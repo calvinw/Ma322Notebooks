@@ -16,7 +16,7 @@ clean :
 ipynb  : $(IPYNB_FILES)
 
 %.ipynb : %.qmd
-	quarto render $<  --to ipynb
+	quarto render $<  --to ipynb --no-execute
 
 watch:
 	ls *.qmd | entr make html
