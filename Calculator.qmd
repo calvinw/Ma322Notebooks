@@ -1,0 +1,133 @@
+
+
+# Calculator
+
+Python can do calculations, just like a calculator:
+
+Addition:
+
+```{python}
+3+4
+```
+
+Multiplication:
+
+```{python}
+3*4
+```
+
+Subtraction:
+
+```{python}
+3-4
+```
+
+Division:
+
+```{python}
+3/4
+```
+
+Exponents:
+
+```{python}
+10**2
+```
+
+Remember $10^2=10(10)=100$
+
+```{python}
+3**4
+```
+
+This is 3 raised to the power 4. Remember $3^4=(3)(3)(3)(3)=81$
+
+3*3*3*3
+
+You can call functions, like taking a square root.
+
+First you need to import a package that has the sqrt function in it. For
+now just put `import math` on a line by itself. Then use the function by
+using a `.` to call it.
+
+So `math.sqrt(16)` means the same as:
+
+$$ \sqrt{16} $$
+
+which we know is just 4.
+
+```{python}
+import math
+
+math.sqrt(16)
+```
+
+Square root works for any non-negative number:
+
+```{python}
+math.sqrt(2)
+```
+
+What happens if we try to make python take the square root of a negative
+number?
+
+```{python}
+#| eval: false
+math.sqrt(-25)
+```
+
+It tells us there is a `math domain error`
+
+You can call the round function:
+
+```{python}
+round(6.3)
+```
+
+You can call the math.ceil function, what do you think this does?
+
+```{python}
+math.ceil(6.3)
+```
+
+You can call the math.floor function, what does this do?
+
+```{python}
+math.floor(6.8)
+```
+
+Python knows about the number $\pi$ as well. It is built in:
+
+```{python}
+math.pi
+```
+
+Python has a remainder function. It is the percent sign `%`. This just
+gives the remainder of $17/5$, which is $2$ since $17/5=3$ with
+remainder 2:
+
+```{python}
+17%5
+```
+
+"""Order of operations"""
+
+```{python}
+2+3*4
+```
+
+Just like we were taught for PEMDAS, it does the multiplication first,
+then the addition. This is sort of like there are parentheses around the
+multiplication:
+
+
+```{python}
+2+(3*4)
+```
+
+If we want to make pytho do the addition first we can. We have to tell
+it to do that first using parentheses
+
+```{python}
+(2+3)*4
+```
