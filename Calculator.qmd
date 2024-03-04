@@ -4,8 +4,6 @@ jupyter:
   python3
 ---
 
-# Calculator
-
 Python can do calculations, just like a calculator:
 
 Addition:
@@ -133,3 +131,23 @@ it to do that first using parentheses
 ```{python}
 (2+3)*4
 ```
+
+One last thing about printing things in python. If you list some expression on a line by itself it will print it out
+
+```{python}
+3+4
+```
+
+But if you try and do two things it will only print the last one
+
+```{python}
+3+4
+6-2
+```
+
+For that reason sometimes people use the `print` function which will make sure it prints out even if it is not the last thing.
+```{python}
+print(3+4)
+print(6-2)
+```
+

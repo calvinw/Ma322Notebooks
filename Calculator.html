@@ -96,8 +96,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="calculator" class="level1">
-<h1>Calculator</h1>
 <p>Python can do calculations, just like a calculator:</p>
 <p>Addition:</p>
 <div class="cell" data-execution_count="1">
@@ -223,7 +221,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>20</code></pre>
 </div>
 </div>
-</section>
+<p>One last thing about printing things in python. If you list some expression on a line by itself it will print it out</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="op">+</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>7</code></pre>
+</div>
+</div>
+<p>But if you try and do two things it will only print the last one</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span><span class="op">+</span><span class="dv">4</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span><span class="op">-</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>4</code></pre>
+</div>
+</div>
+<p>For that reason sometimes people use the <code>print</code> function which will make sure it prints out even if it is not the last thing.</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">3</span><span class="op">+</span><span class="dv">4</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">6</span><span class="op">-</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>7
+4</code></pre>
+</div>
+</div>
 
 </main>
 <!-- /main column -->

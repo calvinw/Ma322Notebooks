@@ -1,0 +1,126 @@
+---
+title: "More Variables"
+jupyter:
+  python3
+---
+
+Lets start by storing a number in a variable. Store 4 in the variable `x`
+
+```{python}
+#| eval: false
+CODE
+```
+
+```{python}
+# Solution:
+x=4
+```
+
+Print out the variable `x`:
+
+```{python}
+#| eval: false
+CODE
+```
+
+```{python}
+# Solution:
+x
+```
+
+Set `y` equal to `5*x`
+
+```{python}
+#| eval: false
+CODE
+```
+
+```{python}
+# Solution:
+y=5*x
+```
+Now y will have a value after we do this. What is the current value of y? Since the current value of `x` is 4, the value of y should be $5(4)=20$.
+
+Now print out the value of `y`
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+y
+```
+
+Variables can be changed as a program proceeds.
+
+Change the value of x to be 7:
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+x=7
+```
+
+One thing you might wonder is that if you change the value of x at some point, does that affect the value of y we defined earlier using x? Let's check:
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+y
+```
+
+No. It doesn't. This y still has the same value it had before which is $5(4) = 20$ since at the time we assigned y the x was equal to 4.
+If we want y to update, we would have to assign it again to give it a new value. Go ahead and do that.
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+y<-5*x
+```
+
+Now print out the new version of y:
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+y
+```
+It has the value $5(7) = 35$ now since currently the x is assigned to be 7.
+
+Next go ahead and set a variable `z` equal to 1.2 and `w` equal to 7 and then print them both out in this block of code
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+z=1.2
+w=7
+print(z)
+print(w)
+```
+
+Now we change (assign) `z` to be `3*w-5` and print out the new `z`
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+z=3*w - 5
+z
+```
+Since `w` was 7 above, the new value of `z` is $3(7)-5 = 16$
+
