@@ -1,24 +1,33 @@
 SHELL:=/bin/bash
 #SOURCES:=$(wildcard *.qmd)
-SOURCES:=Calculator.qmd
+SOURCES:=Calculator.qmd MoreCalculator.qmd
 SOURCES:=$(filter-out index.qmd, $(SOURCES))
 
 IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)
+HTML_FILES = $(SOURCES:%.qmd=%.html)
 
-all : ipynb
+all : html ipynb
 	@echo All files are now up to date
 
 clean :
 	@echo Removing files...
-	rm -f $(IPYNB_FILES)
+	rm -f $(HTML_FILES) $(IPYNB_FILES)
 	rm -rf *_files
+
+html   : $(HTML_FILES)
 
 ipynb  : $(IPYNB_FILES)
 
+%.html : %.qmd
+	quarto render $< --to html
+
 %.ipynb : %.qmd
-	quarto render $<  --to ipynb --no-execute
+	cp $< $(basename $<)-question.qmd
+	sed -i 's/# Solution:/#| include: false/' $(basename $<)-question.qmd
+	quarto render $(basename $<)-question.qmd --to ipynb --output $(basename $<).ipynb --no-execute
+	rm $(basename $<)-question.qmd
 
 watch:
-	ls *.qmd | entr make html
+	ls *.Rmd | entr make html
 
 .PHONY: all clean

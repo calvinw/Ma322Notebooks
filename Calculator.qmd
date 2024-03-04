@@ -1,3 +1,9 @@
+---
+title: "Calculator"
+jupyter:
+  python3
+---
+
 # Calculator
 
 Python can do calculations, just like a calculator:
@@ -40,8 +46,6 @@ Remember $10^2=10(10)=100$
 
 This is 3 raised to the power 4. Remember $3^4=(3)(3)(3)(3)=81$
 
-3*3*3*3
-
 You can call functions, like taking a square root.
 
 First you need to import a package that has the sqrt function in it. For
@@ -70,7 +74,7 @@ What happens if we try to make python take the square root of a negative
 number?
 
 ```{python}
-#| eval: false
+#|eval: false
 math.sqrt(-25)
 ```
 
@@ -123,7 +127,7 @@ multiplication:
 2+(3*4)
 ```
 
-If we want to make pytho do the addition first we can. We have to tell
+If we want to make python do the addition first we can. We have to tell
 it to do that first using parentheses
 
 ```{python}

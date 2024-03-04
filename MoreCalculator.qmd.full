@@ -4,136 +4,115 @@ jupyter:
   python3
 ---
 
+```{python}
+#| include: true
+ex=True
+```
+
 Calculate `4+5` by replacing the line `CODE` with `4+5` and then execute it by hitting the _Run Cell_ button
 
 ```{python}
-#| eval: false
+
+"""
+```{r include=ex, eval=F}
 CODE
 ```
-
-```{python}
-# Solution:
+```{r include=!ex}
 4+5
 ```
-
 Calculate `4*5`
 
-```{python}
-#| eval: false
+```{r include=ex, eval=F}
 CODE
 ```
-
-```{python}
-# Solution:
+```{r include=!ex}
 4*5
 ```
 
 Calculate `4-5`
-```{python}
-#| eval: false
+```{r include=ex, eval=F}
 CODE
 ```
-```{python}
-# Solution:
+```{r include=!ex}
 4-5
 ```
 
 Calculate `4/5`
-```{python}
-#| eval: false
-#| question: true
+```{r include=ex, eval=F}
 CODE
 ```
-```{python}
-# Solution:
+```{r include=!ex}
 4/5
 ```
 
-Calculate `4**2`
-```{python}
-#| eval: false
+Calculate `4^2`
+```{r include=ex, eval=F}
 CODE
 ```
-```{python}
-# Solution:
-4**2
+```{r include=!ex}
+4^2
 ```
 
 Check  $4^2=4(4)=16$
 
-Calculate `5**6`
-```{python}
-#| eval: false
+Calculate `5^6`
+```{r include=ex, eval=F}
 CODE
 ```
-```{python}
-# Solution:
-5**6
+```{r include=!ex}
+5^6
 ```
 
 Check  $5^6=(5)(5)(5)(5)(5)(5)=15625$
 
 
 Calculate `sqrt(36)`
-```{python}
-#| eval: false
+```{r include=ex, eval=F}
 CODE
 ```
-```{python}
-# Solution:
-import math
-math.sqrt(36)
+```{r include=!ex}
+sqrt(36)
 ```
 
 Check:
 $$ \sqrt{ 36 } = 6 $$
 
 Find `round(2.45)`
-
-```{python}
-#| eval: false
+```{r include=ex, eval=F}
 CODE
 ```
-```{python}
-# Solution:
+```{r include=!ex}
 round(2.45)
 ```
 
 The answer should be 2
 
-Find `math.ceil(2.45)`
-```{python}
-#| eval: false
+Find `ceiling(2.45)`
+```{r include=ex, eval=F}
 CODE
 ```
-```{python}
-# Solution:
-math.ceil(2.45)
+```{r include=!ex}
+ceiling(2.45)
 ```
 
 The answer should be 3
 
-Find `24%10`, which is the remainder of $24/10$
-```{python}
-#| question: true
-#| eval: false
+Find `24%%10`, which is the remainder of $24/10$
+```{r include=ex, eval=F}
 CODE
 ```
-```{python}
-# Solution:
-24%10
+```{r include=!ex}
+24%%10
 ```
 
 Put parentheses in the expression `4+2*3` so it gives 18.
 
 As is, it is 10
 
-```{python}
-#| eval: false
+```{r include=ex, eval=F}
 4+2*3
 ```
-```{python}
-# Solution:
+```{r include=!ex}
 (4+2)*3
 ```
 
@@ -141,12 +120,10 @@ Put parentheses in the expression `4*5+3` so it gives 32.
 
 As is, it is 23
 
-```{python}
-#| eval: false
+```{r include=ex, eval=F}
 4*5+3
 ```
-```{python}
-# Solution:
+```{r include=!ex}
 4*(5+3)
 ```
 
@@ -154,12 +131,10 @@ Put parentheses in the expression `20/4*5` so it gives 1.
 
 As is, it is 25
 
-```{python}
-#| eval: false
+```{r include=ex, eval=F}
 20/4*5
 ```
-```{python}
-# Solution:
+```{r include=!ex}
 20/(4*5)
 ```
 
@@ -167,53 +142,70 @@ Put parentheses in the expression `2*9/3*2-1` so it gives 2.
 
 As is, it is 11
 
-```{python}
-#| eval: false
+```{r include=ex, eval=F}
 2*9/3*2-1
 ```
-```{python}
-# Solution:
+```{r include=!ex}
 2*9/(3*2)-1
 ```
 
 The code below generates an error.
 
-```{python}
-#| eval: false
-sqrt(49)
+```{r error=T}
+sqrt 49
 ```
 
 Produce a correct version that computes the square root of 49, which is 7
-
-```{python}
-# Solution:
-import math
-
-math.sqrt(49)
+```{r include=ex, eval=F}
+sqrt 49
+```
+```{r include=!ex}
+sqrt(49)
 ```
 
 The code below generates an error.
 
-```{python}
-#| eval: false
+```{r error=T}
 ceil(9.45)
 ```
 Produce a correct version below with no errors and that gives 10
 
-```{python}
-# Solution:
-math.ceil(9.45)
+```{r include=ex, eval=F}
+ceil(9.45)
+```
+```{r include=!ex}
+ceiling(9.45)
 ```
 
 The code below generates an error.
-```{python}
-#| eval: false
-floor(9.45)
+```{r error=T}
+flooring(9.45)
 ```
 
 Produce a correct version below with no errors and that gives 9
 
-```{python}
-# Solution:
-math.floor(9.45)
+```{r include=ex, eval=F}
+flooring(9.45)
 ```
+```{r include=!ex}
+floor(9.45)
+```
+
+The code below generates an error.
+```{r error=T}
+squarert(25)
+```
+
+Produce a correct version below with no errors and that gives 5
+
+```{r include=ex, eval=F}
+squarert(25)
+```
+```{r include=!ex}
+sqrt(25)
+```
+
+"""
+
+```
+
