@@ -2,3 +2,7 @@
 jupyter:
   python3
 ---
+
+```{python}
+5+6
+```
