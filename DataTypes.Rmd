@@ -1,0 +1,183 @@
+---
+title: "Data Types"
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+Variables and expressions in R have data types. The following charts shows the main data types:
+
+| Data Type | Python version | Examples |
+|--------------------|------------------|------------|
+| Decimal | float | 2.32, -0.45 |
+| String | str | "hello", "k" |
+| Integer | int | 12 |
+| Boolean (True/False) | bool | True, False |
+
+
+You can find out what data type a variable holds by using the `class` function.
+
+`class` is a function that gives info on the data type of an object.
+
+### Numeric
+
+The data type of numbers like 3.2, -2.34, 0.0 is numeric
+
+The following variable has data type numeric:
+
+```{r}
+x<-3.2
+class(x)
+```
+
+### Character
+
+The data type of a text or string is character.
+
+Examples are "Bob", "We are the champions", "Fee Fi Fo"
+
+```{r}
+y<-"hi there"
+class(y)
+z<-"XXXYYYZZZ"
+class(z)
+```
+
+### Logical
+
+The data type of something that holds 'TRUE' or 'FALSE' is 'logical'.
+
+This is Rs name for booleans, things that can just be TRUE or FALSE.
+
+
+```{r}
+u<-TRUE
+class(u)
+v<-FALSE
+class(v)
+```
+
+### Integer
+
+There is also a type for integers (..., -3,-2,-1,0,1,2,3,...), it is not used as frequently as "numeric".
+
+To create an integer type, you have to use an L after the integer:
+
+```{r}
+a<-3L
+class(a)
+```
+
+If you do not use an L, then R will make it a 'numeric' type:
+```{r}
+b<-3
+class(b)
+```
+
+## Using `str` Function For Info
+
+There is an even better function to give you info on an object or variable in R. It is called the `str` function (which stands for structure) and it gives the info a little more succintly than `class`.
+
+```{r}
+x<-3.2
+str(x)
+```
+
+```{r}
+y<-"hi there"
+str(y)
+```
+
+```{r}
+z<-"XXXYYYZZZ"
+str(z)
+```
+
+```{r}
+a<-3L
+str(a)
+```
+
+```{r}
+u<-TRUE
+str(u)
+```
+
+```{r}
+v<-FALSE
+str(v)
+```
+
+One thing that is nice about `str` is that it outputs the value of the variable as well. We will see some other nice things about `str` for more complicated data types like vectors and lists later.
+
+## Checking Types
+
+There are functions for checking the type of a variable or expression, which are sometimes more convenient than using the `class` for `str` function. Each of these answers `TRUE` or `FALSE` depending on whether the value is that type or not:
+
+|  Checking types    |  function     | Example    |
+|--------------------|------------------|------------|
+|  decimal number      |   is.numeric   |  is.numeric(2.32)  |
+|  string              |   is.character | is.character("hello")  |
+|  integer             |   is.integer      |  is.integer(2L)        |
+|  boolean(true/false) |   is.logical      |  is.logical(TRUE)      |
+
+
+It turns out that an integer is also a numeric type
+```{r}
+b<-3L
+is.integer(b)
+is.numeric(b)
+```
+
+But 'numeric' variables are not necessarily 'integer' types. 3.4 is not an integer, and `is.integer` returns `FALSE`
+```{r}
+c<-3.4
+is.numeric(c)
+is.integer(c)
+```
+
+## Converting Types
+
+You can change a variables type if you need to using these functions:
+
+|  Changing types    |  function     | Example    |
+|--------------------|------------------|------------|
+|  decimal number      |   as.numeric   |  as.numeric(2L)  |
+|  string              |   as.character | as.character(123)  |
+|  integer             |   as.integer      |  as.integer(2.0)    |
+|  boolean(true/false) |   as.logical      |  as.logical(1)      |
+
+### Character to Numeric
+
+One use for this is to convert a string like "1.23" to a number 1.23. This happens frequently since when we read in data from files, even though the file may contain numbers, they will often be strings to begin with.
+
+With quotes around it, a number will be seen as a string. Here is an example:
+
+```{r}
+myData<-"1.23"
+is.character(myData)
+is.numeric(myData)
+```
+
+So if we want to change the string "1.23" to a number, we must use `as.numeric` to convert the string to a number:
+
+```{r}
+myOtherData<-as.numeric(myData)
+is.numeric(myOtherData)
+myOtherData
+```
+
+### Numeric to Character
+
+The other direction from number to a string happens sometimes as well.
+
+Below we create a number, then convert it to a string.
+
+```{r}
+aNumber<-4.56
+aString<-as.character(aNumber)
+is.character(aString)
+```
+

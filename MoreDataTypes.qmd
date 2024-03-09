@@ -1,0 +1,176 @@
+---
+title: "More Data Types"
+---
+
+
+- Assign a variable using `myFloat = 1.2`
+- Print out info on `myFloat` using the `type` function
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+myFloat = 1.2
+print(type(myFloat))
+```
+
+This should output `<class 'float'>` which means `float`
+
+- Use the `isinstance` function to check if `myFloat` is a float data type.
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+print(isinstance(myFloat, (int, float)))
+```
+
+The output should be `True` since `myFloat` is a float data type.
+
+Let's look at string types
+
+- Assign a variable using `myString = "hello"`
+- Print out info on `myString` using the `type` function
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+myString = "hello"
+print(type(myString))
+```
+This should output `<class 'str'>` which means `string`
+
+- Use the `isinstance` function to check if `myString` is a string data type
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+print(isinstance(myString, str))
+```
+The output should be `True` since `myString` is a string data type.
+
+Let's look at boolean type:
+
+- Assign a variable using `myBoolean = True`
+- Print out info on `myBoolean` using the `type` function
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+myBoolean = True
+print(type(myBoolean))
+```
+
+This should output `<class 'bool'>` which means `boolean`.
+
+- Use the `isinstance` function to check the data type of `myBoolean` from above
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+print(isinstance(myBoolean, bool))
+```
+The output should be `True` since `myBoolean` is a boolean data type.
+
+One conversion that is frequently used is from a string like "1.23" to a number 1.23.
+
+With quotes around it, a number will be seen as a string:
+
+
+- Define a variable `aString = "1.23"`
+- print out whether it is a string using `isinstance`
+- print out whether it is a float using `isinstance`
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+aString = "1.23"
+print(isinstance(aString, str))
+print(isinstance(aString, (int, float)))
+```
+
+The output of `isinstance(aString, str)` should be `True` since `aString` was a string.
+
+The output of `isinstance(aString, float)` should be `False` since `aString` was not a float.
+
+So if we want to change the string "1.23" to a number, we must use `float` to convert the string to a number:
+
+- Define a variable `aNumber` by using the function `float` on `aString`
+- print out whether `aNumber` is a float using `isinstance`
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+aNumber = float(aString)
+print(isinstance(aNumber, (int, float)))
+```
+
+The output of `isinstance(aNumber, float)` should be `True` since `aNumber` was a float.
+
+Finally for the code below add a couple of `type` functions to display information about the variables.
+
+- Print out info on `x` using the `type` function
+- Print out info on `y` using the `type` function
+
+```{python}
+#| eval: false
+x = "1.23"
+y = float("1.23")
+CODE
+```
+```{python}
+# Solution:
+x = "1.23"
+y = float("1.23")
+print(type(x))
+print(type(y))
+```
+
+`x` is a string since there are quotation marks so that makes it a string.
+
+`y` is a float since it was converted to a float with `float`.
+
+Once again, for the code below add a couple of `type` functions to display information about the variables.
+
+- Print out info on `z` using the `type` function
+- Print out info on `w` using the `type` function
+
+```{python}
+#| eval: false
+z = "TRUE"
+w = bool("TRUE")
+CODE
+```
+```{python}
+# Solution:
+z = "TRUE"
+w = bool("TRUE")
+print(type(z))
+print(type(w))
+```
+
+`z` is a string since there are quotation marks so that makes it a string.
+
+`w` is a boolean since it was converted to a boolean with `bool`.

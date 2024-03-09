@@ -1,0 +1,120 @@
+---
+title: "Data Types"
+---
+
+# Data Types in Python
+
+In Python, variables and expressions have data types. The following table shows the main data types:
+
+| Data Type | Python version | Examples |
+|--------------------|------------------|------------|
+| Float (Decimal) | float | 2.32, -0.45 |
+| String (Text) | str | "hello", "k" |
+| Integer | int | 12 |
+| Boolean (True/False) | bool | True, False |
+
+
+You can find out the data type of a variable by using the `type()` function.
+
+## Float (Decimal)
+
+The data type for decimal numbers like 3.2, -2.34, 0.0 is float.
+
+The following variable has a data type of float:
+
+```{python}
+x = 3.2
+print(type(x))
+```
+
+## String
+
+The data type for text or strings is `str`.
+
+Examples are "Bob", "We are the champions", "Fee Fi Fo".
+
+```{python}
+y = "hi there"
+print(type(y))
+z = "XXXYYYZZZ"
+print(type(z))
+```
+
+## Integer
+
+There is a separate data type for integers (..., -3, -2, -1, 0, 1, 2, 3, ...).
+
+```{python}
+a = 3
+print(type(a))
+```
+
+## Boolean
+
+The data type for something that holds `True` or `False` is `bool`. This is Python's name for booleans, things that can only be `True` or `False`.
+
+```{python}
+u = True
+print(type(u))
+v = False
+print(type(v))
+```
+
+## Checking Types
+
+There are functions for checking the type of a variable or expression, which can be more convenient than using the `type()` function. Each of these returns `True` or `False` depending on whether the value is that type or not:
+
+|  Checking types    |  Function     | Example                   |
+|--------------------|----------------|-----------------------------|
+|  Float             |   `isinstance(x, float)`  | `isinstance(2.32, float)`  |
+|  String            |   `isinstance(x, str)`   | `isinstance("hello", str)`  |
+|  Integer           |   `isinstance(x, int)`   | `isinstance(2, int)`        |
+|  Boolean           |   `isinstance(x, bool)`  | `isinstance(True, bool)`    |
+
+## Converting Types
+
+You can change a variable's type if you need to using these functions:
+
+|  Changing types    |  Function     | Example                   |
+|--------------------|----------------|-----------------------------|
+|  Float   |   `float(x)`  | `float(2)`                |
+|  String            |   `str(x)`    | `str(123)`                |
+|  Integer           |   `int(x)`    | `int(2.0)`                |
+|  Boolean           |   `bool(x)`   | `bool(1)`                 |
+
+### String to Float
+
+One use for this is to convert a string like "1.23" to a number 1.23. This happens frequently when reading data from files, as numbers are often stored as strings initially.
+
+With quotes around it, a number will be seen as a string. Here is an example:
+
+```{python}
+myData = "1.23"
+print(isinstance(myData, str))
+print(isinstance(myData, float))
+```
+
+To change the string "1.23" to a number, we must use `float()` to convert the string to a float:
+
+```{python}
+myOtherData = float(myData)
+print(isinstance(myOtherData, float))
+print(myOtherData)
+```
+
+### Float to String
+
+We can also convert a number to a string.
+
+Below, we create a number, then convert it to a string.
+
+```{python}
+aNumber = 4.56
+print(aNumber)
+print(isinstance(aNumber, float))
+
+aString = str(aNumber)
+print(aString)
+print(isinstance(aString, str))
+```
+
