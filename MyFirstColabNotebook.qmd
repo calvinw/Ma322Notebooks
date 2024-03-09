@@ -1,3 +1,10 @@
+---
+format: html
+jupyter:
+  python3
+---
+
 ```{python}
+#| include: true
 5+6
 ```

@@ -25,7 +25,7 @@ ipynb  : $(IPYNB_FILES)
 	cp $< $(basename $<)-question.qmd
 	sed -i 's/# Solution:/#| include: false/' $(basename $<)-question.qmd
 	quarto render $(basename $<)-question.qmd --to ipynb --output $(basename $<).ipynb --no-execute
-	rm $(basename $<)-question.qmd
+	#rm $(basename $<)-question.qmd
 
 watch:
 	ls *.Rmd | entr make html
