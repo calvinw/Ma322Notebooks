@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 #SOURCES:=$(wildcard *.qmd)
-SOURCES:= Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd
+SOURCES:= MyFirstColabNotebook.qmd Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd
 SOURCES:=$(filter-out index.qmd, $(SOURCES))
 
 IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)
