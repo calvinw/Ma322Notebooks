@@ -90,6 +90,12 @@ Concatenate two strings, `"Welcome "` and `"to Ma322!"`, and print the result.
 #| eval: false
 CODE
 ```
+```{python}
+# Solution:
+aString1 = "Welcome "
+aString2 = "to Ma322!"
+print(aString1+aString2)
+```
 
 ## Replicating Strings
 
@@ -98,6 +104,11 @@ Create a string that repeats `"Coding "` three times and print it.
 ```{python}
 #| eval: false
 CODE
+```
+```{python}
+# Solution:
+aString = "Coding "
+print(3*aString)
 ```
 
 ## String Methods
