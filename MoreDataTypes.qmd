@@ -26,7 +26,7 @@ CODE
 ```
 ```{python}
 # Solution:
-print(isinstance(myFloat, (int, float)))
+print(isinstance(myFloat, float))
 ```
 
 The output should be `True` since `myFloat` is a float data type.
@@ -105,7 +105,7 @@ CODE
 # Solution:
 aString = "1.23"
 print(isinstance(aString, str))
-print(isinstance(aString, (int, float)))
+print(isinstance(aString, float))
 ```
 
 The output of `isinstance(aString, str)` should be `True` since `aString` was a string.
@@ -124,7 +124,7 @@ CODE
 ```{python}
 # Solution:
 aNumber = float(aString)
-print(isinstance(aNumber, (int, float)))
+print(isinstance(aNumber, float))
 ```
 
 The output of `isinstance(aNumber, float)` should be `True` since `aNumber` was a float.

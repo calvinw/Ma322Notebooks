@@ -1,8 +1,6 @@
 ---
-title: "Data Types"
+title: "Data Types In Python"
 ---
-
-# Data Types in Python
 
 In Python, variables and expressions have data types. The following table shows the main data types:
 

@@ -1,0 +1,133 @@
+---
+title: "More Strings In Python"
+---
+
+## Defining Strings
+
+Define a string variable called `aString` by using the string `Hello Cruel World` by using single quotes for the string. Print it.
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+aString = 'Hello Cruel World'
+print(aString)
+```
+
+Define a string variable called `aString` by using the string `Goodbye Cruel World` by using double quotes for the string. Print it.
+
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+aString = "Hello Cruel World"
+print(aString)
+```
+
+Define a multiline string variable called `aString` using `See you later alligator`
+
+using triple quotes and put each word on a separate line like this:
+
+```
+See
+you
+later
+alligator
+```
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+aString = """
+See
+you
+later
+alligator
+"""
+print(aString)
+```
+
+## Accessing Parts of a String (Indexing)
+
+
+Define a string variable called `aString` to be `"Python"`. and print the first character using index notation.
+
+```{python}
+#| eval: false
+ CODE
+```
+```{python}
+# Solution:
+aString = "Python"
+print(aString[0])
+```
+
+Define a string variable called `aString` to be `"Programming"`, and print the last three characters.
+
+```{python}
+#| eval: false
+ CODE
+```
+```{python}
+# Solution:
+aString = "Ma322 is the most fun, it is just unbelievable!"
+print(aString[-3:])
+```
+
+## Concatenating Strings
+
+Concatenate two strings, `"Welcome "` and `"to Ma322!"`, and print the result.
+
+```{python}
+#| eval: false
+CODE
+```
+
+## Replicating Strings
+
+Create a string that repeats `"Coding "` three times and print it.
+
+```{python}
+#| eval: false
+CODE
+```
+
+## String Methods
+
+Given the string `"The quick brown fox jumps over the lazy dog."`, replace `"lazy dog"` with `"energetic puppy"` using the `replace()` method and print the new string.
+
+```{python}
+#| eval: false
+CODE
+```
+
+Given the string `"book,pen,paper,notebook"`, split it into a list of substrings using the `split()` method and print the list.
+
+```{python}
+#| eval: false
+CODE
+```
+
+Given the list `['Python', 'is', 'awesome']`, join the elements into a single string using the `join()` method with `'xoxoxo'` as the separator, and print the resulting string.
+
+```{python}
+#| eval: false
+CODE
+```
+
+## Length of a String
+
+Given the string `"Learn Python today!"`, print its length using the `len()` function.
+
+```{python}
+#| eval: false
+CODE
+```

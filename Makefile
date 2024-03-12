@@ -1,6 +1,7 @@
 SHELL:=/bin/bash
 #SOURCES:=$(wildcard *.qmd)
-SOURCES:= MyFirstColabNotebook.qmd Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd
+SOURCES:= Lists.qmd MoreStrings.qmd Strings.qmd
+SOURCES:= Lists.qmd MoreStrings.qmd Strings.qmd Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd
 SOURCES:=$(filter-out index.qmd, $(SOURCES))
 
 IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)
@@ -25,7 +26,7 @@ ipynb  : $(IPYNB_FILES)
 	cp $< $(basename $<)-question.qmd
 	sed -i 's/# Solution:/#| include: false/' $(basename $<)-question.qmd
 	quarto render $(basename $<)-question.qmd --to ipynb --output $(basename $<).ipynb --no-execute
-	#rm $(basename $<)-question.qmd
+	rm $(basename $<)-question.qmd
 
 watch:
 	ls *.Rmd | entr make html
