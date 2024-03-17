@@ -1,0 +1,80 @@
+---
+title: "LLMS"
+---
+
+{{< include _llm_setup.qmd >}}
+
+## Calling the LLM using a template
+
+Remember the template for having the LLM give us the name of a company that
+makes a particular thing? Let's call the LLM with that template and template
+variable `Cars`:
+
+```{python}
+template = "Create a name for a company that makes {what}"
+
+#Evaluate the template with what="Cars"
+prompt=template.format(what="Cars")
+
+#Call the LLM
+response = get_completion(prompt)
+
+#Print out the the response
+print(response)
+```
+
+## Change the template variable `what`
+
+Let's call the LLM using `Books` as the template variable.
+
+```{python}
+#Evaluate the template with what="Books"
+prompt=template.format(what="Books")
+response = get_completion(prompt)
+
+print(response)
+```
+
+## Add another template variable for `num`
+
+```{python}
+template = "Give {num} possible names for a company that makes {what}"
+
+#Evaluate the template
+prompt=template.format(num=3, what="Cars")
+response = get_completion(prompt)
+
+print(response)
+```
+
+### Formatting the response from the LLM
+
+Lets see if we can introduce some formatting to the output:
+
+```{python}
+template ="""Give {num} possible names for a company that makes {what}. Give
+your answer in {format}"""
+
+#Evaluate the template
+prompt=template.format(num=3, what="Cars", format="A bulleted list using upper case")
+response = get_completion(prompt)
+
+print(response)
+```
+
+## Calling the LLM multiple times with our template
+
+The following is an example of calling the LLM multiple times, each time with a
+different prompt that is created from our template.
+
+```{python}
+template ="""Give {num} possible names for a company that makes {what}. Give
+your answer in {format}"""
+
+myList = ["cars", "watches", "firecrackers"]
+
+for item in myList:
+  prompt = template.format(num=2, what=item, format="upper case")
+  response = get_completion(prompt)
+  print_prompt_and_response(prompt, response)
+```

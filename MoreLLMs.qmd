@@ -1,0 +1,139 @@
+---
+title: "More LLMS"
+---
+
+{{< include _llm_setup.qmd >}}
+
+## Template For Asking For a Capital
+
+Create a template string with a template variable `place` for asking the LLM to
+give you the capital of `place`. Then evaulate the template variable using
+`"Texas"`
+
+Finally call the LLM and get the response and print the response.
+
+Fill in the appropriate sections of the code below where you see the word CODE.
+
+```{python}
+#| eval: false
+# Define template here
+CODE
+
+# Evaluate the template with place="Texas"
+prompt=template.format(CODE)
+
+# Call get_completion and get the response, then print it.
+CODE
+```
+```{python}
+# Solution:
+# Define template here
+template = "Can you tell me the capital of {place}?"
+
+# Evaluate the template with place="Texas"
+prompt=template.format(place="Texas")
+
+# Call get_completion and get the response, then print it.
+response = get_completion(prompt)
+print(response)
+```
+
+## Adding a Variable Called `num`
+
+Add another template variable called `num` to the template and ask the LLM to
+provide you with `num` facts about the capital that you specified with
+`place`. Print out the response
+
+```{python}
+#| eval: false
+# Define template here
+CODE
+
+# Evaluate the template for "Texas" and 3 facts
+prompt=template.format(CODE)
+
+# Call get_completion and get the response, then print it.
+CODE
+```
+```{python}
+# Solution:
+# Define template here
+template = """Can you tell me the capital of {place} and give me {num} simple
+facts about it?"""
+
+# Evaluate the template for "Texas" and 3 facts
+prompt=template.format(place="Texas", num=3)
+
+# Call get_completion and get the response, then print it.
+response = get_completion(prompt)
+print(response)
+```
+
+## Ask To Format the Response
+
+Add a template variable called `format` so you can pass in the desired format
+for the facts that are given.
+
+```{python}
+#| eval: false
+# Define template here
+CODE
+
+# Evaluate the template for "Texas" and 3 facts
+prompt=template.format(CODE)
+
+# Call get_completion and get the response, then print it.
+CODE
+```
+```{python}
+# Solution:
+# Define template here
+template ="""Can you tell me the capital of {place} and give me {num} simple
+facts about it?. Format the facts using {format}"""
+
+# Evaluate the template for "Texas" and 3 facts and "uppercase"
+prompt=template.format(place="Texas", num=3, format="uppercase")
+
+# Call get_completion and get the response, then print it.
+response = get_completion(prompt)
+print(response)
+```
+
+## Asking About Several Capitals
+
+Let's see how this looks if we ask for the capital of several places.
+
+Replace CODE below to create a template, then create a list called `myPlaces`
+of places to use. Use California, Missouri, Florida, Germany and use 3 facts
+about the capitals and use upper case for the format.
+
+```{python}
+#| eval: false
+# Define template here
+CODE
+
+# Create the list of places.
+myPlaces = CODE
+
+# Loop through the myPlaces
+for place in myPlaces:
+  prompt = template.format(CODE)
+  # Call get_completion, then print_prompt_and_completion
+  CODE
+```
+```{python}
+# Solution:
+# Define template here
+template ="""Can you tell me the capital of {place} and give me {num} simple
+facts about it?. Format the {num} facts using {format}"""
+
+# Create the list of places.
+myPlaces = ["California", "Missouri", "Florida", "Germany"]
+
+# Loop through the myPlaces
+for place in myPlaces:
+  prompt = template.format(place=place, num=3, format="a bullet pointed list")
+  # Call get_completion, then print_prompt_and_completion
+  response = get_completion(prompt)
+  print_prompt_and_response(prompt, response)
+```
