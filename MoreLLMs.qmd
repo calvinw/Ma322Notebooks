@@ -2,7 +2,82 @@
 title: "More LLMS"
 ---
 
-{{< include _llm_setup.qmd >}}
+{{< include _llm_openai.qmd >}}
+
+## Calling an LLM
+
+Choose a question and set up the code to send the question to the LLM. Any
+question you like.
+
+```{python}
+#| eval: false
+# Define your prompt here
+CODE
+
+# Call get_completion and get the response, then print it.
+CODE
+```
+```{python}
+# Solution:
+# Define your prompt here
+prompt = "Why do people like Barbie? 50 words please"
+
+# Call get_completion and get the response, then print it.
+response = get_completion(prompt)
+print(response)
+```
+
+## Calling an LLM with `temperature=0.0`
+
+Call the LLM 3 times with your question above, using temperature 0.0 for these.
+
+```{python}
+#| eval: false
+#Set up a prompt
+CODE
+
+print("Calling the LLM with temperature 0.0")
+# Set up a for loop and call your LLM 3 times with temperature 0.0
+CODE
+```
+```{python}
+# Solution:
+#Set up a prompt
+prompt = "Why do people like Barbie? 50 words please"
+
+print("Calling the LLM with temperature 0.0")
+# Set up a for loop and call your LLM 3 times with temperature 0.0
+for i in range(3):
+  response = get_completion(prompt, temperature = 0.0)
+  print(response)
+  print("------")
+```
+
+## Calling an LLM with `temperature=0.7`
+
+Call the LLM 3 times with your question above, using temperature 0.7 for these.
+
+```{python}
+#| eval: false
+#Set up a prompt
+CODE
+
+print("Calling the LLM with temperature 0.7")
+# Set up a for loop and call your LLM 3 times with temperature 0.7
+CODE
+```
+```{python}
+# Solution:
+#Set up a prompt
+prompt = "Why do people like Barbie? 50 words please"
+
+print("Calling the LLM with temperature 0.7")
+# Set up a for loop and call your LLM 3 times with temperature 0.7
+for i in range(3):
+  response = get_completion(prompt, temperature = 0.7)
+  print(response)
+  print("------")
+```
 
 ## Template For Asking For a Capital
 

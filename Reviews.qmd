@@ -1,10 +1,8 @@
 ---
 title: "Analyzing Reviews with LLMs"
-execute:
-  eval: true
 ---
 
-{{< include _llm_setup.qmd >}}
+{{< include _llm_openai.qmd >}}
 
 ## Analyzing Amazon Reviews
 

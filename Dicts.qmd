@@ -1,0 +1,79 @@
+---
+title: "Introduction to Dictionaries in Python"
+---
+
+In Python, a dictionary (often abbreviated as "dict") is an unordered collection of key-value pairs. Dictionaries are mutable, meaning their contents can be changed after creation. They are extensively used in Python for storing and retrieving data in a structured and efficient way.
+
+## Creating a Dictionary
+
+A dictionary is created by enclosing a comma-separated list of key-value pairs within curly braces `{}`. The key and value are separated by a colon `:`
+
+```{python}
+# Empty dictionary
+empty_dict = {}
+
+# Dictionary with key-value pairs
+person = {'name': 'Alice', 'age': 25, 'city': 'New York'}
+print(person)  # Output: {'name': 'Alice', 'age': 25, 'city': 'New York'}
+```
+
+## Accessing Values
+
+You can access the values in a dictionary using their corresponding keys.
+
+```{python}
+person = {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+# Accessing values by key
+print(person['name'])    # Output: 'Alice'
+print(person['age'])     # Output: 25
+```
+
+## Adding and Modifying Values
+
+You can add new key-value pairs or modify existing ones by assigning a value to the key.
+
+```{python}
+person = {'name': 'Alice', 'age': 25}
+
+# Adding a new key-value pair
+person['city'] = 'New York'
+print(person)  # Output: {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+# Modifying an existing value
+person['age'] = 26
+print(person)  # Output: {'name': 'Alice', 'age': 26, 'city': 'New York'}
+```
+
+## Checking for Keys
+
+You can check if a key exists in a dictionary using the `in` operator.
+
+```{python}
+person = {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+print('name' in person)    # Output: True
+print('email' in person)   # Output: False
+```
+
+## Iterating over a Dictionary
+
+You can iterate over the keys, values, or key-value pairs of a dictionary using various methods.
+
+```{python}
+person = {'name': 'Alice', 'age': 25, 'city': 'New York'}
+
+# Iterating over keys
+for key in person.keys():
+    print(key)
+
+# Iterating over values
+for value in person.values():
+    print(value)
+
+# Iterating over key-value pairs
+for key, value in person.items():
+    print(f"{key}: {value}")
+```
+
+Dictionaries are versatile data structures in Python, widely used for storing and retrieving data in a key-value format. They provide efficient lookup and insertion operations, making them useful in many programming scenarios.

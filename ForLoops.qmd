@@ -1,0 +1,43 @@
+---
+title: "For Loops in Python"
+---
+
+For loops in Python are used to iterate over a sequence (such as a list, tuple, or string) or other iterable objects.
+
+## Iterating over a List
+
+```{python}
+# List of fruits
+fruits = ['apple', 'banana', 'cherry', 'orange']
+
+# Iterate over the list
+for fruit in fruits:
+    print(fruit)
+```
+
+## Iterating over a Range
+
+If you use the `range()` function you can loop over the values in a range.
+
+```{python}
+# Iterate over a range of numbers
+for i in range(5):
+    print(i)
+```
+
+```{python}
+# Iterate over a range of numbers
+for i in range(3:7):
+    print(i)
+```
+
+## Iterating over a String
+
+```{python}
+# A string
+greeting = "Hello, World!"
+
+# Iterate over the string
+for char in greeting:
+    print(char)
+```

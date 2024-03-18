@@ -2,23 +2,23 @@ SHELL:=/bin/bash
 #SOURCES:=$(wildcard *.qmd)
 SOURCES:= PromptStrings.qmd MorePromptStrings.qmd LLMs.qmd MoreLLMs.qmd Reviews.qmd Lists.qmd MoreStrings.qmd Strings.qmd Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd
 
-#SOURCES:= LLMs.qmd MoreLLMs.qmd Reviews.qmd
-#SOURCES:= test.qmd
+# SOURCES:= LLMs.qmd MoreLLMs.qmd Reviews.qmd
+# SOURCES:= LLMs.qmd
 
 SOURCES:=$(filter-out index.qmd, $(SOURCES))
 
 IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)
 HTML_FILES = $(SOURCES:%.qmd=%.html)
+_FILES = $(SOURCES:%.qmd=%_files)
 
 include .env
 
-all : ipynb html
+all : html ipynb
 	@echo All files are now up to date
 
 clean :
 	@echo Removing files...
-	rm -f $(HTML_FILES) $(IPYNB_FILES)
-	rm -rf *_files
+	rm -rf $(HTML_FILES) $(IPYNB_FILES) $(_FILES)
 
 html   : $(HTML_FILES)
 
@@ -36,5 +36,8 @@ ipynb  : $(IPYNB_FILES)
 
 watch:
 	ls *.Rmd | entr make html
+
+debug:
+	@echo $(_FILES)
 
 .PHONY: all clean

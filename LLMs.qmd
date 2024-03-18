@@ -2,7 +2,84 @@
 title: "LLMS"
 ---
 
-{{< include _llm_setup.qmd >}}
+{{< include _llm_openai.qmd >}}
+
+## Calling an LLM
+
+We can call the LLM by using the `get_completion` function. This takes our
+prompt and delivers it to the LLM. The LLM returns a response. We can print the
+response after we get it.
+
+```{python}
+#Set up a prompt
+prompt = "Why is the sky blue? In 50 words or less."
+
+#Call the LLM
+response = get_completion(prompt)
+
+#Print out the the response
+print(response)
+```
+
+## Calling an LLM with the `temperature`
+
+Temperature is one of the settings that most LLMs have. You can set the temperature from 0.0 up to some maximum (like 1.0). Sometimes you can go higher than 1.0.
+
+Roughly
+
+1. Low temperature (eg 0.2-0.5)
+   - Generates more predictable and conservative text
+
+2. Medium temperature (eg. 0.6-0.8)
+   - Balances between creativity and coherence
+
+3. High temperature (eg. 0.9-1.2)
+   - Generates more creative diverse, and unpredictable text
+
+### Calling with `temperature=0.0`
+
+Here we call the LLM 3 times with temperature 0.0
+
+```{python}
+#Set up a prompt
+prompt = "Why is the sky blue? In 50 words or less"
+
+print("Calling the LLM with temperature 0")
+for i in range(3):
+  response = get_completion(prompt, temperature = 0.0)
+  print(response)
+  print("------")
+```
+
+### Calling with `temperature=0.4`
+
+Here we call the LLM 3 times with temperature 0.4
+
+```{python}
+#Set up a prompt
+prompt = "Why is the sky blue? In 50 words or less"
+
+print("Calling the LLM with temperature 0.4")
+for i in range(3):
+  response = get_completion(prompt, temperature = 0.4)
+  print(response)
+  print("------")
+```
+
+### Calling with `temperature=1.0`
+
+Here we call the LLM 3 times with temperature 1.0
+
+```{python}
+#Set up a prompt
+prompt = "Why is the sky blue? In 50 words or less"
+
+print("Calling the LLM with temperature 1.0")
+for i in range(3):
+  response = get_completion(prompt, temperature = 1.0)
+  print(response)
+  print("------")
+```
 
 ## Calling the LLM using a template
 

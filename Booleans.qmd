@@ -1,0 +1,53 @@
+---
+title: "Introduction to Booleans in Python"
+---
+
+In Python, a boolean is a logical data type that can have one of two values: `True` or `False`. Booleans are used to represent truth values and are often used in conditional statements and logical operations.
+
+## Boolean Values
+
+To define a boolean value, you can simply use the keywords `True` or `False` (with the first letter capitalized).
+
+```{python}
+is_sunny = True
+is_raining = False
+
+print(is_sunny)   # Output: True
+print(is_raining) # Output: False
+```
+
+## Comparing Values
+
+Booleans are often created by comparing values using relational operators like `==` (equal to), `!=` (not equal to), `>` (greater than), `<` (less than), `>=` (greater than or equal to), and `<=` (less than or equal to).
+
+```{python}
+x = 5
+y = 10
+
+print(x == y)     # Output: False
+print(x != y)     # Output: True
+print(x > y)      # Output: False
+print(x < y)      # Output: True
+print(x >= y)     # Output: False
+print(x <= y)     # Output: True
+```
+
+## Boolean Operations
+
+Python provides logical operators that can be used to combine or negate boolean values:
+
+- `and`: Returns `True` if both operands are `True`, otherwise `False`.
+- `or`: Returns `True` if at least one operand is `True`, otherwise `False`.
+- `not`: Returns the opposite boolean value (negates the operand).
+
+```{python}
+x = True
+y = False
+
+print(x and y)    # Output: False
+print(x or y)     # Output: True
+print(not x)      # Output: False
+```
+
+Booleans are fundamental in programming, as they are used to control the flow of execution in conditional statements and loops. They are also used in various algorithms and data structures.
+
