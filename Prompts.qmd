@@ -1,43 +1,56 @@
 ---
-title: "Prompt Strings"
+title: "Prompts"
 ---
 
 Create a template with a template variable `what`. Then evaulate the template
 using different values for `what`
 
+Evaluate the template when `what="Cars"`
+
 ```{python}
 template = "Give a name for a company that makes {what}"
 
-#Evaluate the template with what="Cars"
 prompt=template.format(what="Cars")
 print(prompt)
+```
 
-#Evaluate the template with what="Books"
+Evaluate the template when `what=`"Books"`
+
+```{python}
 prompt=template.format(what="Books")
 print(prompt)
 ```
 
 Add another template variable for `num`
 
+Evaluate the template when `num=3` and `what="Cars"`
+
 ```{python}
 template = "Give {num} possible names for a company that makes {what}"
 
-#Evaluate the template
 prompt=template.format(num=3, what="Cars")
 print(prompt)
+```
 
-#Evaluate the template
+Evaluate the template when `num=5` and `what="Bikes"`
+
+```{python}
 prompt=template.format(num=5, what="Bikes")
 print(prompt)
 ```
 
-```{python}
-template = "Give {num} possible names for a company that makes {what}. Give your answer in {format}"
+Add something so we can specify the format.
 
-#Evaluate the template
+```{python}
+template = """Give {num} possible names for a company that makes {what}. Give
+your answer in {format}"""
 prompt=template.format(num=3, what="Cars", format="uppercase")
 print(prompt)
+```
 
+Create a prompt that asks for a different format.
+
+```{python}
 #Evaluate the template
 prompt=template.format(num=3, what="Cars", format="a markdown table")
 print(prompt)
@@ -54,23 +67,14 @@ prompt=template.format(num=3, what="Cars", format="a bullet list")
 print(prompt)
 ```
 
-The following is an example of printing out a list of strings:
-
-
-```{python}
-myList = ["cars", "watches", "bikes", "firecrackers"]
-
-for item in myList:
-  print(item)
-```
-
-The following is an example of printing out 4 prompt strings based on a template.
+The following is an example of printing out 3 prompt strings based on a
+template.
 
 ```{python}
 template ="""Give {num} possible names for a company that makes {what}. Give
 your answer in {format}"""
 
-myList = ["cars", "watches", "bikes", "firecrackers"]
+myList = ["cars", "watches", "firecrackers"]
 
 for item in myList:
   prompt = template.format(num=3, what=item, format="a bullet list")

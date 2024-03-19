@@ -6,7 +6,7 @@ title: "More LLMS"
 
 ## Calling an LLM
 
-Choose a question and set up the code to send the question to the LLM. Any
+- Choose a question and set up the code to send the question to the LLM. Any
 question you like.
 
 ```{python}
@@ -31,63 +31,93 @@ print(response)
 
 Call the LLM 3 times with your question above, using temperature 0.0 for these.
 
+- Call `get_completion` and store the response. Then print it.
+- You already defined `prompt` above so you do not need to repeat that.
+- Set `temperature=0.0`
+
 ```{python}
 #| eval: false
-#Set up a prompt
-CODE
-
-print("Calling the LLM with temperature 0.0")
-# Set up a for loop and call your LLM 3 times with temperature 0.0
 CODE
 ```
 ```{python}
 # Solution:
-#Set up a prompt
-prompt = "Why do people like Barbie? 50 words please"
+response = get_completion(prompt, temperature = 0.0)
+print(response)
+```
 
-print("Calling the LLM with temperature 0.0")
-# Set up a for loop and call your LLM 3 times with temperature 0.0
-for i in range(3):
-  response = get_completion(prompt, temperature = 0.0)
-  print(response)
-  print("------")
+- Exactly the same as above.
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+response = get_completion(prompt, temperature = 0.0)
+print(response)
+```
+- Exactly the same as above.
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+response = get_completion(prompt, temperature = 0.0)
+print(response)
 ```
 
 ## Calling an LLM with `temperature=0.7`
 
 Call the LLM 3 times with your question above, using temperature 0.7 for these.
 
+- Call `get_completion` and store the response. Then print it.
+- You already defined `prompt` above so you do not need to repeat that.
+- Set `temperature=0.7`
+
 ```{python}
 #| eval: false
-#Set up a prompt
-CODE
-
-print("Calling the LLM with temperature 0.7")
-# Set up a for loop and call your LLM 3 times with temperature 0.7
 CODE
 ```
 ```{python}
 # Solution:
-#Set up a prompt
-prompt = "Why do people like Barbie? 50 words please"
+response = get_completion(prompt, temperature = 0.7)
+print(response)
+```
 
-print("Calling the LLM with temperature 0.7")
-# Set up a for loop and call your LLM 3 times with temperature 0.7
-for i in range(3):
-  response = get_completion(prompt, temperature = 0.7)
-  print(response)
-  print("------")
+- Exactly the same as above.
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+response = get_completion(prompt, temperature = 0.7)
+print(response)
+```
+
+- Exactly the same as above.
+
+```{python}
+#| eval: false
+CODE
+```
+```{python}
+# Solution:
+response = get_completion(prompt, temperature = 0.7)
+print(response)
 ```
 
 ## Template For Asking For a Capital
 
-Create a template string with a template variable `place` for asking the LLM to
-give you the capital of `place`. Then evaulate the template variable using
-`"Texas"`
-
-Finally call the LLM and get the response and print the response.
-
 Fill in the appropriate sections of the code below where you see the word CODE.
+
+- Create a template string with a template variable `place` for asking the LLM
+  to give you the capital of `place`. Then evaulate the template variable using
+  `place="Texas"`
+- Finally call the LLM and get the response and print the response.
 
 ```{python}
 #| eval: false
@@ -115,9 +145,10 @@ print(response)
 
 ## Adding a Variable Called `num`
 
-Add another template variable called `num` to the template and ask the LLM to
+- Add another template variable called `num` to the template and ask the LLM to
 provide you with `num` facts about the capital that you specified with
-`place`. Print out the response
+`place`.
+- Call your template with `num=3` so you get 3 facts about the capital.
 
 ```{python}
 #| eval: false
@@ -146,15 +177,16 @@ print(response)
 
 ## Ask To Format the Response
 
-Add a template variable called `format` so you can pass in the desired format
-for the facts that are given.
+- Add a template variable called `format` so you can pass in the desired format
+  for the facts that are given.
+- Call your template with "Texas" and 3 facts and "uppercase" for the format
 
 ```{python}
 #| eval: false
 # Define template here
 CODE
 
-# Evaluate the template for "Texas" and 3 facts
+# Evaluate the template for "Texas" and 3 facts and "uppercase"
 prompt=template.format(CODE)
 
 # Call get_completion and get the response, then print it.
@@ -174,13 +206,17 @@ response = get_completion(prompt)
 print(response)
 ```
 
-## Asking About Several Capitals
+## Sending Several Requests to the LLM about Capitals
 
 Let's see how this looks if we ask for the capital of several places.
 
-Replace CODE below to create a template, then create a list called `myPlaces`
-of places to use. Use California, Missouri, Florida, Germany and use 3 facts
-about the capitals and use upper case for the format.
+Replace CODE below to
+
+- Create a template, then create a list called `myPlaces`
+of places to use. Use Missouri, Florida, Germany and use 3 facts
+about the capitals and use "a bullet point list" for the format.
+- In the for loop call `get_completion` and then `print_prompt_and_completion`
+
 
 ```{python}
 #| eval: false
@@ -191,7 +227,7 @@ CODE
 myPlaces = CODE
 
 # Loop through the myPlaces
-for place in myPlaces:
+for item in myPlaces:
   prompt = template.format(CODE)
   # Call get_completion, then print_prompt_and_completion
   CODE
@@ -203,12 +239,12 @@ template ="""Can you tell me the capital of {place} and give me {num} simple
 facts about it?. Format the {num} facts using {format}"""
 
 # Create the list of places.
-myPlaces = ["California", "Missouri", "Florida", "Germany"]
+myPlaces = ["Missouri", "Florida", "Germany"]
 
 # Loop through the myPlaces
-for place in myPlaces:
-  prompt = template.format(place=place, num=3, format="a bullet pointed list")
-  # Call get_completion, then print_prompt_and_completion
+for item in myPlaces:
+  prompt = template.format(place=item, num=3, format="a bullet pointed list")
+  # Call get_completion, then print_prompt_and_response
   response = get_completion(prompt)
   print_prompt_and_response(prompt, response)
 ```

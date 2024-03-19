@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 #SOURCES:=$(wildcard *.qmd)
-SOURCES:= PromptStrings.qmd MorePromptStrings.qmd LLMs.qmd MoreLLMs.qmd Reviews.qmd Lists.qmd MoreStrings.qmd Strings.qmd Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd
+SOURCES:= Prompts.qmd MorePrompts.qmd LLMs.qmd MoreLLMs.qmd Reviews.qmd Lists.qmd MoreStrings.qmd Strings.qmd Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd Dicts.qmd ForLoops.qmd Booleans.qmd PromptsLLMByHand.qmd
 
 # SOURCES:= LLMs.qmd MoreLLMs.qmd Reviews.qmd
 # SOURCES:= LLMs.qmd

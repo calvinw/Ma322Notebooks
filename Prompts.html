@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>For Loops in Python</title>
+<title>Prompts</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="ForLoops_files/libs/clipboard/clipboard.min.js"></script>
-<script src="ForLoops_files/libs/quarto-html/quarto.js"></script>
-<script src="ForLoops_files/libs/quarto-html/popper.min.js"></script>
-<script src="ForLoops_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="ForLoops_files/libs/quarto-html/anchor.min.js"></script>
-<link href="ForLoops_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="ForLoops_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="ForLoops_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="ForLoops_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="ForLoops_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Prompts_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Prompts_files/libs/quarto-html/quarto.js"></script>
+<script src="Prompts_files/libs/quarto-html/popper.min.js"></script>
+<script src="Prompts_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Prompts_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Prompts_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Prompts_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Prompts_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Prompts_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Prompts_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">For Loops in Python</h1>
+<h1 class="title">Prompts</h1>
 </div>
 
 
@@ -94,77 +94,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>For loops in Python are used to iterate over a sequence (such as a list, tuple, or string) or other iterable objects.</p>
-<section id="iterating-over-a-list" class="level2">
-<h2 class="anchored" data-anchor-id="iterating-over-a-list">Iterating over a List</h2>
+<p>Create a template with a template variable <code>what</code>. Then evaulate the template using different values for <code>what</code></p>
+<p>Evaluate the template when <code>what="Cars"</code></p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of fruits</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>fruits <span class="op">=</span> [<span class="st">'apple'</span>, <span class="st">'banana'</span>, <span class="st">'cherry'</span>, <span class="st">'orange'</span>]</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the list</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> fruit <span class="kw">in</span> fruits:</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(fruit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"Give a name for a company that makes </span><span class="sc">{what}</span><span class="st">"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(what<span class="op">=</span><span class="st">"Cars"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>apple
-banana
-cherry
-orange</code></pre>
+<pre><code>Give a name for a company that makes Cars</code></pre>
 </div>
 </div>
-</section>
-<section id="iterating-over-a-range" class="level2">
-<h2 class="anchored" data-anchor-id="iterating-over-a-range">Iterating over a Range</h2>
-<p>If you use the <code>range()</code> function you can loop over the values in a range.</p>
+<p>Evaluate the template when <code>what=</code>“Books”`</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over a range of numbers</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(what<span class="op">=</span><span class="st">"Books"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0
-1
-2
-3
-4</code></pre>
+<pre><code>Give a name for a company that makes Books</code></pre>
 </div>
 </div>
+<p>Add another template variable for <code>num</code></p>
+<p>Evaluate the template when <code>num=3</code> and <code>what="Cars"</code></p>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over a range of numbers</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>,<span class="dv">7</span>):</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"Give </span><span class="sc">{num}</span><span class="st"> possible names for a company that makes </span><span class="sc">{what}</span><span class="st">"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">3</span>, what<span class="op">=</span><span class="st">"Cars"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>3
-4
-5
-6</code></pre>
+<pre><code>Give 3 possible names for a company that makes Cars</code></pre>
 </div>
 </div>
-</section>
-<section id="iterating-over-a-string" class="level2">
-<h2 class="anchored" data-anchor-id="iterating-over-a-string">Iterating over a String</h2>
+<p>Evaluate the template when <code>num=5</code> and <code>what="Bikes"</code></p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A string</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>greeting <span class="op">=</span> <span class="st">"Hello, World!"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over the string</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> char <span class="kw">in</span> greeting:</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(char)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">5</span>, what<span class="op">=</span><span class="st">"Bikes"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>H
-e
-l
-l
-o
-,
- 
-W
-o
-r
-l
-d
-!</code></pre>
+<pre><code>Give 5 possible names for a company that makes Bikes</code></pre>
 </div>
 </div>
-</section>
+<p>Add something so we can specify the format.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""Give </span><span class="sc">{num}</span><span class="st"> possible names for a company that makes </span><span class="sc">{what}</span><span class="st">. Give</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">your answer in </span><span class="sc">{format}</span><span class="st">"""</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">3</span>, what<span class="op">=</span><span class="st">"Cars"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"uppercase"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Give 3 possible names for a company that makes Cars. Give
+your answer in uppercase</code></pre>
+</div>
+</div>
+<p>Create a prompt that asks for a different format.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Evaluate the template</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">3</span>, what<span class="op">=</span><span class="st">"Cars"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"a markdown table"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Give 3 possible names for a company that makes Cars. Give
+your answer in a markdown table</code></pre>
+</div>
+</div>
+<p>We can use multi-line strings for the prompts.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Give </span><span class="sc">{num}</span><span class="st"> possible names for a company that makes </span><span class="sc">{what}</span><span class="st">.</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="st">Give your answer in </span><span class="sc">{format}</span><span class="st">"""</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Evaluate the template</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">3</span>, what<span class="op">=</span><span class="st">"Cars"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"a bullet list"</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Give 3 possible names for a company that makes Cars.
+Give your answer in a bullet list</code></pre>
+</div>
+</div>
+<p>The following is an example of printing out 3 prompt strings based on a template.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Give </span><span class="sc">{num}</span><span class="st"> possible names for a company that makes </span><span class="sc">{what}</span><span class="st">. Give</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">your answer in </span><span class="sc">{format}</span><span class="st">"""</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>myList <span class="op">=</span> [<span class="st">"cars"</span>, <span class="st">"watches"</span>, <span class="st">"firecrackers"</span>]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> myList:</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  prompt <span class="op">=</span> template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">3</span>, what<span class="op">=</span>item, <span class="bu">format</span><span class="op">=</span><span class="st">"a bullet list"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(prompt)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"----"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Give 3 possible names for a company that makes cars. Give
+your answer in a bullet list
+----
+Give 3 possible names for a company that makes watches. Give
+your answer in a bullet list
+----
+Give 3 possible names for a company that makes firecrackers. Give
+your answer in a bullet list
+----</code></pre>
+</div>
+</div>
 
 </main>
 <!-- /main column -->

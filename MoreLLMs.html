@@ -154,7 +154,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="calling-an-llm" class="level2">
 <h2 class="anchored" data-anchor-id="calling-an-llm">Calling an LLM</h2>
-<p>Choose a question and set up the code to send the question to the LLM. Any question you like.</p>
+<ul>
+<li>Choose a question and set up the code to send the question to the LLM. Any question you like.</li>
+</ul>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define your prompt here</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
@@ -174,124 +176,155 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>People like Barbie because she represents beauty, fashion, and glamour. She is a
 symbol of empowerment and independence for young girls, encouraging them to
 dream big and believe in themselves. Barbie's diverse range of careers and
-outfits allow for endless creativity and imagination, making her a beloved and
-iconic toy for generations.</code></pre>
+outfits also make her relatable and aspirational to a wide audience.</code></pre>
 </div>
 </div>
 </section>
 <section id="calling-an-llm-with-temperature0.0" class="level2">
 <h2 class="anchored" data-anchor-id="calling-an-llm-with-temperature0.0">Calling an LLM with <code>temperature=0.0</code></h2>
 <p>Call the LLM 3 times with your question above, using temperature 0.0 for these.</p>
+<ul>
+<li>Call <code>get_completion</code> and store the response. Then print it.</li>
+<li>You already defined <code>prompt</code> above so you do not need to repeat that.</li>
+<li>Set <code>temperature=0.0</code></li>
+</ul>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Set up a prompt</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Calling the LLM with temperature 0.0"</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a for loop and call your LLM 3 times with temperature 0.0</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Set up a prompt</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Why do people like Barbie? 50 words please"</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Calling the LLM with temperature 0.0"</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a for loop and call your LLM 3 times with temperature 0.0</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(response)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Calling the LLM with temperature 0.0
-People like Barbie because she represents beauty, fashion, and glamour. She is a
+<pre><code>People like Barbie because she represents a glamorous and aspirational
+lifestyle. She is seen as a symbol of beauty, fashion, and success. Barbie also
+allows people to engage in imaginative play and create their own stories.
+Additionally, Barbie has been a popular toy for generations, creating a sense of
+nostalgia for many.</code></pre>
+</div>
+</div>
+<ul>
+<li>Exactly the same as above.</li>
+</ul>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>People like Barbie because she represents beauty, fashion, and glamour. She is a
+timeless and iconic toy that allows children to use their imagination and
+creativity. Barbie also promotes positive values such as friendship,
+empowerment, and diversity. Her wide range of careers and outfits make her a
+versatile and inspiring role model.</code></pre>
+</div>
+</div>
+<ul>
+<li>Exactly the same as above.</li>
+</ul>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>People like Barbie because she represents beauty, fashion, and glamour. She is a
 symbol of empowerment and independence for young girls, encouraging them to
 dream big and believe in themselves. Barbie's diverse range of careers and
 outfits allow for endless creativity and imagination, making her a beloved and
-iconic toy for generations.
-------
-People like Barbie because she represents beauty, fashion, and glamour. She is a
-symbol of empowerment and independence for young girls, encouraging them to
-dream big and believe in themselves. Barbie's diverse range of careers and
-outfits also make her relatable and aspirational to a wide audience.
-------
-People like Barbie because she represents beauty, fashion, and glamour. She is a
-symbol of empowerment and independence for young girls, encouraging them to
-dream big and believe in themselves. Barbie's diverse range of careers and
-outfits also make her relatable and aspirational to a wide audience.
-------</code></pre>
+iconic toy for generations.</code></pre>
 </div>
 </div>
 </section>
 <section id="calling-an-llm-with-temperature0.7" class="level2">
 <h2 class="anchored" data-anchor-id="calling-an-llm-with-temperature0.7">Calling an LLM with <code>temperature=0.7</code></h2>
 <p>Call the LLM 3 times with your question above, using temperature 0.7 for these.</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Set up a prompt</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Calling the LLM with temperature 0.7"</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a for loop and call your LLM 3 times with temperature 0.7</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Call <code>get_completion</code> and store the response. Then print it.</li>
+<li>You already defined <code>prompt</code> above so you do not need to repeat that.</li>
+<li>Set <code>temperature=0.7</code></li>
+</ul>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Set up a prompt</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Why do people like Barbie? 50 words please"</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Calling the LLM with temperature 0.7"</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a for loop and call your LLM 3 times with temperature 0.7</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(response)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Calling the LLM with temperature 0.7
-People like Barbie because she represents a glamorous and fashionable lifestyle,
-encourages creativity through play and storytelling, and promotes positive
-messages about empowerment and diversity. She has been a beloved toy for
-generations, allowing children to imagine and create their own worlds with her
-as the central character.
-------
-People like Barbie because she represents beauty, fashion, and glamour. She is a
-timeless and iconic toy that allows children to imagine and play out different
-scenarios. Barbie also promotes creativity and storytelling, as children can
-create their own worlds and adventures with her. Additionally, Barbie has a wide
-range of accessories and playsets that enhance the play experience.
-------
-People like Barbie because she represents an idealized version of beauty,
-success, and femininity. She allows people to escape into a world of imagination
-and creativity. Barbie has been a cultural icon for decades and has inspired
-countless children to dream big and explore their own potential.
-------</code></pre>
+<pre><code>People like Barbie because she represents beauty, fashion, and glamour. She is a
+symbol of femininity and empowerment for many girls and women. Barbie also
+allows for imaginative play and creativity, as she can be dressed up, styled,
+and placed in various roles and scenarios.</code></pre>
+</div>
+</div>
+<ul>
+<li>Exactly the same as above.</li>
+</ul>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>People like Barbie because she represents beauty, fashion, and glamour. She is a
+timeless symbol of femininity and empowerment for many girls and women. Barbie
+also encourages creativity and imagination through her various careers and
+adventures, making her a beloved and iconic toy for generations.</code></pre>
+</div>
+</div>
+<ul>
+<li>Exactly the same as above.</li>
+</ul>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>People like Barbie because she represents a glamorous and aspirational
+lifestyle. She is seen as a symbol of beauty, fashion, and success. Barbie also
+allows people to escape into a world of imagination and creativity, where they
+can create their own stories and adventures with the iconic doll.</code></pre>
 </div>
 </div>
 </section>
 <section id="template-for-asking-for-a-capital" class="level2">
 <h2 class="anchored" data-anchor-id="template-for-asking-for-a-capital">Template For Asking For a Capital</h2>
-<p>Create a template string with a template variable <code>place</code> for asking the LLM to give you the capital of <code>place</code>. Then evaulate the template variable using <code>"Texas"</code></p>
-<p>Finally call the LLM and get the response and print the response.</p>
 <p>Fill in the appropriate sections of the code below where you see the word CODE.</p>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template with place="Texas"</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Create a template string with a template variable <code>place</code> for asking the LLM to give you the capital of <code>place</code>. Then evaulate the template variable using <code>place="Texas"</code></li>
+<li>Finally call the LLM and get the response and print the response.</li>
+</ul>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template with place="Texas"</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"Can you tell me the capital of </span><span class="sc">{place}</span><span class="st">?"</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template with place="Texas"</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"Can you tell me the capital of </span><span class="sc">{place}</span><span class="st">?"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template with place="Texas"</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The capital of Texas is Austin.</code></pre>
 </div>
@@ -299,66 +332,72 @@ countless children to dream big and explore their own potential.
 </section>
 <section id="adding-a-variable-called-num" class="level2">
 <h2 class="anchored" data-anchor-id="adding-a-variable-called-num">Adding a Variable Called <code>num</code></h2>
-<p>Add another template variable called <code>num</code> to the template and ask the LLM to provide you with <code>num</code> facts about the capital that you specified with <code>place</code>. Print out the response</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Add another template variable called <code>num</code> to the template and ask the LLM to provide you with <code>num</code> facts about the capital that you specified with <code>place</code>.</li>
+<li>Call your template with <code>num=3</code> so you get 3 facts about the capital.</li>
+</ul>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?"""</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>, num<span class="op">=</span><span class="dv">3</span>)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?"""</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>, num<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The capital of Texas is Austin.
 
-1. Austin is known for its vibrant music scene, with numerous live music venues
-and music festivals throughout the year.
+1. Austin is known for its live music scene, with over 250 live music venues in
+the city.
 2. The city is home to the University of Texas at Austin, one of the largest
 universities in the United States.
-3. Austin is also known for its outdoor activities, with numerous parks, hiking
-trails, and water activities available in and around the city.</code></pre>
+3. Austin is also known for its outdoor activities, with numerous parks, lakes,
+and hiking trails for residents and visitors to enjoy.</code></pre>
 </div>
 </div>
 </section>
 <section id="ask-to-format-the-response" class="level2">
 <h2 class="anchored" data-anchor-id="ask-to-format-the-response">Ask To Format the Response</h2>
-<p>Add a template variable called <code>format</code> so you can pass in the desired format for the facts that are given.</p>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Add a template variable called <code>format</code> so you can pass in the desired format for the facts that are given.</li>
+<li>Call your template with “Texas” and 3 facts and “uppercase” for the format</li>
+</ul>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts and "uppercase"</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?. Format the facts using </span><span class="sc">{format}</span><span class="st">"""</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts and "uppercase"</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>, num<span class="op">=</span><span class="dv">3</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"uppercase"</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?. Format the facts using </span><span class="sc">{format}</span><span class="st">"""</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts and "uppercase"</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>, num<span class="op">=</span><span class="dv">3</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"uppercase"</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The capital of Texas is AUSTIN.
 
@@ -367,67 +406,59 @@ MUSIC SCENE AND NUMEROUS LIVE MUSIC VENUES.
 2. AUSTIN IS HOME TO THE UNIVERSITY OF TEXAS AT AUSTIN, ONE OF THE LARGEST
 UNIVERSITIES IN THE UNITED STATES.
 3. AUSTIN IS SURROUNDED BY BEAUTIFUL NATURAL LANDSCAPES, INCLUDING THE COLORADO
-RIVER AND THE HILL COUNTRY.</code></pre>
+RIVER, LADY BIRD LAKE, AND THE HILL COUNTRY.</code></pre>
 </div>
 </div>
 </section>
-<section id="asking-about-several-capitals" class="level2">
-<h2 class="anchored" data-anchor-id="asking-about-several-capitals">Asking About Several Capitals</h2>
+<section id="sending-several-requests-to-the-llm-about-capitals" class="level2">
+<h2 class="anchored" data-anchor-id="sending-several-requests-to-the-llm-about-capitals">Sending Several Requests to the LLM about Capitals</h2>
 <p>Let’s see how this looks if we ask for the capital of several places.</p>
-<p>Replace CODE below to create a template, then create a list called <code>myPlaces</code> of places to use. Use California, Missouri, Florida, Germany and use 3 facts about the capitals and use upper case for the format.</p>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the list of places.</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>myPlaces <span class="op">=</span> CODE</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through the myPlaces</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> place <span class="kw">in</span> myPlaces:</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  prompt <span class="op">=</span> template.<span class="bu">format</span>(CODE)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Call get_completion, then print_prompt_and_completion</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace CODE below to</p>
+<ul>
+<li>Create a template, then create a list called <code>myPlaces</code> of places to use. Use Missouri, Florida, Germany and use 3 facts about the capitals and use “a bullet point list” for the format.</li>
+<li>In the for loop call <code>get_completion</code> and then <code>print_prompt_and_completion</code></li>
+</ul>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>CODE</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the list of places.</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>myPlaces <span class="op">=</span> CODE</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through the myPlaces</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> myPlaces:</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  prompt <span class="op">=</span> template.<span class="bu">format</span>(CODE)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Call get_completion, then print_prompt_and_completion</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?. Format the </span><span class="sc">{num}</span><span class="st"> facts using </span><span class="sc">{format}</span><span class="st">"""</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the list of places.</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>myPlaces <span class="op">=</span> [<span class="st">"California"</span>, <span class="st">"Missouri"</span>, <span class="st">"Florida"</span>, <span class="st">"Germany"</span>]</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through the myPlaces</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> place <span class="kw">in</span> myPlaces:</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  prompt <span class="op">=</span> template.<span class="bu">format</span>(place<span class="op">=</span>place, num<span class="op">=</span><span class="dv">3</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"a bullet pointed list"</span>)</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Call get_completion, then print_prompt_and_completion</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?. Format the </span><span class="sc">{num}</span><span class="st"> facts using </span><span class="sc">{format}</span><span class="st">"""</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the list of places.</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>myPlaces <span class="op">=</span> [<span class="st">"Missouri"</span>, <span class="st">"Florida"</span>, <span class="st">"Germany"</span>]</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop through the myPlaces</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> myPlaces:</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  prompt <span class="op">=</span> template.<span class="bu">format</span>(place<span class="op">=</span>item, num<span class="op">=</span><span class="dv">3</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"a bullet pointed list"</span>)</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Call get_completion, then print_prompt_and_response</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
-Can you tell me the capital of California and give me 3 simple
-facts about it?. Format the 3 facts using a bullet pointed list
-
-Response: 
-The capital of California is Sacramento.
-
-- Sacramento is the sixth largest city in California.
-- The city is known for its diverse culture and arts scene.
-- Sacramento is home to the California State Capitol building, where the state's
-government is housed.
-================================================================================
-Prompt: 
 Can you tell me the capital of Missouri and give me 3 simple
 facts about it?. Format the 3 facts using a bullet pointed list
 
 Response: 
 The capital of Missouri is Jefferson City.
 
-- Jefferson City is located on the Missouri River.
+- Jefferson City is located along the Missouri River.
 - The city was named after Thomas Jefferson, the third President of the United
 States.
 - Jefferson City is home to the Missouri State Capitol building, which is the
-tallest capitol building in the United States.
+tallest habitable building in the city.
 ================================================================================
 Prompt: 
 Can you tell me the capital of Florida and give me 3 simple
@@ -436,25 +467,22 @@ facts about it?. Format the 3 facts using a bullet pointed list
 Response: 
 The capital of Florida is Tallahassee.
 
-- Tallahassee is the only state capital in the United States that is situated on
-the same parallel as its corresponding state's northern border.
-- The city is home to Florida State University, one of the state's largest and
-oldest universities.
-- Tallahassee is known for its abundance of parks and green spaces, including
-the Alfred B. Maclay Gardens State Park and the Apalachicola National Forest.
+- Tallahassee is the only state capital in the United States that is not also
+the county seat.
+- The city is home to Florida State University, one of the state's largest
+universities.
+- Tallahassee is known for its numerous parks and outdoor recreational
+opportunities, including the Apalachicola National Forest.
 ================================================================================
 Prompt: 
 Can you tell me the capital of Germany and give me 3 simple
 facts about it?. Format the 3 facts using a bullet pointed list
 
 Response: 
-The capital of Germany is Berlin.
-
-- Berlin is the largest city in Germany, both in terms of population and area.
-- The city is known for its rich history, vibrant arts scene, and diverse
-architecture.
-- Berlin is home to many famous landmarks, such as the Brandenburg Gate, Berlin
-Wall, and Reichstag building.
+- The capital of Germany is Berlin
+- Berlin is the largest city in Germany
+- Berlin is known for its rich history, vibrant arts scene, and diverse
+architecture
 ================================================================================</code></pre>
 </div>
 </div>

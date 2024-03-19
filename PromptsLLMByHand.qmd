@@ -1,0 +1,88 @@
+---
+title: "Prompts LLM By Hand"
+---
+
+In this section we will just copy and paste some of our prompts over to LLMs
+like ChatGPT and Claude, just to get an idea of how the LLMs work and to gain
+some intuition for how they are different.
+
+Although we will use an API to call ChatGPT later, for now this gives a first
+way to compare the outputs of different LLMs
+
+These are mostly the same prompts as before but now we get some responses by
+copy and pasting to the LLMs.
+
+```{python}
+template = "Give a name for a company that makes {what}"
+
+prompt=template.format(what="Cars")
+print(prompt)
+```
+
+Evaluate the template when `what=`"Books"`
+
+```{python}
+prompt=template.format(what="Books")
+print(prompt)
+```
+
+Add another template variable for `num`
+
+Evaluate the template when `num=3` and `what="Cars"`
+
+```{python}
+template = "Give {num} possible names for a company that makes {what}"
+
+prompt=template.format(num=3, what="Cars")
+print(prompt)
+```
+
+Evaluate the template when `num=5` and `what="Bikes"`
+
+```{python}
+prompt=template.format(num=5, what="Bikes")
+print(prompt)
+```
+
+Add something so we can specify the format.
+
+```{python}
+template = """Give {num} possible names for a company that makes {what}. Give
+your answer in {format}"""
+prompt=template.format(num=3, what="Cars", format="uppercase")
+print(prompt)
+```
+
+Create a prompt that asks for a different format.
+
+```{python}
+#Evaluate the template
+prompt=template.format(num=3, what="Cars", format="a markdown table")
+print(prompt)
+```
+
+We can use multi-line strings for the prompts.
+
+```{python}
+template ="""Give {num} possible names for a company that makes {what}.
+Give your answer in {format}"""
+
+#Evaluate the template
+prompt=template.format(num=3, what="Cars", format="a bullet list")
+print(prompt)
+```
+
+The following is an example of printing out 3 prompt strings based on a
+template.
+
+```{python}
+template ="""Give {num} possible names for a company that makes {what}. Give
+your answer in {format}"""
+
+myList = ["cars", "watches", "firecrackers"]
+
+for item in myList:
+  prompt = template.format(num=3, what=item, format="a bullet list")
+  print(prompt)
+  print("----")
+```

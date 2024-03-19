@@ -27,7 +27,7 @@ for i in range(5):
 
 ```{python}
 # Iterate over a range of numbers
-for i in range(3:7):
+for i in range(3,7):
     print(i)
 ```
 

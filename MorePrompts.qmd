@@ -1,5 +1,5 @@
 ---
-title: "More Prompt Strings"
+title: "More Prompts"
 ---
 
 In this section we will create a template string to ask the LLM the capital of
@@ -9,12 +9,13 @@ provide some formatting guidelines about the response.
 ## Template For Asking For a Capital
 
 Create a template string with a template variable `place` for asking the LLM to
-give you the capital of `place`. Then evaulate the template variable using
+give you the capital of `place`. Then evaluate the template variable using
 `"Texas"` and `"France"`. Print out the two prompts that you get by doing that.
 
 Fill in the appropriate sections of the code below where you see the word CODE.
 
-The comments below tell you exactly what to do.
+- Define a template that asks for the capital of {place}
+- Evaluate the template using `place="Texas"`
 
 ```{python}
 #| eval: false
@@ -22,10 +23,6 @@ The comments below tell you exactly what to do.
 CODE
 
 # Evaluate the template with place="Texas"
-prompt=template.format(CODE)
-print(prompt)
-
-# Evaluate the template with place="France"
 prompt=template.format(CODE)
 print(prompt)
 ```
@@ -37,7 +34,18 @@ template = "Can you tell me the capital of {place}?"
 # Evaluate the template with place="Texas"
 prompt=template.format(place="Texas")
 print(prompt)
+```
 
+- Evaluate the template using `place="France"`
+
+```{python}
+#| eval: false
+# Evaluate the template with place="France"
+prompt=template.format(CODE)
+print(prompt)
+```
+```{python}
+# Solution:
 # Evaluate the template with place="France"
 prompt=template.format(place="France")
 print(prompt)
@@ -45,9 +53,9 @@ print(prompt)
 
 ## Adding a Variable Called `num`
 
-Add another template variable called `num` to the template and ask the LLM to
-provide you with `num` facts about the capital that that you specified with
-`place`. Print out the prompts.
+- Add another template variable called `num` and ask the LLM to provide you
+  with `num` facts about the capital that you specified with `place`.
+- Evaluate the tempate using `place="Texas"` and `num=3`
 
 ```{python}
 #| eval: false
@@ -55,10 +63,6 @@ provide you with `num` facts about the capital that that you specified with
 CODE
 
 # Evaluate the template for "Texas" and 3 facts
-prompt=template.format(CODE)
-print(prompt)
-
-# Evaluate the template for and "France" and 2 facts
 prompt=template.format(CODE)
 print(prompt)
 ```
@@ -71,10 +75,6 @@ facts about it?"""
 # Evaluate the template for "Texas" and 3 facts
 prompt=template.format(place="Texas", num=3)
 print(prompt)
-
-# Evaluate the template for "France" and 2 facts
-prompt=template.format(place="France", num=2)
-print(prompt)
 ```
 
 ## Ask To Format the Response
@@ -82,16 +82,16 @@ print(prompt)
 Add a template variable called `format` so you can pass in the desired format
 for the facts that are given.
 
+- Add a template variable called `format` and ask the model to format it
+  according to that
+- Evaluate the template using `place="Texas`, `num=3` and `format="upper case"`
+
 ```{python}
 #| eval: false
 # Define template here
 CODE
 
 # Evaluate the template for "Texas" and 3 facts, and "upper case"
-prompt=template.format(CODE)
-print(prompt)
-
-# Evaluate the template for "France" and 2 facts and "a bulleted list"
 prompt=template.format(CODE)
 print(prompt)
 ```
@@ -105,24 +105,21 @@ Format the facts using {format}"""
 # Evaluate the template for "Texas" and 3 facts, and "upper case"
 prompt=template.format(place="Texas", num=3, format="upper case")
 print(prompt)
-
-# Evaluate the template for "France" and 2 facts and "a bulleted list"
-prompt=template.format(place="France", num=2, format="a bulleted list")
-print(prompt)
 ```
 
 ## Asking About Several Capitals
 
 Let's see how this looks if we ask for the capital of several places.
 
-Replace CODE below to create a template, then create a list called `myPlaces`
-of places to use. Use California, Missouri, Florida, Germany and use 3 facts
-about the capitals and use upper case for the format.
+- Create a list called `myPlaces` with the following places on it: California,
+  Missouri, Florida.  Use strings for the items on the list.
+- Create 3 prompts asking for the capital using a for loop
+
 
 ```{python}
 #| eval: false
 # Define template here
-CODE
+template = "Can you tell me the capital of {place}?"
 
 # Create the list of places.
 myPlaces = CODE
@@ -136,14 +133,12 @@ for place in myPlaces:
 ```{python}
 # Solution:
 # Define template here
-template ="""Can you tell me the capital of {place} and give me {num} simple
-facts about it?.
-Format the facts using {format}"""
+template = "Can you tell me the capital of {place}?"
 
-myPlaces = ["California", "Missouri", "Florida", "Germany"]
+myPlaces = ["California", "Missouri", "Florida"]
 
 for place in myPlaces:
-  prompt = template.format(place=place, num=3, format="upper case")
+  prompt = template.format(place=place)
   print(prompt)
   print("----")
 ```

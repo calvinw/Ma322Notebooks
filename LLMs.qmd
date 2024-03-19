@@ -41,14 +41,19 @@ Roughly
 Here we call the LLM 3 times with temperature 0.0
 
 ```{python}
-#Set up a prompt
 prompt = "Why is the sky blue? In 50 words or less"
+response = get_completion(prompt, temperature = 0.0)
+print(response)
+```
 
-print("Calling the LLM with temperature 0")
-for i in range(3):
-  response = get_completion(prompt, temperature = 0.0)
-  print(response)
-  print("------")
+```{python}
+response = get_completion(prompt, temperature = 0.0)
+print(response)
+```
+
+```{python}
+response = get_completion(prompt, temperature = 0.0)
+print(response)
 ```
 
 ### Calling with `temperature=0.4`
@@ -56,14 +61,18 @@ for i in range(3):
 Here we call the LLM 3 times with temperature 0.4
 
 ```{python}
-#Set up a prompt
-prompt = "Why is the sky blue? In 50 words or less"
+response = get_completion(prompt, temperature = 0.4)
+print(response)
+```
 
-print("Calling the LLM with temperature 0.4")
-for i in range(3):
-  response = get_completion(prompt, temperature = 0.4)
-  print(response)
-  print("------")
+```{python}
+response = get_completion(prompt, temperature = 0.4)
+print(response)
+```
+
+```{python}
+response = get_completion(prompt, temperature = 0.4)
+print(response)
 ```
 
 ### Calling with `temperature=1.0`
@@ -71,15 +80,20 @@ for i in range(3):
 Here we call the LLM 3 times with temperature 1.0
 
 ```{python}
-#Set up a prompt
-prompt = "Why is the sky blue? In 50 words or less"
-
-print("Calling the LLM with temperature 1.0")
-for i in range(3):
-  response = get_completion(prompt, temperature = 1.0)
-  print(response)
-  print("------")
+response = get_completion(prompt, temperature = 1.0)
+print(response)
 ```
+
+```{python}
+response = get_completion(prompt, temperature = 1.0)
+print(response)
+```
+
+```{python}
+response = get_completion(prompt, temperature = 1.0)
+print(response)
+```
+
 
 ## Calling the LLM using a template
 
