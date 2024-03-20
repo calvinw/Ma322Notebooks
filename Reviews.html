@@ -94,13 +94,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="set-up-your-openai_api_key" class="level2">
-<h2 class="anchored" data-anchor-id="set-up-your-openai_api_key">Set up your <code>OPENAI_API_KEY</code></h2>
+<section id="set-up-your-together_api_key" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-your-together_api_key">Set up your <code>TOGETHER_API_KEY</code></h2>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"OPENAI_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"OPENAI_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste your api key here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="install-packages-to-call-the-llm" class="level2">
@@ -136,20 +136,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
 <span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="dv">80</span><span class="op">*</span><span class="st">"="</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the OpenAI LLM</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> openai.OpenAI()</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> openai.OpenAI(api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                           base_url<span class="op">=</span><span class="st">"https://api.together.xyz/v1"</span>)</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    chat_completion <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                           model<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                           model<span class="op">=</span><span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span>,</span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                           messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}],</span>
 <span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                           temperature<span class="op">=</span>temperature,</span>
 <span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                           max_tokens<span class="op">=</span><span class="dv">1024</span>)</span>
 <span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> chat_completion.choices[<span class="dv">0</span>].message.content</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response)</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> response.lstrip()</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="analyzing-amazon-reviews" class="level2">
@@ -192,10 +193,9 @@ cheap. Shirt is a good length for tucking in and a bit long otherwise.
 &lt;/text&gt;
 
 Response: 
-Review mentions receiving wrong size and pattern, collar and neckline issues,
-thin fabric, exposed back of pattern, good for casual wear, boxy cut, good
-length.
-================================================================================</code></pre>
+The reviewer received the wrong size and pattern, and the collar and neckline
+are not ideal. The shirt is good for casual wear and has a nice boxy cut, but
+the exposed back of fabric feels cheap.</code></pre>
 </div>
 </div>
 <p>Let’s take a look at a few more reviews.</p>
@@ -265,9 +265,8 @@ of it and the way it pulls made it a no-go.
 &lt;/text&gt;
 
 Response: 
-Reviewer loved the pattern but had issues with the fabric not being as shiny,
-the short front, and odd stitching. Not suitable for presenting or hiding tummy.
-================================================================================
+User returned a shirt due to issues with fabric shininess, short front, and odd
+stitching.
 Prompt: 
 Give a short summary of the following review. The review is placed
 in the &lt;text&gt; tags. Use no more than 30 words.
@@ -281,9 +280,8 @@ bum if you wanted to wear over leggings
 &lt;/text&gt;
 
 Response: 
-Positive review mentioning sizing, fun design for work, and wish for black
-interior of shirt. Long length covers bum for wearing over leggings.
-================================================================================
+User liked the shirt for work and found it fun, but wished the inside was black
+for a better look when rolling sleeves.
 Prompt: 
 Give a short summary of the following review. The review is placed
 in the &lt;text&gt; tags. Use no more than 30 words.
@@ -298,9 +296,7 @@ wash COLD, Gentle cycle, and Hang dry!
 &lt;/text&gt;
 
 Response: 
-Positive review of shirts, praising patterns, fabric, and construction.
-Recommends washing in cold water and hanging dry to prevent shrinking.
-================================================================================</code></pre>
+Customer loves the shirts but warns about shrinking when washed in warm water.</code></pre>
 </div>
 </div>
 </section>

@@ -2,7 +2,7 @@
 title: "Analyzing Reviews with LLMs"
 ---
 
-{{< include _llm_openai.qmd >}}
+{{< include _llm_togetherai.qmd >}}
 
 ## Analyzing Amazon Reviews
 

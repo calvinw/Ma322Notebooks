@@ -2,82 +2,100 @@
 title: "Prompts"
 ---
 
-Create a template with a template variable `what`. Then evaulate the template
-using different values for `what`
+In this notebook we will look at ways of constructing our prompts using the
+idea of templates. This is so we can reuse parts of our prompts for the LLMs.
 
-Evaluate the template when `what="Cars"`
+## Template Strings
+
+### Making a Template Variable `{what}`
+
+Suppose we want to create a string where we can put in different things for
+some part of the string. For example suppose we want to create the following
+string where we can substitute in different words for `{what}`.
 
 ```{python}
 template = "Give a name for a company that makes {what}"
-
-prompt=template.format(what="Cars")
-print(prompt)
 ```
 
-Evaluate the template when `what=`"Books"`
+Here we start with a string called `template`. The portion `{what}` is where
+we want to substitute in different values. This is called a template variable.
+We put curly brackets { } around that to show it is a template variable.
+
+### Evaluating the Template
+
+Here is how we evaluate the template.
+
+When `what="cars"` we get "cars" put in for `{what}`.
+
+When `what="books"` we get "books" put in for `{what}`.
+
+| Template Variable | Evaluated Template String |
+|----------|----------|
+| what = "cars"  | "Give a name for a company that makes cars"  |
+| what = "books"  | "Give a name for a company that makes books"  |
+
+Now to do this in code we call the `format` method on the string we defined
+above (called `template` here). Then we pass in the parameter `what` and set it
+equal to the value we want it to have. The `format` function takes the string
+"cars" looks through the template and everywhere it sees `{what}` it puts in
+"cars" now instead. Then it returns the evaluated string.
+
+We assign this to the `prompt` variable and print it out below:
 
 ```{python}
-prompt=template.format(what="Books")
+prompt=template.format(what="cars")
+print(prompt)
+```
+If we want to change the value of `what` we can do it like this:
+
+```{python}
+prompt=template.format(what="books")
 print(prompt)
 ```
 
-Add another template variable for `num`
+### Adding Another Template Variable Called `{num}`
 
-Evaluate the template when `num=3` and `what="Cars"`
+Let's add another template variable called `num`.
 
 ```{python}
 template = "Give {num} possible names for a company that makes {what}"
-
-prompt=template.format(num=3, what="Cars")
-print(prompt)
 ```
 
-Evaluate the template when `num=5` and `what="Bikes"`
+Evaluating the template with `num=3` and `what="cars"`:
 
 ```{python}
-prompt=template.format(num=5, what="Bikes")
+prompt=template.format(num=3, what="cars")
 print(prompt)
 ```
+
+Evaluating the template with `num=5` and `what="bikes"`:
+
+```{python}
+prompt=template.format(num=5, what="bikes")
+print(prompt)
+```
+
+### Adding a Template Variable for `{format}`
 
 Add something so we can specify the format.
 
 ```{python}
-template = """Give {num} possible names for a company that makes {what}. Give
-your answer in {format}"""
-prompt=template.format(num=3, what="Cars", format="uppercase")
+template = """Give {num} possible names for a company that makes {what}.
+Give your answer in {format}"""
+```
+
+Here we specify the string as a multi-line string since it is getting long.
+
+Evaluate it with `num=3` and `what="bikes"` and `format="uppercase"`:
+
+```{python}
+prompt=template.format(num=3, what="cars", format="uppercase")
 print(prompt)
 ```
 
-Create a prompt that asks for a different format.
+Evaluate it with `num=3` and `what="cars"` and `format="a markdown table"`:
 
 ```{python}
-#Evaluate the template
 prompt=template.format(num=3, what="Cars", format="a markdown table")
 print(prompt)
-```
-
-We can use multi-line strings for the prompts.
-
-```{python}
-template ="""Give {num} possible names for a company that makes {what}.
-Give your answer in {format}"""
-
-#Evaluate the template
-prompt=template.format(num=3, what="Cars", format="a bullet list")
-print(prompt)
-```
-
-The following is an example of printing out 3 prompt strings based on a
-template.
-
-```{python}
-template ="""Give {num} possible names for a company that makes {what}. Give
-your answer in {format}"""
-
-myList = ["cars", "watches", "firecrackers"]
-
-for item in myList:
-  prompt = template.format(num=3, what=item, format="a bullet list")
-  print(prompt)
-  print("----")
 ```

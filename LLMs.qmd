@@ -2,28 +2,35 @@
 title: "LLMS"
 ---
 
-{{< include _llm_openai.qmd >}}
+{{< include _llm_togetherai.qmd >}}
 
-## Calling an LLM
+## Calling an LLM with `get_completion`
 
-We can call the LLM by using the `get_completion` function. This takes our
-prompt and delivers it to the LLM. The LLM returns a response. We can print the
-response after we get it.
+First set up a prompt we can use:
 
 ```{python}
-#Set up a prompt
 prompt = "Why is the sky blue? In 50 words or less."
+```
 
-#Call the LLM
+Now we call the`get_completion` function. This function takes our prompt as
+argument and sends it off to the LLM. The LLM returns a response. This function
+returns that response.
+
+```{python}
 response = get_completion(prompt)
-
-#Print out the the response
 print(response)
+```
+
+Sometimes its nice to print out the prompt and the response when we are working like this. We can use the function `print_prompt_and_response` and pass it the prompt and the response we got from the `get_completion` function.
+
+```{python}
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
 ```
 
 ## Calling an LLM with the `temperature`
 
-Temperature is one of the settings that most LLMs have. You can set the temperature from 0.0 up to some maximum (like 1.0). Sometimes you can go higher than 1.0.
+Temperature is one of the settings that most LLMs have. You can set the temperature from 0.0 up to some maximum (like 1.0 or 1.2). Sometimes you can go higher.
 
 Roughly
 
@@ -36,24 +43,31 @@ Roughly
 3. High temperature (eg. 0.9-1.2)
    - Generates more creative diverse, and unpredictable text
 
+First lets set up a prompt to call several times with different temperatures.
+
+```{python}
+prompt = "Why is the sky blue? In 50 words or less"
+```
+
 ### Calling with `temperature=0.0`
+
+`temperature` is parameter you can pass to the `get_completion` function. You
+see this in the code below.
 
 Here we call the LLM 3 times with temperature 0.0
 
 ```{python}
-prompt = "Why is the sky blue? In 50 words or less"
 response = get_completion(prompt, temperature = 0.0)
 print(response)
-```
+print("------")
 
-```{python}
 response = get_completion(prompt, temperature = 0.0)
 print(response)
-```
+print("------")
 
-```{python}
 response = get_completion(prompt, temperature = 0.0)
 print(response)
+print("------")
 ```
 
 ### Calling with `temperature=0.4`
@@ -63,109 +77,88 @@ Here we call the LLM 3 times with temperature 0.4
 ```{python}
 response = get_completion(prompt, temperature = 0.4)
 print(response)
-```
+print("------")
 
-```{python}
 response = get_completion(prompt, temperature = 0.4)
 print(response)
-```
+print("------")
 
-```{python}
 response = get_completion(prompt, temperature = 0.4)
 print(response)
+print("------")
 ```
+
 
 ### Calling with `temperature=1.0`
 
-Here we call the LLM 3 times with temperature 1.0
 
 ```{python}
 response = get_completion(prompt, temperature = 1.0)
 print(response)
-```
+print("------")
 
-```{python}
 response = get_completion(prompt, temperature = 1.0)
 print(response)
-```
+print("------")
 
-```{python}
 response = get_completion(prompt, temperature = 1.0)
 print(response)
+print("------")
 ```
-
 
 ## Calling the LLM using a template
 
 Remember the template for having the LLM give us the name of a company that
-makes a particular thing? Let's call the LLM with that template and template
-variable `Cars`:
+makes a particular thing?
 
 ```{python}
-template = "Create a name for a company that makes {what}"
-
-#Evaluate the template with what="Cars"
-prompt=template.format(what="Cars")
-
-#Call the LLM
-response = get_completion(prompt)
-
-#Print out the the response
-print(response)
+template = "Recommend a name for a company that makes {what}"
 ```
-
-## Change the template variable `what`
-
-Let's call the LLM using `Books` as the template variable.
+Lets set that up and call it with `what="cars"`:
 
 ```{python}
-#Evaluate the template with what="Books"
-prompt=template.format(what="Books")
+prompt=template.format(what="cars")
 response = get_completion(prompt)
-
-print(response)
+print_prompt_and_response(prompt, response)
 ```
 
-## Add another template variable for `num`
+## Change the template variable `{what}`
+
+Let's call the LLM using `what="books"` as the template variable.
 
 ```{python}
-template = "Give {num} possible names for a company that makes {what}"
-
-#Evaluate the template
-prompt=template.format(num=3, what="Cars")
+prompt=template.format(what="books")
 response = get_completion(prompt)
-
-print(response)
+print_prompt_and_response(prompt, response)
 ```
 
-### Formatting the response from the LLM
+## Add A Template Variable `{num}`
+
+```{python}
+template = "Recommend {num} names for a company that makes {what}"
+```
+
+Lets call it with `num=3` and `what="cars"`:
+
+```{python}
+prompt=template.format(num=3, what="cars")
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+
+### Add a Template Variable `{format}`
 
 Lets see if we can introduce some formatting to the output:
 
 ```{python}
-template ="""Give {num} possible names for a company that makes {what}. Give
-your answer in {format}"""
-
-#Evaluate the template
-prompt=template.format(num=3, what="Cars", format="A bulleted list using upper case")
-response = get_completion(prompt)
-
-print(response)
+template ="""Recommend {num} names for a company that makes {what}.
+Give your answer in {format}"""
 ```
 
-## Calling the LLM multiple times with our template
-
-The following is an example of calling the LLM multiple times, each time with a
-different prompt that is created from our template.
+Call the LLM:
 
 ```{python}
-template ="""Give {num} possible names for a company that makes {what}. Give
-your answer in {format}"""
-
-myList = ["cars", "watches", "firecrackers"]
-
-for item in myList:
-  prompt = template.format(num=2, what=item, format="upper case")
-  response = get_completion(prompt)
-  print_prompt_and_response(prompt, response)
+prompt=template.format(num=3, what="cars", format="A bulleted list using upper case")
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
 ```

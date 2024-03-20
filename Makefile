@@ -25,7 +25,7 @@ html   : $(HTML_FILES)
 ipynb  : $(IPYNB_FILES)
 
 %.html : %.qmd
-	OPENAI_API_KEY=$(OPENAI_API_KEY) quarto render $< --to html
+	TOGETHER_API_KEY=$(TOGETHER_API_KEY) quarto render $< --to html
 	#quarto render $< --to html
 
 %.ipynb : %.qmd
