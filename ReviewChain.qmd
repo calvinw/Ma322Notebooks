@@ -1,0 +1,61 @@
+---
+title: "Review Chain"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+### Initial Review
+
+
+```{python}
+review = "Ich bin sehr unzufrieden mit dem Produkt, das ich erhalten habe. Die Qualität ist enttäuschend, und es entspricht nicht den Beschreibungen auf der Website. Darüber hinaus war die Lieferung viel zu spät, und der Kundenservice war wenig hilfreich. Ich erwarte eine sofortige Lösung für dieses Problem."
+```
+
+### What Language is It?
+
+```{python}
+what_language_template = "What language is the following review:\n\n{review}"
+
+prompt=what_language_template.format(review=review)
+what_language_response = get_completion(prompt)
+print_prompt_and_response(prompt, what_language_response)
+```
+
+### Lets Translate It
+
+```{python}
+translate_template = "Translate the following review to english:{review}"
+
+prompt=translate_template.format(review=review)
+translate_response = get_completion(prompt)
+print_prompt_and_response(prompt, translate_response)
+```
+
+### Lets Summarize It
+
+```{python}
+summarize_template =  "Can you summarize the following review in 1 sentence:{english_review}"
+
+prompt=summarize_template.format(english_review=translate_response)
+summarize_response = get_completion(prompt)
+print_prompt_and_response(prompt, summarize_response)
+```
+
+### Complete Report
+
+```{python}
+print("Original Review: ")
+print("")
+print(wrap_text(review))
+print("Language: ")
+print("")
+print(what_language_response)
+print("")
+print("Translation:")
+print("")
+print(translate_response)
+print("")
+print("Summary:")
+print("")
+print(summarize_response)
+```

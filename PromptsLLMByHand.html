@@ -95,7 +95,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>In this section we will just copy and paste some of our prompts over to LLMs like ChatGPT and Claude, just to get an idea of how the LLMs work and to gain some intuition for how they are different.</p>
-<p>Although we will use an API to call ChatGPT later, for now this gives a first way to compare the outputs of different LLMs</p>
+<p>Although we will use an API to call the LLM later, for now this gives a first way to compare the outputs of different LLMs</p>
 <p>These are mostly the same prompts as before but now we get some responses by copy and pasting to the LLMs.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"Give a name for a company that makes </span><span class="sc">{what}</span><span class="st">"</span></span>
@@ -165,29 +165,6 @@ your answer in a markdown table</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Give 3 possible names for a company that makes Cars.
 Give your answer in a bullet list</code></pre>
-</div>
-</div>
-<p>The following is an example of printing out 3 prompt strings based on a template.</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Give </span><span class="sc">{num}</span><span class="st"> possible names for a company that makes </span><span class="sc">{what}</span><span class="st">. Give</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">your answer in </span><span class="sc">{format}</span><span class="st">"""</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>myList <span class="op">=</span> [<span class="st">"cars"</span>, <span class="st">"watches"</span>, <span class="st">"firecrackers"</span>]</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> myList:</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  prompt <span class="op">=</span> template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">3</span>, what<span class="op">=</span>item, <span class="bu">format</span><span class="op">=</span><span class="st">"a bullet list"</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(prompt)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"----"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Give 3 possible names for a company that makes cars. Give
-your answer in a bullet list
-----
-Give 3 possible names for a company that makes watches. Give
-your answer in a bullet list
-----
-Give 3 possible names for a company that makes firecrackers. Give
-your answer in a bullet list
-----</code></pre>
 </div>
 </div>
 

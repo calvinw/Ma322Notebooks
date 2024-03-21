@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 #SOURCES:=$(wildcard *.qmd)
-SOURCES:= Prompts.qmd MorePrompts.qmd LLMs.qmd MoreLLMs.qmd Reviews.qmd Lists.qmd MoreStrings.qmd Strings.qmd Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd Dicts.qmd ForLoops.qmd Booleans.qmd PromptsLLMByHand.qmd
+SOURCES:= Prompts.qmd MorePrompts.qmd LLMs.qmd MoreLLMs.qmd Reviews.qmd Lists.qmd MoreStrings.qmd Strings.qmd Calculator.qmd MoreCalculator.qmd Variables.qmd MoreVariables.qmd VariablesHW.qmd MoreDataTypes.qmd DataTypes.qmd Dicts.qmd ForLoops.qmd Booleans.qmd PromptsLLMByHand.qmd ProductSpec.qmd ReviewChain.qmd
 
 # SOURCES:= LLMs.qmd MoreLLMs.qmd Reviews.qmd
 # SOURCES:= LLMs.qmd
@@ -11,9 +11,7 @@ IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)
 HTML_FILES = $(SOURCES:%.qmd=%.html)
 _FILES = $(SOURCES:%.qmd=%_files)
 
-include .env
-
-all : html ipynb
+all : ipynb html
 	@echo All files are now up to date
 
 clean :
@@ -25,8 +23,7 @@ html   : $(HTML_FILES)
 ipynb  : $(IPYNB_FILES)
 
 %.html : %.qmd
-	TOGETHER_API_KEY=$(TOGETHER_API_KEY) quarto render $< --to html
-	#quarto render $< --to html
+	quarto render $< --to html
 
 %.ipynb : %.qmd
 	cp $< $(basename $<)-question.qmd

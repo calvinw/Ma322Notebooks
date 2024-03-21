@@ -8,8 +8,9 @@ title: "Interacting with Anthropic's Language Model"
 import os
 
 if os.environ.get("ANTHROPIC_API_KEY") is None:
-   os.environ["ANTHROPIC_API_KEY"] = "paste your api key here"
+   os.environ["ANTHROPIC_API_KEY"] = "paste_your_api_key_here"
 ```
+
 
 ## Install Package to Call the LLM
 

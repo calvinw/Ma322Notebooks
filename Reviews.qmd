@@ -2,7 +2,7 @@
 title: "Analyzing Reviews with LLMs"
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_anthropic.qmd >}}
 
 ## Analyzing Amazon Reviews
 

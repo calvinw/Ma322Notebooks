@@ -1,6 +1,7 @@
 ## Set up your `TOGETHER_API_KEY`
 
 ```{python}
+#| eval: true
 import os
 
 if os.environ.get("TOGETHER_API_KEY") is None:
@@ -51,6 +52,7 @@ def get_completion(prompt, temperature=0.0):
 
     chat_completion = client.chat.completions.create(
                            model="NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT",
+                           #model="zero-one-ai/Yi-34B-Chat",
                            messages=[{"role": "user", "content": prompt}],
                            temperature=temperature,
                            max_tokens=1024)

@@ -143,14 +143,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    chat_completion <span class="op">=</span> client.chat.completions.create(</span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                           model<span class="op">=</span><span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span>,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                           messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}],</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                           temperature<span class="op">=</span>temperature,</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                           max_tokens<span class="op">=</span><span class="dv">1024</span>)</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> chat_completion.choices[<span class="dv">0</span>].message.content</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> response.lstrip()</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response)</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                           <span class="co">#model="zero-one-ai/Yi-34B-Chat",</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                           messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}],</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                           temperature<span class="op">=</span>temperature,</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                           max_tokens<span class="op">=</span><span class="dv">1024</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> chat_completion.choices[<span class="dv">0</span>].message.content</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> response.lstrip()</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calling-an-llm" class="level2">
@@ -175,9 +176,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>People like Barbie because she represents an idealized version of beauty,
 fashion, and lifestyle. Her diverse range of careers, hobbies, and accessories
 inspire creativity and imagination in children, allowing them to explore
-different interests and aspirations. Additionally, Barbie's evolution over the
-years, including more inclusive body types and diverse representation, has made
-her more relatable and appealing to a wider audience.</code></pre>
+different interests and aspirations. Additionally, Barbie's ever-evolving
+appearance and style keep her relevant and appealing to fans of all ages.</code></pre>
 </div>
 </div>
 <ul>
@@ -194,9 +194,8 @@ Response:
 People like Barbie because she represents an idealized version of beauty,
 fashion, and lifestyle. Her diverse range of careers, hobbies, and accessories
 inspire creativity and imagination in children, allowing them to explore
-different interests and aspirations. Additionally, Barbie's evolution over the
-years, including more inclusive body types and diverse representation, has made
-her more relatable and appealing to a wider audience.</code></pre>
+different interests and aspirations. Additionally, Barbie's ever-evolving
+appearance and style keep her relevant and appealing to fans of all ages.</code></pre>
 </div>
 </div>
 </section>
@@ -228,9 +227,8 @@ her more relatable and appealing to a wider audience.</code></pre>
 <pre><code>People like Barbie because she represents an idealized version of beauty,
 fashion, and lifestyle. Her diverse range of careers, hobbies, and accessories
 inspire creativity and imagination in children, allowing them to explore
-different interests and aspirations. Additionally, Barbie's evolution over the
-years, including more inclusive body types and diverse representation, has made
-her more relatable and appealing to a wider audience.
+different interests and aspirations. Additionally, Barbie's ever-evolving
+appearance and style keep her relevant and appealing to fans of all ages.
  
 People like Barbie because she represents an idealized version of beauty,
 fashion, and lifestyle. Her diverse range of careers, hobbies, and accessories
@@ -268,20 +266,22 @@ her more relatable and appealing to a wider audience.</code></pre>
 <span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>People like Barbie because she is a fashionable and adventurous doll that offers
-endless possibilities for imaginative play. Her stylish outfits, diverse career
-options, and timeless appeal make her a favorite for many children and
-collectors alike.
+<pre><code>People like Barbie because she is a cultural icon and represents various aspects
+of life such as fashion, beauty, careers, and family. Her versatility and
+enduring popularity have made her a favorite among children and collectors
+alike.
  
-People like Barbie because she represents an idealized version of womanhood,
-with her perfect figure, fashionable clothes and glamorous lifestyle. She also
-offers a variety of careers, promoting the idea that girls can be anything they
-want to be. Additionally, her versatility allows children to engage in
-imaginative play, enhancing creativity and social skills.
+People like Barbie because she is an iconic character, representing beauty,
+fashion, and glamour. Her diverse career options and accessories inspire
+children and symbolize their dreams. Additionally, Barbie has always been a
+positive role model for young girls, encouraging them to pursue their passions
+and break boundaries.
  
-People like Barbie because of her iconic status, fashionable outfits, and
-diverse career options. She is a representation of various aspirations and
-allows children to explore their imagination through play.</code></pre>
+People like Barbie because she represents an iconic symbol of fashion, beauty,
+and lifestyle. She embodies various career paths, promotes positive values, and
+offers a wide range of accessories and outfits that allow people to express
+their creativity and individuality. Barbie also serves as a source of
+inspiration and aspiration for many young girls.</code></pre>
 </div>
 </div>
 </section>
@@ -424,8 +424,8 @@ facts about it?. Format the facts using uppercase
 Response: 
 The capital of Texas is AUSTIN. Here are 3 simple facts about it:
 1. AUSTIN IS KNOWN FOR ITS MUSIC SCENE.
-2. AUSTIN IS HOME TO THE UNIVERSITY OF TEXAS.
-3. AUSTIN IS LOCATED IN THE HILL COUNTRY REGION OF TEXAS.</code></pre>
+2. THE CITY IS HOME TO THE UNIVERSITY OF TEXAS.
+3. AUSTIN IS ALSO KNOWN FOR ITS OUTDOOR ACTIVITIES, SUCH AS HIKING AND BIKING.</code></pre>
 </div>
 </div>
 </section>
