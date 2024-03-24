@@ -13,6 +13,7 @@ fruits = ['apple', 'banana', 'cherry', 'orange']
 # Iterate over the list
 for fruit in fruits:
     print(fruit)
+
 ```
 
 ## Iterating over a Range
@@ -23,12 +24,14 @@ If you use the `range()` function you can loop over the values in a range.
 # Iterate over a range of numbers
 for i in range(5):
     print(i)
+
 ```
 
 ```{python}
 # Iterate over a range of numbers
 for i in range(3,7):
     print(i)
+
 ```
 
 ## Iterating over a String
@@ -40,4 +43,5 @@ greeting = "Hello, World!"
 # Iterate over the string
 for char in greeting:
     print(char)
+
 ```

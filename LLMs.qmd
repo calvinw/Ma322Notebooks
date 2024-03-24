@@ -1,5 +1,7 @@
 ---
 title: "LLMS"
+execute:
+  eval: true
 ---
 
 {{< include _llm_togetherai.qmd >}}
@@ -21,7 +23,9 @@ response = get_completion(prompt)
 print(response)
 ```
 
-Sometimes its nice to print out the prompt and the response when we are working like this. We can use the function `print_prompt_and_response` and pass it the prompt and the response we got from the `get_completion` function.
+Sometimes its nice to print out the prompt and the response when we are working
+like this. We can use the function `print_prompt_and_response` and pass it the
+prompt and the response we got from the `get_completion` function.
 
 ```{python}
 response = get_completion(prompt)
@@ -30,7 +34,9 @@ print_prompt_and_response(prompt, response)
 
 ## Calling an LLM with the `temperature`
 
-Temperature is one of the settings that most LLMs have. You can set the temperature from 0.0 up to some maximum (like 1.0 or 1.2). Sometimes you can go higher.
+Temperature is one of the settings that most LLMs have. You can set the
+temperature from 0.0 up to some maximum (like 1.0 or 1.2). Sometimes you can go
+higher.
 
 Roughly
 
@@ -159,77 +165,6 @@ Call the LLM:
 
 ```{python}
 prompt=template.format(num=3, what="cars", format="A bulleted list using upper case")
-response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
-```
-
-### Using a template to analyze reviews
-
-Finally in this example, we use a template for asking the LLM to analyze some
-reviews of a product.
-
-This shows how the template idea works. We can work on the template separately
-from the reviews in just one place, that way once the template works we can
-apply it to any number of reviews.
-
-Here are the reviews:
-
-```{python}
-#| eval: true
-first_review = """So close! Aside from the technical issues — I ordered a small
-of the less busy face pattern, and received a medium in the more busy face
-pattern option instead. I’m 5’6” 135-140lbs. The sizes were European. This
-medium was a little big but still would have felt cute, if not for the collar
-and neckline. The collar has a high backing that doesn’t allow it to fall too
-well around your neck, and since the fabric is very thin and one-sided, you can
-see the back of the pattern when the collar is open (see photos). While okay
-for casual wear, and has a great boxy cut, the exposed back of fabric feels a
-bit cheap. Shirt is a good length for tucking in and a bit long otherwise."""
-
-second_review = """I love the pattern on this shirt, and I wanted to keep it so
-badly!! A few issues, though, made me send it back. 1 - The shirt looks much
-shinier/glossier on the models, and it's not. It's not shiny at all. It's a
-very nice fabric that is lightweight, but it hangs a lot differently that what
-was shown. 2 - The front is very short. The back hangs down nicely, but if you
-want to hide any tummy issues, this shirt won't do it for you. I also felt like
-my arms couldn't come up any or the shirt would be too high. I do a lot of
-presenting so this was a no go for me. 3 - The stitching on the front pulls
-oddly, so although it was big enough to button across the chest area, the
-stitching made it seem as though it was pulling even when it wasn't. Could just
-be my experience, but I don't like looking like the shirt is barely holding on,
-ha. I am 5'4 with a more muscular build (wide shoulders too) so that might be
-part of it. I love this shirt and wish it would work for me, but the shortness
-of it and the way it pulls made it a no-go."""
-```
-
-And here is our template.
-
-```{python}
-# Here is our template
-template="""
-You will be given a review in <text> tags below.
-
-- Summarize the review using around {length} words
-- On a separate line give {num} keywords that identify the main concerns in the review
-
-<text>
-{review}
-</text>
-"""
-```
-
-Lets pass in the first review.
-
-```{python}
-prompt=template.format(review=second_review, num=3, length=100)
-response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
-```
-
-Lets pass in the second review.
-
-```{python}
-prompt=template.format(review=second_review, num=5, length=50)
 response = get_completion(prompt)
 print_prompt_and_response(prompt, response)
 ```

@@ -1,0 +1,141 @@
+---
+title: "More Analyzing Reviews with LLMs"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+## Analyzing Amazon Reviews
+
+Lets summarize a few reviews from this product:
+
+[Hanes Women’s Slub Knit Full-Zip Hoodie, Textured Cotton Zip-Up T-Shirt Hoodie for Women](https://www.amazon.com/product-reviews/B016YKIF60/ref=cm_cr_arp_d_viewopt_srt?ie=UTF8&filterByStar=all_stars&reviewerType=avp_only_reviews&pageNumber=1&sortBy=helpful#reviews-filter-bar)
+
+Go to the page above and find some reviews to analyze.
+
+### Review Template
+
+Here's our template:
+
+```{python}
+template ="""Give a short summary of the following review. The review is placed
+in the <text> tags. Use no more than 30 words.
+<text>
+{review}
+</text>"""
+```
+
+### First Review
+
+- Paste your first review where it says CODE below
+
+```{python}
+#| eval: false
+first_review = """
+CODE
+"""
+```
+```{python}
+# Solution:
+first_review = """
+
+"""
+```
+
+- Run the below and get summary of the `first_review`
+
+```{python}
+prompt=template.format(review=first_review)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+
+### Second Review
+
+Lets do the `second_review`
+
+```{python}
+#| eval: false
+second_review = """
+CODE
+"""
+```
+```{python}
+# Solution:
+second_review = """
+
+"""
+```
+
+- Run the below and get summary of the `second_review`
+
+```{python}
+prompt=template.format(review=second_review)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+
+### Third Review
+
+Lets do the `third_review`
+
+```{python}
+#| eval: false
+third_review = """
+CODE
+"""
+```
+```{python}
+# Solution:
+third_review= """
+
+"""
+```
+
+- Run the below and get summary of the `third_review`
+
+```{python}
+prompt=template.format(review=third_review)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+
+- Lets do the `third_review`
+
+```{python}
+prompt=template.format(review=third_review)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+
+### Summarize all Reviews
+
+```{python}
+template ="""Summarize all of the following reviews, enclosed in <review> tags.
+List commonalities between the reviews and differences. If there are issues
+that multiple customers mention, please list those. If there are things that
+all customers like, list those. The goal is to summarize the collective
+viewpoint of the reviews.
+
+<review>
+{first_review}
+</review>
+
+<review>
+{third_review}
+</review>
+
+<review>
+{third_review}
+</review>
+"""
+```
+
+```{python}
+prompt=template.format(first_review=first_review,
+                       second_review=second_review,
+                       third_review=third_review)
+
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+

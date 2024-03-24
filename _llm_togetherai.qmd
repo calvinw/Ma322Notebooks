@@ -1,7 +1,7 @@
 ## Set up your `TOGETHER_API_KEY`
 
 ```{python}
-#| eval: true
+#| eval: false
 import os
 
 if os.environ.get("TOGETHER_API_KEY") is None:
@@ -19,6 +19,7 @@ For this part we set up the LLM.
 
 ```{python}
 #| eval: true
+import os
 import openai
 import textwrap
 
@@ -28,16 +29,13 @@ def wrap_text(text, max_width=80):
     """
     lines = text.splitlines()  # Split the text into lines
     wrapped_lines = []
-
     for line in lines:
         if line.strip():  # Skip empty lines
             wrapped_line = textwrap.fill(line, max_width, initial_indent='', subsequent_indent='')
             wrapped_lines.extend(wrapped_line.splitlines())  # Preserve line breaks
         else:
             wrapped_lines.append('')  # Keep empty lines
-
     return '\n'.join(wrapped_lines)
-
 
 def print_prompt_and_response(prompt, response):
     print("Prompt: ")
@@ -49,17 +47,17 @@ def print_prompt_and_response(prompt, response):
 def get_completion(prompt, temperature=0.0):
     client = openai.OpenAI(api_key=os.environ.get("TOGETHER_API_KEY"),
                            base_url="https://api.together.xyz/v1")
-
     chat_completion = client.chat.completions.create(
                            model="NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT",
                            #model="zero-one-ai/Yi-34B-Chat",
+                           #model="openchat/openchat-3.5-1210",
                            messages=[{"role": "user", "content": prompt}],
                            temperature=temperature,
                            max_tokens=1024)
-
     response = chat_completion.choices[0].message.content
     response = response.lstrip()
     wrapped_response = wrap_text(response)
     return wrapped_response
+
 ```
 

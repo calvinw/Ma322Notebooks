@@ -10,7 +10,6 @@ Calculate `4+5` by replacing the line `CODE` with `4+5` and then execute it by h
 #| eval: false
 CODE
 ```
-
 ```{python}
 # Solution:
 4+5
@@ -22,7 +21,6 @@ Calculate `4*5`
 #| eval: false
 CODE
 ```
-
 ```{python}
 # Solution:
 4*5

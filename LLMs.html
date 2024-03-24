@@ -110,48 +110,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(prompt)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> openai.OpenAI(api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                           base_url<span class="op">=</span><span class="st">"https://api.together.xyz/v1"</span>)</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    chat_completion <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                           model<span class="op">=</span><span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span>,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                           <span class="co">#model="zero-one-ai/Yi-34B-Chat",</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                           messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}],</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                           temperature<span class="op">=</span>temperature,</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                           max_tokens<span class="op">=</span><span class="dv">1024</span>)</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> chat_completion.choices[<span class="dv">0</span>].message.content</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> response.lstrip()</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response)</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(prompt)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> openai.OpenAI(api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                           base_url<span class="op">=</span><span class="st">"https://api.together.xyz/v1"</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    chat_completion <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                           model<span class="op">=</span><span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span>,</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                           <span class="co">#model="zero-one-ai/Yi-34B-Chat",</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                           <span class="co">#model="openchat/openchat-3.5-1210",</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                           messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}],</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                           temperature<span class="op">=</span>temperature,</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                           max_tokens<span class="op">=</span><span class="dv">1024</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> chat_completion.choices[<span class="dv">0</span>].message.content</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> response.lstrip()</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="calling-an-llm-with-get_completion" class="level2">
@@ -261,19 +258,20 @@ wavelengths. This scattering makes the sky appear blue to our eyes.
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The sky appears blue due to a phenomenon called Rayleigh scattering. When
-sunlight passes through the Earth's atmosphere, it interacts with gas molecules
-and tiny particles. Blue light has shorter wavelengths and is scattered more
-easily, making the sky appear blue to our eyes.
+sunlight reaches Earth's atmosphere, it collides with gas molecules and is
+scattered in various directions. Blue light has a shorter wavelength and
+scatters more easily, making the sky appear blue to our eyes.
+------
+The sky appears blue due to a phenomenon called Rayleigh scattering. When
+sunlight passes through Earth's atmosphere, it collides with gas molecules,
+causing the light to scatter in various directions. Blue light, with shorter
+wavelengths, scatters more than other colors, making the sky appear blue to our
+eyes.
 ------
 The sky appears blue due to a phenomenon called Rayleigh scattering. Sunlight,
-which is white, contains all colors of the spectrum. When sunlight enters the
-Earth's atmosphere, it interacts with gas molecules and tiny particles. Blue
-light has a shorter wavelength and scatters more easily than other colors,
-making the sky appear blue to our eyes.
-------
-The sky appears blue because of the way our atmosphere scatters sunlight. Blue
-light has shorter wavelengths and is more easily scattered by air molecules,
-making the sky appear blue to our eyes.
+which contains all colors of the spectrum, interacts with molecules in the
+Earth's atmosphere. Blue light is scattered more than other colors, making the
+sky appear blue to our eyes.
 ------</code></pre>
 </div>
 </div>
@@ -293,19 +291,20 @@ making the sky appear blue to our eyes.
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The sky appears blue due to the scattering of sunlight by tiny particles,
-molecules, and air molecules in the Earth's atmosphere. Blue wavelengths are
-more likely to collide with these particles, causing them to bend and shift in
-our direction, thus making the sky appear blue to our eyes.
+<pre><code>The sky appears blue because the flames in sun are made up of varying colors,
+and some of these flames flames are not visible to the human eye. When sunlight
+passes through the Earth's atmosphere, some of the colors get reflected by the
+molecules in the air as they collide with each other. This reflection causes
+blue to be dominant in the visible spectrum, making the sky generally appear
+blue during the day.
 ------
-The sky appears blue because of the way sunlight interacts with Earth's
-atmosphere. The short-wavelength, blue light from the sun is scattered more than
-other colors, making the sky look blue when we look at it.
+The sky appears blue because of a phenomenon called Rayleigh Scattering.
+Sunlight gets scattered by tiny particles in the Earth's atmosphere, making
+shorter blue wavelengths more visible to us.
 ------
-The sky appears blue due to a phenomenon called Rayleigh scattering. As sunlight
-passes through the Earth's atmosphere, smaller wavelengths (blue) collide with
-air molecules, causing them to scatter in all directions. This dispersal of blue
-light makes our sky appear blue during the day.
+The sky appears blue due to the scattering of sunlight in Earth's atmosphere.
+Shorter wavelength blue light gets scattered more than longer wavelengths and
+becomes more visible to our eyes.
 ------</code></pre>
 </div>
 </div>
@@ -388,129 +387,6 @@ Response:
 - SPEEDSTER
 - AUTOMASTER
 - HORIZON MOTORS</code></pre>
-</div>
-</div>
-</section>
-<section id="using-a-template-to-analyze-reviews" class="level3">
-<h3 class="anchored" data-anchor-id="using-a-template-to-analyze-reviews">Using a template to analyze reviews</h3>
-<p>Finally in this example, we use a template for asking the LLM to analyze some reviews of a product.</p>
-<p>This shows how the template idea works. We can work on the template separately from the reviews in just one place, that way once the template works we can apply it to any number of reviews.</p>
-<p>Here are the reviews:</p>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>first_review <span class="op">=</span> <span class="st">"""So close! Aside from the technical issues — I ordered a small</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">of the less busy face pattern, and received a medium in the more busy face</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">pattern option instead. I’m 5’6” 135-140lbs. The sizes were European. This</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">medium was a little big but still would have felt cute, if not for the collar</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">and neckline. The collar has a high backing that doesn’t allow it to fall too</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st">well around your neck, and since the fabric is very thin and one-sided, you can</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="st">see the back of the pattern when the collar is open (see photos). While okay</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="st">for casual wear, and has a great boxy cut, the exposed back of fabric feels a</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="st">bit cheap. Shirt is a good length for tucking in and a bit long otherwise."""</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>second_review <span class="op">=</span> <span class="st">"""I love the pattern on this shirt, and I wanted to keep it so</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="st">badly!! A few issues, though, made me send it back. 1 - The shirt looks much</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="st">shinier/glossier on the models, and it's not. It's not shiny at all. It's a</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="st">very nice fabric that is lightweight, but it hangs a lot differently that what</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="st">was shown. 2 - The front is very short. The back hangs down nicely, but if you</span></span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="st">want to hide any tummy issues, this shirt won't do it for you. I also felt like</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="st">my arms couldn't come up any or the shirt would be too high. I do a lot of</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="st">presenting so this was a no go for me. 3 - The stitching on the front pulls</span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="st">oddly, so although it was big enough to button across the chest area, the</span></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="st">stitching made it seem as though it was pulling even when it wasn't. Could just</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="st">be my experience, but I don't like looking like the shirt is barely holding on,</span></span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="st">ha. I am 5'4 with a more muscular build (wide shoulders too) so that might be</span></span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="st">part of it. I love this shirt and wish it would work for me, but the shortness</span></span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="st">of it and the way it pulls made it a no-go."""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>And here is our template.</p>
-<div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Here is our template</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>template<span class="op">=</span><span class="st">"""</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">You will be given a review in &lt;text&gt; tags below.</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="st">- Summarize the review using around </span><span class="sc">{length}</span><span class="st"> words</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="st">- On a separate line give </span><span class="sc">{num}</span><span class="st"> keywords that identify the main concerns in the review</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;text&gt;</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/text&gt;</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Lets pass in the first review.</p>
-<div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(review<span class="op">=</span>second_review, num<span class="op">=</span><span class="dv">3</span>, length<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
-
-You will be given a review in &lt;text&gt; tags below.
-
-- Summarize the review using around 100 words
-- On a separate line give 3 keywords that identify the main concerns in the review
-
-&lt;text&gt;
-I love the pattern on this shirt, and I wanted to keep it so
-badly!! A few issues, though, made me send it back. 1 - The shirt looks much
-shinier/glossier on the models, and it's not. It's not shiny at all. It's a
-very nice fabric that is lightweight, but it hangs a lot differently that what
-was shown. 2 - The front is very short. The back hangs down nicely, but if you
-want to hide any tummy issues, this shirt won't do it for you. I also felt like
-my arms couldn't come up any or the shirt would be too high. I do a lot of
-presenting so this was a no go for me. 3 - The stitching on the front pulls
-oddly, so although it was big enough to button across the chest area, the
-stitching made it seem as though it was pulling even when it wasn't. Could just
-be my experience, but I don't like looking like the shirt is barely holding on,
-ha. I am 5'4 with a more muscular build (wide shoulders too) so that might be
-part of it. I love this shirt and wish it would work for me, but the shortness
-of it and the way it pulls made it a no-go.
-&lt;/text&gt;
-
-
-Response: 
-Summary: The reviewer loved the pattern of the shirt but had to return it due to
-issues with the fabric's shine, the short front, and odd stitching.
-
-Keywords: shiny, short front, stitching</code></pre>
-</div>
-</div>
-<p>Lets pass in the second review.</p>
-<div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(review<span class="op">=</span>second_review, num<span class="op">=</span><span class="dv">5</span>, length<span class="op">=</span><span class="dv">50</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
-
-You will be given a review in &lt;text&gt; tags below.
-
-- Summarize the review using around 50 words
-- On a separate line give 5 keywords that identify the main concerns in the review
-
-&lt;text&gt;
-I love the pattern on this shirt, and I wanted to keep it so
-badly!! A few issues, though, made me send it back. 1 - The shirt looks much
-shinier/glossier on the models, and it's not. It's not shiny at all. It's a
-very nice fabric that is lightweight, but it hangs a lot differently that what
-was shown. 2 - The front is very short. The back hangs down nicely, but if you
-want to hide any tummy issues, this shirt won't do it for you. I also felt like
-my arms couldn't come up any or the shirt would be too high. I do a lot of
-presenting so this was a no go for me. 3 - The stitching on the front pulls
-oddly, so although it was big enough to button across the chest area, the
-stitching made it seem as though it was pulling even when it wasn't. Could just
-be my experience, but I don't like looking like the shirt is barely holding on,
-ha. I am 5'4 with a more muscular build (wide shoulders too) so that might be
-part of it. I love this shirt and wish it would work for me, but the shortness
-of it and the way it pulls made it a no-go.
-&lt;/text&gt;
-
-
-Response: 
-Summary: The reviewer loved the pattern of the shirt but had to return it due to
-its shiny appearance, short front, odd stitching, and inability to raise arms
-without the shirt rising.
-
-Keywords: shiny, short front, odd stitching, wide shoulders, no-go.</code></pre>
 </div>
 </div>
 </section>

@@ -1,1 +1,1 @@
-export $(cat .env | xargs) && env
+export $(cat .env | xargs)

@@ -1,0 +1,151 @@
+---
+title: "Functions in Python"
+---
+
+Functions in Python are reusable blocks of code that perform a specific task.
+They allow you to organize your code into logical units, making it easier to
+read, maintain, and reuse. In this lesson, we'll cover the basics of functions,
+including how to define and call them, pass arguments, handle return values,
+and use keyword arguments.
+
+## Defining a Function
+
+In Python, you define a function using the `def` keyword, followed by the
+function name, parentheses `()` for the arguments, and a colon `:`. The
+function body is indented and contains the code that will be executed when the
+function is called.
+
+Here's an example of a simple function that prints a greeting:
+
+```{python}
+def greet():
+  print("Hello, World!")
+
+```
+
+To call this function, you simply use its name followed by parentheses:
+
+```{python}
+greet()
+```
+
+## Passing Arguments
+
+Functions can accept input values, called arguments, which are specified inside
+the parentheses when defining the function. These arguments act as variables
+inside the function, allowing you to perform operations on the provided data.
+
+```{python}
+def greet_person(name):
+    print("Hello, " + name + "!")
+
+greet_person("Alice")  # Output: Hello, Alice!
+greet_person("Bob")    # Output: Hello, Bob!
+```
+
+You can also define functions with multiple arguments:
+
+```{python}
+def add_numbers(num1, num2):
+    result = num1 + num2
+    print("The sum is ", result)
+
+add_numbers(3, 5)
+add_numbers(10, 20)
+```
+
+## Default Arguments
+
+Python allows you to provide default values for function arguments. If no value is provided when calling the function, the default value is used.
+
+```{python}
+def greet_person(name, greeting="Hello"):
+    print(greeting + ", " + name + "!")
+
+greet_person("Alice")
+greet_person("Bob", "Hi")
+```
+
+In the example above, the `greeting` argument has a default value of `"Hello"`.
+If no value is provided for `greeting` when calling the function, "Hello" is
+used. However, you can override the default value by passing a different value
+for `greeting`.
+
+## Return Values
+
+Functions can also return values using the `return` statement. The returned
+value can be assigned to a variable or used directly in expressions.
+
+```{python}
+def multiply(num1, num2):
+    result = num1 * num2
+    return result
+
+product = multiply(3, 4)
+print("The product is:", product)
+```
+
+In the example above, the `multiply` function takes two arguments, calculates
+their product, and returns the result. The returned value is then assigned to
+the `product` variable and printed.
+
+## Keyword Arguments
+
+In Python, you can also pass arguments to a function using keyword arguments.
+Keyword arguments allow you to specify the argument names explicitly when
+calling the function, making your code more readable and less error-prone,
+especially when dealing with functions that have many arguments.
+
+```{python}
+def describe_person(name, age, location):
+    print(name + " is " + str(age) + " years old and lives in " + location)
+
+# Using positional arguments
+describe_person("Alice", 25, "New York")
+
+# Using keyword arguments
+describe_person(name="Bob", age=30, location="London")
+
+# Mixing positional and keyword arguments
+describe_person("Charlie", location="Paris", age=35)
+```
+
+In the example above, the `describe_person` function takes three arguments:
+`name`, `age`, and `location`. When calling the function, you can use
+positional arguments (where the argument values are matched to the function
+parameters based on their position) or keyword arguments (where you specify the
+argument name explicitly).
+
+Keyword arguments are particularly useful when you have functions with many
+arguments, as they make the code more self-documenting and less prone to errors
+caused by argument order.
+
+## Calling a Large Language Model (Example)
+
+Let's consider an example of calling a Large Language Model (LLM) using a
+hypothetical function `get_llm_response`. This function takes a prompt as an
+argument and returns the LLM's response.
+
+```{python}
+def get_llm_response(prompt):
+    # Hypothetical code to call the LLM and get a response
+    response = "This is a sample response from the LLM."
+    return response
+
+prompt = "What is the meaning of life?"
+response = get_llm_response(prompt)
+print("Prompt:", prompt)
+print("Response:", response)
+```
+
+In this example, the `get_llm_response` function takes a `prompt` as an
+argument and returns a sample response (in a real scenario, this would involve
+sending the prompt to the LLM and receiving its response). The `prompt`
+variable stores the user's question, which is then passed to the
+`get_llm_response` function The LLM's response is stored in the `response`
+variable and printed along with the original prompt.
+
+By organizing your code into functions, you can make it more readable, modular,
+and easier to maintain. Functions also promote code reuse, as you can call them
+multiple times with different arguments to perform the same task in different
+contexts.

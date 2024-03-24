@@ -2,11 +2,13 @@
 title: "Analyzing Reviews with LLMs"
 ---
 
-{{< include _llm_anthropic.qmd >}}
+{{< include _llm_togetherai.qmd >}}
 
 ## Analyzing Amazon Reviews
 
 The following sets up some templates to analyze reviews of this product: [Big Dart Blouses](https://www.amazon.com/Womens-Blouses-Sleeve-Button-Fashion/dp/B08NYQN9ZY/ref=cm_cr_arp_d_bdcrb_top?ie=UTF8&th=1)
+
+Here's our template:
 
 ```{python}
 template ="""Give a short summary of the following review. The review is placed
@@ -14,7 +16,11 @@ in the <text> tags. Use no more than 30 words.
 <text>
 {review}
 </text>"""
+```
 
+Here's our first review:
+
+```{python}
 first_review = """So close! Aside from the technical issues — I ordered a small
 of the less busy face pattern, and received a medium in the more busy face
 pattern option instead. I’m 5’6” 135-140lbs. The sizes were European. This
@@ -24,7 +30,11 @@ well around your neck, and since the fabric is very thin and one-sided, you can
 see the back of the pattern when the collar is open (see photos). While okay for
 casual wear, and has a great boxy cut, the exposed back of fabric feels a bit
 cheap. Shirt is a good length for tucking in and a bit long otherwise."""
+```
 
+Lets pass in `first_review` as the `review` we want to use in the template:
+
+```{python}
 prompt=template.format(review=first_review)
 response = get_completion(prompt)
 print_prompt_and_response(prompt, response)
@@ -33,7 +43,6 @@ print_prompt_and_response(prompt, response)
 Let's take a look at a few more reviews.
 
 ```{python}
-
 second_review = """I love the pattern on this shirt, and I wanted to keep it so
 badly!! A few issues, though, made me send it back. 1 - The shirt looks much
 shinier/glossier on the models, and it's not. It's not shiny at all. It's a
@@ -63,18 +72,26 @@ reordering my original and adding a couple more colors, BUT this time I will
 wash COLD, Gentle cycle, and Hang dry!"""
 ```
 
+Lets do the `second_review`
+
 ```{python}
-template ="""Give a short summary of the following review. The review is placed
-in the <text> tags. Use no more than 30 words.
+prompt=template.format(review=second_review)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
 
-<text>
-{review}
-</text>"""
+Lets do the `third_review`
 
-reviews = [second_review, third_review, fourth_review]
+```{python}
+prompt=template.format(review=third_review)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
 
-for review in reviews:
-  prompt = template.format(review=review)
-  response = get_completion(prompt)
-  print_prompt_and_response(prompt, response)
+And the `fourth_review`
+
+```{python}
+prompt=template.format(review=fourth_review)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
 ```
