@@ -32,7 +32,7 @@ say_hi()
 
 ## Function Arguments
 
-- Define a function called `greet_by_name` that takes a `name` argument and prints "Welcome, [name]" when called.
+- Define a function called `greet_by_name` that takes a `name` argument and prints "Welcome, [name]!" when called.
 
 ```{python}
 #| eval: false
@@ -42,7 +42,7 @@ CODE
 ```{python}
 # Solution:
 def greet_by_name(name):
-    print("Welcome, " + name)
+    print("Welcome, " + name + "!")
 
 ```
 
@@ -84,18 +84,6 @@ CODE
 ```{python}
 # Solution:
 greet_with_default_name()
-```
-
-- Call the `greet_with_default_name` function with the argument "Sam".
-
-```{python}
-#| eval: false
-CODE
-```
-
-```{python}
-# Solution:
-greet_with_default_name("Sam")
 ```
 
 ## Return Values

@@ -55,37 +55,51 @@ print(numbers[::2])  # Every other item (step size 2)
 
 Lists in Python come with several built-in methods that allow you to manipulate them. Here are a few commonly used methods:
 
+### Appending an item to the end of the list
 ```{python}
 fruits = ["apple", "banana", "cherry"]
-
-# Append an item to the end of the list
 fruits.append("orange")
 print(fruits)
+```
 
-# Insert an item at a specific index
+### Inserting an item at a specific index
+```{python}
 fruits.insert(1, "mango")
 print(fruits)
+```
 
-# Remove an item by value
+### Removing an item by value
+```{python}
 fruits.remove("banana")
 print(fruits)
+```
 
-# Remove an item by index
+### Removing an item by index
+```{python}
 del fruits[1]
 print(fruits)
+```
 
-# Get the index of an item
+### Getting the index of an item
+```{python}
 print(fruits.index("apple"))
+```
 
-# Count occurrences of an item
+### Counting occurrences of an item
+```{python}
 new_fruits = ["apple", "cherry", "apple"]
 print(new_fruits.count("apple"))
+```
 
-# Sort the list
+### Sorting the list
+```{python}
 new_fruits.sort()
 print(new_fruits)
+```
 
-# Reverse the list
+### Reversing the list
+```{python}
 new_fruits.reverse()
 print(new_fruits)
 ```
+

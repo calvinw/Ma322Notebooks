@@ -1,0 +1,190 @@
+---
+title: "Evaluating Inputs: Classification with LLMs"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+## Evaluating Inputs
+
+
+### Template
+
+Here's our template:
+
+```{python}
+template ="""
+You will be provided with customer service queries. The customer service query
+will be delimited with <query> tags.
+
+Classify each query into a primary category and a secondary category.
+
+Provide your output as a list with primary and secondary category.
+
+Primary categories: Billing, Technical Support, Account Management, or General
+Inquiry.
+
+The secondary category must come from the lists below.
+
+Billing secondary categories:
+- Unsubscribe or upgrade
+- Add a payment method
+- Explanation for charge
+- Dispute a charge
+
+Technical Support secondary categories:
+- General troubleshooting
+- Device compatibility
+- Software updates
+
+Account Management secondary categories:
+- Password reset
+- Update personal information
+- Close account
+- Account security
+
+General Inquiry secondary categories:
+- Product information
+- Pricing
+- Feedback
+- Speak to a human
+
+<query>
+{query}
+</query>"""
+```
+
+```{python}
+def get_query_response(template, query):
+  prompt=template.format(query=query)
+  response = get_completion(prompt)
+  print(query)
+  print(response)
+
+```
+
+### I want you to delete my profile and all of my user data
+
+Set up the query string:
+
+```{python}
+first_query = """
+I want you to delete my profile and all of my user data
+"""
+```
+
+We pass in `template` and `first_query` to `get_query_response`:
+
+```{python}
+get_query_response(template, first_query)
+```
+
+### Tell me more about your flat screen tvs
+
+Set up the query string:
+
+```{python}
+second_query = """
+Tell me more about your flat screen tvs
+"""
+```
+We pass in `template` and `first_query` to `get_query_response`:
+
+```{python}
+get_query_response(template, second_query)
+```
+
+### I can't log into my account. Can you reset my password?
+
+Set up the query string:
+
+```{python}
+third_query = """
+I can't log into my account. Can you reset my password?
+"""
+```
+
+We pass in `template` and `third_query` to `get_query_response`:
+
+```{python}
+get_query_response(template, third_query)
+```
+
+### I'm having trouble connecting my smart TV to the internet. Can you help me troubleshoot this issue?
+
+Set up the query string:
+
+```{python}
+fourth_query = """
+I'm having trouble connecting my smart TV to the internet. Can you help me troubleshoot this issue?
+"""
+```
+
+We pass in `template` and `fourth_query` to `get_query_response`:
+
+```{python}
+get_query_response(template, fourth_query)
+```
+
+### I'd like to cancel my subscription and get a refund for the remaining months.
+
+Set up the query string:
+
+```{python}
+fifth_query = """
+I'd like to cancel my subscription and get a refund for the remaining months.
+"""
+```
+
+We pass in `template` and `fifth_query` to `get_query_response`:
+
+```{python}
+get_query_response(template, fifth_query)
+```
+
+### How do I update my email address and password on my account?
+
+Set up the query string:
+
+```{python}
+sixth_query = """
+How do I update my email address and password on my account?
+"""
+```
+
+We pass in `template` and `sixth_query` to `get_query_response`:
+
+```{python}
+get_query_response(template, sixth_query)
+```
+
+### What are the key features of your premium streaming package compared to the basic plan?
+
+Set up the query string:
+
+```{python}
+seventh_query = """
+What are the key features of your premium streaming package compared to the basic plan?
+"""
+```
+
+We pass in `template` and `seventh_query` to `get_query_response`:
+
+```{python}
+get_query_response(template, seventh_query)
+```
+
+### I have some feedback about improving the user interface of your mobile app.
+
+Set up the query string:
+
+```{python}
+eighth_query = """
+I have some feedback about improving the user interface of your mobile app.
+"""
+```
+
+We pass in `template` and `eighth_query` to `get_query_response`:
+
+```{python}
+get_query_response(template, eighth_query)
+```
