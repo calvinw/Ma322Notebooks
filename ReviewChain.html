@@ -103,52 +103,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="install-packages-to-call-the-llm" class="level2">
-<h2 class="anchored" data-anchor-id="install-packages-to-call-the-llm">Install Packages to Call the LLM</h2>
-<p>For this part we set up the LLM.</p>
+<section id="setup-to-call-the-llm" class="level2">
+<h2 class="anchored" data-anchor-id="setup-to-call-the-llm">Setup to Call the LLM</h2>
+<p>For this part, we install the required package to interact with a TogetherAI language model.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> openai</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(prompt)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    client <span class="op">=</span> openai.OpenAI(api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                           base_url<span class="op">=</span><span class="st">"https://api.together.xyz/v1"</span>)</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    chat_completion <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                           model<span class="op">=</span><span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span>,</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                           <span class="co">#model="zero-one-ai/Yi-34B-Chat",</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                           <span class="co">#model="openchat/openchat-3.5-1210",</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                           messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt}],</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                           temperature<span class="op">=</span>temperature,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                           max_tokens<span class="op">=</span><span class="dv">1024</span>)</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> chat_completion.choices[<span class="dv">0</span>].message.content</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> response.lstrip()</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response)</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>display(Markdown(<span class="st">"### Model:  </span><span class="ch">\n</span><span class="st">#### "</span> <span class="op">+</span> model_name))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="model" class="level3 cell-output cell-output-display">
+<h3 class="anchored" data-anchor-id="model">Model:</h3>
+<section id="nousresearchnous-hermes-2-mixtral-8x7b-sft" class="level4">
+<h4 class="anchored" data-anchor-id="nousresearchnous-hermes-2-mixtral-8x7b-sft">NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</h4>
+</section>
+</section>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We will analyze a customer review, including translating and summarizing it. Then try to compose a response</p>
 <p>Here are the steps in the analysis:</p>
@@ -166,25 +189,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Lets start with the review text.</p>
 <section id="initial-review" class="level3">
 <h3 class="anchored" data-anchor-id="initial-review">Initial Review</h3>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>review <span class="op">=</span> <span class="st">"""Ich bin sehr unzufrieden mit dem Produkt, das ich erhalten habe.</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">Die Qualität ist enttäuschend, und es entspricht nicht den Beschreibungen auf</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">der Website. Darüber hinaus war die Lieferung viel zu spät, und der</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">Kundenservice war wenig hilfreich. Ich erwarte eine sofortige Lösung für dieses</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">Problem."""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>review <span class="op">=</span> <span class="st">"""Ich bin sehr unzufrieden mit dem Produkt, das ich erhalten habe.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">Die Qualität ist enttäuschend, und es entspricht nicht den Beschreibungen auf</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">der Website. Darüber hinaus war die Lieferung viel zu spät, und der</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">Kundenservice war wenig hilfreich. Ich erwarte eine sofortige Lösung für dieses</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">Problem."""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="what-language-is-it" class="level3">
 <h3 class="anchored" data-anchor-id="what-language-is-it">What Language is It?</h3>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>what_language_template <span class="op">=</span> <span class="st">"""What language is the following review:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">Just state the language name only.</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>what_language_template.<span class="bu">format</span>(review<span class="op">=</span>review)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>what_language_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, what_language_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>what_language_template <span class="op">=</span> <span class="st">"""What language is the following review:</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">Just state the language name only.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>what_language_template.<span class="bu">format</span>(review<span class="op">=</span>review)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>what_language_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, what_language_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 What language is the following review:
@@ -195,7 +218,6 @@ Kundenservice war wenig hilfreich. Ich erwarte eine sofortige Lösung für diese
 Problem.
 Just state the language name only.
 
-
 Response: 
 German</code></pre>
 </div>
@@ -203,14 +225,14 @@ German</code></pre>
 </section>
 <section id="lets-translate-it" class="level3">
 <h3 class="anchored" data-anchor-id="lets-translate-it">Lets Translate It</h3>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>translate_template <span class="op">=</span><span class="st">"""Translate the following review to english:</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>translate_template.<span class="bu">format</span>(review<span class="op">=</span>review)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>translation_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, translation_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>translate_template <span class="op">=</span><span class="st">"""Translate the following review to english:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>translate_template.<span class="bu">format</span>(review<span class="op">=</span>review)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>translation_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, translation_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 Translate the following review to english:
@@ -219,7 +241,6 @@ Die Qualität ist enttäuschend, und es entspricht nicht den Beschreibungen auf
 der Website. Darüber hinaus war die Lieferung viel zu spät, und der
 Kundenservice war wenig hilfreich. Ich erwarte eine sofortige Lösung für dieses
 Problem.
-
 
 Response: 
 I am very dissatisfied with the product I received.
@@ -231,14 +252,14 @@ was not very helpful. I expect an immediate solution to this problem.</code></pr
 </section>
 <section id="lets-summarize-it" class="level3">
 <h3 class="anchored" data-anchor-id="lets-summarize-it">Lets Summarize It</h3>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>summarize_template <span class="op">=</span><span class="st">"""Can you summarize the following review in 1 sentence:</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="sc">{english_review}</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>summarize_template.<span class="bu">format</span>(english_review<span class="op">=</span>translation_response)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>summarize_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, summarize_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>summarize_template <span class="op">=</span><span class="st">"""Can you summarize the following review in 1 sentence:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">{english_review}</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>summarize_template.<span class="bu">format</span>(english_review<span class="op">=</span>translation_response)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>summarize_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, summarize_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 Can you summarize the following review in 1 sentence:
@@ -247,28 +268,27 @@ The quality is disappointing, and it does not match the descriptions on the
 website. Furthermore, the delivery was much too late, and the customer service
 was not very helpful. I expect an immediate solution to this problem.
 
-
 Response: 
-The reviewer expresses dissatisfaction with the product's quality, late
-delivery, and unhelpful customer service, demanding an immediate solution.</code></pre>
+The reviewer is extremely unhappy with the product's quality, late delivery, and
+unhelpful customer service, demanding an immediate solution.</code></pre>
 </div>
 </div>
 </section>
 <section id="analyze-the-sentiment-on-scale-of-1very-negative-to-5very-positive" class="level3">
 <h3 class="anchored" data-anchor-id="analyze-the-sentiment-on-scale-of-1very-negative-to-5very-positive">Analyze the sentiment on scale of 1(very negative) to 5(very positive)</h3>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sentiment_template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">Analyze the sentiment of the following review on a scale of 1 to 5, where 1 is</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">very negative and 5 is very positive:</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">Just give the number only.</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> sentiment_template.<span class="bu">format</span>(review<span class="op">=</span>review)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>sentiment_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, sentiment_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sentiment_template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">Analyze the sentiment of the following review on a scale of 1 to 5, where 1 is</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">very negative and 5 is very positive:</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">Just give the number only.</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> sentiment_template.<span class="bu">format</span>(review<span class="op">=</span>review)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>sentiment_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, sentiment_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 
@@ -283,7 +303,6 @@ Problem.
 
 Just give the number only.
 
-
 Response: 
 2</code></pre>
 </div>
@@ -291,20 +310,20 @@ Response:
 </section>
 <section id="categorize-the-review-based-on-the-main-issue" class="level3">
 <h3 class="anchored" data-anchor-id="categorize-the-review-based-on-the-main-issue">Categorize the Review Based On the Main Issue</h3>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>categorize_template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the main issue or concern raised in the following review:</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="st">Choose from the following categories: Product Quality, Shipping/Delivery,</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="st">Customer Service, Pricing, Other.</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="st">Just give the categories only.</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> categorize_template.<span class="bu">format</span>(review<span class="op">=</span>translation_response)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>category_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, category_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>categorize_template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the main issue or concern raised in the following review:</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">Choose from the following categories: Product Quality, Shipping/Delivery,</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">Customer Service, Pricing, Other.</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="st">Just give the categories only.</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> categorize_template.<span class="bu">format</span>(review<span class="op">=</span>translation_response)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>category_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, category_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 
@@ -319,7 +338,6 @@ Choose from the following categories: Product Quality, Shipping/Delivery,
 Customer Service, Pricing, Other.
 Just give the categories only.
 
-
 Response: 
 Product Quality, Shipping/Delivery, Customer Service.</code></pre>
 </div>
@@ -327,19 +345,19 @@ Product Quality, Shipping/Delivery, Customer Service.</code></pre>
 </section>
 <section id="suggest-potential-improvements-based-on-the-review" class="level3">
 <h3 class="anchored" data-anchor-id="suggest-potential-improvements-based-on-the-review">Suggest Potential Improvements Based On the Review</h3>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>improvement_template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">Based on the following review, suggest at least three potential improvements or</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">changes that could address the customer's concerns:</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">Give only the three potential improvements as your output.</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> improvement_template.<span class="bu">format</span>(review<span class="op">=</span>translation_response)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>improvements_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, improvements_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>improvement_template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">Based on the following review, suggest at least three potential improvements or</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">changes that could address the customer's concerns:</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">Give only the three potential improvements as your output.</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> improvement_template.<span class="bu">format</span>(review<span class="op">=</span>translation_response)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>improvements_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, improvements_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 
@@ -353,7 +371,6 @@ was not very helpful. I expect an immediate solution to this problem.
 
 Give only the three potential improvements as your output.
 
-
 Response: 
 1. Improve product quality to match website descriptions.
 2. Ensure timely delivery of products.
@@ -363,19 +380,19 @@ Response:
 </section>
 <section id="write-an-individualized-email-response-to-the-customer-in-german" class="level3">
 <h3 class="anchored" data-anchor-id="write-an-individualized-email-response-to-the-customer-in-german">Write an individualized email response to the customer in German</h3>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>response_template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="st">You have received the following review from a customer:</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">Please draft a polite and professional email response to the customer in</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">German, addressing their concerns and offering a resolution or next steps.</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> response_template.<span class="bu">format</span>(review<span class="op">=</span>review)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>german_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, german_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>response_template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="st">You have received the following review from a customer:</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="st">Please draft a polite and professional email response to the customer in</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">German, addressing their concerns and offering a resolution or next steps.</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> response_template.<span class="bu">format</span>(review<span class="op">=</span>review)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>german_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, german_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 
@@ -390,7 +407,6 @@ Problem.
 Please draft a polite and professional email response to the customer in
 German, addressing their concerns and offering a resolution or next steps.
 
-
 Response: 
 Sehr geehrte/r Kundin/Kunde,
 
@@ -401,34 +417,34 @@ Zunächst möchten wir uns für die verspätete Lieferung entschuldigen. Wir hab
 die Lieferung überprüft und werden sicherstellen, dass dies in Zukunft nicht
 mehr vorkommt.
 Was die Qualität des Produkts betrifft, möchten wir Ihnen versichern, dass wir
-großen Wert auf die Qualität unserer Produkte legen. Wir werden die Beschwerde
-über die Qualität des Produkts untersuchen und uns mit Ihnen in Verbindung
-setzen, um eine Lösung zu finden.
-Wir möchten auch betonen, dass wir unseren Kundenservice ständig verbessern
-möchten. Wir werden Ihre Beschwerde über den Kundenservice untersuchen und
-sicherstellen, dass unsere Mitarbeiter besser geschult werden, um Ihnen in
-Zukunft eine bessere Unterstützung bieten zu können.
-Wir hoffen, dass Sie uns eine weitere Chance geben, um Ihr Vertrauen
-zurückzugewinnen. Bitte teilen Sie uns mit, wie wir Ihnen helfen können, und wir
-werden unser Bestes tun, um Ihre Anliegen zu lösen.
+nur hochwertige Produkte anbieten. Wir werden die Beschreibung auf unserer
+Website überprüfen und gegebenenfalls anpassen, um sicherzustellen, dass sie
+genau und korrekt ist.
+Wir möchten Ihnen auch anbieten, das Produkt kostenlos zurückzusenden und Ihnen
+einen Ersatz oder eine Rückerstattung anzubieten. Bitte kontaktieren Sie uns
+innerhalb der nächsten 7 Tage, um die Rücksendung zu arrangieren.
+Wir entschuldigen uns erneut für die Unannehmlichkeiten und hoffen, dass wir Ihr
+Vertrauen zurückgewinnen können.
 Mit freundlichen Grüßen,
+
 [Ihr Name]
-[Ihr Unternehmen]</code></pre>
+[Ihre Funktion]
+[Ihre Kontaktinformationen]</code></pre>
 </div>
 </div>
 </section>
 <section id="translate-the-email-response-to-english" class="level3">
 <h3 class="anchored" data-anchor-id="translate-the-email-response-to-english">Translate the email response to English</h3>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>translate_response_template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the following text from German to English:</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{german_response}</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> translate_response_template.<span class="bu">format</span>(german_response<span class="op">=</span>german_response)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>english_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, english_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>translate_response_template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="st">Translate the following text from German to English:</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{german_response}</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> translate_response_template.<span class="bu">format</span>(german_response<span class="op">=</span>german_response)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>english_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, english_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 
@@ -443,20 +459,19 @@ Zunächst möchten wir uns für die verspätete Lieferung entschuldigen. Wir hab
 die Lieferung überprüft und werden sicherstellen, dass dies in Zukunft nicht
 mehr vorkommt.
 Was die Qualität des Produkts betrifft, möchten wir Ihnen versichern, dass wir
-großen Wert auf die Qualität unserer Produkte legen. Wir werden die Beschwerde
-über die Qualität des Produkts untersuchen und uns mit Ihnen in Verbindung
-setzen, um eine Lösung zu finden.
-Wir möchten auch betonen, dass wir unseren Kundenservice ständig verbessern
-möchten. Wir werden Ihre Beschwerde über den Kundenservice untersuchen und
-sicherstellen, dass unsere Mitarbeiter besser geschult werden, um Ihnen in
-Zukunft eine bessere Unterstützung bieten zu können.
-Wir hoffen, dass Sie uns eine weitere Chance geben, um Ihr Vertrauen
-zurückzugewinnen. Bitte teilen Sie uns mit, wie wir Ihnen helfen können, und wir
-werden unser Bestes tun, um Ihre Anliegen zu lösen.
+nur hochwertige Produkte anbieten. Wir werden die Beschreibung auf unserer
+Website überprüfen und gegebenenfalls anpassen, um sicherzustellen, dass sie
+genau und korrekt ist.
+Wir möchten Ihnen auch anbieten, das Produkt kostenlos zurückzusenden und Ihnen
+einen Ersatz oder eine Rückerstattung anzubieten. Bitte kontaktieren Sie uns
+innerhalb der nächsten 7 Tage, um die Rücksendung zu arrangieren.
+Wir entschuldigen uns erneut für die Unannehmlichkeiten und hoffen, dass wir Ihr
+Vertrauen zurückgewinnen können.
 Mit freundlichen Grüßen,
-[Ihr Name]
-[Ihr Unternehmen]
 
+[Ihr Name]
+[Ihre Funktion]
+[Ihre Kontaktinformationen]
 
 Response: 
 Dear customer,
@@ -465,63 +480,64 @@ Thank you for your feedback. We regret that you are not satisfied with your
 shopping experience. Your opinion is important to us, and we would like to help
 you find a satisfactory solution.
 First of all, we would like to apologize for the delayed delivery. We have
-reviewed the delivery and will ensure that this does not happen again in the
+checked the delivery and will ensure that this does not happen again in the
 future.
-Regarding the quality of the product, we would like to assure you that we attach
-great importance to the quality of our products. We will investigate the
-complaint about the quality of the product and contact you to find a solution.
-We would also like to emphasize that we are constantly striving to improve our
-customer service. We will investigate your complaint about customer service and
-ensure that our employees are better trained to provide you with better support
-in the future.
-We hope that you will give us another chance to regain your trust. Please let us
-know how we can help you, and we will do our best to resolve your concerns.
+Regarding the quality of the product, we would like to assure you that we only
+offer high-quality products. We will review the description on our website and,
+if necessary, adjust it to ensure that it is accurate and correct.
+We would also like to offer you the option to return the product free of charge
+and offer you a replacement or a refund. Please contact us within the next 7
+days to arrange the return.
+We apologize once again for the inconvenience and hope that we can regain your
+trust.
 Best regards,
+
 [Your Name]
-[Your Company]</code></pre>
+[Your Position]
+[Your Contact Information]</code></pre>
 </div>
 </div>
 </section>
 <section id="final-report" class="level3">
 <h3 class="anchored" data-anchor-id="final-report">Final Report</h3>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fix_for_markdown(s):</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">'  </span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>final_report <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="ss">### Initial Review</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>review<span class="sc">}</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="ss">### Language</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>what_language_response<span class="sc">}</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="ss">### Translation</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>translation_response<span class="sc">}</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="ss">### Summary</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>summarize_response<span class="sc">}</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="ss">### Sentiment 1 (very negative) to 5 (very positive)</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>sentiment_response<span class="sc">}</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="ss">### Categorized Main Issue</span></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>category_response<span class="sc">}</span></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a><span class="ss">### Potential Improvements</span></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>improvements_response<span class="sc">}</span></span>
-<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a><span class="ss">### Individualized Email Response</span></span>
-<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>german_response<span class="sc">}</span></span>
-<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a><span class="ss">### Translation to English</span></span>
-<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>english_response<span class="sc">}</span></span>
-<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>fixed <span class="op">=</span> final_report.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">'  </span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>display(Markdown(fixed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fix_for_markdown(s):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">'  </span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>final_report <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="ss">### Initial Review</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>review<span class="sc">}</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="ss">### Language</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>what_language_response<span class="sc">}</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="ss">### Translation</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>translation_response<span class="sc">}</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="ss">### Summary</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>summarize_response<span class="sc">}</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="ss">### Sentiment 1 (very negative) to 5 (very positive)</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>sentiment_response<span class="sc">}</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="ss">### Categorized Main Issue</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>category_response<span class="sc">}</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="ss">### Potential Improvements</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>improvements_response<span class="sc">}</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a><span class="ss">### Individualized Email Response</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>german_response<span class="sc">}</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a><span class="ss">### Translation to English</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>english_response<span class="sc">}</span></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>fixed <span class="op">=</span> final_report.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">'  </span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>display(Markdown(fixed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <section id="initial-review-1" class="level3">
 <h3 class="anchored" data-anchor-id="initial-review-1">Initial Review</h3>
@@ -544,8 +560,8 @@ was not very helpful. I expect an immediate solution to this problem.</p>
 </section>
 <section id="summary" class="level3">
 <h3 class="anchored" data-anchor-id="summary">Summary</h3>
-<p>The reviewer expresses dissatisfaction with the product’s quality, late<br>
-delivery, and unhelpful customer service, demanding an immediate solution.</p>
+<p>The reviewer is extremely unhappy with the product’s quality, late delivery, and<br>
+unhelpful customer service, demanding an immediate solution.</p>
 </section>
 <section id="sentiment-1-very-negative-to-5-very-positive" class="level3">
 <h3 class="anchored" data-anchor-id="sentiment-1-very-negative-to-5-very-positive">Sentiment 1 (very negative) to 5 (very positive)</h3>
@@ -575,19 +591,18 @@ Zunächst möchten wir uns für die verspätete Lieferung entschuldigen. Wir hab
 die Lieferung überprüft und werden sicherstellen, dass dies in Zukunft nicht<br>
 mehr vorkommt.<br>
 Was die Qualität des Produkts betrifft, möchten wir Ihnen versichern, dass wir<br>
-großen Wert auf die Qualität unserer Produkte legen. Wir werden die Beschwerde<br>
-über die Qualität des Produkts untersuchen und uns mit Ihnen in Verbindung<br>
-setzen, um eine Lösung zu finden.<br>
-Wir möchten auch betonen, dass wir unseren Kundenservice ständig verbessern<br>
-möchten. Wir werden Ihre Beschwerde über den Kundenservice untersuchen und<br>
-sicherstellen, dass unsere Mitarbeiter besser geschult werden, um Ihnen in<br>
-Zukunft eine bessere Unterstützung bieten zu können.<br>
-Wir hoffen, dass Sie uns eine weitere Chance geben, um Ihr Vertrauen<br>
-zurückzugewinnen. Bitte teilen Sie uns mit, wie wir Ihnen helfen können, und wir<br>
-werden unser Bestes tun, um Ihre Anliegen zu lösen.<br>
-Mit freundlichen Grüßen,<br>
-[Ihr Name]<br>
-[Ihr Unternehmen]</p>
+nur hochwertige Produkte anbieten. Wir werden die Beschreibung auf unserer<br>
+Website überprüfen und gegebenenfalls anpassen, um sicherzustellen, dass sie<br>
+genau und korrekt ist.<br>
+Wir möchten Ihnen auch anbieten, das Produkt kostenlos zurückzusenden und Ihnen<br>
+einen Ersatz oder eine Rückerstattung anzubieten. Bitte kontaktieren Sie uns<br>
+innerhalb der nächsten 7 Tage, um die Rücksendung zu arrangieren.<br>
+Wir entschuldigen uns erneut für die Unannehmlichkeiten und hoffen, dass wir Ihr<br>
+Vertrauen zurückgewinnen können.<br>
+Mit freundlichen Grüßen,</p>
+<p>[Ihr Name]<br>
+[Ihre Funktion]<br>
+[Ihre Kontaktinformationen]</p>
 </section>
 <section id="translation-to-english" class="level3">
 <h3 class="anchored" data-anchor-id="translation-to-english">Translation to English</h3>
@@ -596,20 +611,20 @@ Mit freundlichen Grüßen,<br>
 shopping experience. Your opinion is important to us, and we would like to help<br>
 you find a satisfactory solution.<br>
 First of all, we would like to apologize for the delayed delivery. We have<br>
-reviewed the delivery and will ensure that this does not happen again in the<br>
+checked the delivery and will ensure that this does not happen again in the<br>
 future.<br>
-Regarding the quality of the product, we would like to assure you that we attach<br>
-great importance to the quality of our products. We will investigate the<br>
-complaint about the quality of the product and contact you to find a solution.<br>
-We would also like to emphasize that we are constantly striving to improve our<br>
-customer service. We will investigate your complaint about customer service and<br>
-ensure that our employees are better trained to provide you with better support<br>
-in the future.<br>
-We hope that you will give us another chance to regain your trust. Please let us<br>
-know how we can help you, and we will do our best to resolve your concerns.<br>
-Best regards,<br>
-[Your Name]<br>
-[Your Company]</p>
+Regarding the quality of the product, we would like to assure you that we only<br>
+offer high-quality products. We will review the description on our website and,<br>
+if necessary, adjust it to ensure that it is accurate and correct.<br>
+We would also like to offer you the option to return the product free of charge<br>
+and offer you a replacement or a refund. Please contact us within the next 7<br>
+days to arrange the return.<br>
+We apologize once again for the inconvenience and hope that we can regain your<br>
+trust.<br>
+Best regards,</p>
+<p>[Your Name]<br>
+[Your Position]<br>
+[Your Contact Information]</p>
 </section>
 </div>
 </div>

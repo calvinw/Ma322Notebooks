@@ -7,56 +7,26 @@ if os.environ.get("OPENAI_API_KEY") is None:
    os.environ["OPENAI_API_KEY"] = "paste your api key here"
 ```
 
-## Install Packages to Call the LLM
+## Setup to Call the LLM
 
-For this part we set up the LLM.
+For this part, we install the required package to interact with OpenAIs language model.
 
 ```{python}
 #| eval: false
-!pip3 install openai
+!pip3 install langchain langchain_openai
 ```
 
 ```{python}
 #| eval: true
-import openai
-import textwrap
+import os
+from langchain_openai import ChatOpenAI
+from IPython.display import Markdown
 
-def wrap_text(text, max_width=80):
-    """
-    Wraps the text to the specified max_width, preserving line breaks and formatting.
-    """
-    lines = text.splitlines()  # Split the text into lines
-    wrapped_lines = []
+model_name = "gpt-3.5-turbo"
+display(Markdown("#### Model Used: " + model_name))
 
-    for line in lines:
-        if line.strip():  # Skip empty lines
-            wrapped_line = textwrap.fill(line, max_width, initial_indent='', subsequent_indent='')
-            wrapped_lines.extend(wrapped_line.splitlines())  # Preserve line breaks
-        else:
-            wrapped_lines.append('')  # Keep empty lines
-
-    return '\n'.join(wrapped_lines)
-
-
-def print_prompt_and_response(prompt, response):
-    print("Prompt: ")
-    print(prompt)
-    print("")
-    print("Response: ")
-    print(response)
-    print(80*"=")
-
-def get_completion(prompt, temperature=0.0):
-    # Create the OpenAI LLM
-    client = openai.OpenAI()
-    chat_completion = client.chat.completions.create(
-                           model="gpt-3.5-turbo",
-                           messages=[{"role": "user", "content": prompt}],
-                           temperature=temperature,
-                           max_tokens=1024)
-
-    response = chat_completion.choices[0].message.content
-    wrapped_response = wrap_text(response)
-    return wrapped_response
+llm = ChatOpenAI(model_name=model_name,
+                 openai_api_key=os.environ.get("OPENAI_API_KEY"))
 ```
 
+{{< include _llm_utils.qmd >}}

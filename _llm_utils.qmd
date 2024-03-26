@@ -1,0 +1,41 @@
+
+```{python}
+#| eval: true
+import textwrap
+from langchain_core.prompts import ChatPromptTemplate
+
+def wrap_text(text, max_width=80):
+    """
+    Wraps the text to the specified max_width, preserving line breaks and formatting.
+    """
+    lines = text.splitlines()  # Split the text into lines
+    wrapped_lines = []
+    for line in lines:
+        if line.strip():  # Skip empty lines
+            wrapped_line = textwrap.fill(line, max_width, initial_indent='', subsequent_indent='')
+            wrapped_lines.extend(wrapped_line.splitlines())  # Preserve line breaks
+        else:
+            wrapped_lines.append('')  # Keep empty lines
+    return '\n'.join(wrapped_lines)
+
+def print_prompt_and_response(prompt, response):
+    print("Prompt: ")
+    print(wrap_text(prompt))
+    print("")
+    print("Response: ")
+    print(response)
+
+def print_messages_and_response(messages, response):
+    prompt = ChatPromptTemplate(messages=messages)
+    print_prompt_and_response(prompt.format(), response)
+
+def get_completion(prompt, temperature=0.0):
+    response = llm.invoke(prompt, temperature=temperature)
+    wrapped_response = wrap_text(response.content)
+    return wrapped_response
+
+def get_completion_messages(messages, temperature=0.0):
+    response=llm.invoke(messages, temperature=temperature)
+    wrapped_response = wrap_text(response.content)
+    return wrapped_response
+```

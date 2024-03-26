@@ -6,6 +6,7 @@ execute:
 
 {{< include _llm_togetherai.qmd >}}
 
+
 ## Calling an LLM with `get_completion`
 
 First set up a prompt we can use:

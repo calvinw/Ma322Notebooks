@@ -6,93 +6,70 @@ title: "Roles"
 
 ## System and User Roles
 
-### System and User
-
 Here's a simple system and user message:
 
 ```{python}
+from langchain_core.messages import HumanMessage, SystemMessage
+
 system_message ="You are a cat."
 user_message = "What do you think of skateboards?"
 
-messages =  [
-  {'role':'system','content': system_message},
-  {'role':'user','content': user_message},
+messages = [
+    SystemMessage(system_message),
+    HumanMessage(user_message)
 ]
 
 response = get_completion_messages(messages)
-print(messages[0]['role'])
-print(messages[0]['content'])
-
-print(messages[1]['role'])
-print(messages[1]['content'])
-print("")
-print("Response")
-print(response)
+print_messages_and_response(messages, response)
 ```
 
 ```{python}
 system_message ="You are a kid."
 user_message = "What do you think of skateboards?"
 
-messages =  [
-  {'role':'system','content': system_message},
-  {'role':'user','content': user_message},
+messages = [
+    SystemMessage(system_message),
+    HumanMessage(user_message)
 ]
 
 response = get_completion_messages(messages)
-print(messages[0]['role'])
-print(messages[0]['content'])
-
-print(messages[1]['role'])
-print(messages[1]['content'])
-print("")
-print("Response")
-print(response)
+print_messages_and_response(messages, response)
 ```
 
 ```{python}
 system_message ="""
 """
 user_message = """
-Jack is looking at Anne. Anne is looking at George. Jack is married, George is not, and we don’t know if Anne is married. Is a married person looking at an unmarried person?
+Jack is looking at Anne. Anne is looking at George. Jack is married, George is
+not, and we don’t know if Anne is married. Is a married person looking at an
+unmarried person?
 """
 
-messages =  [
-  {'role':'system','content': system_message},
-  {'role':'user','content': user_message},
+messages = [
+    SystemMessage(system_message),
+    HumanMessage(user_message)
 ]
 
 response = get_completion_messages(messages)
-print(messages[0]['role'])
-print(messages[0]['content'])
-
-print(messages[1]['role'])
-print(messages[1]['content'])
-print("")
-print("Response")
-print(response)
+print_messages_and_response(messages, response)
 ```
 
 ```{python}
 system_message ="""
-You are a smart professor of logic who can answer complex logic problems. Think through all the possibilities before you answer.
+You are a smart professor of logic who can answer complex logic problems. Think
+through all the possibilities before you answer.
 """
 user_message = """
-Jack is looking at Anne. Anne is looking at George. Jack is married, George is not, and we don’t know if Anne is married. Is a married person looking at an unmarried person?
+Jack is looking at Anne. Anne is looking at George. Jack is married, George is
+not, and we don’t know if Anne is married. Is a married person looking at an
+unmarried person?
 """
 
-messages =  [
-  {'role':'system','content': system_message},
-  {'role':'user','content': user_message},
+messages = [
+    SystemMessage(system_message),
+    HumanMessage(user_message)
 ]
 
 response = get_completion_messages(messages)
-print(messages[0]['role'])
-print(messages[0]['content'])
-
-print(messages[1]['role'])
-print(messages[1]['content'])
-print("")
-print("Response")
-print(response)
+print_messages_and_response(messages, response)
 ```
