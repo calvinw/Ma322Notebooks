@@ -1,0 +1,580 @@
+---
+title: 'Product Inquiries'
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+# Product Inquiries for a Retail Store
+
+Suppose we have the a simple retail store with the following categories and
+products for these categories:
+
+**Dresses**
+
+* Boho Chic Maxi Dress
+* Little Black Dress
+* Floral Sundress
+* Off-the-Shoulder Dress
+* Lace Cocktail Dress
+
+**Jeans**
+
+* High-Waisted Skinny Jeans
+* Distressed Boyfriend Jeans
+* Black Skinny Jeans
+* Mom Jeans
+* Flare Jeans
+
+**Tops & Blouses**
+
+* Floral Print Blouse
+* Lace Trim Cami
+* Striped Button-Down Shirt
+* Off-the-Shoulder Top
+* Graphic Tee
+
+**Sweaters & Cardigans**
+
+* Oversized Knit Sweater
+* Cropped Cardigan
+* Turtleneck Sweater
+* Cable Knit Pullover
+* Cashmere V-Neck Sweater
+
+**Jackets & Coats**
+
+* Leather Biker Jacket
+* Denim Jacket
+* Trench Coat
+* Puffer Jacket
+* Wool Peacoat
+
+**Shoes**
+
+* Strappy High Heels
+* Leather Ankle Boots
+* White Sneakers
+* Ballet Flats
+* Espadrille Wedges
+
+The product names are just the names in each category and there are 5 in each
+category
+
+We want to build an LLM application that will identify products and categories
+mentioned in customer queries or questions. We then want to have the LLM
+extract all the categories and products mentioned into a list of categories and
+products individual products. Based on that list we look up the detailed
+product information for each product, and pass that information back to the LLM
+as context to answer the customers queries with relevant details from the
+products or categories.
+
+
+```{python}
+delimiter = "####"
+
+examples=f"""
+Example 1:
+Query: {delimiter}I need a new outfit for a summer music festival. The Boho Chic Maxi Dress looks perfect!{delimiter}
+Output: [{{'category': 'Dresses', 'products': ['Boho Chic Maxi Dress']}}]
+Example 2:
+Query: {delimiter}Can you recommend some good jeans? Also I am interested in the Leather Biker Jacket for a cool edgy look.{delimiter}
+Output: [{{'category': 'Jeans'}}, {{'category': 'Jackets & Coats', 'products': ['Leather Biker Jacket']}}]
+Example 3:
+Query: {delimiter} Can you tell me about the Floral Print Blouse and the High-Waisted Skinny Jeans?{delimiter}
+Output: [[{{'category': 'Tops & Blouses', 'products': ['Floral Print Blouse']}}, {{'category': 'Jeans', 'products': ['High-Waisted Skinny Jeans']}}]
+"""
+
+system_message = f"""
+You will be provided with customer service queries related to various product
+categories. The queries will be delimited by {delimiter} characters.
+Your task is to output a Python list of dictionaries, where each dictionary
+represents a product category or specific product(s) mentioned in the query.
+Each dictionary should have the following formats:
+{{
+    'category': <one of the allowed categories>
+}}
+OR
+{{
+    'category': <one of the allowed categories>, 'products': <list of product names>
+}}
+In the second example the product should be in the category listed.
+If no category or product is found in the query, output an empty list [].
+Allowed Categories:
+- Dresses
+- Jeans
+- Tops & Blouses
+- Sweaters & Cardigans
+- Jackets & Coats
+- Shoes
+Allowed Products:
+Dresses:
+- Boho Chic Maxi Dress
+- Little Black Dress
+- Floral Sundress
+- Off-the-Shoulder Dress
+- Lace Cocktail Dress
+Jeans:
+- High-Waisted Skinny Jeans
+- Distressed Boyfriend Jeans
+- Black Skinny Jeans
+- Mom Jeans
+- Flare Jeans
+Tops & Blouses:
+- Floral Print Blouse
+- Lace Trim Cami
+- Striped Button-Down Shirt
+- Off-the-Shoulder Top
+- Graphic Tee
+Sweaters & Cardigans:
+- Oversized Knit Sweater
+- Cropped Cardigan
+- Turtleneck Sweater
+- Cable Knit Pullover
+- Cashmere V-Neck Sweater
+Jackets & Coats:
+- Leather Biker Jacket
+- Denim Jacket
+- Trench Coat
+- Puffer Jacket
+- Wool Peacoat
+Shoes:
+- Strappy High Heels
+- Leather Ankle Boots
+- White Sneakers
+- Ballet Flats
+- Espadrille Wedges
+{examples}
+Only output the list of dictionaries, with nothing else.
+"""
+
+user_message_1 = f"""
+ Tell me about the Floral Print Blouse and
+ the Leather Ankle Boots.
+ Also tell me about your dresses."""
+messages =  [
+  {'role':'system', 'content': system_message},
+  {'role':'user', 'content': f"{delimiter}{user_message_1}{delimiter}"},
+]
+category_and_product_response_1 = get_completion_messages(messages)
+print(category_and_product_response_1)
+```
+
+```{python}
+user_message_2 = f"""
+Can you tell me about your jeans? Also your jackets and coats."""
+messages =  [
+  {'role':'system','content': system_message},
+  {'role':'user','content': f"{delimiter}{user_message_2}{delimiter}"},
+]
+response = get_completion_messages(messages)
+print(response)
+```
+
+### Retrieve detailed product information for extracted products and categories
+```{python}
+#| code-fold: true
+# product information
+products = {
+    "Boho Chic Maxi Dress": {
+        "name": "Boho Chic Maxi Dress",
+        "category": "Dresses",
+        "brand": "Bohemian Vibes",
+        "price": 79.99,
+        "rating": 4.5,
+        "features": ["Flowy silhouette", "Floral print", "Adjustable straps", "Lined"],
+        "description": "Embrace your free-spirited style with this beautiful boho chic maxi dress. The flowy silhouette and floral print create a relaxed and feminine look, while the adjustable straps and lining ensure a comfortable and flattering fit. Perfect for summer music festivals, beach days, or any casual occasion where you want to channel your inner bohemian goddess."
+    },
+    "Little Black Dress": {
+        "name": "Little Black Dress",
+        "category": "Dresses",
+        "brand": "Classic Chic",
+        "price": 99.99,
+        "rating": 4.7,
+        "features": ["Sleeveless", "Scoop neckline", "Fitted waist", "Knee-length"],
+        "description": "The little black dress is a timeless wardrobe staple, and this version is the epitome of elegance. The sleeveless design and scoop neckline create a flattering silhouette, while the fitted waist and knee-length hem offer a sophisticated and versatile look. Whether you're attending a formal event or need a chic option for the office, this classic LBD is sure to become a go-to in your closet."
+    },
+    "Floral Sundress": {
+        "name": "Floral Sundress",
+        "category": "Dresses",
+        "brand": "Sunny Days",
+        "price": 49.99,
+        "rating": 4.3,
+        "features": ["Spaghetti straps", "Sweetheart neckline", "Elastic waist", "Midi length"],
+        "description": "Embrace the warm weather in this charming floral sundress. The lightweight and breezy fabric keeps you cool, while the spaghetti straps and sweetheart neckline create a feminine and flattering silhouette. The elastic waist provides a comfortable and customizable fit, and the midi length is both stylish and practical. Whether you're strolling through a garden, attending a backyard BBQ, or enjoying a day at the beach, this sundress is the perfect warm-weather companion."
+    },
+    "Off-the-Shoulder Dress": {
+        "name": "Off-the-Shoulder Dress",
+        "category": "Dresses",
+        "brand": "Romantic Ruffles",
+        "price": 69.99,
+        "rating": 4.6,
+        "features": ["Off-the-shoulder neckline", "Ruffled sleeves", "Fitted bodice", "Flared skirt"],
+        "description": "Embrace your romantic side with this stunning off-the-shoulder dress. The alluring off-the-shoulder neckline and ruffled sleeves create a flirtatious and feminine look, while the fitted bodice and flared skirt flatter your figure. Whether you're attending a summer wedding, a fancy dinner date, or a special occasion, this dress is sure to turn heads and make you feel confident and beautiful."
+    },
+    "Lace Cocktail Dress": {
+        "name": "Lace Cocktail Dress",
+        "category": "Dresses",
+        "brand": "Elegant Evening",
+        "price": 129.99,
+        "rating": 4.8,
+        "features": ["Lace overlay", "Illusion neckline", "Fitted silhouette", "Back zipper"],
+        "description": "Exude elegance and sophistication in this stunning lace cocktail dress. The delicate lace overlay creates a romantic and luxurious look, while the illusion neckline and fitted silhouette accentuate your curves. The back zipper closure ensures a secure and comfortable fit, making this dress the perfect choice for any formal event or special occasion. Whether you're attending a wedding, a gala, or a fancy dinner party, this lace cocktail dress will have you feeling like the belle of the ball."
+    },
+    "High-Waisted Skinny Jeans": {
+        "name": "High-Waisted Skinny Jeans",
+        "category": "Jeans",
+        "brand": "Denim Darling",
+        "price": 59.99,
+        "rating": 4.4,
+        "features": ["High-waisted", "Skinny leg", "Stretch denim", "Five-pocket style"],
+        "description": "These high-waisted skinny jeans are a wardrobe essential that will flatter your figure and keep you comfortable all day long. The high-rise waist smooths and sculpts your midsection, while the skinny leg creates a sleek and streamlined silhouette. The stretch denim fabric provides the perfect amount of give, allowing you to move freely without sacrificing style. With the classic five-pocket design, these jeans are both functional and fashionable, making them a versatile choice for any casual or dressy occasion."
+    },
+    "Distressed Boyfriend Jeans": {
+        "name": "Distressed Boyfriend Jeans",
+        "category": "Jeans",
+        "brand": "Casual Cool",
+        "price": 69.99,
+        "rating": 4.2,
+        "features": ["Relaxed fit", "Distressed details", "Cuffed hems", "Five-pocket style"],
+        "description": "Embrace your laid-back, effortless style with these distressed boyfriend jeans. The relaxed fit and cuffed hems create a cool, casual vibe, while the distressed details add a touch of edge and character. The five-pocket design and durable denim construction ensure all-day comfort, whether you're running errands, meeting up with friends, or enjoying a weekend adventure. Pair these jeans with a simple tee and sneakers for a classic off-duty look, or dress them up with a blouse and heels for a more polished aesthetic."
+    },
+    "Black Skinny Jeans": {
+        "name": "Black Skinny Jeans",
+        "category": "Jeans",
+        "brand": "Sleek & Chic",
+        "price": 49.99,
+        "rating": 4.5,
+        "features": ["Skinny leg", "Mid-rise waist", "Stretch denim", "Five-pocket style"],
+        "description": "These black skinny jeans are a wardrobe staple that will seamlessly transition from day to night. The skinny leg and mid-rise waist create a flattering and elongating silhouette, while the stretch denim fabric ensures all-day comfort and a perfect fit. The classic five-pocket design adds a touch of timeless style, making these jeans a versatile choice for any occasion. Dress them up with a blouse and heels for a night out, or keep it casual with a t-shirt and sneakers for a laid-back weekend look."
+    },
+    "Mom Jeans": {
+        "name": "Mom Jeans",
+        "category": "Jeans",
+        "brand": "Retro Revival",
+        "price": 59.99,
+        "rating": 4.3,
+        "features": ["High-waisted", "Relaxed fit", "Tapered leg", "Vintage wash"],
+        "description": "Embrace the nostalgic charm of the 90s with these on-trend mom jeans. The high-waisted design and relaxed fit create a flattering and comfortable silhouette, while the tapered leg and vintage wash add a touch of retro style. Whether you're channeling your inner '90s kid or simply looking for a pair of jeans that offer both style and comfort, these mom jeans are the perfect choice. Pair them with a crop top and platform sneakers for a cool, casual vibe, or dress them up with a tucked-in blouse and heels for a more polished look."
+    },
+    "Flare Jeans": {
+        "name": "Flare Jeans",
+        "category": "Jeans",
+        "brand": "70s Flair",
+        "price": 69.99,
+        "rating": 4.6,
+        "features": ["High-waisted", "Flared leg", "Stretch denim", "Five-pocket style"],
+        "description": "Embrace your inner 70s goddess with these flare jeans. The high-waisted design and dramatic flared leg create a flattering and elongating silhouette, while the stretch denim fabric ensures all-day comfort and a perfect fit. The classic five-pocket style and timeless denim wash make these jeans a versatile addition to your wardrobe. Pair them with a tucked-in blouse and platform heels for a retro-inspired look, or keep it casual with a graphic tee and sneakers for a laid-back vibe."
+    },
+    "Floral Print Blouse": {
+        "name": "Floral Print Blouse",
+        "category": "Tops & Blouses",
+        "brand": "Blooming Beauty",
+        "price": 39.99,
+        "rating": 4.4,
+        "features": ["Floral print", "V-neckline", "Short sleeves", "Lightweight fabric"],
+        "description": "Embrace the beauty of the season with this charming floral print blouse. The vibrant floral pattern adds a touch of femininity and style to any outfit, while the v-neckline and short sleeves create a flattering and comfortable silhouette. The lightweight fabric ensures you'll stay cool and comfortable, making this blouse a versatile choice for work, weekends, or any occasion where you want to channel your inner garden goddess."
+    },
+    "Lace Trim Cami": {
+        "name": "Lace Trim Cami",
+        "category": "Tops & Blouses",
+        "brand": "Delicate Details",
+        "price": 29.99,
+        "rating": 4.2,
+        "features": ["Lace trim", "Adjustable straps", "Scalloped neckline", "Satin fabric"],
+        "description": "Elevate your everyday style with this delicate lace trim cami. The romantic lace detailing adds a touch of elegance, while the adjustable straps and scalloped neckline create a flattering and comfortable fit. The satin fabric provides a luxurious feel against your skin, making this cami a versatile layering piece or a chic standalone top. Pair it with your favorite jeans and sandals for a casual-cool look, or dress it up with a blazer and heels for a more polished ensemble."
+    },
+    "Striped Button-Down Shirt": {
+        "name": "Striped Button-Down Shirt",
+        "category": "Tops & Blouses",
+        "brand": "Preppy Stripes",
+        "price": 49.99,
+        "rating": 4.5,
+        "features": ["Striped pattern", "Button-down front", "Collared neckline", "Long sleeves"],
+        "description": "This classic striped button-down shirt is a wardrobe essential that will never go out of style. The timeless striped pattern and collared neckline create a polished and preppy look, while the button-down front and long sleeves offer a versatile and comfortable fit. Tuck it into a pair of high-waisted jeans for a chic casual ensemble, or layer it under a blazer for a more professional office-ready outfit. No matter how you style it, this striped button-down is sure to become a go-to in your closet."
+    },
+    "Off-the-Shoulder Top": {
+        "name": "Off-the-Shoulder Top",
+        "category": "Tops & Blouses",
+        "brand": "Bare Shoulders",
+        "price": 34.99,
+        "rating": 4.3,
+        "features": ["Off-the-shoulder neckline", "Elastic top", "Short sleeves", "Lightweight fabric"],
+        "description": "Embrace the trend of the moment with this flirty off-the-shoulder top. The elastic neckline and short sleeves create a flattering and comfortable silhouette, while the lightweight fabric keeps you cool and comfortable. Whether you're dressing up for a night out or keeping it casual for a weekend brunch, this off-the-shoulder top is the perfect way to show off your shoulders and add a touch of effortless style to your look."
+    },
+    "Graphic Tee": {
+        "name": "Graphic Tee",
+        "category": "Tops & Blouses",
+        "brand": "Statement Tees",
+        "price": 24.99,
+        "rating": 4.1,
+        "features": ["Graphic print", "Crew neckline", "Short sleeves", "Cotton blend"],
+        "description": "Make a bold statement with this fun and expressive graphic tee. The eye-catching print adds a touch of personality to any outfit, while the classic crew neckline and short sleeves provide a comfortable and versatile fit. Crafted from a soft cotton blend, this tee is perfect for everyday wear, whether you're running errands, meeting up with friends, or just lounging at home. Pair it with your favorite jeans and sneakers for a casual-cool look, or dress it up with a blazer and skirt for a more polished vibe."
+    },
+    "Oversized Knit Sweater": {
+        "name": "Oversized Knit Sweater",
+        "category": "Sweaters & Cardigans",
+        "brand": "Cozy Comfort",
+        "price": 59.99,
+        "rating": 4.6,
+        "features": ["Oversized fit", "Chunky knit", "Crew neckline", "Long sleeves"],
+        "description": "Wrap yourself in the ultimate cozy comfort with this oversized knit sweater. The chunky, textured knit fabric and relaxed, oversized fit create a stylish and snuggly look that's perfect for chilly days. The classic crew neckline and long sleeves provide ample coverage, while the slightly boxy silhouette flatters a variety of body types. Whether you're curled up at home, running errands, or enjoying a weekend brunch, this sweater will keep you warm and looking effortlessly chic."
+    },
+    "Cropped Cardigan": {
+        "name": "Cropped Cardigan",
+        "category": "Sweaters & Cardigans",
+        "brand": "Layered Chic",
+        "price": 44.99,
+        "rating": 4.3,
+        "features": ["Cropped length", "Button-front", "Ribbed trim", "Soft knit"],
+        "description": "Add a touch of sophistication to any outfit with this versatile cropped cardigan. The button-front design and cropped length create a flattering and stylish silhouette, while the ribbed trim and soft knit fabric provide a cozy and comfortable feel. Layer it over a dress or camisole for a polished look, or throw it on with a t-shirt and jeans for a casual-chic vibe. This cardigan is the perfect layering piece to keep you warm and stylish all season long."
+    },
+    "Turtleneck Sweater": {
+        "name": "Turtleneck Sweater",
+        "category": "Sweaters & Cardigans",
+        "brand": "Timeless Knits",
+        "price": 49.99,
+        "rating": 4.5,
+        "features": ["Turtleneck", "Slim fit", "Ribbed knit", "Long sleeves"],
+        "description": "Elevate your cold-weather wardrobe with this classic turtleneck sweater. The high neckline and slim, fitted silhouette create a sophisticated and polished look, while the ribbed knit fabric provides warmth and comfort. Pair this sweater with your favorite trousers or skirts for a chic office-ready ensemble, or tuck it into high-waisted jeans for a more casual-cool vibe. No matter how you style it, this turtleneck sweater is a timeless piece that will never go out of fashion."
+    },
+    "Cable Knit Pullover": {
+        "name": "Cable Knit Pullover",
+        "category": "Sweaters & Cardigans",
+        "brand": "Rustic Charm",
+        "price": 69.99,
+        "rating": 4.7,
+        "features": ["Cable knit pattern", "Crew neckline", "Long sleeves", "Wool blend"],
+        "description": "Cozy up in the charming and textured appeal of this cable knit pullover. The intricate cable knit pattern adds visual interest and a touch of rustic elegance, while the crew neckline and long sleeves provide ample coverage and warmth. Crafted from a soft wool blend, this sweater is perfect for chilly days spent exploring the outdoors or relaxing by the fireplace. Pair it with your favorite jeans and boots for a classic, countryside-inspired look."
+    },
+    "Cashmere V-Neck Sweater": {
+        "name": "Cashmere V-Neck Sweater",
+        "category": "Sweaters & Cardigans",
+        "brand": "Luxe Layers",
+        "price": 99.99,
+        "rating": 4.8,
+        "features": ["V-neckline", "Soft cashmere", "Relaxed fit", "Long sleeves"],
+        "description": "Indulge in the ultimate in luxury with this cashmere v-neck sweater. The soft and sumptuous cashmere fabric is not only durable and long-lasting, but it also provides unparalleled warmth and comfort. The relaxed fit and v-neckline create a flattering and versatile silhouette that can be dressed up or down. Whether you're pairing it with tailored trousers for the office or tucking it into your favorite jeans for a weekend brunch, this cashmere sweater will elevate any outfit with its timeless elegance and superior quality."
+    },
+    "Leather Biker Jacket": {
+        "name": "Leather Biker Jacket",
+        "category": "Jackets & Coats",
+        "brand": "Rebel Chic",
+        "price": 199.99,
+        "rating": 4.9,
+        "features": ["Genuine leather", "Asymmetrical zipper", "Notched lapels", "Zippered pockets"],
+        "description": "Channel your inner rebel with this bold and edgy leather biker jacket. Crafted from high-quality genuine leather, this jacket is not only stylish but also durable and long-lasting. The asymmetrical zipper and notched lapels give it a classic biker look, while the zippered pockets provide convenient storage for your essentials. Whether you're pairing it with a flowy dress for a night out or throwing it on over a t-shirt and jeans for a casual weekend look, this leather biker jacket is sure to make a statement."
+    },
+    "Denim Jacket": {
+        "name": "Denim Jacket",
+        "category": "Jackets & Coats",
+        "brand": "Blue Jean Baby",
+        "price": 79.99,
+        "rating": 4.6,
+        "features": ["Classic denim", "Button-front", "Collared neckline", "Chest pockets"],
+        "description": "A timeless denim jacket is a wardrobe essential that never goes out of style. This classic version features a button-front closure, collared neckline, and chest pockets for a polished and versatile look. The durable denim construction ensures it will withstand the test of time, while the slightly relaxed fit allows for comfortable layering. Wear it over a sundress for a laid-back summer look, or pair it with a graphic tee and jeans for a cool, casual vibe. No matter how you style it, this denim jacket is sure to become a go-to piece in your closet."
+    },
+    "Trench Coat": {
+        "name": "Trench Coat",
+        "category": "Jackets & Coats",
+        "brand": "Classic Elegance",
+        "price": 149.99,
+        "rating": 4.7,
+        "features": ["Double-breasted", "Belted waist", "Notched lapels", "Waterproof fabric"],
+        "description": "Elevate your outerwear game with this sophisticated trench coat. The double-breasted design and belted waist create a flattering and structured silhouette, while the notched lapels and waterproof fabric provide both style and practicality. Whether you're braving a rainy day or simply need a polished topper for your outfit, this trench coat is the perfect choice. Slip it on over a dress for a chic office-ready look, or pair it with jeans and ankle boots for a timeless weekend ensemble."
+    },
+    "Puffer Jacket": {
+        "name": "Puffer Jacket",
+        "category": "Jackets & Coats",
+        "brand": "Arctic Adventure",
+        "price": 129.99,
+        "rating": 4.5,
+        "features": ["Quilted design", "Hooded", "Zip-front", "Insulated filling"],
+        "description": "Stay warm and cozy in this versatile puffer jacket. The quilted design and insulated filling provide ample warmth, while the hooded silhouette and zip-front closure offer protection from the elements. Whether you're braving the cold on a winter hike or simply running errands around town, this puffer jacket is the perfect outerwear choice. Its lightweight and packable construction makes it easy to layer over sweaters or throw in your bag for unexpected temperature drops."
+    },
+    "Wool Peacoat": {
+        "name": "Wool Peacoat",
+        "category": "Jackets & Coats",
+        "brand": "Nautical Chic",
+        "price": 179.99,
+        "rating": 4.8,
+        "features": ["Wool blend", "Double-breasted", "Notched lapels", "Flap pockets"],
+        "description": "Embrace timeless style with this classic wool peacoat. Crafted from a warm and durable wool blend, this coat offers both fashion and function. The double-breasted design and notched lapels create a structured and sophisticated silhouette, while the flap pockets provide practical storage. Whether you're dressing up for a formal event or simply need a polished topper for your everyday outfits, this wool peacoat is a wardrobe essential that will never go out of style."
+    },
+    "Strappy High Heels": {
+        "name": "Strappy High Heels",
+        "category": "Shoes",
+        "brand": "Glamour Girl",
+        "price": 89.99,
+        "rating": 4.6,
+        "features": ["Strappy design", "Stiletto heel", "Ankle strap", "Leather upper"],
+        "description": "Step out in style with these stunning strappy high heels. The sleek and sexy silhouette features a strappy design that wraps elegantly around the ankle, while the stiletto heel adds a touch of glamour. Crafted with a durable and comfortable leather upper, these heels are perfect for a night out on the town, a fancy dinner, or any occasion where you want to feel confident and fabulous. Pair them with a little black dress or your favorite going-out ensemble for a head-turning look."
+    },
+    "Leather Ankle Boots": {
+        "name": "Leather Ankle Boots",
+        "category": "Shoes",
+        "brand": "Urban Chic",
+        "price": 119.99,
+        "rating": 4.7,
+        "features": ["Genuine leather", "Stacked heel", "Side zipper", "Pointed toe"],
+        "description": "Step up your style game with these versatile leather ankle boots. Crafted from high-quality genuine leather, these boots offer both durability and a sleek, sophisticated look. The stacked heel provides a subtle lift, while the side zipper closure ensures a secure and easy fit. The pointed toe silhouette elongates the leg for a flattering and modern aesthetic. Pair these ankle boots with everything from skinny jeans to midi skirts for a polished and on-trend look that can take you from the office to a night out."
+    },
+    "White Sneakers": {
+        "name": "White Sneakers",
+        "category": "Shoes",
+        "brand": "Casual Kicks",
+        "price": 59.99,
+        "rating": 4.4,
+        "features": ["Canvas upper", "Rubber sole", "Lace-up closure", "Cushioned insole"],
+        "description": "These classic white sneakers are a wardrobe essential that will never go out of style. The canvas upper is durable and easy to clean, while the rubber sole provides excellent traction and support for all-day wear. The lace-up closure allows you to achieve a customized fit, and the cushioned insole ensures maximum comfort. Whether you're running errands, exploring the city, or just looking for a comfortable and stylish everyday shoe, these white sneakers are the perfect choice."
+    },
+    "Ballet Flats": {
+        "name": "Ballet Flats",
+        "category": "Shoes",
+        "brand": "Dainty Dancer",
+        "price": 49.99,
+        "rating": 4.3,
+        "features": ["Soft fabric", "Slip-on style", "Elasticized topline", "Rounded toe"],
+        "description": "Embrace your inner ballerina with these elegant and comfortable ballet flats. The soft fabric upper and elasticized topline provide a flexible and secure fit, while the rounded toe creates a feminine silhouette. Whether you're running errands, commuting to the office, or exploring a new city, these ballet flats will keep your feet happy and your style on point. Pair them with a sundress, cropped pants, or your favorite jeans for a chic and effortless look."
+    },
+    "Espadrille Wedges": {
+        "name": "Espadrille Wedges",
+        "category": "Shoes",
+        "brand": "Summer Soles",
+        "price": 79.99,
+        "rating": 4.5,
+        "features": ["Canvas upper", "Jute wedge", "Ankle strap", "Rubber sole"],
+        "description": "Elevate your summer style with these stylish and comfortable espadrille wedges. The canvas upper and jute wedge provide a classic, beachy look, while the ankle strap and rubber sole ensure a secure and stable fit. Whether you're strolling through a farmers market, attending a backyard party, or enjoying a day at the park, these wedges will keep you looking and feeling your best. Pair them with a flowy sundress or your favorite pair of shorts for a chic and effortless warm-weather ensemble."
+    }
+}
+
+```
+
+```{python}
+def get_product_by_name(name):
+    return products.get(name, None)
+def get_products_by_category(category):
+    return [product for product in products.values() if product["category"] == category]
+```
+```{python}
+print(get_product_by_name("Floral Print Blouse"))
+```
+```{python}
+print(get_products_by_category("Dresses"))
+```
+```{python}
+print(user_message_1)
+```
+```{python}
+print(category_and_product_response_1)
+```
+### Read Python string into Python list of dictionaries
+```{python}
+import json
+def read_string_to_list(input_string):
+    if input_string is None:
+        return None
+    try:
+        input_string= input_string.replace("'",'\"')
+        input_string= input_string.replace("\n"," ")
+        data = json.loads(input_string)
+        return data
+    except json.JSONDecodeError:
+        print("Error: Invalid JSON String")
+        return None
+```
+```{python}
+category_and_product_list = read_string_to_list(category_and_product_response_1)
+print(category_and_product_list)
+```
+```{python}
+def generate_output_string(data_list):
+    output_string = ""
+    if data_list is None:
+        return output_string
+    for data in data_list:
+        try:
+            if "products" in data:
+                products_list = data["products"]
+                for product_name in products_list:
+                    product = get_product_by_name(product_name)
+                    if product:
+                        output_string += json.dumps(product, indent=4) + "\n"
+                    else:
+                        print(f"Error: Product '{product_name}' not found")
+            elif "category" in data:
+                category_name = data["category"]
+                category_products = get_products_by_category(category_name)
+                for product in category_products:
+                    output_string += json.dumps(product, indent=4) + "\n"
+            else:
+                print("Error: Invalid object format")
+        except Exception as e:
+            print(f"Error: {e}")
+    return output_string
+```
+
+```{python}
+product_information_for_user_message_1 = generate_output_string(category_and_product_list)
+print(product_information_for_user_message_1)
+```
+### Generate answer to user query based on detailed product information
+
+```{python}
+system_message = f"""
+You are a customer service assistant for a large fashion retailer. Your role is
+to provide friendly and helpful information about the store's products to
+customers based on the provided product details.
+When a customer asks about specific products or categories, you should refer to
+the relevant product information and provide concise and accurate details about
+those products or categories. Summarize the features to the customer, avoid
+just listing the products.
+If the customer's query is unclear or if you need additional information to
+provide a better response, you should ask relevant follow-up questions.
+For example, if a customer asks about a specific product, you can provide
+details such as its features, brand, pricing, and customer rating. If a customer asks
+about a category, you can highlight the key products within that category and
+their unique features or styles.
+Remember to always use the provided product information as the source of your
+responses, and do not make up or speculate about any product details.
+"""
+assistant_message=f"""Relevant product information:\n\
+{product_information_for_user_message_1}
+"""
+messages =  [
+  {'role':'system', 'content': system_message},
+  {'role':'user', 'content': user_message_1},
+  {'role':'assistant', 'content': assistant_message}
+]
+final_response = get_completion_messages(messages)
+print(final_response)
+```
+
+```{python}
+user_messages = [
+    "I'm looking for a cozy and oversized knit sweater for the fall. What do you have that would work well?",
+    "Do you have any high-waisted skinny jeans that are stretchy and comfortable? I need a pair that will suck me in but still be easy to move in.",
+    "I really like the sound of that Leather Biker Jacket. Can you tell me more about the features and how it fits?",
+    "I'm going to a summer music festival and need the perfect floral sundress. Something lightweight and flowy would be great.",
+    "My friend has the Floral Print Blouse and it looks so cute. Do you have it in any other color options?",
+    "I'm trying to find a nice pair of white sneakers that are durable and easy to clean. Do you have any recommendations?",
+    "I saw the Cashmere V-Neck Sweater online and it looks so luxurious. Is it true to size or should I size up?",
+    "I need a new pair of jeans but I'm not sure if I should get the Distressed Boyfriend Jeans or the Flare Jeans. What's the difference between the two?",
+    "I'm looking for a Lace Cocktail Dress for an upcoming wedding. Do you have anything with a high-low hemline?",
+    "I really want to try the Espadrille Wedges but I'm worried they won't be comfortable for all-day wear. Can you tell me about the cushioning and support?"
+]
+
+category_and_product_response = [
+    {'category': 'Sweaters & Cardigans', 'products': ['Oversized Knit Sweater']},
+    {'category': 'Jeans', 'products': ['High-Waisted Skinny Jeans']},
+    {'category': 'Jackets & Coats', 'products': ['Leather Biker Jacket']},
+    {'category': 'Dresses', 'products': ['Floral Sundress']},
+    {'category': 'Tops & Blouses', 'products': ['Floral Print Blouse']},
+    {'category': 'Shoes', 'products': ['White Sneakers']},
+    {'category': 'Sweaters & Cardigans', 'products': ['Cashmere V-Neck Sweater']},
+    {'category': 'Jeans', 'products': ['Distressed Boyfriend Jeans', 'Flare Jeans']},
+    {'category': 'Dresses', 'products': ['Lace Cocktail Dress']},
+    {'category': 'Shoes', 'products': ['Espadrille Wedges']}
+]
+```
+
+

@@ -1,29 +1,30 @@
 ## Set up your `OPENAI_API_KEY`
 
 ```{python}
+#| eval: false
+#| code-fold: true
 import os
 
 if os.environ.get("OPENAI_API_KEY") is None:
    os.environ["OPENAI_API_KEY"] = "paste your api key here"
 ```
 
-## Setup to Call the LLM
-
-For this part, we install the required package to interact with OpenAIs language model.
-
 ```{python}
 #| eval: false
+#| code-fold: true
 !pip3 install langchain langchain_openai
 ```
 
 ```{python}
 #| eval: true
+#| code-fold: true
 import os
 from langchain_openai import ChatOpenAI
-from IPython.display import Markdown
 
-model_name = "gpt-3.5-turbo"
-display(Markdown("#### Model Used: " + model_name))
+model_name = "gpt-3.5-turbo-0613"
+
+print("Provider: Open AI")
+print("Model: " + model_name)
 
 llm = ChatOpenAI(model_name=model_name,
                  openai_api_key=os.environ.get("OPENAI_API_KEY"))

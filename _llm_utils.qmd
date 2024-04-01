@@ -1,6 +1,7 @@
 
 ```{python}
 #| eval: true
+#| code-fold: true
 import textwrap
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -8,6 +9,7 @@ def wrap_text(text, max_width=80):
     """
     Wraps the text to the specified max_width, preserving line breaks and formatting.
     """
+    text = text.lstrip()
     lines = text.splitlines()  # Split the text into lines
     wrapped_lines = []
     for line in lines:

@@ -1,0 +1,48 @@
+---
+title: "Delimiters"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+## Calling an LLM without delimiters
+
+First set up a prompt we can use:
+
+```{python}
+template ='''
+Below is a list of sentences. Tell me the second item on the list.
+- Each is about an animal, like rabbits.
+{sentences}
+'''
+
+my_sentences='''- I like how cows sound
+- This sentence is about spiders
+- This sentence may appear to be about dogs but it's actually about pigs'''
+
+prompt = template.format(sentences=my_sentences)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+
+Now lets use delimiters:
+
+```{python}
+template ="""
+Below is a list of sentences that appears inside <sentences> and </sentences> tags.
+
+Tell me the second item on the list.
+
+- Each is about an animal, like rabbits.
+<sentences>
+{sentences}
+</sentences>
+"""
+
+my_sentences='''- I like how cows sound
+- This sentence is about spiders
+- This sentence may appear to be about dogs but it's actually about pigs'''
+
+prompt = template.format(sentences=my_sentences)
+response = get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```

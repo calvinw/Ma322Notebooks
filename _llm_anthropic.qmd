@@ -1,32 +1,32 @@
 ## Set up your `ANTHROPIC_API_KEY`
 
 ```{python}
+#| code-fold: true
+#| eval: false
 import os
 
 if os.environ.get("ANTHROPIC_API_KEY") is None:
    os.environ["ANTHROPIC_API_KEY"] = "paste_your_api_key_here"
 ```
 
-## Setup to Call the LLM
-
-For this part, we install the required package to interact with Anthropic's language model.
-
 ```{python}
 #| eval: false
+#| code-fold: true
 !pip3 install langchain langchain_anthropic
 ```
 
 ```{python}
 #| eval: true
+#| code-fold: true
 import os
 from langchain_anthropic import ChatAnthropic
-from IPython.display import Markdown
 
 #model="claude-3-opus-20240229"
 #model="claude-3-sonnet-20240229"
 model="claude-3-haiku-20240307"
 
-display(Markdown("#### Model Used: " + model))
+print("Provider: Antropic")
+print("Model: " + model)
 
 llm = ChatAnthropic(model=model,
                     anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"))

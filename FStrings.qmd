@@ -1,0 +1,117 @@
+---
+title: "F-string Prompts"
+---
+
+In this notebook we will look at ways of constructing our prompts using the
+idea of the idea of F-strings
+
+### F-strings as Templates
+
+Remember earlier we wanted to evaluate a string with a template variable
+`{what}`
+
+Another way to do this different from what we showed before is to use the idea
+of a F-string.
+
+The idea is that we put a little `f` before the string and this makes it a
+template that is evaluated immediately when it is executed. So we have this:
+
+```
+prompt = f"Give a name for a company that makes {what}"
+```
+
+In python F-strings are evaluated as soon as they are defined. That
+means that the `what` must be defined ahead of this line in the code.
+
+### Executing an F-string
+
+For example try to execute the following code:
+
+```{python}
+#| eval: false
+prompt = f"Give a name for a company that makes {what}"
+```
+
+Since `what` is not defined it does not work.
+
+### Define Template Variables Ahead of Execution
+
+Lets see how it works if what is defined ahead of the F-string.
+
+```{python}
+what="cars"
+prompt = f"Give a name for a company that makes {what}"
+print(prompt)
+```
+
+### Changing Template Variables and Re-Executing
+
+If we want to change the value of `what` we can do it like this:
+
+```{python}
+what="bikes"
+prompt = f"Give a name for a company that makes {what}"
+print(prompt)
+```
+
+### No Easy Way to Reuse an F-string
+
+Notice how we had to repeat the definition of the F-string in order to make
+this work. Thats kind of a disadvantage.
+
+There is not a super easy way of "reusing" an F-string without some additional
+effort.
+
+But we will sometimes use F-strings since they work well for certain
+situations.
+
+
+### Adding Another Template Variable Called `{num}`
+
+Let's add another template variable called `num`.
+
+Evaluating the template with `num=3` and `what="cars"`:
+
+```{python}
+num=3
+what="cars"
+prompt = f"Give {num} possible names for a company that makes {what}"
+print(prompt)
+```
+
+### Adding a Template Variable for `{format}`
+
+Add something so we can specify the format.
+
+```python
+prompt = f"""Give {num} possible names
+for a company that makes {what}.
+Give your answer in {format}"""
+```
+
+Here we specify the string as a multi-line string since it is getting long.
+
+Evaluate it with `num=3` and `what="bikes"` and `format="uppercase"`:
+
+```{python}
+num=3
+what="bikes"
+format="uppercase"
+prompt = f"""Give {num} possible names
+for a company that makes {what}.
+Give your answer in {format}"""
+print(prompt)
+```
+
+Evaluate it with `num=2` and `what="cars"` and `format="a markdown table"`:
+
+```{python}
+num=2
+what="cars"
+format="a markdown table"
+prompt = f"""Give {num} possible names
+for a company that makes {what}.
+Give your answer in {format}"""
+print(prompt)
+```
+

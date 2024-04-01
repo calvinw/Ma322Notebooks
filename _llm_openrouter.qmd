@@ -1,0 +1,43 @@
+```{python}
+#| eval: false
+#| code-fold: true
+import os
+
+# Please set up your OPENROUTER_API_KEY
+if os.environ.get("OPENROUTER_API_KEY") is None:
+   os.environ["OPENROUTER_API_KEY"] = "paste_your_api_key_here"
+```
+```{python}
+#| eval: false
+#| code-fold: true
+!pip3 install langchain langchain_openai
+```
+```{python}
+#| eval: true
+#| code-fold: true
+import os
+from langchain_openai import ChatOpenAI
+
+#model_name = "mistralai/mistral-7b-instruct:free"
+#model_name="openai/gpt-4"
+#model_name="openai/gpt-3.5-turbo"
+#model_name="mistralai/mistral-medium"
+#model_name="mistralai/mistral-large"
+#model_name="mistralai/mixtral-8x7b-instruct"
+#model_name="anthropic/claude-3-haiku:beta"
+#model_name="anthropic/claude-3-sonnet"
+#model_name="anthropic/claude-3-opus"
+#model_name="openchat/openchat-7b:free"
+#model_name="openchat/openchat-7b"
+model_name="databricks/dbrx-instruct"
+
+print("Provider: Open Router")
+print("Model: ", model_name)
+
+llm=ChatOpenAI(model_name=model_name,
+               openai_api_key=os.environ.get("OPENROUTER_API_KEY"),
+               openai_api_base="https://openrouter.ai/api/v1")
+
+```
+
+{{< include _llm_utils.qmd >}}

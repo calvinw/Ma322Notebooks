@@ -1,75 +1,126 @@
 ---
 title: "Roles"
+execute:
+  enabled: true
 ---
 
 {{< include _llm_togetherai.qmd >}}
 
-## System and User Roles
+## Act Like a Cat
 
-Here's a simple system and user message:
+We can tell the LLM in a `System` message that it is to act like a cat.
 
 ```{python}
-from langchain_core.messages import HumanMessage, SystemMessage
-
-system_message ="You are a cat."
+system_message = "You are a cat"
 user_message = "What do you think of skateboards?"
 
-messages = [
-    SystemMessage(system_message),
-    HumanMessage(user_message)
-]
-
-response = get_completion_messages(messages)
-print_messages_and_response(messages, response)
-```
-
-```{python}
-system_message ="You are a kid."
-user_message = "What do you think of skateboards?"
-
-messages = [
-    SystemMessage(system_message),
-    HumanMessage(user_message)
-]
-
-response = get_completion_messages(messages)
-print_messages_and_response(messages, response)
-```
-
-```{python}
-system_message ="""
+prompt=f"""{system_message}
+{user_message}
 """
+response=get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+
+## Act Like a Kid
+
+```{python}
+system_message = "You are a kid"
+user_message = "What do you think of skateboards?"
+
+prompt=f"""{system_message}
+{user_message}
+"""
+response=get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+
+## Is a Married Person Looking at an Unmarried Person?
+
+In this part we ask the LLM to solve a logical problem. We just try to have it
+solve the problem without any additional prompting.
+
+```{python}
+system_message = ""
 user_message = """
 Jack is looking at Anne. Anne is looking at George. Jack is married, George is
 not, and we don’t know if Anne is married. Is a married person looking at an
 unmarried person?
 """
 
-messages = [
-    SystemMessage(system_message),
-    HumanMessage(user_message)
-]
+prompt=f"""{system_message}
+{user_message}
+"""
 
-response = get_completion_messages(messages)
-print_messages_and_response(messages, response)
+response=get_completion(prompt)
+print_prompt_and_response(prompt, response)
 ```
 
+## Act Like a Professor of Logic
+
+But now we tell the LLM its a professor of logic and it should think through
+all the possibilities. With many LLMs this gets them closer to the right
+solution and sometimes they get it completly right with this kind of prompting.
+
+Asking a model to think "step-by-step" or by listing its reasoning is called "Chain of Thought(CoT)" prompting.
+
 ```{python}
+system_message= """You are a smart professor of logic who can answer complex
+logic problems. Think through all the possibilities before you answer."""
+
+user_message = """Jack is looking at Anne. Anne is looking at George. Jack is
+married, George is not, and we don’t know if Anne is married. Is a married
+person looking at an unmarried person?
+"""
+
+prompt=f"""{system_message}
+{user_message}
+"""
+
+response=get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+## Is This Equation Solved Correctly?
+
+Without further prompting we ask the LLM if this (incorrect) problem solution
+is correct.
+
+```{python}
+system_message = ""
+user_message = """
+Is this equation solved correctly below?
+
+2x-3=9
+2x=6
+x=3
+"""
+
+prompt=f"""{system_message}
+{user_message}
+"""
+
+response=get_completion(prompt)
+print_prompt_and_response(prompt, response)
+```
+## You are a Teacher of Math. Reason Step-By-Step
+
+Now we ask it again, but this time we tell it that its a teacher of math.
+
+```{python}
+
 system_message ="""
-You are a smart professor of logic who can answer complex logic problems. Think
-through all the possibilities before you answer.
+You are a teacher of math. And can reason step-by-step to see if something is correct. First work out your own solution to the problem. Then compare your solution to the given solution.
 """
 user_message = """
-Jack is looking at Anne. Anne is looking at George. Jack is married, George is
-not, and we don’t know if Anne is married. Is a married person looking at an
-unmarried person?
+Is this problem solved correctly below?
+2x-3=9
+2x=6
+x=3
 """
 
-messages = [
-    SystemMessage(system_message),
-    HumanMessage(user_message)
-]
+prompt=f"""{system_message}
+{user_message}
+"""
 
-response = get_completion_messages(messages)
-print_messages_and_response(messages, response)
+response=get_completion(prompt)
+print_prompt_and_response(prompt, response)
 ```

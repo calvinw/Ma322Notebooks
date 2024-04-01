@@ -1,24 +1,66 @@
 ---
 title: "Evaluating Inputs: Classification with LLMs"
+execute:
+  enabled: true
 ---
 
 {{< include _llm_togetherai.qmd >}}
 
-## Evaluating Inputs
+## Classifying Customer Query Categories
 
+For this notebook we would like to set up classifying customer queries into a
+primary category and a secondary category. This might be the first step in
+routing the customer in a customer support application.
 
-### Template
+### Primary and Secondary Category
 
-Here's our template:
+Here are our primary and secondary categories:
+
+- Billing
+  - Unsubscribe or upgrade
+  - Add a payment method
+  - Explanation for charge
+  - Dispute a charge
+- Technical Support
+  - General troubleshooting
+  - Device compatibility
+  - Software updates
+- Account Management
+  - Password reset
+  - Update personal information
+  - Close account
+  - Account security
+- General Inquiry
+  - Product information
+  - Pricing
+  - Feedback
+  - Speak to a human
+
+### Example Queries
+
+And here are some examples of the kinds of queries we will classify:
+
+| Query |
+| --- |
+| I want you to delete my profile and all of my user data |
+| Tell me more about your flat screen tvs |
+| How do I update my email address and password on my account? |
+| I need help setting up parental controls on my streaming account. |
+| How do I change the primary account holder for my subscription? |
+
+Here is our prompt that we will use:
 
 ```{python}
 template ="""
-You will be provided with customer service queries. The customer service query
-will be delimited with <query> tags.
+You will be provided with a customer service query in <query></query> tags
+below.
 
 Classify each query into a primary category and a secondary category.
 
-Provide your output as a list with primary and secondary category.
+Provide your output like this:
+
+Primary Category: {{primary_category}}
+Secondary Category: {{secondary_category}}
 
 Primary categories: Billing, Technical Support, Account Management, or General
 Inquiry.
@@ -53,140 +95,141 @@ General Inquiry secondary categories:
 </query>"""
 ```
 
-```{python}
-def get_query_response(template, query):
-  prompt=template.format(query=query)
-  response = get_completion(prompt)
-  print("Customer Query:")
-  print(query)
-  print("Response:")
-  print(response)
-
-```
-
 ### I want you to delete my profile and all of my user data
 
-Set up the query string:
+Set up the query string and send to the llm:
 
 ```{python}
 first_query = """
 I want you to delete my profile and all of my user data
 """
-```
 
-We pass in `template` and `first_query` to `get_query_response`:
-
-```{python}
-get_query_response(template, first_query)
+prompt=template.format(query=first_query)
+response = get_completion(prompt)
+print(response)
 ```
 
 ### Tell me more about your flat screen tvs
 
-Set up the query string:
+Set up the query string and send to the llm:
 
 ```{python}
 second_query = """
 Tell me more about your flat screen tvs
 """
-```
-We pass in `template` and `first_query` to `get_query_response`:
 
-```{python}
-get_query_response(template, second_query)
+prompt=template.format(query=second_query)
+response = get_completion(prompt)
+print(response)
 ```
 
 ### I can't log into my account. Can you reset my password?
 
-Set up the query string:
+Set up the query string and send to the llm:
 
 ```{python}
 third_query = """
 I can't log into my account. Can you reset my password?
 """
-```
 
-We pass in `template` and `third_query` to `get_query_response`:
-
-```{python}
-get_query_response(template, third_query)
+prompt=template.format(query=third_query)
+response = get_completion(prompt)
+print(response)
 ```
 
 ### I'm having trouble connecting my smart TV to the internet. Can you help me troubleshoot this issue?
 
-Set up the query string:
+Set up the query string and send to the llm:
 
 ```{python}
 fourth_query = """
 I'm having trouble connecting my smart TV to the internet. Can you help me troubleshoot this issue?
 """
-```
 
-We pass in `template` and `fourth_query` to `get_query_response`:
-
-```{python}
-get_query_response(template, fourth_query)
+prompt=template.format(query=fourth_query)
+response = get_completion(prompt)
+print(response)
 ```
 
 ### I'd like to cancel my subscription and get a refund for the remaining months.
 
-Set up the query string:
+Set up the query string and send to the llm:
 
 ```{python}
 fifth_query = """
 I'd like to cancel my subscription and get a refund for the remaining months.
 """
-```
 
-We pass in `template` and `fifth_query` to `get_query_response`:
-
-```{python}
-get_query_response(template, fifth_query)
+prompt=template.format(query=fifth_query)
+response = get_completion(prompt)
+print(response)
 ```
 
 ### How do I update my email address and password on my account?
 
-Set up the query string:
+Set up the query string and send to the llm:
 
 ```{python}
 sixth_query = """
 How do I update my email address and password on my account?
 """
-```
 
-We pass in `template` and `sixth_query` to `get_query_response`:
-
-```{python}
-get_query_response(template, sixth_query)
+prompt=template.format(query=sixth_query)
+response = get_completion(prompt)
+print(response)
 ```
 
 ### What are the key features of your premium streaming package compared to the basic plan?
 
-Set up the query string:
+Set up the query string and send to the llm:
 
 ```{python}
 seventh_query = """
 What are the key features of your premium streaming package compared to the basic plan?
 """
-```
 
-We pass in `template` and `seventh_query` to `get_query_response`:
+prompt=template.format(query=seventh_query)
+response = get_completion(prompt)
+print(response)
 
-```{python}
-get_query_response(template, seventh_query)
 ```
 
 ### I have some feedback about improving the user interface of your mobile app.
 
-Set up the query string:
+Set up the query string and send to the llm:
 
 ```{python}
 eighth_query = """
 I have some feedback about improving the user interface of your mobile app.
 """
+
+prompt=template.format(query=eighth_query)
+response = get_completion(prompt)
+print(response)
 ```
 
-We pass in `template` and `eighth_query` to `get_query_response`:
+### Additional Queries
 
 ```{python}
-get_query_response(template, eighth_query)
+#| eval: false
+additional_queries = [
+    "I need help setting up parental controls on my streaming account.",
+    "How do I change the primary account holder for my subscription?",
+    "I was overcharged on my last bill. Can you investigate this issue?",
+    "Is there a way to download movies and shows for offline viewing?",
+    "Can you recommend some good shows or movies based on my viewing history?",
+    "My streaming quality keeps buffering. What could be causing this?",
+    "I want to add another user to my account. How can I do that?",
+    "How do I update my payment method with a new credit card?",
+    "I'm having issues with the audio on certain shows. Can you help me troubleshoot?",
+    "What's the process for reporting a technical issue with your platform?"
+]
+
+
+for query in additional_queries:
+    prompt = template.format(query=query)
+    response = get_completion(prompt)
+    print(f"Query: {query}")
+    print(response)
+    print("---")
 ```

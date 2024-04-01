@@ -94,96 +94,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="set-up-your-together_api_key" class="level2">
-<h2 class="anchored" data-anchor-id="set-up-your-together_api_key">Set up your <code>TOGETHER_API_KEY</code></h2>
 <div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="setup-to-call-the-llm" class="level2">
-<h2 class="anchored" data-anchor-id="setup-to-call-the-llm">Setup to Call the LLM</h2>
-<p>For this part, we install the required package to interact with a TogetherAI language model.</p>
 <div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>display(Markdown(<span class="st">"### Model:  </span><span class="ch">\n</span><span class="st">#### "</span> <span class="op">+</span> model_name))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="model" class="level3 cell-output cell-output-display">
-<h3 class="anchored" data-anchor-id="model">Model:</h3>
-<section id="nousresearchnous-hermes-2-mixtral-8x7b-sft" class="level4">
-<h4 class="anchored" data-anchor-id="nousresearchnous-hermes-2-mixtral-8x7b-sft">NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</h4>
-</section>
-</section>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Provider: TogetherAI
+Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
+</div>
 </div>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
 <section id="calling-an-llm-with-get_completion" class="level2">
 <h2 class="anchored" data-anchor-id="calling-an-llm-with-get_completion">Calling an LLM with <code>get_completion</code></h2>
 <p>First set up a prompt we can use:</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Why is the sky blue? In 50 words or less."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Why is the sky blue? In 50 words or less."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we call the<code>get_completion</code> function. This function takes our prompt as argument and sends it off to the LLM. The LLM returns a response. This function returns that response.</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The sky appears blue due to a phenomenon called Rayleigh scattering. Sunlight,
 which is composed of all colors, reaches Earth's atmosphere and interacts with

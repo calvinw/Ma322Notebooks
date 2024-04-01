@@ -1,0 +1,599 @@
+---
+title: 'Product Inquiries'
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+### Implement a complex task with multiple prompts
+
+Extract relevant product and category names
+
+```{python}
+delimiter = "####"
+
+examples=f"""
+Example 1:
+Query: {delimiter}I need a new outfit for a summer music festival. The Boho Chic Maxi Dress looks perfect!{delimiter}
+Output: [{{'category': 'Dresses', 'products': ['Boho Chic Maxi Dress']}}]
+Example 2:
+Query: {delimiter}Can you recommend some good jeans? Also I am interested in the Leather Biker Jacket for a cool edgy look.{delimiter}
+Output: [{{'category': 'Jeans'}}, {{'category': 'Jackets & Coats', 'products': ['Leather Biker Jacket']}}]
+Example 3:
+Query: {delimiter} Can you tell me about the Floral Print Blouse and the High-Waisted Skinny Jeans?{delimiter}
+Output: [[{{'category': 'Tops & Blouses', 'products': ['Floral Print Blouse']}}, {{'category': 'Jeans', 'products': ['High-Waisted Skinny Jeans']}}]
+"""
+
+system_message = f"""
+You will be provided with customer service queries related to various product
+categories. The queries will be delimited by {delimiter} characters.
+Your task is to output a Python list of dictionaries, where each dictionary
+represents a product category or specific product(s) mentioned in the query.
+Each dictionary should have the following formats:
+{{
+    'category': <one of the allowed categories>
+}}
+OR
+{{
+    'category': <one of the allowed categories>, 'products': <list of product names>
+}}
+In the second example the product should be in the category listed.
+If no category or product is found in the query, output an empty list [].
+Allowed Categories:
+- Dresses
+- Jeans
+- Tops & Blouses
+- Sweaters & Cardigans
+- Jackets & Coats
+- Shoes
+Allowed Products:
+Dresses:
+- Boho Chic Maxi Dress
+- Little Black Dress
+- Floral Sundress
+- Off-the-Shoulder Dress
+- Lace Cocktail Dress
+Jeans:
+- High-Waisted Skinny Jeans
+- Distressed Boyfriend Jeans
+- Black Skinny Jeans
+- Mom Jeans
+- Flare Jeans
+Tops & Blouses:
+- Floral Print Blouse
+- Lace Trim Cami
+- Striped Button-Down Shirt
+- Off-the-Shoulder Top
+- Graphic Tee
+Sweaters & Cardigans:
+- Oversized Knit Sweater
+- Cropped Cardigan
+- Turtleneck Sweater
+- Cable Knit Pullover
+- Cashmere V-Neck Sweater
+Jackets & Coats:
+- Leather Biker Jacket
+- Denim Jacket
+- Trench Coat
+- Puffer Jacket
+- Wool Peacoat
+Shoes:
+- Strappy High Heels
+- Leather Ankle Boots
+- White Sneakers
+- Ballet Flats
+- Espadrille Wedges
+{examples}
+Only output the list of dictionaries, with nothing else.
+"""
+
+user_message_1 = f"""
+ Tell me about the Floral Print Blouse and
+ the Leather Ankle Boots.
+ Also tell me about your dresses."""
+messages =  [
+  {'role':'system', 'content': system_message},
+  {'role':'user', 'content': f"{delimiter}{user_message_1}{delimiter}"},
+]
+category_and_product_response_1 = get_completion_messages(messages)
+print(category_and_product_response_1)
+```
+
+```{python}
+user_message_2 = f"""
+Can you tell me about your jeans? Also your jackets and coats."""
+messages =  [
+  {'role':'system','content': system_message},
+  {'role':'user','content': f"{delimiter}{user_message_2}{delimiter}"},
+]
+response = get_completion_messages(messages)
+print(response)
+```
+
+### Retrieve detailed product information for extracted products and categories
+```{python}
+#| code-fold: true
+# product information
+products = {
+    "Boho Chic Maxi Dress": {
+        "name": "Boho Chic Maxi Dress",
+        "category": "Dresses",
+        "brand": "Bohemian Vibes",
+        "price": 79.99,
+        "rating": 4.5,
+        "features": ["Flowy silhouette", "Floral print", "Adjustable straps", "Lined"],
+        "description": "A beautiful and comfortable maxi dress perfect for summer days and music festivals.",
+    },
+    "Little Black Dress": {
+        "name": "Little Black Dress",
+        "category": "Dresses",
+        "brand": "Classic Chic",
+        "price": 99.99,
+        "rating": 4.7,
+        "features": ["Sleeveless", "Scoop neckline", "Fitted waist", "Knee-length"],
+        "description": "A timeless and versatile little black dress for any occasion.",
+    },
+    "Floral Sundress": {
+        "name": "Floral Sundress",
+        "category": "Dresses",
+        "brand": "Sunny Days",
+        "price": 49.99,
+        "rating": 4.3,
+        "features": ["Spaghetti straps", "Sweetheart neckline", "Elastic waist", "Midi length"],
+        "description": "A cute and feminine sundress with a lovely floral print.",
+    },
+    "Off-the-Shoulder Dress": {
+        "name": "Off-the-Shoulder Dress",
+        "category": "Dresses",
+        "brand": "Romantic Ruffles",
+        "price": 69.99,
+        "rating": 4.6,
+        "features": ["Off-the-shoulder neckline", "Ruffled sleeves", "Fitted bodice", "Flared skirt"],
+        "description": "A romantic and flirty off-the-shoulder dress for special occasions.",
+    },
+    "Lace Cocktail Dress": {
+        "name": "Lace Cocktail Dress",
+        "category": "Dresses",
+        "brand": "Elegant Evening",
+        "price": 129.99,
+        "rating": 4.8,
+        "features": ["Lace overlay", "Illusion neckline", "Fitted silhouette", "Back zipper"],
+        "description": "A stunning lace cocktail dress for elegant events and parties.",
+    },
+    "High-Waisted Skinny Jeans": {
+        "name": "High-Waisted Skinny Jeans",
+        "category": "Jeans",
+        "brand": "Denim Darling",
+        "price": 59.99,
+        "rating": 4.4,
+        "features": ["High-waisted", "Skinny leg", "Stretch denim", "Five-pocket style"],
+        "description": "A pair of trendy and flattering high-waisted skinny jeans.",
+    },
+    "Distressed Boyfriend Jeans": {
+        "name": "Distressed Boyfriend Jeans",
+        "category": "Jeans",
+        "brand": "Casual Cool",
+        "price": 69.99,
+        "rating": 4.2,
+        "features": ["Relaxed fit", "Distressed details", "Cuffed hems", "Five-pocket style"],
+"description": "A stylish and comfortable pair of distressed boyfriend jeans for a laid-back look.",
+    },
+    "Black Skinny Jeans": {
+        "name": "Black Skinny Jeans",
+        "category": "Jeans",
+        "brand": "Sleek & Chic",
+        "price": 49.99,
+        "rating": 4.5,
+        "features": ["Skinny leg", "Mid-rise waist", "Stretch denim", "Five-pocket style"],
+        "description": "A versatile pair of black skinny jeans that go with everything.",
+    },
+    "Mom Jeans": {
+        "name": "Mom Jeans",
+        "category": "Jeans",
+        "brand": "Retro Revival",
+        "price": 59.99,
+        "rating": 4.3,
+        "features": ["High-waisted", "Relaxed fit", "Tapered leg", "Vintage wash"],
+        "description": "A trendy pair of mom jeans with a nostalgic and comfortable fit.",
+    },
+    "Flare Jeans": {
+        "name": "Flare Jeans",
+        "category": "Jeans",
+        "brand": "70s Flair",
+        "price": 69.99,
+        "rating": 4.6,
+        "features": ["High-waisted", "Flared leg", "Stretch denim", "Five-pocket style"],
+        "description": "A groovy pair of flare jeans that add a retro touch to any outfit.",
+    },
+    "Floral Print Blouse": {
+        "name": "Floral Print Blouse",
+        "category": "Tops & Blouses",
+        "brand": "Blooming Beauty",
+        "price": 39.99,
+        "rating": 4.4,
+        "features": ["Floral print", "V-neckline", "Short sleeves", "Lightweight fabric"],
+        "description": "A pretty and feminine floral print blouse perfect for spring and summer.",
+    },
+    "Lace Trim Cami": {
+        "name": "Lace Trim Cami",
+        "category": "Tops & Blouses",
+        "brand": "Delicate Details",
+        "price": 29.99,
+        "rating": 4.2,
+        "features": ["Lace trim", "Adjustable straps", "Scalloped neckline", "Satin fabric"],
+        "description": "A delicate and romantic lace trim cami for layering or wearing on its own.",
+    },
+    "Striped Button-Down Shirt": {
+        "name": "Striped Button-Down Shirt",
+        "category": "Tops & Blouses",
+        "brand": "Preppy Stripes",
+        "price": 49.99,
+        "rating": 4.5,
+        "features": ["Striped pattern", "Button-down front", "Collared neckline", "Long sleeves"],
+        "description": "A classic and versatile striped button-down shirt for a polished look.",
+    },
+    "Off-the-Shoulder Top": {
+        "name": "Off-the-Shoulder Top",
+        "category": "Tops & Blouses",
+        "brand": "Bare Shoulders",
+        "price": 34.99,
+        "rating": 4.3,
+        "features": ["Off-the-shoulder neckline", "Elastic top", "Short sleeves", "Lightweight fabric"],
+        "description": "A flirty and trendy off-the-shoulder top that shows off your shoulders.",
+    },
+    "Graphic Tee": {
+        "name": "Graphic Tee",
+        "category": "Tops & Blouses",
+        "brand": "Statement Tees",
+        "price": 24.99,
+        "rating": 4.1,
+        "features": ["Graphic print", "Crew neckline", "Short sleeves", "Cotton blend"],
+        "description": "A fun and expressive graphic tee to make a statement.",
+    },
+    "Oversized Knit Sweater": {
+        "name": "Oversized Knit Sweater",
+        "category": "Sweaters & Cardigans",
+        "brand": "Cozy Comfort",
+        "price": 59.99,
+        "rating": 4.6,
+        "features": ["Oversized fit", "Chunky knit", "Crew neckline", "Long sleeves"],
+        "description": "A cozy and comfortable oversized knit sweater for chilly days.",
+    },
+    "Cropped Cardigan": {
+        "name": "Cropped Cardigan",
+        "category": "Sweaters & Cardigans",
+        "brand": "Layered Chic",
+        "price": 44.99,
+        "rating": 4.3,
+        "features": ["Cropped length", "Button-front", "Ribbed trim", "Soft knit"],
+        "description": "A stylish and versatile cropped cardigan for layering over any outfit.",
+    },
+    "Turtleneck Sweater": {
+        "name": "Turtleneck Sweater",
+        "category": "Sweaters & Cardigans",
+        "brand": "Timeless Knits",
+        "price": 49.99,
+        "rating": 4.5,
+        "features": ["Turtleneck", "Slim fit", "Ribbed knit", "Long sleeves"],
+        "description": "A classic and sophisticated turtleneck sweater for a polished look.",
+    },
+    "Cable Knit Pullover": {
+        "name": "Cable Knit Pullover",
+        "category": "Sweaters & Cardigans",
+        "brand": "Rustic Charm",
+        "price": 69.99,
+        "rating": 4.7,
+        "features": ["Cable knit pattern", "Crew neckline", "Long sleeves", "Wool blend"],
+        "description": "A charming and textured cable knit pullover for a cozy and stylish outfit.",
+    },
+    "Cashmere V-Neck Sweater": {
+        "name": "Cashmere V-Neck Sweater",
+        "category": "Sweaters & Cardigans",
+        "brand": "Luxe Layers",
+        "price": 99.99,
+        "rating": 4.8,
+        "features": ["V-neckline", "Soft cashmere", "Relaxed fit", "Long sleeves"],
+        "description": "An indulgent and luxurious cashmere v-neck sweater for ultimate comfort.",
+    },
+    "Leather Biker Jacket": {
+        "name": "Leather Biker Jacket",
+        "category": "Jackets & Coats",
+        "brand": "Rebel Chic",
+        "price": 199.99,
+        "rating": 4.9,
+        "features": ["Genuine leather", "Asymmetrical zipper", "Notched lapels", "Zippered pockets"],
+        "description": "A bold and edgy leather biker jacket for a cool and confident look.",
+    },
+    "Denim Jacket": {
+        "name": "Denim Jacket",
+        "category": "Jackets & Coats",
+        "brand": "Blue Jean Baby",
+        "price": 79.99,
+        "rating": 4.6,
+        "features": ["Classic denim", "Button-front", "Collared neckline", "Chest pockets"],
+        "description": "A timeless and versatile denim jacket that never goes out of style.",
+    },
+    "Trench Coat": {
+        "name": "Trench Coat",
+        "category": "Jackets & Coats",
+        "brand": "Classic Elegance",
+        "price": 149.99,
+        "rating": 4.7,
+        "features": ["Double-breasted", "Belted waist", "Notched lapels", "Waterproof fabric"],
+        "description": "A sophisticated and iconic trench coat for a polished and put-together look.",
+    },
+    "Puffer Jacket": {
+        "name": "Puffer Jacket",
+        "category": "Jackets & Coats",
+        "brand": "Arctic Adventure",
+        "price": 129.99,
+        "rating": 4.5,
+        "features": ["Quilted design", "Hooded", "Zip-front", "Insulated filling"],
+        "description": "A warm and cozy puffer jacket for cold weather adventures.",
+    },
+    "Wool Peacoat": {
+        "name": "Wool Peacoat",
+        "category": "Jackets & Coats",
+        "brand": "Nautical Chic",
+        "price": 179.99,
+        "rating": 4.8,
+        "features": ["Wool blend", "Double-breasted", "Notched lapels", "Flap pockets"],
+        "description": "A classic and stylish wool peacoat for a timeless and sophisticated look.",
+    },
+    "Strappy High Heels": {
+        "name": "Strappy High Heels",
+        "category": "Shoes",
+        "brand": "Glamour Girl",
+        "price": 89.99,
+        "rating": 4.6,
+        "features": ["Strappy design", "Stiletto heel", "Ankle strap", "Leather upper"],
+        "description": "A pair of sexy and glamorous strappy high heels for a night out.",
+    },
+    "Leather Ankle Boots": {
+        "name": "Leather Ankle Boots",
+        "category": "Shoes",
+        "brand": "Urban Chic",
+        "price": 119.99,
+        "rating": 4.7,
+        "features": ["Genuine leather", "Stacked heel", "Side zipper", "Pointed toe"],
+        "description": "A pair of stylish and versatile leather ankle boots for any occasion.",
+    },
+    "White Sneakers": {
+        "name": "White Sneakers",
+        "category": "Shoes",
+        "brand": "Casual Kicks",
+        "price": 59.99,
+        "rating": 4.4,
+        "features": ["Canvas upper", "Rubber sole", "Lace-up closure", "Cushioned insole"],
+        "description": "A pair of classic and comfortable white sneakers for everyday wear.",
+    },
+    "Ballet Flats": {
+        "name": "Ballet Flats",
+        "category": "Shoes",
+        "brand": "Dainty Dancer",
+        "price": 49.99,
+        "rating": 4.3,
+        "features": ["Soft fabric", "Slip-on style", "Elasticized topline", "Rounded toe"],
+        "description": "A pair of feminine and elegant ballet flats for a graceful look.",
+    },
+    "Espadrille Wedges": {
+        "name": "Espadrille Wedges",
+        "category": "Shoes",
+        "brand": "Summer Soles",
+        "price": 79.99,
+        "rating": 4.5,
+        "features": ["Canvas upper", "Jute wedge", "Ankle strap", "Rubber sole"],
+        "description": "A pair of summery and stylish espadrille wedges for a chic and elevated look.",
+    }
+}
+```
+
+```{python}
+def get_product_by_name(name):
+    return products.get(name, None)
+def get_products_by_category(category):
+    return [product for product in products.values() if product["category"] == category]
+```
+```{python}
+print(get_product_by_name("Floral Print Blouse"))
+```
+```{python}
+print(get_products_by_category("Dresses"))
+```
+```{python}
+print(user_message_1)
+```
+```{python}
+print(category_and_product_response_1)
+```
+### Read Python string into Python list of dictionaries
+```{python}
+import json
+def read_string_to_list(input_string):
+    if input_string is None:
+        return None
+    try:
+        input_string= input_string.replace("'",'\"')
+        input_string= input_string.replace("\n"," ")
+        data = json.loads(input_string)
+        return data
+    except json.JSONDecodeError:
+        print("Error: Invalid JSON String")
+        return None
+```
+```{python}
+category_and_product_list = read_string_to_list(category_and_product_response_1)
+print(category_and_product_list)
+```
+```{python}
+def generate_output_string(data_list):
+    output_string = ""
+    if data_list is None:
+        return output_string
+    for data in data_list:
+        try:
+            if "products" in data:
+                products_list = data["products"]
+                for product_name in products_list:
+                    product = get_product_by_name(product_name)
+                    if product:
+                        output_string += json.dumps(product, indent=4) + "\n"
+                    else:
+                        print(f"Error: Product '{product_name}' not found")
+            elif "category" in data:
+                category_name = data["category"]
+                category_products = get_products_by_category(category_name)
+                for product in category_products:
+                    output_string += json.dumps(product, indent=4) + "\n"
+            else:
+                print("Error: Invalid object format")
+        except Exception as e:
+            print(f"Error: {e}")
+    return output_string
+```
+
+```{python}
+product_information_for_user_message_1 = generate_output_string(category_and_product_list)
+print(product_information_for_user_message_1)
+```
+### Generate answer to user query based on detailed product information
+
+```{python}
+system_message = f"""
+You are a customer service assistant for a large fashion retailer. Your role is
+to provide friendly and helpful information about the store's products to
+customers based on the provided product details.
+When a customer asks about specific products or categories, you should refer to
+the relevant product information and provide concise and accurate details about
+those products or categories. Summarize the features to the customer, avoid
+just listing the products.
+If the customer's query is unclear or if you need additional information to
+provide a better response, you should ask relevant follow-up questions.
+For example, if a customer asks about a specific product, you can provide
+details such as its features, brand, pricing, and customer rating. If a customer asks
+about a category, you can highlight the key products within that category and
+their unique features or styles.
+Remember to always use the provided product information as the source of your
+responses, and do not make up or speculate about any product details.
+"""
+assistant_message=f"""Relevant product information:\n\
+{product_information_for_user_message_1}
+"""
+messages =  [
+  {'role':'system', 'content': system_message},
+  {'role':'user', 'content': user_message_1},
+  {'role':'assistant', 'content': assistant_message}
+]
+final_response = get_completion_messages(messages)
+print(final_response)
+```
+
+```{python}
+user_messages = [
+    "I'm looking for a new dress for a summer wedding. Can you tell me about the Floral Sundress and the Off-the-Shoulder Dress?",
+    "I need some new jeans for everyday wear. What options do you have in the Jeans category?",
+    "I'm interested in getting a cozy sweater for the upcoming fall season. Can you tell me about the Oversized Knit Sweater and the Cashmere V-Neck Sweater?",
+    "I'm going on a trip and need a versatile jacket. Can you tell me about the Denim Jacket and the Trench Coat?",
+    "I'm looking to update my shoe collection. What can you tell me about the Strappy High Heels and the Espadrille Wedges?",
+    "I need a new top for the office. Can you tell me about the Striped Button-Down Shirt and the Lace Trim Cami?",
+    "I'm looking for a stylish and warm jacket for the winter. Can you tell me about the Puffer Jacket and the Wool Peacoat?",
+    "I'm in the market for a new pair of comfortable yet fashionable jeans. What can you tell me about the Mom Jeans and the Flare Jeans?",
+    "I'm planning a music festival outfit. Can you tell me about the Boho Chic Maxi Dress and the Graphic Tee?",
+    "I need a new jacket for the transitional weather. Can you tell me about the Leather Biker Jacket and the Cropped Cardigan?"
+]
+```
+
+The expected JSON output for these user messages would be:
+
+```json
+[
+  {
+    "category": "Dresses",
+    "products": [
+      "Floral Sundress",
+      "Off-the-Shoulder Dress"
+    ]
+  }
+],
+[
+  {
+    "category": "Jeans"
+  }
+],
+[
+  {
+    "category": "Sweaters & Cardigans",
+    "products": [
+      "Oversized Knit Sweater",
+      "Cashmere V-Neck Sweater"
+    ]
+  }
+],
+[
+  {
+    "category": "Jackets & Coats",
+    "products": [
+      "Denim Jacket",
+      "Trench Coat"
+    ]
+  }
+],
+[
+  {
+    "category": "Shoes",
+    "products": [
+      "Strappy High Heels",
+      "Espadrille Wedges"
+    ]
+  }
+],
+[
+  {
+    "category": "Tops & Blouses",
+    "products": [
+      "Striped Button-Down Shirt",
+      "Lace Trim Cami"
+    ]
+  }
+],
+[
+  {
+    "category": "Jackets & Coats",
+    "products": [
+      "Puffer Jacket",
+      "Wool Peacoat"
+    ]
+  }
+],
+[
+  {
+    "category": "Jeans",
+    "products": [
+      "Mom Jeans",
+      "Flare Jeans"
+    ]
+  }
+],
+[
+  {
+    "category": "Dresses",
+    "products": [
+      "Boho Chic Maxi Dress"
+    ]
+  },
+  {
+    "category": "Tops & Blouses",
+    "products": [
+      "Graphic Tee"
+    ]
+  }
+],
+[
+  {
+    "category": "Jackets & Coats",
+    "products": [
+      "Leather Biker Jacket",
+      "Cropped Cardigan"
+    ]
+  }
+]
+```

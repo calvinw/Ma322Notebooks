@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Product Inquiries</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="ProductInquiries.short_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ProductInquiries.short_files/libs/quarto-html/quarto.js"></script>
+<script src="ProductInquiries.short_files/libs/quarto-html/popper.min.js"></script>
+<script src="ProductInquiries.short_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ProductInquiries.short_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ProductInquiries.short_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ProductInquiries.short_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ProductInquiries.short_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ProductInquiries.short_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ProductInquiries.short_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Product Inquiries</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Provider: TogetherAI
+Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="implement-a-complex-task-with-multiple-prompts" class="level3">
+<h3 class="anchored" data-anchor-id="implement-a-complex-task-with-multiple-prompts">Implement a complex task with multiple prompts</h3>
+<p>Extract relevant product and category names</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>delimiter <span class="op">=</span> <span class="st">"####"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>examples<span class="op">=</span><span class="ss">f"""</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ss">Example 1:</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ss">Query: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">I need a new outfit for a summer music festival. The Boho Chic Maxi Dress looks perfect!</span><span class="sc">{</span>delimiter<span class="sc">}</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ss">Output: [</span><span class="ch">{{</span><span class="ss">'category': 'Dresses', 'products': ['Boho Chic Maxi Dress']</span><span class="ch">}}</span><span class="ss">]</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ss">Example 2:</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ss">Query: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">Can you recommend some good jeans? Also I am interested in the Leather Biker Jacket for a cool edgy look.</span><span class="sc">{</span>delimiter<span class="sc">}</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ss">Output: [</span><span class="ch">{{</span><span class="ss">'category': 'Jeans'</span><span class="ch">}}</span><span class="ss">, </span><span class="ch">{{</span><span class="ss">'category': 'Jackets &amp; Coats', 'products': ['Leather Biker Jacket']</span><span class="ch">}}</span><span class="ss">]</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ss">Example 3:</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ss">Query: </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> Can you tell me about the Floral Print Blouse and the High-Waisted Skinny Jeans?</span><span class="sc">{</span>delimiter<span class="sc">}</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ss">Output: [[</span><span class="ch">{{</span><span class="ss">'category': 'Tops &amp; Blouses', 'products': ['Floral Print Blouse']</span><span class="ch">}}</span><span class="ss">, </span><span class="ch">{{</span><span class="ss">'category': 'Jeans', 'products': ['High-Waisted Skinny Jeans']</span><span class="ch">}}</span><span class="ss">]</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="ss">You will be provided with customer service queries related to various product</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="ss">categories. The queries will be delimited by </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> characters.</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ss">Your task is to output a Python list of dictionaries, where each dictionary</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="ss">represents a product category or specific product(s) mentioned in the query.</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="ss">Each dictionary should have the following formats:</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="ch">{{</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="ss">    'category': &lt;one of the allowed categories&gt;</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="ch">}}</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="ss">OR</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="ch">{{</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="ss">    'category': &lt;one of the allowed categories&gt;, 'products': &lt;list of product names&gt;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="ch">}}</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="ss">In the second example the product should be in the category listed.</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="ss">If no category or product is found in the query, output an empty list [].</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="ss">Allowed Categories:</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- Dresses</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- Jeans</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- Tops &amp; Blouses</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- Sweaters &amp; Cardigans</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- Jackets &amp; Coats</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- Shoes</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="ss">Allowed Products:</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="ss">Dresses:</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- Boho Chic Maxi Dress</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- Little Black Dress</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- Floral Sundress</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- Off-the-Shoulder Dress</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- Lace Cocktail Dress</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="ss">Jeans:</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- High-Waisted Skinny Jeans</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- Distressed Boyfriend Jeans</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- Black Skinny Jeans</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- Mom Jeans</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="ss">- Flare Jeans</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="ss">Tops &amp; Blouses:</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="ss">- Floral Print Blouse</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="ss">- Lace Trim Cami</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="ss">- Striped Button-Down Shirt</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- Off-the-Shoulder Top</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- Graphic Tee</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="ss">Sweaters &amp; Cardigans:</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- Oversized Knit Sweater</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- Cropped Cardigan</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- Turtleneck Sweater</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="ss">- Cable Knit Pullover</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="ss">- Cashmere V-Neck Sweater</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="ss">Jackets &amp; Coats:</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="ss">- Leather Biker Jacket</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- Denim Jacket</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- Trench Coat</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- Puffer Jacket</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- Wool Peacoat</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="ss">Shoes:</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="ss">- Strappy High Heels</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="ss">- Leather Ankle Boots</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- White Sneakers</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="ss">- Ballet Flats</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- Espadrille Wedges</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>examples<span class="sc">}</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="ss">Only output the list of dictionaries, with nothing else.</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>user_message_1 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="ss"> Tell me about the Floral Print Blouse and</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="ss"> the Leather Ankle Boots.</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="ss"> Also tell me about your dresses."""</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span>  [</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'role'</span>:<span class="st">'system'</span>, <span class="st">'content'</span>: system_message},</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'role'</span>:<span class="st">'user'</span>, <span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message_1<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>category_and_product_response_1 <span class="op">=</span> get_completion_messages(messages)</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_and_product_response_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[{'category': 'Tops &amp; Blouses', 'products': ['Floral Print Blouse']},
+{'category': 'Shoes', 'products': ['Leather Ankle Boots']}, {'category':
+'Dresses'}]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>user_message_2 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ss">Can you tell me about your jeans? Also your jackets and coats."""</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span>  [</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'role'</span>:<span class="st">'system'</span>,<span class="st">'content'</span>: system_message},</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'role'</span>:<span class="st">'user'</span>,<span class="st">'content'</span>: <span class="ss">f"</span><span class="sc">{</span>delimiter<span class="sc">}{</span>user_message_2<span class="sc">}{</span>delimiter<span class="sc">}</span><span class="ss">"</span>},</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion_messages(messages)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[{'category': 'Jeans'}, {'category': 'Jackets &amp; Coats'}]</code></pre>
+</div>
+</div>
+</section>
+<section id="retrieve-detailed-product-information-for-extracted-products-and-categories" class="level3">
+<h3 class="anchored" data-anchor-id="retrieve-detailed-product-information-for-extracted-products-and-categories">Retrieve detailed product information for extracted products and categories</h3>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># product information</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>products <span class="op">=</span> {</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Boho Chic Maxi Dress"</span>: {</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Boho Chic Maxi Dress"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Dresses"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Bohemian Vibes"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">79.99</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Flowy silhouette"</span>, <span class="st">"Floral print"</span>, <span class="st">"Adjustable straps"</span>, <span class="st">"Lined"</span>],</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A beautiful and comfortable maxi dress perfect for summer days and music festivals."</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Little Black Dress"</span>: {</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Little Black Dress"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Dresses"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Classic Chic"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">99.99</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.7</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Sleeveless"</span>, <span class="st">"Scoop neckline"</span>, <span class="st">"Fitted waist"</span>, <span class="st">"Knee-length"</span>],</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A timeless and versatile little black dress for any occasion."</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Floral Sundress"</span>: {</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Floral Sundress"</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Dresses"</span>,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Sunny Days"</span>,</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">49.99</span>,</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Spaghetti straps"</span>, <span class="st">"Sweetheart neckline"</span>, <span class="st">"Elastic waist"</span>, <span class="st">"Midi length"</span>],</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A cute and feminine sundress with a lovely floral print."</span>,</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Off-the-Shoulder Dress"</span>: {</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Off-the-Shoulder Dress"</span>,</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Dresses"</span>,</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Romantic Ruffles"</span>,</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">69.99</span>,</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Off-the-shoulder neckline"</span>, <span class="st">"Ruffled sleeves"</span>, <span class="st">"Fitted bodice"</span>, <span class="st">"Flared skirt"</span>],</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A romantic and flirty off-the-shoulder dress for special occasions."</span>,</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lace Cocktail Dress"</span>: {</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Lace Cocktail Dress"</span>,</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Dresses"</span>,</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Elegant Evening"</span>,</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">129.99</span>,</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.8</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Lace overlay"</span>, <span class="st">"Illusion neckline"</span>, <span class="st">"Fitted silhouette"</span>, <span class="st">"Back zipper"</span>],</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A stunning lace cocktail dress for elegant events and parties."</span>,</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"High-Waisted Skinny Jeans"</span>: {</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"High-Waisted Skinny Jeans"</span>,</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jeans"</span>,</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Denim Darling"</span>,</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">59.99</span>,</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.4</span>,</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"High-waisted"</span>, <span class="st">"Skinny leg"</span>, <span class="st">"Stretch denim"</span>, <span class="st">"Five-pocket style"</span>],</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A pair of trendy and flattering high-waisted skinny jeans."</span>,</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Distressed Boyfriend Jeans"</span>: {</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Distressed Boyfriend Jeans"</span>,</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jeans"</span>,</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Casual Cool"</span>,</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">69.99</span>,</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.2</span>,</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Relaxed fit"</span>, <span class="st">"Distressed details"</span>, <span class="st">"Cuffed hems"</span>, <span class="st">"Five-pocket style"</span>],</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="st">"description"</span>: <span class="st">"A stylish and comfortable pair of distressed boyfriend jeans for a laid-back look."</span>,</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Black Skinny Jeans"</span>: {</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Black Skinny Jeans"</span>,</span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jeans"</span>,</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Sleek &amp; Chic"</span>,</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">49.99</span>,</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Skinny leg"</span>, <span class="st">"Mid-rise waist"</span>, <span class="st">"Stretch denim"</span>, <span class="st">"Five-pocket style"</span>],</span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A versatile pair of black skinny jeans that go with everything."</span>,</span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mom Jeans"</span>: {</span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Mom Jeans"</span>,</span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jeans"</span>,</span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Retro Revival"</span>,</span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">59.99</span>,</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"High-waisted"</span>, <span class="st">"Relaxed fit"</span>, <span class="st">"Tapered leg"</span>, <span class="st">"Vintage wash"</span>],</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A trendy pair of mom jeans with a nostalgic and comfortable fit."</span>,</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Flare Jeans"</span>: {</span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Flare Jeans"</span>,</span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jeans"</span>,</span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"70s Flair"</span>,</span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">69.99</span>,</span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"High-waisted"</span>, <span class="st">"Flared leg"</span>, <span class="st">"Stretch denim"</span>, <span class="st">"Five-pocket style"</span>],</span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A groovy pair of flare jeans that add a retro touch to any outfit."</span>,</span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Floral Print Blouse"</span>: {</span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Floral Print Blouse"</span>,</span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Tops &amp; Blouses"</span>,</span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Blooming Beauty"</span>,</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">39.99</span>,</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.4</span>,</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Floral print"</span>, <span class="st">"V-neckline"</span>, <span class="st">"Short sleeves"</span>, <span class="st">"Lightweight fabric"</span>],</span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A pretty and feminine floral print blouse perfect for spring and summer."</span>,</span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lace Trim Cami"</span>: {</span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Lace Trim Cami"</span>,</span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Tops &amp; Blouses"</span>,</span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Delicate Details"</span>,</span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">29.99</span>,</span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.2</span>,</span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Lace trim"</span>, <span class="st">"Adjustable straps"</span>, <span class="st">"Scalloped neckline"</span>, <span class="st">"Satin fabric"</span>],</span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A delicate and romantic lace trim cami for layering or wearing on its own."</span>,</span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Striped Button-Down Shirt"</span>: {</span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Striped Button-Down Shirt"</span>,</span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Tops &amp; Blouses"</span>,</span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Preppy Stripes"</span>,</span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">49.99</span>,</span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Striped pattern"</span>, <span class="st">"Button-down front"</span>, <span class="st">"Collared neckline"</span>, <span class="st">"Long sleeves"</span>],</span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A classic and versatile striped button-down shirt for a polished look."</span>,</span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Off-the-Shoulder Top"</span>: {</span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Off-the-Shoulder Top"</span>,</span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Tops &amp; Blouses"</span>,</span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Bare Shoulders"</span>,</span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">34.99</span>,</span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Off-the-shoulder neckline"</span>, <span class="st">"Elastic top"</span>, <span class="st">"Short sleeves"</span>, <span class="st">"Lightweight fabric"</span>],</span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A flirty and trendy off-the-shoulder top that shows off your shoulders."</span>,</span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Graphic Tee"</span>: {</span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Graphic Tee"</span>,</span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Tops &amp; Blouses"</span>,</span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Statement Tees"</span>,</span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">24.99</span>,</span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.1</span>,</span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Graphic print"</span>, <span class="st">"Crew neckline"</span>, <span class="st">"Short sleeves"</span>, <span class="st">"Cotton blend"</span>],</span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A fun and expressive graphic tee to make a statement."</span>,</span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Oversized Knit Sweater"</span>: {</span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Oversized Knit Sweater"</span>,</span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Sweaters &amp; Cardigans"</span>,</span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Cozy Comfort"</span>,</span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">59.99</span>,</span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Oversized fit"</span>, <span class="st">"Chunky knit"</span>, <span class="st">"Crew neckline"</span>, <span class="st">"Long sleeves"</span>],</span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A cozy and comfortable oversized knit sweater for chilly days."</span>,</span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cropped Cardigan"</span>: {</span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Cropped Cardigan"</span>,</span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Sweaters &amp; Cardigans"</span>,</span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Layered Chic"</span>,</span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">44.99</span>,</span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Cropped length"</span>, <span class="st">"Button-front"</span>, <span class="st">"Ribbed trim"</span>, <span class="st">"Soft knit"</span>],</span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A stylish and versatile cropped cardigan for layering over any outfit."</span>,</span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Turtleneck Sweater"</span>: {</span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Turtleneck Sweater"</span>,</span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Sweaters &amp; Cardigans"</span>,</span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Timeless Knits"</span>,</span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">49.99</span>,</span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Turtleneck"</span>, <span class="st">"Slim fit"</span>, <span class="st">"Ribbed knit"</span>, <span class="st">"Long sleeves"</span>],</span>
+<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A classic and sophisticated turtleneck sweater for a polished look."</span>,</span>
+<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cable Knit Pullover"</span>: {</span>
+<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Cable Knit Pullover"</span>,</span>
+<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Sweaters &amp; Cardigans"</span>,</span>
+<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Rustic Charm"</span>,</span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">69.99</span>,</span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.7</span>,</span>
+<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Cable knit pattern"</span>, <span class="st">"Crew neckline"</span>, <span class="st">"Long sleeves"</span>, <span class="st">"Wool blend"</span>],</span>
+<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A charming and textured cable knit pullover for a cozy and stylish outfit."</span>,</span>
+<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Cashmere V-Neck Sweater"</span>: {</span>
+<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Cashmere V-Neck Sweater"</span>,</span>
+<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Sweaters &amp; Cardigans"</span>,</span>
+<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Luxe Layers"</span>,</span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">99.99</span>,</span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.8</span>,</span>
+<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"V-neckline"</span>, <span class="st">"Soft cashmere"</span>, <span class="st">"Relaxed fit"</span>, <span class="st">"Long sleeves"</span>],</span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"An indulgent and luxurious cashmere v-neck sweater for ultimate comfort."</span>,</span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Leather Biker Jacket"</span>: {</span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Leather Biker Jacket"</span>,</span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jackets &amp; Coats"</span>,</span>
+<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Rebel Chic"</span>,</span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">199.99</span>,</span>
+<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.9</span>,</span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Genuine leather"</span>, <span class="st">"Asymmetrical zipper"</span>, <span class="st">"Notched lapels"</span>, <span class="st">"Zippered pockets"</span>],</span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A bold and edgy leather biker jacket for a cool and confident look."</span>,</span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Denim Jacket"</span>: {</span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Denim Jacket"</span>,</span>
+<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jackets &amp; Coats"</span>,</span>
+<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Blue Jean Baby"</span>,</span>
+<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">79.99</span>,</span>
+<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Classic denim"</span>, <span class="st">"Button-front"</span>, <span class="st">"Collared neckline"</span>, <span class="st">"Chest pockets"</span>],</span>
+<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A timeless and versatile denim jacket that never goes out of style."</span>,</span>
+<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Trench Coat"</span>: {</span>
+<span id="cb10-202"><a href="#cb10-202" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Trench Coat"</span>,</span>
+<span id="cb10-203"><a href="#cb10-203" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jackets &amp; Coats"</span>,</span>
+<span id="cb10-204"><a href="#cb10-204" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Classic Elegance"</span>,</span>
+<span id="cb10-205"><a href="#cb10-205" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">149.99</span>,</span>
+<span id="cb10-206"><a href="#cb10-206" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.7</span>,</span>
+<span id="cb10-207"><a href="#cb10-207" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Double-breasted"</span>, <span class="st">"Belted waist"</span>, <span class="st">"Notched lapels"</span>, <span class="st">"Waterproof fabric"</span>],</span>
+<span id="cb10-208"><a href="#cb10-208" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A sophisticated and iconic trench coat for a polished and put-together look."</span>,</span>
+<span id="cb10-209"><a href="#cb10-209" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-210"><a href="#cb10-210" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Puffer Jacket"</span>: {</span>
+<span id="cb10-211"><a href="#cb10-211" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Puffer Jacket"</span>,</span>
+<span id="cb10-212"><a href="#cb10-212" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jackets &amp; Coats"</span>,</span>
+<span id="cb10-213"><a href="#cb10-213" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Arctic Adventure"</span>,</span>
+<span id="cb10-214"><a href="#cb10-214" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">129.99</span>,</span>
+<span id="cb10-215"><a href="#cb10-215" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-216"><a href="#cb10-216" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Quilted design"</span>, <span class="st">"Hooded"</span>, <span class="st">"Zip-front"</span>, <span class="st">"Insulated filling"</span>],</span>
+<span id="cb10-217"><a href="#cb10-217" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A warm and cozy puffer jacket for cold weather adventures."</span>,</span>
+<span id="cb10-218"><a href="#cb10-218" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-219"><a href="#cb10-219" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Wool Peacoat"</span>: {</span>
+<span id="cb10-220"><a href="#cb10-220" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Wool Peacoat"</span>,</span>
+<span id="cb10-221"><a href="#cb10-221" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Jackets &amp; Coats"</span>,</span>
+<span id="cb10-222"><a href="#cb10-222" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Nautical Chic"</span>,</span>
+<span id="cb10-223"><a href="#cb10-223" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">179.99</span>,</span>
+<span id="cb10-224"><a href="#cb10-224" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.8</span>,</span>
+<span id="cb10-225"><a href="#cb10-225" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Wool blend"</span>, <span class="st">"Double-breasted"</span>, <span class="st">"Notched lapels"</span>, <span class="st">"Flap pockets"</span>],</span>
+<span id="cb10-226"><a href="#cb10-226" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A classic and stylish wool peacoat for a timeless and sophisticated look."</span>,</span>
+<span id="cb10-227"><a href="#cb10-227" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-228"><a href="#cb10-228" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Strappy High Heels"</span>: {</span>
+<span id="cb10-229"><a href="#cb10-229" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Strappy High Heels"</span>,</span>
+<span id="cb10-230"><a href="#cb10-230" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Shoes"</span>,</span>
+<span id="cb10-231"><a href="#cb10-231" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Glamour Girl"</span>,</span>
+<span id="cb10-232"><a href="#cb10-232" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">89.99</span>,</span>
+<span id="cb10-233"><a href="#cb10-233" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.6</span>,</span>
+<span id="cb10-234"><a href="#cb10-234" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Strappy design"</span>, <span class="st">"Stiletto heel"</span>, <span class="st">"Ankle strap"</span>, <span class="st">"Leather upper"</span>],</span>
+<span id="cb10-235"><a href="#cb10-235" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A pair of sexy and glamorous strappy high heels for a night out."</span>,</span>
+<span id="cb10-236"><a href="#cb10-236" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-237"><a href="#cb10-237" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Leather Ankle Boots"</span>: {</span>
+<span id="cb10-238"><a href="#cb10-238" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Leather Ankle Boots"</span>,</span>
+<span id="cb10-239"><a href="#cb10-239" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Shoes"</span>,</span>
+<span id="cb10-240"><a href="#cb10-240" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Urban Chic"</span>,</span>
+<span id="cb10-241"><a href="#cb10-241" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">119.99</span>,</span>
+<span id="cb10-242"><a href="#cb10-242" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.7</span>,</span>
+<span id="cb10-243"><a href="#cb10-243" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Genuine leather"</span>, <span class="st">"Stacked heel"</span>, <span class="st">"Side zipper"</span>, <span class="st">"Pointed toe"</span>],</span>
+<span id="cb10-244"><a href="#cb10-244" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A pair of stylish and versatile leather ankle boots for any occasion."</span>,</span>
+<span id="cb10-245"><a href="#cb10-245" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-246"><a href="#cb10-246" aria-hidden="true" tabindex="-1"></a>    <span class="st">"White Sneakers"</span>: {</span>
+<span id="cb10-247"><a href="#cb10-247" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"White Sneakers"</span>,</span>
+<span id="cb10-248"><a href="#cb10-248" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Shoes"</span>,</span>
+<span id="cb10-249"><a href="#cb10-249" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Casual Kicks"</span>,</span>
+<span id="cb10-250"><a href="#cb10-250" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">59.99</span>,</span>
+<span id="cb10-251"><a href="#cb10-251" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.4</span>,</span>
+<span id="cb10-252"><a href="#cb10-252" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Canvas upper"</span>, <span class="st">"Rubber sole"</span>, <span class="st">"Lace-up closure"</span>, <span class="st">"Cushioned insole"</span>],</span>
+<span id="cb10-253"><a href="#cb10-253" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A pair of classic and comfortable white sneakers for everyday wear."</span>,</span>
+<span id="cb10-254"><a href="#cb10-254" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-255"><a href="#cb10-255" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Ballet Flats"</span>: {</span>
+<span id="cb10-256"><a href="#cb10-256" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Ballet Flats"</span>,</span>
+<span id="cb10-257"><a href="#cb10-257" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Shoes"</span>,</span>
+<span id="cb10-258"><a href="#cb10-258" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Dainty Dancer"</span>,</span>
+<span id="cb10-259"><a href="#cb10-259" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">49.99</span>,</span>
+<span id="cb10-260"><a href="#cb10-260" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.3</span>,</span>
+<span id="cb10-261"><a href="#cb10-261" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Soft fabric"</span>, <span class="st">"Slip-on style"</span>, <span class="st">"Elasticized topline"</span>, <span class="st">"Rounded toe"</span>],</span>
+<span id="cb10-262"><a href="#cb10-262" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A pair of feminine and elegant ballet flats for a graceful look."</span>,</span>
+<span id="cb10-263"><a href="#cb10-263" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb10-264"><a href="#cb10-264" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Espadrille Wedges"</span>: {</span>
+<span id="cb10-265"><a href="#cb10-265" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"Espadrille Wedges"</span>,</span>
+<span id="cb10-266"><a href="#cb10-266" aria-hidden="true" tabindex="-1"></a>        <span class="st">"category"</span>: <span class="st">"Shoes"</span>,</span>
+<span id="cb10-267"><a href="#cb10-267" aria-hidden="true" tabindex="-1"></a>        <span class="st">"brand"</span>: <span class="st">"Summer Soles"</span>,</span>
+<span id="cb10-268"><a href="#cb10-268" aria-hidden="true" tabindex="-1"></a>        <span class="st">"price"</span>: <span class="fl">79.99</span>,</span>
+<span id="cb10-269"><a href="#cb10-269" aria-hidden="true" tabindex="-1"></a>        <span class="st">"rating"</span>: <span class="fl">4.5</span>,</span>
+<span id="cb10-270"><a href="#cb10-270" aria-hidden="true" tabindex="-1"></a>        <span class="st">"features"</span>: [<span class="st">"Canvas upper"</span>, <span class="st">"Jute wedge"</span>, <span class="st">"Ankle strap"</span>, <span class="st">"Rubber sole"</span>],</span>
+<span id="cb10-271"><a href="#cb10-271" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"A pair of summery and stylish espadrille wedges for a chic and elevated look."</span>,</span>
+<span id="cb10-272"><a href="#cb10-272" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_product_by_name(name):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> products.get(name, <span class="va">None</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_products_by_category(category):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [product <span class="cf">for</span> product <span class="kw">in</span> products.values() <span class="cf">if</span> product[<span class="st">"category"</span>] <span class="op">==</span> category]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_product_by_name(<span class="st">"Floral Print Blouse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'name': 'Floral Print Blouse', 'category': 'Tops &amp; Blouses', 'brand': 'Blooming Beauty', 'price': 39.99, 'rating': 4.4, 'features': ['Floral print', 'V-neckline', 'Short sleeves', 'Lightweight fabric'], 'description': 'A pretty and feminine floral print blouse perfect for spring and summer.'}</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_products_by_category(<span class="st">"Dresses"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[{'name': 'Boho Chic Maxi Dress', 'category': 'Dresses', 'brand': 'Bohemian Vibes', 'price': 79.99, 'rating': 4.5, 'features': ['Flowy silhouette', 'Floral print', 'Adjustable straps', 'Lined'], 'description': 'A beautiful and comfortable maxi dress perfect for summer days and music festivals.'}, {'name': 'Little Black Dress', 'category': 'Dresses', 'brand': 'Classic Chic', 'price': 99.99, 'rating': 4.7, 'features': ['Sleeveless', 'Scoop neckline', 'Fitted waist', 'Knee-length'], 'description': 'A timeless and versatile little black dress for any occasion.'}, {'name': 'Floral Sundress', 'category': 'Dresses', 'brand': 'Sunny Days', 'price': 49.99, 'rating': 4.3, 'features': ['Spaghetti straps', 'Sweetheart neckline', 'Elastic waist', 'Midi length'], 'description': 'A cute and feminine sundress with a lovely floral print.'}, {'name': 'Off-the-Shoulder Dress', 'category': 'Dresses', 'brand': 'Romantic Ruffles', 'price': 69.99, 'rating': 4.6, 'features': ['Off-the-shoulder neckline', 'Ruffled sleeves', 'Fitted bodice', 'Flared skirt'], 'description': 'A romantic and flirty off-the-shoulder dress for special occasions.'}, {'name': 'Lace Cocktail Dress', 'category': 'Dresses', 'brand': 'Elegant Evening', 'price': 129.99, 'rating': 4.8, 'features': ['Lace overlay', 'Illusion neckline', 'Fitted silhouette', 'Back zipper'], 'description': 'A stunning lace cocktail dress for elegant events and parties.'}]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(user_message_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Tell me about the Floral Print Blouse and
+ the Leather Ankle Boots.
+ Also tell me about your dresses.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_and_product_response_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[{'category': 'Tops &amp; Blouses', 'products': ['Floral Print Blouse']},
+{'category': 'Shoes', 'products': ['Leather Ankle Boots']}, {'category':
+'Dresses'}]</code></pre>
+</div>
+</div>
+</section>
+<section id="read-python-string-into-python-list-of-dictionaries" class="level3">
+<h3 class="anchored" data-anchor-id="read-python-string-into-python-list-of-dictionaries">Read Python string into Python list of dictionaries</h3>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_string_to_list(input_string):</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> input_string <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        input_string<span class="op">=</span> input_string.replace(<span class="st">"'"</span>,<span class="st">'</span><span class="ch">\"</span><span class="st">'</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        input_string<span class="op">=</span> input_string.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>,<span class="st">" "</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> json.loads(input_string)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> data</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> json.JSONDecodeError:</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Error: Invalid JSON String"</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>category_and_product_list <span class="op">=</span> read_string_to_list(category_and_product_response_1)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_and_product_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[{'category': 'Tops &amp; Blouses', 'products': ['Floral Print Blouse']}, {'category': 'Shoes', 'products': ['Leather Ankle Boots']}, {'category': 'Dresses'}]</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_output_string(data_list):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    output_string <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> data_list <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> output_string</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> data <span class="kw">in</span> data_list:</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="st">"products"</span> <span class="kw">in</span> data:</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                products_list <span class="op">=</span> data[<span class="st">"products"</span>]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> product_name <span class="kw">in</span> products_list:</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                    product <span class="op">=</span> get_product_by_name(product_name)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> product:</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>                        output_string <span class="op">+=</span> json.dumps(product, indent<span class="op">=</span><span class="dv">4</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">else</span>:</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                        <span class="bu">print</span>(<span class="ss">f"Error: Product '</span><span class="sc">{</span>product_name<span class="sc">}</span><span class="ss">' not found"</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> <span class="st">"category"</span> <span class="kw">in</span> data:</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>                category_name <span class="op">=</span> data[<span class="st">"category"</span>]</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                category_products <span class="op">=</span> get_products_by_category(category_name)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> product <span class="kw">in</span> category_products:</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>                    output_string <span class="op">+=</span> json.dumps(product, indent<span class="op">=</span><span class="dv">4</span>) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="st">"Error: Invalid object format"</span>)</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>product_information_for_user_message_1 <span class="op">=</span> generate_output_string(category_and_product_list)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(product_information_for_user_message_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{
+    "name": "Floral Print Blouse",
+    "category": "Tops &amp; Blouses",
+    "brand": "Blooming Beauty",
+    "price": 39.99,
+    "rating": 4.4,
+    "features": [
+        "Floral print",
+        "V-neckline",
+        "Short sleeves",
+        "Lightweight fabric"
+    ],
+    "description": "A pretty and feminine floral print blouse perfect for spring and summer."
+}
+{
+    "name": "Leather Ankle Boots",
+    "category": "Shoes",
+    "brand": "Urban Chic",
+    "price": 119.99,
+    "rating": 4.7,
+    "features": [
+        "Genuine leather",
+        "Stacked heel",
+        "Side zipper",
+        "Pointed toe"
+    ],
+    "description": "A pair of stylish and versatile leather ankle boots for any occasion."
+}
+{
+    "name": "Boho Chic Maxi Dress",
+    "category": "Dresses",
+    "brand": "Bohemian Vibes",
+    "price": 79.99,
+    "rating": 4.5,
+    "features": [
+        "Flowy silhouette",
+        "Floral print",
+        "Adjustable straps",
+        "Lined"
+    ],
+    "description": "A beautiful and comfortable maxi dress perfect for summer days and music festivals."
+}
+{
+    "name": "Little Black Dress",
+    "category": "Dresses",
+    "brand": "Classic Chic",
+    "price": 99.99,
+    "rating": 4.7,
+    "features": [
+        "Sleeveless",
+        "Scoop neckline",
+        "Fitted waist",
+        "Knee-length"
+    ],
+    "description": "A timeless and versatile little black dress for any occasion."
+}
+{
+    "name": "Floral Sundress",
+    "category": "Dresses",
+    "brand": "Sunny Days",
+    "price": 49.99,
+    "rating": 4.3,
+    "features": [
+        "Spaghetti straps",
+        "Sweetheart neckline",
+        "Elastic waist",
+        "Midi length"
+    ],
+    "description": "A cute and feminine sundress with a lovely floral print."
+}
+{
+    "name": "Off-the-Shoulder Dress",
+    "category": "Dresses",
+    "brand": "Romantic Ruffles",
+    "price": 69.99,
+    "rating": 4.6,
+    "features": [
+        "Off-the-shoulder neckline",
+        "Ruffled sleeves",
+        "Fitted bodice",
+        "Flared skirt"
+    ],
+    "description": "A romantic and flirty off-the-shoulder dress for special occasions."
+}
+{
+    "name": "Lace Cocktail Dress",
+    "category": "Dresses",
+    "brand": "Elegant Evening",
+    "price": 129.99,
+    "rating": 4.8,
+    "features": [
+        "Lace overlay",
+        "Illusion neckline",
+        "Fitted silhouette",
+        "Back zipper"
+    ],
+    "description": "A stunning lace cocktail dress for elegant events and parties."
+}
+</code></pre>
+</div>
+</div>
+</section>
+<section id="generate-answer-to-user-query-based-on-detailed-product-information" class="level3">
+<h3 class="anchored" data-anchor-id="generate-answer-to-user-query-based-on-detailed-product-information">Generate answer to user query based on detailed product information</h3>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ss">You are a customer service assistant for a large fashion retailer. Your role is</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ss">to provide friendly and helpful information about the store's products to</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ss">customers based on the provided product details.</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ss">When a customer asks about specific products or categories, you should refer to</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="ss">the relevant product information and provide concise and accurate details about</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="ss">those products or categories. Summarize the features to the customer, avoid</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ss">just listing the products.</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="ss">If the customer's query is unclear or if you need additional information to</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="ss">provide a better response, you should ask relevant follow-up questions.</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="ss">For example, if a customer asks about a specific product, you can provide</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="ss">details such as its features, brand, pricing, and customer rating. If a customer asks</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="ss">about a category, you can highlight the key products within that category and</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="ss">their unique features or styles.</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="ss">Remember to always use the provided product information as the source of your</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="ss">responses, and do not make up or speculate about any product details.</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>assistant_message<span class="op">=</span><span class="ss">f"""Relevant product information:</span><span class="ch">\n\</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>product_information_for_user_message_1<span class="sc">}</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span>  [</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'role'</span>:<span class="st">'system'</span>, <span class="st">'content'</span>: system_message},</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'role'</span>:<span class="st">'user'</span>, <span class="st">'content'</span>: user_message_1},</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'role'</span>:<span class="st">'assistant'</span>, <span class="st">'content'</span>: assistant_message}</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>final_response <span class="op">=</span> get_completion_messages(messages)</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(final_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The Floral Print Blouse is a pretty and feminine blouse from the brand Blooming
+Beauty. It features a floral print, a V-neckline, short sleeves, and is made of
+lightweight fabric. This blouse is perfect for spring and summer and has a
+customer rating of 4.4 stars.
+
+The Leather Ankle Boots are a pair of stylish and versatile boots from the brand
+Urban Chic. They are made of genuine leather, have a stacked heel, a side
+zipper, and a pointed toe. These boots are suitable for any occasion and have a
+customer rating of 4.7 stars.
+As for our dresses, we have a variety of styles to choose from. Some of our
+popular dresses include:
+
+1. Boho Chic Maxi Dress: This dress is perfect for summer days and music
+festivals. It features a flowy silhouette, a lovely floral print, adjustable
+straps, and is lined.
+2. Little Black Dress: This timeless and versatile dress is perfect for any
+occasion. It has a sleeveless design, a scoop neckline, a fitted waist, and a
+knee-length skirt.
+3. Floral Sundress: This cute and feminine sundress features spaghetti straps, a
+sweetheart neckline, an elastic waist, and a midi-length skirt.
+4. Off-the-Shoulder Dress: This romantic and flirty dress has an off-the-
+shoulder neckline, ruffled sleeves, a fitted bodice, and a flared skirt.
+5. Lace Cocktail Dress: This stunning lace cocktail dress is perfect for elegant
+events and parties. It features a lace overlay, an illusion neckline, a fitted
+silhouette, and a back zipper.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>user_messages <span class="op">=</span> [</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm looking for a new dress for a summer wedding. Can you tell me about the Floral Sundress and the Off-the-Shoulder Dress?"</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I need some new jeans for everyday wear. What options do you have in the Jeans category?"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm interested in getting a cozy sweater for the upcoming fall season. Can you tell me about the Oversized Knit Sweater and the Cashmere V-Neck Sweater?"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm going on a trip and need a versatile jacket. Can you tell me about the Denim Jacket and the Trench Coat?"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm looking to update my shoe collection. What can you tell me about the Strappy High Heels and the Espadrille Wedges?"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I need a new top for the office. Can you tell me about the Striped Button-Down Shirt and the Lace Trim Cami?"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm looking for a stylish and warm jacket for the winter. Can you tell me about the Puffer Jacket and the Wool Peacoat?"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm in the market for a new pair of comfortable yet fashionable jeans. What can you tell me about the Mom Jeans and the Flare Jeans?"</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm planning a music festival outfit. Can you tell me about the Boho Chic Maxi Dress and the Graphic Tee?"</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I need a new jacket for the transitional weather. Can you tell me about the Leather Biker Jacket and the Cropped Cardigan?"</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The expected JSON output for these user messages would be:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Dresses"</span><span class="fu">,</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Floral Sundress"</span><span class="ot">,</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Off-the-Shoulder Dress"</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Jeans"</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Sweaters &amp; Cardigans"</span><span class="fu">,</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Oversized Knit Sweater"</span><span class="ot">,</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Cashmere V-Neck Sweater"</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Jackets &amp; Coats"</span><span class="fu">,</span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Denim Jacket"</span><span class="ot">,</span></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Trench Coat"</span></span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Shoes"</span><span class="fu">,</span></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Strappy High Heels"</span><span class="ot">,</span></span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Espadrille Wedges"</span></span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Tops &amp; Blouses"</span><span class="fu">,</span></span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Striped Button-Down Shirt"</span><span class="ot">,</span></span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Lace Trim Cami"</span></span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Jackets &amp; Coats"</span><span class="fu">,</span></span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Puffer Jacket"</span><span class="ot">,</span></span>
+<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Wool Peacoat"</span></span>
+<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Jeans"</span><span class="fu">,</span></span>
+<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Mom Jeans"</span><span class="ot">,</span></span>
+<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Flare Jeans"</span></span>
+<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-70"><a href="#cb29-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-71"><a href="#cb29-71" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Dresses"</span><span class="fu">,</span></span>
+<span id="cb29-72"><a href="#cb29-72" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-73"><a href="#cb29-73" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Boho Chic Maxi Dress"</span></span>
+<span id="cb29-74"><a href="#cb29-74" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-75"><a href="#cb29-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb29-76"><a href="#cb29-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-77"><a href="#cb29-77" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Tops &amp; Blouses"</span><span class="fu">,</span></span>
+<span id="cb29-78"><a href="#cb29-78" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-79"><a href="#cb29-79" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Graphic Tee"</span></span>
+<span id="cb29-80"><a href="#cb29-80" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-81"><a href="#cb29-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-82"><a href="#cb29-82" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span><span class="er">,</span></span>
+<span id="cb29-83"><a href="#cb29-83" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb29-84"><a href="#cb29-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb29-85"><a href="#cb29-85" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"category"</span><span class="fu">:</span> <span class="st">"Jackets &amp; Coats"</span><span class="fu">,</span></span>
+<span id="cb29-86"><a href="#cb29-86" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"products"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb29-87"><a href="#cb29-87" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Leather Biker Jacket"</span><span class="ot">,</span></span>
+<span id="cb29-88"><a href="#cb29-88" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Cropped Cardigan"</span></span>
+<span id="cb29-89"><a href="#cb29-89" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb29-90"><a href="#cb29-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb29-91"><a href="#cb29-91" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

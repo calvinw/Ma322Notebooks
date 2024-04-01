@@ -1,0 +1,22 @@
+---
+title: "Simple Completion"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+## Calling an LLM with `get_completion`
+
+First set up a prompt we can use:
+
+```{python}
+prompt = "Why is the sky blue? In 50 words or less."
+```
+
+Now we call the`get_completion` function. This function takes our prompt as
+argument and sends it off to the LLM. The LLM returns a response. This function
+returns that response.
+
+```{python}
+response = get_completion(prompt)
+print(response)
+```

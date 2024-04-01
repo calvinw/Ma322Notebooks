@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chain Of Thought Reasoning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="ChainOfThoughtReasoning_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ChainOfThoughtReasoning_files/libs/quarto-html/quarto.js"></script>
+<script src="ChainOfThoughtReasoning_files/libs/quarto-html/popper.min.js"></script>
+<script src="ChainOfThoughtReasoning_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ChainOfThoughtReasoning_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ChainOfThoughtReasoning_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ChainOfThoughtReasoning_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ChainOfThoughtReasoning_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ChainOfThoughtReasoning_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ChainOfThoughtReasoning_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Chain Of Thought Reasoning</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Provider: TogetherAI
+Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="chain-of-thought-reasoning---customer-queries" class="level2">
+<h2 class="anchored" data-anchor-id="chain-of-thought-reasoning---customer-queries">Chain of Thought Reasoning - Customer Queries</h2>
+<p>Here we want to build an application that allows us to answer questions from the customer using chain of thought (step-by-step) reasoning. This keeps the LLM from making up facts or not sticking with the important points about the customers queries.</p>
+<section id="products" class="level3">
+<h3 class="anchored" data-anchor-id="products">Products</h3>
+<p>We will pretend we just have the products below and not others. That keeps our example small.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>product_descriptions<span class="op">=</span><span class="ss">f"""</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ss">- Product ID: DR001</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Product: Floral Print Sundress</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Department: Dresses</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Class: Casual Dresses</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Brand: Blossom</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Size Range: XS-XL</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Material: Rayon</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Rating: 4.6</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Features: Adjustable straps, tiered skirt, ruffled hem</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Description: A beautiful floral sundress perfect for spring and summer.</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Price: $39.99</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- Product ID: BT002</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Product: Distressed Boyfriend Jeans</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Department: Bottoms</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Class: Jeans</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Brand: DenimCo</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Size Range: 24-32</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Material: Cotton</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Rating: 4.4</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Features: Relaxed fit, ripped details, roll-up hems</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Description: Casual and trendy jeans with a lived-in look.</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Price: $54.99</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- Product ID: TP003</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Product: Striped Off-Shoulder Top</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Department: Tops</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Class: Blouses</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Brand: Trendy Threads</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Size Range: XS-XL</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Material: Rayon</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Rating: 4.7</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Features: Elasticized neckline, short sleeves, cropped length</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Description: A stylish and flirty off-shoulder top with classic stripes.</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Price: $24.99</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- Product ID: OW004</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Product: Faux Leather Moto Jacket</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Department: Outerwear</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Class: Jackets</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Brand: Rebel Edge</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Size Range: XS-XL</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Material: Polyurethane</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Rating: 4.5</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Features: Notched collar, asymmetrical zipper, zippered pockets</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Description: An edgy faux leather jacket with a modern moto style.</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Price: $69.99</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- Product ID: FW005</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Product: Embroidered Canvas Sneakers</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Department: Footwear</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Class: Sneakers</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Brand: Kick Start</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Size Range: 6-11</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Material: Canvas</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Rating: 4.3</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Features: Lace-up closure, embroidered floral design, rubber sole</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Description: Fun and fashionable sneakers with a vibrant embroidered pattern.</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Price: $44.99</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="ss">- Product ID: AC006</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Product: Tassel Crossbody Bag</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Department: Accessories</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Class: Bags</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Brand: BoHo Chic</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Material: Faux Leather</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Rating: 4.6</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Features: Adjustable strap, tassel accent, interior zip pocket</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Description: A trendy crossbody bag with boho style and flair.</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="ss">  - Price: $29.99</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="customer-queries" class="level3">
+<h3 class="anchored" data-anchor-id="customer-queries">Customer Queries</h3>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>user_queries <span class="op">=</span> [</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm looking for a sundress for my daughter, but she's quite tall for her age. Do the Floral Print Sundresses come in sizes for pre-teens or juniors?"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I really like the look of the Distressed Boyfriend Jeans, but I'm worried they might be too loose and baggy. Do they run small or true to size?"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The Striped Off-Shoulder Top looks so cute! I'm usually between a small and medium. Since it's cropped, should I size up to a large?"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I want to buy the Faux Leather Moto Jacket as a gift, but I'm not sure about the sizing. Do the jackets tend to run big or small? And do they have any stretch to them?"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"My teenage son is really into sneakers right now. I was thinking of getting him the Embroidered Canvas Sneakers, but he usually wears a men's size 11.5. Do these come in half sizes or just whole sizes?"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Do you carry any plus size options for the Floral Print Sundress or other dresses?"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"What is the return policy on shoes like the Embroidered Canvas Sneakers?"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm looking for a dress to wear to a summer wedding. Would the Floral Print Sundress be appropriate or too casual?"</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Are the materials used for the Distressed Boyfriend Jeans environmentally friendly or sustainable?"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"My daughter wants a new backpack for school. Do you have any backpacks or bags in that department?"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"How often do you get new inventory for tops and blouses like the Striped Off-Shoulder Top?"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Do any of your jackets like the Faux Leather Moto Jacket have a lining for colder weather?"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I need to buy a gift for my teenage niece. What is popular with girls her age in your accessories department?"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"My feet tend to sweat a lot. Are the materials used for the Embroidered Canvas Sneakers breathable?"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm looking for a new purse, but not one that's too big or bulky. What crossbody or smaller bag options do you have?"</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="a-prompt-without-chain-of-thought" class="level3">
+<h3 class="anchored" data-anchor-id="a-prompt-without-chain-of-thought">A Prompt Without Chain of Thought</h3>
+<p>First we create a system prompt without CoT (Chain of Thought)</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>delimiter <span class="op">=</span> <span class="st">"####"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>system_message1 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ss">Answer the customer queries.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ss">The customer query will be delimited with the tags &lt;query&gt; and &lt;/query&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ss">All available products:</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>product_descriptions<span class="sc">}</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ss">Answer the customer in a friendly tone.</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="a-prompt-with-chain-of-thought" class="level3">
+<h3 class="anchored" data-anchor-id="a-prompt-with-chain-of-thought">A Prompt With Chain of Thought</h3>
+<p>Now we create a system prompt with CoT technique:</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>system_message2 <span class="op">=</span> <span class="ss">f"""</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ss">Follow these steps to answer the customer queries.</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ss">The customer query will be delimited with the tags &lt;query&gt; and &lt;/query&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 1:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> First decide whether the user is</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ss">asking a question about a specific product or products.</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ss">Department and class don't count.</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 2:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> If the user is asking about</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ss">specific products, identify whether</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="ss">the products are in the following list.</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="ss">All available products:</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>product_descriptions<span class="sc">}</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 3:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> If the message contains products</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="ss">in the list above, list any assumptions that the</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="ss">user is making in their</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="ss">message e.g. that the sundress runs small, or that</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="ss">the sneakers come in half sizes.</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 4:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">: If the user made any assumptions,</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="ss">figure out whether the assumption is true based on your</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="ss">product information.</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 5:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss">: First, politely correct the</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="ss">customer's incorrect assumptions if applicable.</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="ss">Only mention or reference products in the list of</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="ss">products, as these are the only products</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="ss">that the store sells.</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="ss">Answer the customer in a friendly tone.</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="ss">Use the following format:</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 1:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 1 reasoning&gt;</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 2:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 2 reasoning&gt;</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 3:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 3 reasoning&gt;</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a><span class="ss">Step 4:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;step 4 reasoning&gt;</span></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="ss">Response to user:</span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> &lt;response to customer&gt;</span></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="ss">Make sure to include </span><span class="sc">{</span>delimiter<span class="sc">}</span><span class="ss"> to separate every step.</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we are going to get responses using both techniques so we can compare them</p>
+<p>For the CoT version we also have the LLM print out the “inner monologue” which is the steps and its reasons.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.messages <span class="im">import</span> HumanMessage, SystemMessage</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#user_queries = user_queries[:2]</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> query <span class="kw">in</span> user_queries:</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Query:"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(wrap_text(query))</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span><span class="ss">f"""</span><span class="sc">{</span>system_message1<span class="sc">}</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ss">  &lt;query&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="sc">{</span>query<span class="sc">}</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="ss">  &lt;/query&gt;"""</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"-----Without CoT Response:-----"</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(response)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  prompt<span class="op">=</span><span class="ss">f"""</span><span class="sc">{</span>system_message2<span class="sc">}</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="ss">  &lt;query&gt;</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="ss">  </span><span class="sc">{</span>query<span class="sc">}</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="ss">  &lt;/query&gt;"""</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"-----CoT Response:--------"</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(response)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Query:
+I'm looking for a sundress for my daughter, but she's quite tall for her age. Do
+the Floral Print Sundresses come in sizes for pre-teens or juniors?
+
+-----Without CoT Response:-----
+Hello! I'd be happy to help you find the perfect sundress for your daughter. The
+Floral Print Sundresses are available in sizes XS-XL, which typically fit sizes
+0-12. If your daughter is taller than average, you may want to consider sizing
+up for a better fit. Please let me know if you need any further assistance!
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The Floral Print Sundress is in the list of available products.
+Step 3:#### The user is assuming that the Floral Print Sundress might not be
+available in sizes for pre-teens or juniors.
+Step 4:#### The Floral Print Sundress is available in sizes XS-XL, which could
+potentially fit pre-teens or juniors depending on their height and build.
+
+Response to user:#### The Floral Print Sundress is available in sizes XS-XL,
+which could potentially fit pre-teens or juniors depending on their height and
+build.
+
+
+Query:
+I really like the look of the Distressed Boyfriend Jeans, but I'm worried they
+might be too loose and baggy. Do they run small or true to size?
+
+-----Without CoT Response:-----
+&lt;query&gt;
+Hello! The Distressed Boyfriend Jeans are designed to have a relaxed fit, so
+they might appear a bit looser than regular jeans. However, they are true to
+size according to customer reviews. If you prefer a more fitted look, you may
+want to consider sizing down. Don't hesitate to reach out if you have any
+further questions!
+&lt;/query&gt;
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The product mentioned is in the list of available products.
+Step 3:#### The user is asking if the jeans run small or true to size.
+Step 4:#### The product information for the Distressed Boyfriend Jeans does not
+mention anything about the fit being small or true to size.
+
+Response to user:#### Thank you for your interest in the Distressed Boyfriend
+Jeans! Unfortunately, we do not have information on whether they run small or
+true to size. However, we can assure you that they have a relaxed fit and are
+made of cotton, which generally provides a comfortable and true-to-size fit. If
+you have any further questions or concerns, please don't hesitate to ask!
+
+
+Query:
+The Striped Off-Shoulder Top looks so cute! I'm usually between a small and
+medium. Since it's cropped, should I size up to a large?
+
+-----Without CoT Response:-----
+Hello! Thank you for your interest in the Striped Off-Shoulder Top. It's a
+lovely piece, and I'm happy to help you with sizing.
+Since the top has an elasticized neckline and a cropped length, it might have
+some stretch and hug your body nicely. However, if you prefer a looser fit or
+have a longer torso, sizing up to a large could be a good option.
+Remember, it's always a good idea to check the size chart on our website for
+more accurate sizing information. If you have any further questions, please
+don't hesitate to ask!
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The Striped Off-Shoulder Top is in the list of available products.
+Step 3:#### The user is assuming that they should size up due to the cropped
+length.
+Step 4:#### The product information does not mention sizing up for the cropped
+length.
+
+Response to user:#### The Striped Off-Shoulder Top is a stylish and flirty top
+with an elasticized neckline, short sleeves, and a cropped length. The size
+range for this top is XS-XL. Since the product information does not mention
+sizing up for the cropped length, you can choose your regular size between small
+and medium.
+
+
+Query:
+I want to buy the Faux Leather Moto Jacket as a gift, but I'm not sure about the
+sizing. Do the jackets tend to run big or small? And do they have any stretch to
+them?
+
+-----Without CoT Response:-----
+Hello! The Faux Leather Moto Jacket is designed to fit true to size. It doesn't
+have much stretch, so I recommend choosing the size that matches the recipient's
+usual size. If they prefer a more relaxed fit, you might consider going up a
+size. I hope this helps!
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The product is in the list of available products.
+Step 3:#### The user is asking about the sizing and stretch of the Faux Leather
+Moto Jacket.
+Step 4:#### The product information does not mention any information about the
+sizing running big or small, or if the jacket has stretch.
+
+Response to user:#### Thank you for your interest in the Faux Leather Moto
+Jacket. Unfortunately, our product information does not mention if the jackets
+run big or small, or if they have any stretch. However, we can assure you that
+the jacket is made of polyurethane, which is a material that can have some
+flexibility. If you have any further questions or need assistance with sizing,
+please don't hesitate to ask.
+
+
+Query:
+My teenage son is really into sneakers right now. I was thinking of getting him
+the Embroidered Canvas Sneakers, but he usually wears a men's size 11.5. Do
+these come in half sizes or just whole sizes?
+
+-----Without CoT Response:-----
+Hello! I'd be happy to help you with that. The Embroidered Canvas Sneakers come
+in whole sizes only, ranging from size 6 to 11. Unfortunately, they do not offer
+half sizes. However, you might want to consider checking out other sneaker
+options that do offer half sizes to ensure a better fit for your son.
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The product is in the list of available products.
+Step 3:#### The user is assuming that the Embroidered Canvas Sneakers come in
+half sizes.
+Step 4:#### Based on the product information, the Embroidered Canvas Sneakers
+come in whole sizes only.
+
+Response to user:#### Thank you for your interest in the Embroidered Canvas
+Sneakers. I'm sorry to inform you that they only come in whole sizes, ranging
+from size 6 to 11. However, we have a wide variety of sneakers in our store, and
+I'd be happy to help you find a suitable pair for your son.
+
+
+Query:
+Do you carry any plus size options for the Floral Print Sundress or other
+dresses?
+
+-----Without CoT Response:-----
+Yes, we do carry plus size options for the Floral Print Sundress and other
+dresses. The Floral Print Sundress is available in sizes XS-XL, which includes
+plus sizes. Additionally, we have a variety of dresses in our Plus Size Dresses
+category, which includes sizes 1X-3X. You can find these options by browsing our
+website or using the search bar to filter by size.
+
+-----CoT Response:--------
+Step 1:#### The user is asking about specific products.
+Step 2:#### The user is asking about the Floral Print Sundress and other
+dresses.
+Step 3:#### The user is asking if there are plus size options available for
+these products.
+Step 4:#### The Floral Print Sundress has a size range of XS-XL, which includes
+some plus sizes.
+
+Response to user:#### Thank you for your inquiry! The Floral Print Sundress
+(Product ID: DR001) has a size range of XS-XL, which includes some plus sizes.
+We do carry other dresses as well, but the size range may vary depending on the
+specific dress. Please let us know if you need any further assistance!
+
+
+Query:
+What is the return policy on shoes like the Embroidered Canvas Sneakers?
+
+-----Without CoT Response:-----
+Hello! Our return policy for shoes, including the Embroidered Canvas Sneakers,
+allows you to return them within 30 days of purchase for a full refund or
+exchange. The shoes must be in their original condition and packaging. If you
+have any further questions, please don't hesitate to ask!
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The product is in the list of available products.
+Step 3:#### The user is asking about the return policy for the Embroidered
+Canvas Sneakers.
+Step 4:#### The return policy is not product-specific, but the store generally
+accepts returns within 30 days of purchase, as long as the item is in its
+original condition and has the original tags attached.
+
+Response to user:#### Thank you for your question! The Embroidered Canvas
+Sneakers can be returned within 30 days of purchase, as long as they are in
+their original condition with the original tags attached. If you have any
+further questions, please don't hesitate to ask!
+
+
+Query:
+I'm looking for a dress to wear to a summer wedding. Would the Floral Print
+Sundress be appropriate or too casual?
+
+-----Without CoT Response:-----
+&lt;query&gt;
+The Floral Print Sundress would be a great choice for a summer wedding! It's a
+beautiful and stylish dress that is perfect for the occasion. The floral print
+and ruffled hem add a touch of elegance, making it suitable for a wedding. You
+can pair it with some nice accessories and heels to complete the look. Enjoy
+your special day!
+&lt;/query&gt;
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The Floral Print Sundress is in the list of available products.
+Step 3:#### The user is asking if the dress is appropriate for a summer wedding.
+Step 4:#### The Floral Print Sundress is a casual dress, but it could be
+appropriate for a summer wedding depending on the formality of the event.
+
+Response to user:#### The Floral Print Sundress is a beautiful and stylish
+option for a summer wedding. It has a casual yet elegant design with adjustable
+straps and a tiered skirt. While it may not be the most formal dress, it could
+be a great choice for a more relaxed wedding.
+
+
+Query:
+Are the materials used for the Distressed Boyfriend Jeans environmentally
+friendly or sustainable?
+
+-----Without CoT Response:-----
+Hello! The Distressed Boyfriend Jeans are made of cotton, which is a natural and
+renewable resource. However, the specific sourcing and production methods used
+by DenimCo may not be explicitly mentioned as environmentally friendly or
+sustainable. If you have any concerns or would like more information about the
+materials used, I recommend reaching out to the brand directly.
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The product mentioned is in the list of available products.
+Step 3:#### The user is asking about the sustainability of the materials used in
+the product.
+Step 4:#### The product information does not specify whether the materials used
+are environmentally friendly or sustainable.
+
+Response to user:#### Thank you for your question. The Distressed Boyfriend
+Jeans are made of cotton, but we do not have information on whether the
+materials used are environmentally friendly or sustainable. We apologize for any
+inconvenience this may cause.
+
+
+Query:
+My daughter wants a new backpack for school. Do you have any backpacks or bags
+in that department?
+
+-----Without CoT Response:-----
+Hello! Yes, we have a variety of backpacks and bags in our Accessories
+department. One popular option is the "Canvas Rucksack" with a Product ID of
+AC007. It's made of durable canvas material and features adjustable shoulder
+straps, a front zip pocket, and a spacious main compartment. It's perfect for
+school or everyday use. Let me know if you'd like more information or if you'd
+like to see other options in that department!
+
+-----CoT Response:--------
+Step 1:#### The user is asking about specific products.
+Step 2:#### The user is asking about backpacks or bags.
+Step 3:#### The user is not making any assumptions about the products.
+Step 4:#### The store does not sell backpacks, but it does sell a crossbody bag
+(AC006).
+
+Response to user:#### Thank you for your inquiry. While we do not have
+backpacks, we do have a trendy crossbody bag (AC006) that might interest your
+daughter. It's made by BoHo Chic and features an adjustable strap, tassel
+accent, and an interior zip pocket. The bag is priced at $29.99.
+
+
+Query:
+How often do you get new inventory for tops and blouses like the Striped Off-
+Shoulder Top?
+
+-----Without CoT Response:-----
+Hello! We are constantly updating our inventory to bring you the latest fashion
+trends. We typically receive new shipments of tops and blouses every 2-3 weeks.
+If you're interested in a specific item, I recommend checking our website
+frequently or signing up for our newsletter to stay updated on new arrivals.
+
+-----CoT Response:--------
+Step 1:#### The user is asking about specific products.
+Step 2:#### The user is asking about the Striped Off-Shoulder Top, which is a
+product in the list.
+Step 3:#### The user is asking about the frequency of new inventory for tops and
+blouses.
+Step 4:#### The store does not have information on the frequency of new
+inventory for specific products.
+
+Response to user:#### We apologize for any inconvenience, but we do not have
+information on the frequency of new inventory for specific products. However, we
+can assure you that we regularly update our inventory with new and stylish
+items.
+
+
+Query:
+Do any of your jackets like the Faux Leather Moto Jacket have a lining for
+colder weather?
+
+-----Without CoT Response:-----
+Hello! Thank you for your inquiry. Unfortunately, the Faux Leather Moto Jacket
+does not have a lining for colder weather. However, we do have other jackets in
+our collection that are designed for colder temperatures. Please let me know if
+you'd like more information on those options.
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The product in question is the Faux Leather Moto Jacket.
+Step 3:#### The user is asking if the jacket has a lining for colder weather.
+Step 4:#### The product information does not mention a lining for colder
+weather.
+
+Response to user:#### Thank you for your question! The Faux Leather Moto Jacket
+does not have a lining specifically designed for colder weather. However, it is
+made of polyurethane, which can provide some insulation. If you're looking for a
+jacket with a lining for colder weather, we have other options available. Please
+let us know if you need further assistance!
+
+
+Query:
+I need to buy a gift for my teenage niece. What is popular with girls her age in
+your accessories department?
+
+-----Without CoT Response:-----
+Hello! Thank you for reaching out to us. For teenage girls, our Tassel Crossbody
+Bag (Product ID: AC006) is a popular choice in our accessories department. It's
+stylish, versatile, and perfect for carrying their essentials. You can find more
+information about it in the product details provided earlier. Let me know if you
+need any further assistance!
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product or products in the
+accessories department.
+Step 2:#### The user is asking about popular products for teenage girls in the
+accessories department.
+Step 3:#### The user is not making any assumptions about the products.
+Step 4:#### The Tassel Crossbody Bag (AC006) is a popular accessory for teenage
+girls.
+
+Response to user:#### The Tassel Crossbody Bag (AC006) is a popular accessory
+among teenage girls. It features a trendy design with a tassel accent and
+adjustable strap. This bag is made of faux leather and has an interior zip
+pocket. It is available in various colors and is priced at $29.99.
+
+
+Query:
+My feet tend to sweat a lot. Are the materials used for the Embroidered Canvas
+Sneakers breathable?
+
+-----Without CoT Response:-----
+Hello! Yes, the Embroidered Canvas Sneakers are made of canvas, which is a
+breathable material. This should help keep your feet cool and comfortable.
+
+-----CoT Response:--------
+Step 1:#### The user is asking about a specific product.
+Step 2:#### The product mentioned is in the list of available products.
+Step 3:#### The user is asking about the breathability of the sneakers.
+Step 4:#### The product information does not mention the breathability of the
+sneakers.
+
+Response to user:#### Thank you for your question! The Embroidered Canvas
+Sneakers are made of canvas material, which is generally breathable. However,
+the breathability may vary depending on the individual's foot shape and size. If
+you have any further questions, please don't hesitate to ask!
+
+
+Query:
+I'm looking for a new purse, but not one that's too big or bulky. What crossbody
+or smaller bag options do you have?
+
+-----Without CoT Response:-----
+Hello! We have a few smaller bag options that might interest you. Here are some
+of our crossbody bags:
+
+- Product ID: AC006
+  - Product: Tassel Crossbody Bag
+  - Department: Accessories
+  - Class: Bags
+  - Brand: BoHo Chic
+  - Material: Faux Leather
+  - Rating: 4.6
+  - Features: Adjustable strap, tassel accent, interior zip pocket
+  - Description: A trendy crossbody bag with boho style and flair.
+  - Price: $29.99
+
+- Product ID: HB007
+  - Product: Mini Holographic Backpack
+  - Department: Accessories
+  - Class: Backpacks
+  - Brand: Glitz &amp; Glam
+  - Material: Polyester
+  - Rating: 4.4
+  - Features: Holographic finish, adjustable shoulder straps, zippered main
+compartment
+  - Description: A fun and stylish mini backpack with a holographic finish.
+  - Price: $34.99
+
+- Product ID: CL008
+  - Product: Classic Clutch Purse
+  - Department: Accessories
+  - Class: Clutches
+  - Brand: Timeless Treasures
+  - Material: Faux Leather
+  - Rating: 4.5
+  - Features: Magnetic closure, interior card slots, detachable wristlet strap
+  - Description: A sleek and sophisticated clutch purse for a night out.
+  - Price: $24.99
+
+I hope this helps you find the perfect bag! Let me know if you have any other
+questions.
+
+-----CoT Response:--------
+Step 1:#### The user is asking about specific products.
+Step 2:#### The user is asking about bags.
+Step 3:#### The user is looking for a crossbody or smaller bag.
+Step 4:#### The store has a Tassel Crossbody Bag (Product ID: AC006) which is a
+smaller bag option.
+
+Response to user:#### Thank you for your inquiry! We have a Tassel Crossbody Bag
+(Product ID: AC006) that might be a great fit for you. It's a trendy crossbody
+bag with boho style and flair, and it's a smaller bag option. You can find more
+information about it on our website.
+
+</code></pre>
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

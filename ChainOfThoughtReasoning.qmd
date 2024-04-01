@@ -1,0 +1,223 @@
+---
+title: "Chain Of Thought Reasoning"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+## Chain of Thought Reasoning - Customer Queries
+
+
+Here we want to build an application that allows us to answer questions from
+the customer using chain of thought (step-by-step) reasoning. This keeps the
+LLM from making up facts or not sticking with the important points about the
+customers queries.
+
+### Products
+
+We will pretend we just have the products below and not others. That keeps our
+example small.
+
+```{python}
+product_descriptions=f"""
+- Product ID: DR001
+  - Product: Floral Print Sundress
+  - Department: Dresses
+  - Class: Casual Dresses
+  - Brand: Blossom
+  - Size Range: XS-XL
+  - Material: Rayon
+  - Rating: 4.6
+  - Features: Adjustable straps, tiered skirt, ruffled hem
+  - Description: A beautiful floral sundress perfect for spring and summer.
+  - Price: $39.99
+
+- Product ID: BT002
+  - Product: Distressed Boyfriend Jeans
+  - Department: Bottoms
+  - Class: Jeans
+  - Brand: DenimCo
+  - Size Range: 24-32
+  - Material: Cotton
+  - Rating: 4.4
+  - Features: Relaxed fit, ripped details, roll-up hems
+  - Description: Casual and trendy jeans with a lived-in look.
+  - Price: $54.99
+
+- Product ID: TP003
+  - Product: Striped Off-Shoulder Top
+  - Department: Tops
+  - Class: Blouses
+  - Brand: Trendy Threads
+  - Size Range: XS-XL
+  - Material: Rayon
+  - Rating: 4.7
+  - Features: Elasticized neckline, short sleeves, cropped length
+  - Description: A stylish and flirty off-shoulder top with classic stripes.
+  - Price: $24.99
+
+- Product ID: OW004
+  - Product: Faux Leather Moto Jacket
+  - Department: Outerwear
+  - Class: Jackets
+  - Brand: Rebel Edge
+  - Size Range: XS-XL
+  - Material: Polyurethane
+  - Rating: 4.5
+  - Features: Notched collar, asymmetrical zipper, zippered pockets
+  - Description: An edgy faux leather jacket with a modern moto style.
+  - Price: $69.99
+
+- Product ID: FW005
+  - Product: Embroidered Canvas Sneakers
+  - Department: Footwear
+  - Class: Sneakers
+  - Brand: Kick Start
+  - Size Range: 6-11
+  - Material: Canvas
+  - Rating: 4.3
+  - Features: Lace-up closure, embroidered floral design, rubber sole
+  - Description: Fun and fashionable sneakers with a vibrant embroidered pattern.
+  - Price: $44.99
+
+- Product ID: AC006
+  - Product: Tassel Crossbody Bag
+  - Department: Accessories
+  - Class: Bags
+  - Brand: BoHo Chic
+  - Material: Faux Leather
+  - Rating: 4.6
+  - Features: Adjustable strap, tassel accent, interior zip pocket
+  - Description: A trendy crossbody bag with boho style and flair.
+  - Price: $29.99
+"""
+```
+
+### Customer Queries
+
+```{python}
+user_queries = [
+    "I'm looking for a sundress for my daughter, but she's quite tall for her age. Do the Floral Print Sundresses come in sizes for pre-teens or juniors?",
+    "I really like the look of the Distressed Boyfriend Jeans, but I'm worried they might be too loose and baggy. Do they run small or true to size?",
+    "The Striped Off-Shoulder Top looks so cute! I'm usually between a small and medium. Since it's cropped, should I size up to a large?",
+    "I want to buy the Faux Leather Moto Jacket as a gift, but I'm not sure about the sizing. Do the jackets tend to run big or small? And do they have any stretch to them?",
+    "My teenage son is really into sneakers right now. I was thinking of getting him the Embroidered Canvas Sneakers, but he usually wears a men's size 11.5. Do these come in half sizes or just whole sizes?",
+    "Do you carry any plus size options for the Floral Print Sundress or other dresses?",
+    "What is the return policy on shoes like the Embroidered Canvas Sneakers?",
+    "I'm looking for a dress to wear to a summer wedding. Would the Floral Print Sundress be appropriate or too casual?",
+    "Are the materials used for the Distressed Boyfriend Jeans environmentally friendly or sustainable?",
+    "My daughter wants a new backpack for school. Do you have any backpacks or bags in that department?",
+    "How often do you get new inventory for tops and blouses like the Striped Off-Shoulder Top?",
+    "Do any of your jackets like the Faux Leather Moto Jacket have a lining for colder weather?",
+    "I need to buy a gift for my teenage niece. What is popular with girls her age in your accessories department?",
+    "My feet tend to sweat a lot. Are the materials used for the Embroidered Canvas Sneakers breathable?",
+    "I'm looking for a new purse, but not one that's too big or bulky. What crossbody or smaller bag options do you have?"
+]
+```
+
+### A Prompt Without Chain of Thought
+
+First we create a system prompt without CoT (Chain of Thought)
+
+```{python}
+delimiter = "####"
+system_message1 = f"""
+Answer the customer queries.
+
+The customer query will be delimited with the tags <query> and </query>
+
+All available products:
+
+{product_descriptions}
+
+Answer the customer in a friendly tone.
+"""
+```
+
+### A Prompt With Chain of Thought
+
+Now we create a system prompt with CoT technique:
+
+```{python}
+system_message2 = f"""
+Follow these steps to answer the customer queries.
+
+The customer query will be delimited with the tags <query> and </query>
+
+Step 1:{delimiter} First decide whether the user is
+asking a question about a specific product or products.
+Department and class don't count.
+
+Step 2:{delimiter} If the user is asking about
+specific products, identify whether
+the products are in the following list.
+
+All available products:
+
+{product_descriptions}
+
+Step 3:{delimiter} If the message contains products
+in the list above, list any assumptions that the
+user is making in their
+message e.g. that the sundress runs small, or that
+the sneakers come in half sizes.
+
+Step 4:{delimiter}: If the user made any assumptions,
+figure out whether the assumption is true based on your
+product information.
+
+Step 5:{delimiter}: First, politely correct the
+customer's incorrect assumptions if applicable.
+Only mention or reference products in the list of
+products, as these are the only products
+that the store sells.
+Answer the customer in a friendly tone.
+
+Use the following format:
+
+Step 1:{delimiter} <step 1 reasoning>
+Step 2:{delimiter} <step 2 reasoning>
+Step 3:{delimiter} <step 3 reasoning>
+Step 4:{delimiter} <step 4 reasoning>
+
+Response to user:{delimiter} <response to customer>
+
+Make sure to include {delimiter} to separate every step.
+"""
+```
+
+Now we are going to get responses using both techniques so we can compare them
+
+For the CoT version we also have the LLM print out the "inner monologue" which
+is the steps and its reasons.
+
+```{python}
+from langchain_core.messages import HumanMessage, SystemMessage
+
+#user_queries = user_queries[:2]
+for query in user_queries:
+  print("Query:")
+  print(wrap_text(query))
+
+  prompt=f"""{system_message1}
+  <query>
+  {query}
+  </query>"""
+
+  response = get_completion(prompt)
+  print("")
+  print("-----Without CoT Response:-----")
+  print(response)
+  print("")
+
+  prompt=f"""{system_message2}
+  <query>
+  {query}
+  </query>"""
+
+  response = get_completion(prompt)
+  print("-----CoT Response:--------")
+  print(response)
+  print("")
+  print("")
+```
+

@@ -1,0 +1,82 @@
+---
+title: "FString Chains"
+execute:
+  enabled: true
+---
+
+
+{{< include _llm_togetherai.qmd >}}
+
+Here is an example of a simple chain with 2 calls to an LLM. The first call asks for 3 names of a company, then the second call asks the LLM to take the response from the first call and upper case it.
+
+This represents a chain of calls to LLMs and we want to show how to do this with F-strings.
+
+Its easy if we dont care about re-using the the chain. Here is how to achieve it with a couple of FStrings.
+
+Run the version below which is created with 2 F-strings. Each one is the prompt that will be passed to the LLM for that stage of the chain.
+
+```{python}
+#| eval: true
+thing = "toothpicks"
+
+first_query = f"""
+Give me 3 possible names for companies that make {thing}.
+Just list the 3 names like this:
+1 <Company 1 name>
+2 <Company 2 name>
+3 <Company 3 name>
+"""
+
+first_response = get_completion(first_query)
+print(first_response)
+
+second_query = f"""
+Can you upper case the text below:
+Just uppercase the text and return the uppercased version.
+
+{first_response}
+
+"""
+second_response = get_completion(second_query)
+print(second_response)
+```
+
+```{python}
+#| eval: true
+def chain(thing):
+  first_query = f"""
+  Give me 3 possible names for companies that make {thing}.
+  Just list the 3 names like this:
+  1 <Company 1 name>
+  2 <Company 2 name>
+  3 <Company 3 name>
+  """
+
+  first_response = get_completion(first_query)
+  print(first_response)
+  print(80*'-')
+
+  second_query = f"""
+  Can you upper case the text below:
+  Just uppercase the text and return the uppercased version.
+
+  {first_response}
+
+  """
+
+  second_response = get_completion(second_query)
+  return second_response
+
+response=chain("bikes")
+print(response)
+
+print(80*"*")
+
+response=chain("firecrackers")
+print(response)
+
+print(80*"*")
+
+response=chain("yoga mats")
+print(response)
+```

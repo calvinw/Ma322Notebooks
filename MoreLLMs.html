@@ -94,119 +94,122 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="set-up-your-together_api_key" class="level2">
-<h2 class="anchored" data-anchor-id="set-up-your-together_api_key">Set up your <code>TOGETHER_API_KEY</code></h2>
 <div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="setup-to-call-the-llm" class="level2">
-<h2 class="anchored" data-anchor-id="setup-to-call-the-llm">Setup to Call the LLM</h2>
-<p>For this part, we install the required package to interact with a TogetherAI language model.</p>
 <div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>display(Markdown(<span class="st">"### Model:  </span><span class="ch">\n</span><span class="st">#### "</span> <span class="op">+</span> model_name))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="model" class="level3 cell-output cell-output-display">
-<h3 class="anchored" data-anchor-id="model">Model:</h3>
-<section id="nousresearchnous-hermes-2-mixtral-8x7b-sft" class="level4">
-<h4 class="anchored" data-anchor-id="nousresearchnous-hermes-2-mixtral-8x7b-sft">NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</h4>
-</section>
-</section>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Provider: TogetherAI
+Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
+</div>
 </div>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
 <section id="calling-an-llm" class="level2">
 <h2 class="anchored" data-anchor-id="calling-an-llm">Calling an LLM</h2>
 <ul>
 <li>Choose a question and set up a prompt to send the question to the LLM. Any question you like.</li>
 </ul>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Why do people like Barbie? 50 words please"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"Why do people like Barbie? 50 words please"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Run the cell below to print out your response</li>
 </ul>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>People like Barbie because she represents an idealized version of beauty,
 fashion, and lifestyle. Her diverse range of careers, hobbies, and accessories
 inspire creativity and imagination in children, allowing them to explore
-different interests and aspirations. Additionally, Barbie's evolution over the
-years, including more inclusive body types and diverse representation, has made
-her more relatable and appealing to a wider audience.</code></pre>
+different interests and aspirations. Additionally, Barbie's ever-evolving
+appearance and style keep her relevant and appealing to fans of all ages.</code></pre>
 </div>
 </div>
 <ul>
 <li>Run the cell below to print out your prompt and your response together</li>
 </ul>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 Why do people like Barbie? 50 words please
@@ -229,28 +232,29 @@ her more relatable and appealing to a wider audience.</code></pre>
 <li>Each time print out the response you get</li>
 </ul>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.0</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>People like Barbie because she represents an idealized version of beauty,
 fashion, and lifestyle. Her diverse range of careers, hobbies, and accessories
 inspire creativity and imagination in children, allowing them to explore
-different interests and aspirations. Additionally, Barbie's ever-evolving
-appearance and style keep her relevant and appealing to fans of all ages.
+different interests and aspirations. Additionally, Barbie's evolution over the
+years, including more inclusive body types and diverse representation, has made
+her more relatable and appealing to a wider audience.
  
 People like Barbie because she represents an idealized version of beauty,
 fashion, and lifestyle. Her diverse range of careers, hobbies, and accessories
@@ -271,40 +275,38 @@ her more relatable and appealing to a wider audience.</code></pre>
 <li>Exactly the same as above but use <code>temperature=0.7</code> instead</li>
 </ul>
 <div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">" "</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>People like Barbie because she is a versatile toy, coming with various outfits
-and accessories, representing different careers and lifestyles. Barbie also
-encourages creativity and imagination, allowing children to explore different
-roles and aspirations. Additionally, Barbie's diverse range of dolls promotes
-inclusivity and representation.
+<pre><code>People like Barbie because she represents an idealized and aspirational
+lifestyle, with her endless outfits, accessories, and careers. She is also a
+nostalgic figure for many adults who played with her as children, and her
+collectible nature adds to her appeal.
  
-People love Barbie because she represents an idealized, glamorous lifestyle. Her
-vast wardrobe, diverse careers, and endless accessories allow children to
-explore different identities and possibilities. Additionally, Barbie has been a
-symbol of female empowerment and body positivity, making her an iconic and
-enduring toy.
+People like Barbie because she embodies fashion, beauty, and style. She
+represents a fantasy world where girls can explore limitless possibilities, play
+with different careers, and build their imagination. Additionally, Barbie has
+evolved over time to include diverse body types, skin tones, and cultural
+backgrounds, making her more relatable and inclusive for various audiences.
  
-People like Barbie because she represents an idealized version of femininity,
-beauty, and fashion. She has a wide range of outfits and accessories, allowing
-children to explore various interests and careers. Additionally, Barbie has been
-a part of many childhoods for generations, making her a nostalgic and beloved
-toy.</code></pre>
+People like Barbie because she represents an idealized lifestyle and fashion
+trends. She has diverse careers, hobbies, and outfits, allowing children to
+explore various interests. Additionally, Barbie serves as a role model for young
+girls, promoting confidence, self-expression, and a strong work ethic.</code></pre>
 </div>
 </div>
 </section>
@@ -314,11 +316,11 @@ toy.</code></pre>
 <li>Create a template string with using a template variable <code>{place}</code> for asking the LLM to give you the capital of <code>{place}</code>.</li>
 </ul>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"Can you tell me the capital of </span><span class="sc">{place}</span><span class="st">?"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"Can you tell me the capital of </span><span class="sc">{place}</span><span class="st">?"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Evaluate your template with <code>place="Texas"</code></li>
@@ -326,23 +328,23 @@ toy.</code></pre>
 <li>print the response using <code>print_prompt_and_response</code></li>
 </ul>
 <div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the LLM by passing the prompt to get_completion</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(CODE)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the response</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the LLM by passing the prompt to get_completion</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(CODE)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the response</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the LLM by passing the prompt to get_completion</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the response</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the LLM by passing the prompt to get_completion</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the response</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 Can you tell me the capital of Texas?
@@ -358,42 +360,42 @@ The capital of Texas is Austin.</code></pre>
 <li>Add another template variable called <code>{num}</code> to the template and ask the LLM to provide you with <code>num</code> facts about the capital that you specified with <code>{place}</code>.</li>
 </ul>
 <div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Evaluate your template with <code>place="Texas"</code> and <code>num=3</code> and save it in the <code>prompt</code> variable</li>
 </ul>
 <div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>, num<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>, num<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Now call <code>get_completion</code> with the prompt and get the response. Store it in the <code>response</code> variable</li>
 </ul>
 <div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(CODE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(CODE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Use <code>print_prompt_and_response</code> to print out the prompt and completion.</li>
 </ul>
 <div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 Can you tell me the capital of Texas and give me 3 simple
@@ -405,8 +407,8 @@ The capital of Texas is Austin. Here are three simple facts about it:
 country, blues, and rock.
 2. The city is home to the University of Texas at Austin, one of the largest
 public universities in the United States.
-3. Austin is located in the heart of Texas Hill Country, offering residents and
-visitors access to beautiful natural landscapes.</code></pre>
+3. Austin is located in the center of Texas and is situated along the Colorado
+River.</code></pre>
 </div>
 </div>
 </section>
@@ -417,28 +419,28 @@ visitors access to beautiful natural landscapes.</code></pre>
 <li>Call your template with “Texas” and 3 facts and “uppercase” for the format</li>
 </ul>
 <div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> CODE</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template using place="Texas" and num=3 and format="upper case"</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> CODE</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template using place="Texas" and num=3 and format="upper case"</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?. Format the facts using </span><span class="sc">{format}</span><span class="st">"""</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts and "uppercase"</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>, num<span class="op">=</span><span class="dv">3</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"uppercase"</span>)</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Define template here</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""Can you tell me the capital of </span><span class="sc">{place}</span><span class="st"> and give me </span><span class="sc">{num}</span><span class="st"> simple</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="st">facts about it?. Format the facts using </span><span class="sc">{format}</span><span class="st">"""</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template for "Texas" and 3 facts and "uppercase"</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(place<span class="op">=</span><span class="st">"Texas"</span>, num<span class="op">=</span><span class="dv">3</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"uppercase"</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 Can you tell me the capital of Texas and give me 3 simple
@@ -447,8 +449,8 @@ facts about it?. Format the facts using uppercase
 Response: 
 The capital of Texas is AUSTIN. Here are 3 simple facts about it:
 1. AUSTIN IS KNOWN FOR ITS MUSIC SCENE.
-2. THE CITY IS HOME TO THE UNIVERSITY OF TEXAS.
-3. AUSTIN IS ALSO KNOWN FOR ITS OUTDOOR ACTIVITIES, SUCH AS HIKING AND BIKING.</code></pre>
+2. AUSTIN IS HOME TO THE UNIVERSITY OF TEXAS.
+3. AUSTIN IS LOCATED IN THE HILL COUNTRY REGION OF TEXAS.</code></pre>
 </div>
 </div>
 </section>
