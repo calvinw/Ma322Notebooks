@@ -1,17 +1,22 @@
 SHELL:=/bin/bash
-SOURCES:=$(wildcard *.qmd)
-# SOURCES:= FStringChains.qmd
 
+SOURCES:=$(wildcard *.qmd)
+SOURCES:= MoreLLMs.qmd LLMs.qmd MoreFunctions.qmd Functions.qmd
 SOURCES:=$(filter-out index.qmd, $(SOURCES))
-SOURCES:=$(filter-out _*.qmd, $(SOURCES))
+LLM_FILES=$(wildcard _llm_*.qmd)
+SOURCES:=$(filter-out $(LLM_FILES), $(SOURCES))
 
 IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)
 HTML_FILES = $(SOURCES:%.qmd=%.html)
 _FILES = $(SOURCES:%.qmd=%_files)
-LLM_FILES=$(wildcard _llm_*.qmd)
 
 all : html ipynb
 	@echo All files are now up to date
+
+debug:
+	@echo $(HTML_FILES)
+	@echo $(IPYNB_FILES)
+	@echo $(LLM_FILES)
 
 clean :
 	@echo Removing files...

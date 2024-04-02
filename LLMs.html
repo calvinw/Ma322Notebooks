@@ -103,6 +103,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<section id="setup-the-llm" class="level2">
+<h2 class="anchored" data-anchor-id="setup-the-llm">Setup the LLM</h2>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
@@ -178,6 +180,7 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
 <section id="calling-an-llm-with-get_completion" class="level2">
 <h2 class="anchored" data-anchor-id="calling-an-llm-with-get_completion">Calling an LLM with <code>get_completion</code></h2>
 <p>First set up a prompt we can use:</p>
@@ -285,18 +288,19 @@ wavelengths. This scattering makes the sky appear blue to our eyes.
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The sky appears blue due to a phenomenon called Rayleigh scattering. When
-sunlight reaches Earth's atmosphere, it collides with gas molecules, which then
-scatter the light in all directions. Blue light has shorter wavelengths and is
-more easily scattered, making the sky appear blue to our eyes.
+sunlight passes through Earth's atmosphere, it interacts with the air molecules,
+which then scatter the light in all directions. Blue light has a shorter
+wavelength and is scattered more than other colors, making the sky appear blue.
 ------
-The sky appears blue due to the scattering of sunlight by molecules in the
-Earth's atmosphere. Blue light has shorter wavelengths and is scattered more
-easily than other colors, making the sky appear blue to our eyes.
+The sky appears blue due to the scattering of sunlight by the Earth's
+atmosphere. Shorter wavelengths, such as blue light, are scattered more than
+longer wavelengths, like red light. As a result, blue light reaches our eyes
+from all directions, making the sky appear blue.
 ------
-The sky appears blue due to a phenomenon called Rayleigh scattering. When
-sunlight enters Earth's atmosphere, it collides with gas molecules, causing the
-light to scatter. Blue light has a shorter wavelength and scatters more easily,
-making the sky appear blue to our eyes.
+The sky appears blue because of a phenomenon called Rayleigh scattering.
+Sunlight, which is composed of all colors, gets scattered by the molecules in
+the Earth's atmosphere. Blue light has shorter wavelengths and gets scattered
+more than other colors, making the sky appear blue to our eyes.
 ------</code></pre>
 </div>
 </div>
@@ -316,20 +320,19 @@ making the sky appear blue to our eyes.
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The sky appears blue due to the scattering of sunlight by molecules in the
-atmosphere. Blue light has a shorter wavelength and scatters more easily than
-other colors, making it more visible to us.
+<pre><code>The sky appears blue due to a phenomenon called Rayleigh scattering. When
+sunlight travels through Earth's atmosphere, it interacts with gas molecules,
+primarily nitrogen and oxygen. The blue light from the sunlight is scattered
+more widely than other colors, leading to the blue appearance of the sky.
 ------
-The sky appears blue because the Earth's atmosphere scatters blue light from the
-sun more than other colors. This dispersion of light makes the sky look blue
-during the day, while it changes colors during sunrise and sunset due to the
-angle at which sunlight enters the atmosphere.
+The sky appears blue because of the way our atmosphere interacts with sunlight.
+Blue light has a shorter wavelength and is scattered more widely by air
+molecules, causing the sky to look blue during the day.
 ------
-The sky appears blue because the atmosphere scatters sunlight. Small particles
-in the air, such as air molecules or tiny droplets, scatter shorter wavelengths
-(blue) more than longer ones (red). As a result, we perceive the sky as blue.
-## How do clouds float in the air when they're made of water droplets, which are
-heavier than the air?
+The sky appears blue due to a property called Rayleigh scattering. This occurs
+when sunlight enters Earth's atmosphere and collides with particles such as
+nitrogen and oxygen molecules. The shorter, blue wavelengths are scattered more,
+thus reaching our eyes and creating the blue sky.
 ------</code></pre>
 </div>
 </div>
