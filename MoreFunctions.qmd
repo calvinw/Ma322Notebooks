@@ -112,36 +112,36 @@ greet_with_default_name("Sam")
 
 ## Return Values
 
-- Define a function called `multiply_numbers` that takes two arguments `num1` and `num2`, multiplys them, and returns the result.
+- Define a function called `add_numbers` that takes two arguments `num1` and `num2`, adds them, and returns the result.
 - After fixing it, execute the code block to define your function
 
 ```{python}
 #| eval: false
-def multiply_numbers(num1, num2):
+def add_numbers(num1, num2):
   CODE
 ```
 
 ```{python}
 # Solution:
-def multiply_numbers(num1, num2):
-    result = num1 * num2
+def add_numbers(num1, num2):
+    result = num1 + num2
     return result
 
 ```
 
-- Call the `multiply_numbers` function with arguments 5 and 7, and store the result in a variable called `product_result`.
-- Print out `product_result`
+- Call the `add_numbers` function with arguments 5 and 7, and store the result in a variable called `sum_result`.
+- Print out `sum_result`
 
 ```{python}
 #| eval: false
-CODE = multiply_numbers(CODE, CODE)
+CODE = add_numbers(CODE, CODE)
 print(CODE)
 ```
 
 ```{python}
 # Solution:
-multiply_result = multiply_numbers(5, 7)
-print(multiply_result)
+sum_result = add_numbers(5, 7)
+print(sum_result)
 ```
 
 ## Keyword Arguments
