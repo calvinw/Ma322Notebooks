@@ -154,7 +154,7 @@ print(multiply_result)
 ```{python}
 #| eval: false
 def introduce_person(CODE):
-  print("This is " + name " + "they are " + str(age) + "years old")
+  print("This is " + name + "they are " + str(age) + "years old")
 
 ```
 
