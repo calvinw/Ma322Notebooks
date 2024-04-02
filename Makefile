@@ -1,7 +1,6 @@
 SHELL:=/bin/bash
 
 SOURCES:=$(wildcard *.qmd)
-SOURCES:= MoreLLMs.qmd LLMs.qmd MoreFunctions.qmd Functions.qmd
 SOURCES:=$(filter-out index.qmd, $(SOURCES))
 LLM_FILES=$(wildcard _llm_*.qmd)
 SOURCES:=$(filter-out $(LLM_FILES), $(SOURCES))
