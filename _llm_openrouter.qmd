@@ -24,12 +24,12 @@ from langchain_openai import ChatOpenAI
 #model_name="mistralai/mistral-medium"
 #model_name="mistralai/mistral-large"
 #model_name="mistralai/mixtral-8x7b-instruct"
-#model_name="anthropic/claude-3-haiku:beta"
+model_name="anthropic/claude-3-haiku"
 #model_name="anthropic/claude-3-sonnet"
 #model_name="anthropic/claude-3-opus"
 #model_name="openchat/openchat-7b:free"
 #model_name="openchat/openchat-7b"
-model_name="databricks/dbrx-instruct"
+#model_name="databricks/dbrx-instruct"
 
 print("Provider: Open Router")
 print("Model: ", model_name)

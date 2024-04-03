@@ -1,0 +1,72 @@
+---
+title: "Company Emoticon Chain"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+### Suggest Company and Upper Case Chain
+
+### Company Name
+
+```{python}
+car_product ="sports cars"
+```
+
+### Suggest a Funny Company Name
+
+Suggest a funny name for a company that makes a certain product.
+
+```{python}
+company_template ="""
+Create a funny name for a company that makes:
+
+{product}
+"""
+
+company_prompt = company_template.format(product=car_product)
+company_response = get_completion(company_prompt)
+print(company_response)
+```
+
+### Upper Case the Name
+
+Upper case the Company Name
+
+
+```{python}
+uppercase_template ="""
+
+Please upper case the company name and the product:
+
+Company:
+{company}
+
+Product:
+{product}
+"""
+
+uppercase_prompt = uppercase_template.format(company=company_response,
+                                             product=car_product)
+uppercase_response = get_completion(uppercase_prompt)
+print(uppercase_response)
+```
+
+### Final Report
+
+```{python}
+template = """
+### Product
+{product}
+
+### Company Name
+{company}
+
+### Upper Cased Company and Product
+{uppercase}
+"""
+
+report = template.format(product = car_product,
+                         company = company_response,
+                         uppercase = uppercase_response)
+print(report)
+```
