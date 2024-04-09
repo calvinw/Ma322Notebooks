@@ -1,0 +1,141 @@
+---
+title: "Review Chain"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+### Description of Review Chain
+
+We will analyze a customer review and summarize it. Then try to compose a response.
+
+Here are the steps in the analysis:
+
+1. **Initial Review**: The process starts with a customer review, which is
+  provided as a string variable.
+
+1. **Analyze the sentiment of the original review on a scale of 1 to 5**: The
+  sentiment of the original review is analyzed on a scale of 1 (very negative)
+  to 5 (very positive) by prompting a language model.
+
+1. **Categorize the Review Based On the Main Issue**: The main issue or concern
+  raised in the review is categorized into one of the following categories:
+  Product Quality, Shipping/Delivery, Customer Service, Pricing, or Other.
+
+1. **Suggest Potential Improvements Based On the Review**: At least three
+  potential improvements or changes are suggested to address the customer's
+  concerns based on the review.
+
+1. **Write an individualized email response to the customer**: A polite and
+  professional email response is drafted, addressing the customer's concerns
+  and offering a resolution or next steps.
+
+
+### Initial Review
+
+Lets start with the review text.
+
+```{python}
+review = """I am very dissatisfied with the product I received. The quality is
+disappointing, and it does not match the descriptions on the website. Furthermore,
+the delivery was way too late, and the customer service was unhelpful. I expect
+an immediate resolution to this issue."""
+print(review)
+```
+
+### Analyze the Sentiment
+
+Analyze the sentiment on scale of 1(very negative) to 5(very positive)
+
+```{python}
+sentiment_prompt = f"""
+Analyze the sentiment of the following review on a scale of 1 to 5, where 1 is
+very negative and 5 is very positive:
+
+{review}
+
+Just give the number only.
+"""
+
+sentiment_response = get_completion(sentiment_prompt)
+print(sentiment_response)
+```
+
+### Categorize the Review
+
+Categorize the Review Based On the Main Issue
+
+```{python}
+categorize_prompt = f"""
+Categorize the main issue or concern raised in the following review:
+
+{review}
+
+Choose from the following categories: Product Quality, Shipping/Delivery,
+Customer Service, Pricing, Other.
+Just give the categories only.
+"""
+
+category_response = get_completion(categorize_prompt)
+print(category_response)
+```
+
+### Suggest Potential Improvements Based On the Review
+
+Lets suggest 3 potential improvements
+
+```{python}
+improvement_prompt = f"""
+Based on the following review, suggest at least three potential improvements or
+changes that could address the customer's concerns:
+
+{review}
+
+Give only the three potential improvements as your output.
+"""
+
+improvements_response = get_completion(improvement_prompt)
+print(improvements_response)
+```
+
+### Write an Individualized Response
+
+Write an individualized email response to the customer
+python
+
+
+```{python}
+individualized_prompt = f"""
+You have received the following review from a customer:
+
+{review}
+
+Please draft a polite and professional email response to the customer,
+addressing their concerns and offering a resolution or next steps.
+"""
+
+individualized_response = get_completion(individualized_prompt)
+print(individualized_response)
+```
+
+### Final Report for This Review
+
+```{python}
+report = f"""
+### Initial Review
+{review}
+
+### Sentiment 1 (very negative) to 5 (very positive)
+{sentiment_response}
+
+### Categorized Main Issue
+{category_response}
+
+### Potential Improvements
+{improvements_response}
+
+### Individualized Email Response
+{individualized_response}
+"""
+
+print(report)
+```

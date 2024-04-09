@@ -1,10 +1,10 @@
 ---
-title: "Movie Analysis Chain"
+title: "LLM Chain"
 ---
 
 {{< include _llm_togetherai.qmd >}}
 
-### Description of Movie Chain
+## Movie Chain
 
 We will analyze an extended movie plot summary, identify the genre(s) of the
 film, generate a tagline, and then create a short synopsis incorporating the
@@ -175,6 +175,7 @@ print(report)
 
 ```{python}
 prompt_template = """
+## Final Report
 
 ### Genre(s)
 {genre}
@@ -185,7 +186,7 @@ prompt_template = """
 ### Title
 {title}
 
-### Short Movie Synopsis
+### Synopsis
 {synopsis}
 """
 

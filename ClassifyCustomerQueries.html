@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Evaluating Inputs: Classification with LLMs</title>
+<title>Classifying Customer Queries</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="EvaluateInputs_files/libs/clipboard/clipboard.min.js"></script>
-<script src="EvaluateInputs_files/libs/quarto-html/quarto.js"></script>
-<script src="EvaluateInputs_files/libs/quarto-html/popper.min.js"></script>
-<script src="EvaluateInputs_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="EvaluateInputs_files/libs/quarto-html/anchor.min.js"></script>
-<link href="EvaluateInputs_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="EvaluateInputs_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="EvaluateInputs_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="EvaluateInputs_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="EvaluateInputs_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="ClassifyCustomerQueries_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ClassifyCustomerQueries_files/libs/quarto-html/quarto.js"></script>
+<script src="ClassifyCustomerQueries_files/libs/quarto-html/popper.min.js"></script>
+<script src="ClassifyCustomerQueries_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ClassifyCustomerQueries_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ClassifyCustomerQueries_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ClassifyCustomerQueries_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ClassifyCustomerQueries_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ClassifyCustomerQueries_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ClassifyCustomerQueries_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Evaluating Inputs: Classification with LLMs</h1>
+<h1 class="title">Classifying Customer Queries</h1>
 </div>
 
 
@@ -182,8 +182,8 @@ Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 </details>
 </div>
 </section>
-<section id="classifying-customer-query-categories" class="level2">
-<h2 class="anchored" data-anchor-id="classifying-customer-query-categories">Classifying Customer Query Categories</h2>
+<section id="classifying-customer-queries-into-categories" class="level2">
+<h2 class="anchored" data-anchor-id="classifying-customer-queries-into-categories">Classifying Customer Queries Into Categories</h2>
 <p>For this notebook we would like to set up classifying customer queries into a primary category and a secondary category. This might be the first step in routing the customer in a customer support application.</p>
 <section id="primary-and-secondary-category" class="level3">
 <h3 class="anchored" data-anchor-id="primary-and-secondary-category">Primary and Secondary Category</h3>

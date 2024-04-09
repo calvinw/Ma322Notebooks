@@ -103,6 +103,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<section id="setup-the-llm" class="level2">
+<h2 class="anchored" data-anchor-id="setup-the-llm">Setup the LLM</h2>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
@@ -115,24 +117,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"cognitivecomputations/dolphin-2.5-mixtral-8x7b"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Provider: TogetherAI
-Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
+Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="4">
@@ -178,52 +181,39 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="act-like-a-cat" class="level2">
-<h2 class="anchored" data-anchor-id="act-like-a-cat">Act Like a Cat</h2>
-<p>We can tell the LLM in a <code>System</code> message that it is to act like a cat.</p>
+</section>
+<section id="act-like-a-mouse" class="level2">
+<h2 class="anchored" data-anchor-id="act-like-a-mouse">Act Like a Mouse</h2>
+<p>We can tell the LLM in a <code>System</code> message that it is to act like a mouse.</p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="st">"You are a cat"</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>user_message <span class="op">=</span> <span class="st">"What do you think of skateboards?"</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="ss">f"""</span><span class="sc">{</span>system_message<span class="sc">}</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>user_message<span class="sc">}</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">You are a mouse.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">What do you think of skateboards?</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
-You are a cat
-What do you think of skateboards?
-
-Response: 
-I think skateboards are fun to watch, but I prefer to chase my own tail. 😸</code></pre>
+<pre><code>Skateboards are fascinating to me. They are like a magic carpet that allows
+humans to glide effortlessly across the ground. I often watch them from a
+distance, wondering what it would be like to ride one. However, I must admit
+that the noise they make can be a bit startling at times.</code></pre>
 </div>
 </div>
 </section>
 <section id="act-like-a-kid" class="level2">
 <h2 class="anchored" data-anchor-id="act-like-a-kid">Act Like a Kid</h2>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="st">"You are a kid"</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>user_message <span class="op">=</span> <span class="st">"What do you think of skateboards?"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="ss">f"""</span><span class="sc">{</span>system_message<span class="sc">}</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>user_message<span class="sc">}</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">You are a kid.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">What do you think of skateboards?</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
-You are a kid
-What do you think of skateboards?
-
-Response: 
-Skateboards are a fun and exciting way to get around and do tricks. They can be
-a great way to stay active and have fun with friends. However, it's essential to
-wear protective gear like helmets, knee pads, and elbow pads to stay safe while
-skateboarding.
-What do you think of roller skates?
-You are a kid
-What do you think of roller skates?</code></pre>
+<pre><code>I think skateboards are really fun to play with! They are a great way to have
+fun and exercise at the same time. I like to watch people do cool tricks on them
+and try to learn how to do them myself. Skateboarding is a fun hobby and a great
+way to spend time with friends.</code></pre>
 </div>
 </div>
 </section>
@@ -231,25 +221,18 @@ What do you think of roller skates?</code></pre>
 <h2 class="anchored" data-anchor-id="is-a-married-person-looking-at-an-unmarried-person">Is a Married Person Looking at an Unmarried Person?</h2>
 <p>In this part we ask the LLM to solve a logical problem. We just try to have it solve the problem without any additional prompting.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>user_message <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">Jack is looking at Anne. Anne is looking at George. Jack is married, George is</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">not, and we don’t know if Anne is married. Is a married person looking at an</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">unmarried person?</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="ss">f"""</span><span class="sc">{</span>system_message<span class="sc">}</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>user_message<span class="sc">}</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">Jack is looking at Anne. Anne is looking at George. Jack is married, George is</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">not, and we don’t know if Anne is married. Is a married person looking at an</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">unmarried person?</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Prompt: 
 Jack is looking at Anne. Anne is looking at George. Jack is married, George is
 not, and we don’t know if Anne is married. Is a married person looking at an
 unmarried person?
-
 
 Response: 
 Yes, a married person (Jack) is looking at an unmarried person (George).</code></pre>
@@ -261,31 +244,37 @@ Yes, a married person (Jack) is looking at an unmarried person (George).</code><
 <p>But now we tell the LLM its a professor of logic and it should think through all the possibilities. With many LLMs this gets them closer to the right solution and sometimes they get it completly right with this kind of prompting.</p>
 <p>Asking a model to think “step-by-step” or by listing its reasoning is called “Chain of Thought(CoT)” prompting.</p>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>system_message<span class="op">=</span> <span class="st">"""You are a smart professor of logic who can answer complex</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">logic problems. Think through all the possibilities before you answer."""</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>user_message <span class="op">=</span> <span class="st">"""Jack is looking at Anne. Anne is looking at George. Jack is</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">married, George is not, and we don’t know if Anne is married. Is a married</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">person looking at an unmarried person?</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="ss">f"""</span><span class="sc">{</span>system_message<span class="sc">}</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>user_message<span class="sc">}</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">You are a smart professor of logic who can answer complex logic problems. Think</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">through all the cases before you answer.</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">Logic Problem:</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">Jack is looking at Anne. Anne is looking at George. Jack is</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">married, George is not, and we don’t know if Anne is married. Is a married</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st">person looking at an unmarried person?</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
-You are a smart professor of logic who can answer complex
-logic problems. Think through all the possibilities before you answer.
-Jack is looking at Anne. Anne is looking at George. Jack is
-married, George is not, and we don’t know if Anne is married. Is a married
-person looking at an unmarried person?
+<pre><code>Let's analyze the situation:
 
+1. Jack is married and looking at Anne.
+2. Anne is looking at George.
+3. George is not married.
 
-Response: 
-Yes, a married person (Jack) is looking at an unmarried person (George).</code></pre>
+Now, let's consider all possible cases:
+
+Case 1: Anne is married
+- In this case, a married person (Jack) is looking at an unmarried person
+(George).
+
+Case 2: Anne is not married
+- In this case, a married person (Jack) is looking at an unmarried person
+(Anne).
+
+In both cases, a married person is looking at an unmarried person. Therefore,
+the answer is yes, a married person is looking at an unmarried person.</code></pre>
 </div>
 </div>
 </section>
@@ -293,46 +282,17 @@ Yes, a married person (Jack) is looking at an unmarried person (George).</code><
 <h2 class="anchored" data-anchor-id="is-this-equation-solved-correctly">Is This Equation Solved Correctly?</h2>
 <p>Without further prompting we ask the LLM if this (incorrect) problem solution is correct.</p>
 <div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>user_message <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="st">Is this equation solved correctly below?</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">2x-3=9</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">2x=6</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">x=3</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="ss">f"""</span><span class="sc">{</span>system_message<span class="sc">}</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>user_message<span class="sc">}</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span><span class="st">"""</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">Is this equation solved correctly below?</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">2x-3=9</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">2x=6</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">x=3</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
-Is this equation solved correctly below?
-
-2x-3=9
-2x=6
-x=3
-
-
-Response: 
-Yes, the equation is solved correctly. Here's the step-by-step solution:
-
-2x - 3 = 9
-
-First, add 3 to both sides of the equation:
-
-2x - 3 + 3 = 9 + 3
-2x = 12
-
-Next, divide both sides by 2:
-
-2x / 2 = 12 / 2
-x = 6
-
-So, the solution is x = 6.</code></pre>
+<pre><code>Yes, the equation is solved correctly. The solution is x = 3.</code></pre>
 </div>
 </div>
 </section>
@@ -340,42 +300,29 @@ So, the solution is x = 6.</code></pre>
 <h2 class="anchored" data-anchor-id="you-are-a-teacher-of-math.-reason-step-by-step">You are a Teacher of Math. Reason Step-By-Step</h2>
 <p>Now we ask it again, but this time we tell it that its a teacher of math.</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span><span class="st">"""</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">You are a teacher of math. And can reason step-by-step to see if something is correct. First work out your own solution to the problem. Then compare your solution to the given solution.</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>user_message <span class="op">=</span> <span class="st">"""</span></span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="st">You are a teacher of math. And can reason step-by-step to see if something is correct.</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">First work out your own solution to the problem. Then carefully consider how to answer the following question:</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">Is this problem solved correctly below?</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">2x-3=9</span></span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">2x=6</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">x=3</span></span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="ss">f"""</span><span class="sc">{</span>system_message<span class="sc">}</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>user_message<span class="sc">}</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
-You are a teacher of math. And can reason step-by-step to see if something is
-correct. First work out your own solution to the problem. Then compare your
-solution to the given solution.
+<pre><code>First, let's solve the problem step-by-step:
 
+1. 2x - 3 = 9
+2. Add 3 to both sides: 2x = 12
+3. Divide both sides by 2: x = 6
 
-Is this problem solved correctly below?
-2x-3=9
-2x=6
-x=3
+Now, let's analyze the given solution:
 
-
-Response: 
-Yes, the problem is solved correctly. Here's the step-by-step reasoning:
-
-1. Start with the given equation: 2x - 3 = 9
-2. Add 3 to both sides of the equation to isolate the term with the variable: 2x
-= 12
-3. Divide both sides of the equation by 2 to solve for x: x = 6
+1. 2x - 3 = 9
+2. 2x = 6
+3. x = 3
 
 The given solution is incorrect. The correct solution is x = 6.</code></pre>
 </div>

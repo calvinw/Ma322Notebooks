@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Segmenting Customers</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="SegmentingCustomers_files/libs/clipboard/clipboard.min.js"></script>
+<script src="SegmentingCustomers_files/libs/quarto-html/quarto.js"></script>
+<script src="SegmentingCustomers_files/libs/quarto-html/popper.min.js"></script>
+<script src="SegmentingCustomers_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="SegmentingCustomers_files/libs/quarto-html/anchor.min.js"></script>
+<link href="SegmentingCustomers_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="SegmentingCustomers_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="SegmentingCustomers_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="SegmentingCustomers_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="SegmentingCustomers_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Segmenting Customers</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="setup-the-llm" class="level2">
+<h2 class="anchored" data-anchor-id="setup-the-llm">Setup the LLM</h2>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"cognitivecomputations/dolphin-2.5-mixtral-8x7b"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Provider: TogetherAI
+Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>customers_info<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">1. Polo shirt ($24.99), flat front shorts ($19.99), leather boat shoes ($44.99)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $89.97</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">2. Leggings (2 for $24.99), oversized sweatshirt ($39.99), slip-on sneakers ($24.99)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $89.97</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="st">3. Printed culotte jumpsuit ($49.99), floppy hat ($19.99), strappy sandals ($34.99), tote bag ($29.99)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $134.96</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="st">4. Sundress ($29.99), cropped utility jacket ($39.99), ankle boots ($44.99), fanny pack ($14.99)</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $129.96</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">5. Lace romper ($39.99), embroidered kimono ($49.99), lace-up espadrilles ($29.99), circle sunglasses ($12.99)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $132.96</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">6. Asymmetrical ruffle skirt ($39.99), cold-shoulder top ($24.99), over-the-knee boots ($59.99), chain belt ($19.99)</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $144.96</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="st">7. Trapeze dress ($39.99), denim jacket ($44.99), rain boots ($29.99), bucket hat ($14.99)</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $129.96</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="st">8. Crewneck sweatshirt ($24.99), joggers ($29.99), slippers ($12.99)</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $67.97</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="st">9. French terry joggers ($34.99), waffle knit top ($24.99), slippers ($12.99)</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $72.97</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="st">10. Men's dress shirt ($34.99), chino shorts ($29.99), boat shoes ($39.99), baseball cap ($12.99)</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $117.96</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="st">11. Off-shoulder floral dress ($49.99), denim jacket ($59.99), ankle booties ($39.99), round sunglasses ($14.99)</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $164.96</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="st">12. Halter bodysuit ($24.99), high-waist shorts ($29.99), lace-up flats ($34.99), tassel necklace ($19.99)</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $109.96</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="st">13. Tank dress ($29.99), military jacket ($44.99), combat boots ($49.99), crossbody bag ($19.99)</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $144.96</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="st">14. Sheath dress ($49.99), open front cardigan ($39.99), block heels ($44.99)</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $134.97</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="st">15. 3-pack v-neck tees ($17.99), chino shorts ($24.99), canvas sneakers ($29.99)</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $72.97</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="st">16. Silk blouse ($54.99), slim pants ($49.99), loafers ($44.99)</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $149.97</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="st">17. Blazer ($79.99), sheath dress ($49.99), pumps ($59.99)</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $189.97</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="st">18. Floral maxi dress ($54.99), denim jacket ($44.99), wedge sandals ($39.99), tassel earrings ($12.99)</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $152.96</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a><span class="st">19. Graphic tees (2 for $14.99), jean shorts ($24.99), flip flops ($9.99)</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $49.97</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="st">20. Joggers ($29.99), hoodie ($34.99), slides ($14.99), baseball cap ($12.99)</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $92.96</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="st">21. Men's t-shirt ($17.99), basketball shorts ($22.99), slides ($14.99), dad hat ($12.99)</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $68.96</span></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="st">22. Hoodie ($29.99), sweatpants ($24.99), sneakers ($39.99)</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $94.97</span></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="st">23. Gingham off-shoulder dress ($39.99), strappy sandals ($34.99), floppy hat ($19.99), round sunglasses ($12.99)</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $107.96</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="st">24. Printed high-low dress ($49.99), denim jacket ($44.99), embroidered mules ($39.99), fringe earrings ($14.99)</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $149.96</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="st">25. Button down shirt ($29.99), khakis ($34.99), belt ($12.99)</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $77.97</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="st">26. Sweat shorts ($19.99), graphic tee ($14.99), slides ($14.99)</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $49.97</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="st">27. Floral wrap dress ($39.99), ripped boyfriend jeans ($44.99), faux fur coat ($69.99), studded sandals ($29.99), fringe crossbody bag ($34.99), lace crop top ($19.99)</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $239.94</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a><span class="st">28. Blazer ($49.99), ankle pants ($44.99), ballet flats ($34.99)</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $119.97</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="st">29. Printed jumpsuit ($54.99), fedora hat ($24.99), fringe crossbody ($34.99), statement earrings ($14.99)</span></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $129.96</span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="st">30. Skater dress ($34.99), moto jacket ($59.99), over-the-knee boots ($54.99), bucket bag ($29.99)</span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $179.96</span></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="st">31. Puffer vest ($34.99), beanie ($9.99), sweatpants ($24.99)</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $69.97</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="st">32. Cold shoulder top ($24.99), high waist wide leg pants ($39.99), mules ($29.99), faux leather crossbody ($34.99)</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $129.96</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a><span class="st">33. Basic tee ($12.99), overalls ($44.99), sneakers ($39.99), dad hat ($9.99)</span></span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $107.96</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a><span class="st">34. Active tee ($12.99), running shorts ($19.99), sneakers ($34.99)</span></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $67.97</span></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a><span class="st">35. Sleeveless swing dress ($29.99), denim jacket ($44.99), ankle boots ($39.99)</span></span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $114.97</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a><span class="st">36. 5 pack basic crewneck tees ($24.99), chino shorts ($29.99), white sneakers ($39.99), lightweight windbreaker ($29.99)</span></span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $124.96</span></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a><span class="st">37. Packable down jacket ($59.99), flannel shirt ($24.99), jeans ($39.99)</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $124.97</span></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a><span class="st">38. Maxi tee dress ($29.99), denim jacket ($39.99), slip-on sneakers ($29.99)</span></span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $99.97</span></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a><span class="st">39. Crop top ($19.99), high-rise flare jeans ($44.99), platform sandals ($39.99), fringe crossbody ($29.99)</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $134.96</span></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a><span class="st">40. Bell sleeve top ($27.99), culottes ($39.99), sandals ($19.99), tote bag ($24.99)</span></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $112.96</span></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a><span class="st">41. Cozy sweater ($39.99), boyfriend jeans ($44.99), moccasin slippers ($19.99)</span></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $104.97</span></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a><span class="st">42. Henley ($22.99), cargo shorts ($29.99), Birkenstocks ($39.99), backpack ($34.99)</span></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $127.96</span></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a><span class="st">43. Suit set ($129.99), button up shirt ($34.99), oxfords ($49.99)</span></span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $214.97</span></span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a><span class="st">44. Button down ($34.99), bermuda shorts ($24.99), boat shoes ($39.99), baseball cap ($14.99)</span></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $114.96</span></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a><span class="st">45. Lace up bodysuit ($29.99), ripped mom shorts ($24.99), ankle booties ($44.99), pendant necklace ($19.99)</span></span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $119.96</span></span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a><span class="st">46. Ruffle sleeve romper ($39.99), faux suede jacket ($54.99), ankle strap heels ($44.99), bucket bag ($29.99)</span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $169.96</span></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a><span class="st">47. Cami top ($14.99), high-waisted boyfriend jeans ($39.99), clogs ($29.99), crossbody bag ($24.99)</span></span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $109.96</span></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="st">48. Long sleeve thermal ($17.99), lightweight puffer vest ($34.99), beanie ($9.99)</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $62.97</span></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="st">49. Wrap front top ($29.99), distressed girlfriend jeans ($44.99), studded slides ($24.99), bucket bag ($39.99)</span></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $139.96</span></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="st">50. Off-the-shoulder top ($24.99), wide leg linen pants ($39.99), ballet flats ($24.99), tote ($29.99)</span></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $119.96</span></span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a><span class="st">51. 5-pack crew socks ($7.99), 3-pack boxer briefs ($17.99)</span></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $25.98</span></span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a><span class="st">52. 4-pack undershirts ($15.99), 2-pack boxer briefs ($12.99)</span></span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $28.98</span></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a><span class="st">53. Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt ($29.99), sneakers ($44.99)</span></span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $129.96</span></span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a><span class="st">54. Pleated metallic skirt ($39.99), lace camisole ($24.99), block heel sandals ($44.99), fringe crossbody ($29.99)</span></span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $139.96</span></span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a><span class="st">55. Wide leg trousers ($54.99), camisole ($17.99), loafers ($39.99)</span></span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $112.97</span></span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a><span class="st">56. Wrap crop top ($19.99), paper bag waist shorts ($29.99), slide sandals ($19.99), circle sunglasses ($14.99)</span></span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $84.96</span></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a><span class="st">57. Tie-front crop top ($19.99), high waist mom jeans ($39.99), slide sandals ($24.99), circle belt bag ($29.99)</span></span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $114.96</span></span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a><span class="st">58. Off-shoulder eyelet top ($34.99), denim skirt ($29.99), espadrille wedges ($39.99), tassel earrings ($14.99)</span></span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $119.96</span></span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a><span class="st">59. Soft shorts ($19.99), muscle tank ($12.99), slides ($14.99)</span></span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $47.97</span></span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a><span class="st">60. Floral wrap dress ($44.99), denim jacket ($49.99), embroidered clutch ($29.99), fringe earrings ($19.99)</span></span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $144.96</span></span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a><span class="st">61. Polo ($24.99), drawstring pants ($29.99), slides ($19.99), visor ($9.99)</span></span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $84.96</span></span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a><span class="st">62. Tunic top ($29.99), palazzo pants ($39.99), gladiator sandals ($34.99), fedora ($19.99)</span></span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $124.96</span></span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a><span class="st">63. Bell sleeve top ($27.99), culottes ($39.99), sandals ($19.99), tote bag ($24.99)</span></span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $112.96</span></span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a><span class="st">64. Wrap dress ($59.99), trench coat ($99.99), knee high boots ($69.99)</span></span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $229.97</span></span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a><span class="st">65. Cold shoulder top ($24.99), paperbag pants ($39.99), peep toe booties ($49.99), faux suede crossbody ($34.99)</span></span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $149.96</span></span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a><span class="st">66. Shift dress ($44.99), blazer ($69.99), ballet flats ($29.99)</span></span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $144.97</span></span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a><span class="st">67. Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt ($29.99), sneakers ($44.99)</span></span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $129.96</span></span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a><span class="st">68. Henley shirt ($19.99), 5-pocket twill pants ($29.99), boat shoes ($39.99)</span></span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $89.97</span></span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a><span class="st">69. Off-shoulder ruffle top ($34.99), palazzo pants ($44.99), tassel earrings ($14.99), embroidered clutch ($29.99)</span></span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $124.96</span></span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a><span class="st">70. Halter neck top ($24.99), denim jacket ($44.99), ankle booties ($44.99), circle belt bag ($24.99)</span></span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $139.96</span></span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a><span class="st">71. Tiered maxi dress ($49.99), floppy hat ($24.99), flat sandals ($19.99), straw tote ($29.99)</span></span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $124.96</span></span>
+<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a><span class="st">72. Linen button-down ($34.99), drawstring shorts ($29.99), boat shoes ($39.99), baseball cap ($19.99)</span></span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $124.96</span></span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a><span class="st">73. Smocked off-shoulder top ($27.99), paper bag shorts ($24.99), espadrille flats ($19.99), circle sunglasses ($9.99)</span></span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $82.96</span></span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a><span class="st">74. Printed jumpsuit ($44.99), denim jacket ($49.99), wedge sandals ($39.99), tassel pendant ($14.99)</span></span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $149.96</span></span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a><span class="st">75. Racerback midi dress ($39.99), utility jacket ($49.99), ankle strap flats ($29.99), fanny pack ($19.99)</span></span>
+<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $139.96</span></span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">I have defined 5 customer profiles for a retail clothing store like H&amp;M:</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">1. Trendy Fashionista</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">- Age: 18-30</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st">- Interests: Follows the latest fashion trends, values style and</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">self-expression through clothing, active on social media Shopping Behavior:</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">Frequently shops for new on-trend clothing, drawn to bold</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">patterns/colors/accessories, likely to make impulse purchases</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">2. Budget-Conscious Shopper</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">- Age: 25-45</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">- Interests: Finds good deals, values quality over quantity, practical fashion</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">sense Shopping Behavior: Looks for sales/discounts, buys versatile wardrobe</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">staples that can be mixed and matched, avoids fast fashion</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">3. Casual Comfort Seeker</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">- Age: 30-55</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="st">- Interests: Low-maintenance style, prioritizes comfort over trendiness</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="st">Shopping Behavior: Buys basic tees, loungewear like joggers/hoodies for casual</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="st">wear, gravitates towards athleisure and activewear</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="st">4. Minimalist Professional</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="st">- Age: 30-50</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="st">- Interests: Simple, classic styles for work/business casual settings Shopping</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="st">Behavior: Buys high-quality basics like blazers, slacks, button-downs that can</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="st">be mixed and matched, avoids trends</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="st">5. Eco-Conscious Shopper</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="st">- Age: 20-40</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="st">- Interests: Sustainability, ethical/environmentally-friendly fashion Shopping</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="st">Behavior: Seeks out organic materials, avoids fast fashion, looks for</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="st">secondhand/vintage items</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="st">I have some customers with their purchase histories at H&amp;M over the past 6 months</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="st">listed below. Can you classify each customer into one of the three profiles</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="st">based on their purchases?</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="sc">{customers_info}</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="st">For each customer, specify which of the 5 profiles you would assign them to</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="st">and your reasoning based on the items purchased.</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="st">Also print out the customers purchases and total spent.</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="st">Give the output like this for each customer:</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="st">Purchases: &lt;&lt;list the purchases&gt;&gt;</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="st">Total Spent: &lt;&lt;total spent&gt;&gt;</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="st">Profile: &lt;&lt;profile&gt;&gt;</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="st">Reasons: &lt;&lt;reasons&gt;&gt;</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="st">When you are finished with all the customers print out these totals:</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="st">Trendy Fashionista: &lt;&lt;number of these&gt;&gt;</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="st">Casual Comfort Seeker: &lt;&lt;number of these&gt;&gt;</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="st">Minimalist Professional: &lt;&lt;number of these&gt;&gt;</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="st">Budget-Conscious Shopper: &lt;&lt;number of these&gt;&gt;</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> prompt.<span class="bu">format</span>(customers_info <span class="op">=</span> customers_info)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Purchases: Polo shirt ($24.99), flat front shorts ($19.99), leather boat shoes
+($44.99)
+Total Spent: $89.97
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a polo shirt and leather boat
+shoes, which are typical for someone who follows fashion trends.
+
+Purchases: Leggings (2 for $24.99), oversized sweatshirt ($39.99), slip-on
+sneakers ($24.99)
+Total Spent: $89.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like leggings and an oversized
+sweatshirt, indicating a preference for low-maintenance style.
+
+Purchases: Printed culotte jumpsuit ($49.99), floppy hat ($19.99), strappy
+sandals ($34.99), tote bag ($29.99)
+Total Spent: $134.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a printed jumpsuit and strappy
+sandals, indicating a preference for following fashion trends.
+
+Purchases: Sundress ($29.99), cropped utility jacket ($39.99), ankle boots
+($44.99), fanny pack ($14.99)
+Total Spent: $129.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a sundress and cropped utility
+jacket, indicating a preference for following fashion trends.
+
+Purchases: Lace romper ($39.99), embroidered kimono ($49.99), lace-up
+espadrilles ($29.99), circle sunglasses ($12.99)
+Total Spent: $132.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a lace romper and embroidered
+kimono, indicating a preference for following fashion trends.
+
+Purchases: Asymmetrical ruffle skirt ($39.99), cold-shoulder top ($24.99), over-
+the-knee boots ($59.99), chain belt ($19.99)
+Total Spent: $144.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like an asymmetrical ruffle skirt
+and over-the-knee boots, indicating a preference for following fashion trends.
+
+Purchases: Trapeze dress ($39.99), denim jacket ($44.99), rain boots ($29.99),
+bucket hat ($14.99)
+Total Spent: $129.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a trapeze dress and rain
+boots, indicating a preference for low-maintenance style.
+
+Purchases: Crewneck sweatshirt ($24.99), joggers ($29.99), slippers ($12.99)
+Total Spent: $67.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a crewneck sweatshirt and
+joggers, indicating a preference for low-maintenance style.
+
+Purchases: French terry joggers ($34.99), waffle knit top ($24.99), slippers
+($12.99)
+Total Spent: $72.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like French terry joggers and
+a waffle knit top, indicating a preference for low-maintenance style.
+
+Purchases: Men's dress shirt ($34.99), chino shorts ($29.99), boat shoes
+($39.99), baseball cap ($12.99)
+Total Spent: $117.96
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a dress shirt and chino
+shorts, indicating a preference for simple, classic styles.
+
+Purchases: Off-shoulder floral dress ($49.99), denim jacket ($44.99), ankle
+booties ($39.99), round sunglasses ($14.99)
+Total Spent: $152.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like an off-shoulder floral dress
+and ankle booties, indicating a preference for following fashion trends.
+
+Purchases: Halter bodysuit ($24.99), high-waist shorts ($29.99), lace-up flats
+($34.99), tassel necklace ($19.99)
+Total Spent: $109.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a halter bodysuit and lace-up
+flats, indicating a preference for following fashion trends.
+
+Purchases: Tank dress ($29.99), military jacket ($44.99), combat boots ($49.99),
+crossbody bag ($19.99)
+Total Spent: $144.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a tank dress and combat boots,
+indicating a preference for following fashion trends.
+
+Purchases: Sheath dress ($49.99), open front cardigan ($39.99), block heels
+($44.99)
+Total Spent: $134.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a sheath dress and block
+heels, indicating a preference for simple, classic styles.
+
+Purchases: 3-pack v-neck tees ($17.99), chino shorts ($24.99), canvas sneakers
+($29.99)
+Total Spent: $72.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like v-neck tees and chino
+shorts, indicating a preference for low-maintenance style.
+
+Purchases: Silk blouse ($54.99), slim pants ($49.99), loafers ($44.99)
+Total Spent: $149.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a silk blouse and slim pants,
+indicating a preference for simple, classic styles.
+
+Purchases: Blazer ($79.99), sheath dress ($49.99), pumps ($59.99)
+Total Spent: $189.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a blazer and sheath dress,
+indicating a preference for simple, classic styles.
+
+Purchases: Floral maxi dress ($54.99), denim jacket ($44.99), wedge sandals
+($39.99), tassel earrings ($12.99)
+Total Spent: $152.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a floral maxi dress and wedge
+sandals, indicating a preference for following fashion trends.
+
+Purchases: Graphic tees (2 for $14.99), jean shorts ($24.99), flip flops ($9.99)
+Total Spent: $49.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like graphic tees and jean
+shorts, indicating a preference for low-maintenance style.
+
+Purchases: Joggers ($29.99), hoodie ($34.99), slides ($14.99), baseball cap
+($12.99)
+Total Spent: $92.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like joggers and a hoodie,
+indicating a preference for low-maintenance style.
+
+Purchases: Men's t-shirt ($17.99), basketball shorts ($22.99), slides ($14.99),
+dad hat ($12.99)
+Total Spent: $68.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a men's t-shirt and
+basketball shorts, indicating a preference for low-maintenance style.
+
+Purchases: Hoodie ($29.99), sweatpants ($24.99), sneakers ($39.99)
+Total Spent: $94.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a hoodie and sweatpants,
+indicating a preference for low-maintenance style.
+
+Purchases: Gingham off-shoulder dress ($39.99), strappy sandals ($34.99), floppy
+hat ($19.99), round sunglasses ($12.99)
+Total Spent: $107.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a gingham off-shoulder dress
+and strappy sandals, indicating a preference for following fashion trends.
+
+Purchases: Printed high-low dress ($49.99), denim jacket ($44.99), embroidered
+mules ($39.99), fringe earrings ($14.99)
+Total Spent: $149.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a printed high-low dress and
+embroidered mules, indicating a preference for following fashion trends.
+
+Purchases: Button down shirt ($29.99), khakis ($34.99), belt ($12.99)
+Total Spent: $77.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a button down shirt and
+khakis, indicating a preference for simple, classic styles.
+
+Purchases: Sweat shorts ($19.99), graphic tee ($14.99), slides ($14.99)
+Total Spent: $49.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like sweat shorts and a
+graphic tee, indicating a preference for low-maintenance style.
+
+Purchases: Floral wrap dress ($39.99), ripped boyfriend jeans ($44.99), faux fur
+coat ($69.99), studded sandals ($29.99), fringe crossbody bag ($34.99), lace
+crop top ($19.99)
+Total Spent: $239.94
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a floral wrap dress and ripped
+boyfriend jeans, indicating a preference for following fashion trends.
+
+Purchases: Blazer ($49.99), ankle pants ($44.99), ballet flats ($34.99)
+Total Spent: $119.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a blazer and ankle pants,
+indicating a preference for simple, classic styles.
+
+Purchases: Printed jumpsuit ($54.99), fedora hat ($24.99), fringe crossbody
+($34.99), statement earrings ($14.99)
+Total Spent: $129.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a printed jumpsuit and
+statement earrings, indicating a preference for following fashion trends.
+
+Purchases: Skater dress ($34.99), moto jacket ($59.99), over-the-knee boots
+($54.99), bucket bag ($29.99)
+Total Spent: $179.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a skater dress and moto
+jacket, indicating a preference for following fashion trends.
+
+Purchases: Puffer vest ($34.99), beanie ($9.99), sweatpants ($24.99)
+Total Spent: $69.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a puffer vest and
+sweatpants, indicating a preference for low-maintenance style.
+
+Purchases: Cold shoulder top ($24.99), high waist wide leg pants ($39.99), mules
+($29.99), faux leather crossbody ($34.99)
+Total Spent: $129.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a cold shoulder top and high
+waist wide leg pants, indicating a preference for following fashion trends.
+
+Purchases: Basic tee ($12.99), overalls ($44.99), sneakers ($39.99), dad hat
+($9.99)
+Total Spent: $107.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a basic tee and overalls,
+indicating a preference for low-maintenance style.
+
+Purchases: Active tee ($12.99), running shorts ($19.99), sneakers ($34.99)
+Total Spent: $67.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like an active tee and running
+shorts, indicating a preference for low-maintenance style.
+
+Purchases: Sleeveless swing dress ($29.99), denim jacket ($44.99), ankle boots
+($39.99)
+Total Spent: $114.97
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a sleeveless swing dress and
+denim jacket, indicating a preference for following fashion trends.
+
+Purchases: 5 pack basic crewneck tees ($24.99), chino shorts ($29.99), white
+sneakers ($39.99), lightweight windbreaker ($29.99)
+Total Spent: $124.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like basic crewneck tees and
+chino shorts, indicating a preference for low-maintenance style.
+
+Purchases: Packable down jacket ($59.99), flannel shirt ($24.99), jeans ($39.99)
+Total Spent: $124.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a packable down jacket and
+jeans, indicating a preference for simple, classic styles.
+
+Purchases: Maxi tee dress ($29.99), denim jacket ($39.99), slip-on sneakers
+($29.99)
+Total Spent: $99.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a maxi tee dress and
+slip-on sneakers, indicating a preference for low-maintenance style.
+
+Purchases: Crop top ($19.99), high-rise flare jeans ($44.99), platform sandals
+($39.99), fringe crossbody bag ($29.99)
+Total Spent: $134.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a crop top and high-rise flare
+jeans, indicating a preference for following fashion trends.
+
+Purchases: Bell sleeve top ($27.99), culottes ($39.99), sandals ($19.99), tote
+bag ($24.99)
+Total Spent: $112.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a bell sleeve top and
+culottes, indicating a preference for following fashion trends.
+
+Purchases: Cozy sweater ($39.99), boyfriend jeans ($44.99), moccasin slippers
+($19.99)
+Total Spent: $104.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a cozy sweater and
+boyfriend jeans, indicating a preference for low-maintenance style.
+
+Purchases: Henley ($22.99), cargo shorts ($29.99), Birkenstocks ($39.99),
+backpack ($34.99)
+Total Spent: $127.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a Henley and cargo
+shorts, indicating a preference for low-maintenance style.
+
+Purchases: Suit set ($129.99), button up shirt ($34.99), oxfords ($49.99)
+Total Spent: $214.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a suit set and button up
+shirt, indicating a preference for simple, classic styles.
+
+Purchases: Button down ($34.99), bermuda shorts ($24.99), boat shoes ($39.99),
+baseball cap ($14.99)
+Total Spent: $114.96
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a button down and bermuda
+shorts, indicating a preference for simple, classic styles.
+
+Purchases: Lace up bodysuit ($29.99), ripped mom shorts ($24.99), ankle booties
+($44.99), pendant necklace ($19.99)
+Total Spent: $119.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a lace up bodysuit and ripped
+mom shorts, indicating a preference for following fashion trends.
+
+Purchases: Ruffle sleeve romper ($39.99), faux suede jacket ($54.99), ankle
+strap heels ($44.99), bucket bag ($29.99)
+Total Spent: $169.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a ruffle sleeve romper and
+faux suede jacket, indicating a preference for following fashion trends.
+
+Purchases: Cami top ($14.99), high-waisted boyfriend jeans ($39.99), clogs
+($29.99), crossbody bag ($24.99)
+Total Spent: $109.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a cami top and high-
+waisted boyfriend jeans, indicating a preference for low-maintenance style.
+
+Purchases: Long sleeve thermal ($17.99), lightweight puffer vest ($34.99),
+beanie ($9.99)
+Total Spent: $62.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a long sleeve thermal and
+lightweight puffer vest, indicating a preference for low-maintenance style.
+
+Purchases: Wrap front top ($29.99), distressed girlfriend jeans ($44.99),
+studded slides ($24.99), bucket bag ($39.99)
+Total Spent: $139.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a wrap front top and
+distressed girlfriend jeans, indicating a preference for following fashion
+trends.
+
+Purchases: Off-the-shoulder top ($24.99), wide leg linen pants ($39.99), ballet
+flats ($24.99), tote ($29.99)
+Total Spent: $119.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like an off-the-shoulder top and
+wide leg linen pants, indicating a preference for following fashion trends.
+
+Purchases: 5-pack crew socks ($7.99), 3-pack boxer briefs ($17.99)
+Total Spent: $25.98
+Profile: Budget-Conscious Shopper
+Reasons: The customer purchased items in bulk, indicating a preference for
+finding good deals.
+
+Purchases: 4-pack undershirts ($15.99), 2-pack boxer briefs ($12.99)
+Total Spent: $28.98
+Profile: Budget-Conscious Shopper
+Reasons: The customer purchased items in bulk, indicating a preference for
+finding good deals.
+
+Purchases: Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt ($29.99),
+sneakers ($44.99)
+Total Spent: $129.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a graphic tee and skinny
+jeans, indicating a preference for following fashion trends.
+
+Purchases: Pleated metallic skirt ($39.99), lace camisole ($24.99), block heel
+sandals ($44.99), fringe crossbody ($34.99)
+Total Spent: $139.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a pleated metallic skirt and
+block heel sandals, indicating a preference for following fashion trends.
+
+Purchases: Wide leg trousers ($54.99), camisole ($17.99), loafers ($39.99)
+Total Spent: $112.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like wide leg trousers and
+loafers, indicating a preference for simple, classic styles.
+
+Purchases: Wrap crop top ($19.99), paper bag waist shorts ($29.99), slide
+sandals ($19.99), circle sunglasses ($14.99)
+Total Spent: $84.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a wrap crop top and paper
+bag waist shorts, indicating a preference for low-maintenance style.
+
+Purchases: Tie-front crop top ($19.99), high waist mom jeans ($39.99), slide
+sandals ($24.99), circle belt bag ($29.99)
+Total Spent: $114.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a tie-front crop top and
+high waist mom jeans, indicating a preference for low-maintenance style.
+
+Purchases: Off-shoulder eyelet top ($34.99), denim skirt ($29.99), espadrille
+wedges ($39.99), tassel earrings ($14.99)
+Total Spent: $119.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like an off-shoulder eyelet top and
+espadrille wedges, indicating a preference for following fashion trends.
+
+Purchases: Soft shorts ($19.99), muscle tank ($12.99), slides ($14.99)
+Total Spent: $47.97
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like soft shorts and a muscle
+tank, indicating a preference for low-maintenance style.
+
+Purchases: Floral wrap dress ($44.99), denim jacket ($49.99), embroidered clutch
+($29.99), fringe earrings ($19.99)
+Total Spent: $144.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a floral wrap dress and
+embroidered clutch, indicating a preference for following fashion trends.
+
+Purchases: Polo ($24.99), drawstring pants ($29.99), slides ($19.99), visor
+($9.99)
+Total Spent: $84.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like drawstring pants and
+slides, indicating a preference for low-maintenance style.
+
+Purchases: Tunic top ($29.99), palazzo pants ($39.99), gladiator sandals
+($34.99), fedora ($19.99)
+Total Spent: $124.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a tunic top and palazzo pants,
+indicating a preference for following fashion trends.
+
+Purchases: Bell sleeve top ($27.99), culottes ($39.99), sandals ($19.99), tote
+bag ($24.99)
+Total Spent: $112.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a bell sleeve top and
+culottes, indicating a preference for following fashion trends.
+
+Purchases: Wrap dress ($59.99), trench coat ($99.99), knee high boots ($69.99)
+Total Spent: $229.97
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a wrap dress and knee high
+boots, indicating a preference for following fashion trends.
+
+Purchases: Cold shoulder top ($24.99), paperbag pants ($39.99), peep toe booties
+($49.99), faux suede crossbody ($34.99)
+Total Spent: $149.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a cold shoulder top and peep
+toe booties, indicating a preference for following fashion trends.
+
+Purchases: Shift dress ($44.99), blazer ($69.99), ballet flats ($29.99)
+Total Spent: $144.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a shift dress and blazer,
+indicating a preference for simple, classic styles.
+
+Purchases: Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt ($29.99),
+sneakers ($44.99)
+Total Spent: $129.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a graphic tee and skinny
+jeans, indicating a preference for following fashion trends.
+
+Purchases: Henley shirt ($19.99), 5-pocket twill pants ($29.99), boat shoes
+($39.99)
+Total Spent: $89.97
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a Henley shirt and 5-pocket
+twill pants, indicating a preference for simple, classic styles.
+
+Purchases: Off-shoulder ruffle top ($34.99), palazzo pants ($44.99), sandals
+($19.99), tote bag ($24.99)
+Total Spent: $112.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like an off-shoulder ruffle top and
+palazzo pants, indicating a preference for following fashion trends.
+
+Purchases: Halter neck top ($24.99), denim jacket ($44.99), ankle booties
+($44.99), circle belt bag ($24.99)
+Total Spent: $139.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a halter neck top and ankle
+booties, indicating a preference for following fashion trends.
+
+Purchases: Tiered maxi dress ($49.99), floppy hat ($24.99), flat sandals
+($19.99), straw tote ($29.99)
+Total Spent: $124.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a tiered maxi dress and floppy
+hat, indicating a preference for following fashion trends.
+
+Purchases: Linen button-down ($34.99), drawstring shorts ($29.99), boat shoes
+($39.99), baseball cap ($19.99)
+Total Spent: $124.96
+Profile: Minimalist Professional
+Reasons: The customer purchased classic items like a linen button-down and
+drawstring shorts, indicating a preference for simple, classic styles.
+
+Purchases: Smocked off-shoulder top ($27.99), paper bag shorts ($24.99),
+espadrille flats ($19.99), circle sunglasses ($9.99)
+Total Spent: $82.96
+Profile: Casual Comfort Seeker
+Reasons: The customer purchased comfortable items like a smocked off-shoulder
+top and paper bag shorts, indicating a preference for low-maintenance style.
+
+Purchases: Printed jumpsuit ($44.99), denim jacket ($49.99), wedge sandals
+($39.99), tassel pendant ($14.99)
+Total Spent: $149.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a printed jumpsuit and wedge
+sandals, indicating a preference for following fashion trends.
+
+Purchases: Racerback midi dress ($39.99), utility jacket ($49.99), ankle strap
+flats ($29.99), fanny pack ($19.99)
+Total Spent: $139.96
+Profile: Trendy Fashionista
+Reasons: The customer purchased trendy items like a racerback midi dress and
+utility jacket, indicating a preference for following fashion trends.
+
+Trendy Fashionista: 25
+Casual Comfort Seeker: 15
+Minimalist Professional: 10
+Budget-Conscious Shopper: 2
+
+Note: The classification is based on the items purchased and may not be 100%
+accurate for all customers.</code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

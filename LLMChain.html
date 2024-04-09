@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Movie Analysis Chain</title>
+<title>LLM Chain</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="MovieChain_files/libs/clipboard/clipboard.min.js"></script>
-<script src="MovieChain_files/libs/quarto-html/quarto.js"></script>
-<script src="MovieChain_files/libs/quarto-html/popper.min.js"></script>
-<script src="MovieChain_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="MovieChain_files/libs/quarto-html/anchor.min.js"></script>
-<link href="MovieChain_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="MovieChain_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="MovieChain_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="MovieChain_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="MovieChain_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="LLMChain_files/libs/clipboard/clipboard.min.js"></script>
+<script src="LLMChain_files/libs/quarto-html/quarto.js"></script>
+<script src="LLMChain_files/libs/quarto-html/popper.min.js"></script>
+<script src="LLMChain_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="LLMChain_files/libs/quarto-html/anchor.min.js"></script>
+<link href="LLMChain_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="LLMChain_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="LLMChain_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="LLMChain_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="LLMChain_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Movie Analysis Chain</h1>
+<h1 class="title">LLM Chain</h1>
 </div>
 
 
@@ -122,19 +122,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"openchat/openchat-3.5-1210"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"cognitivecomputations/dolphin-2.5-mixtral-8x7b"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Provider: TogetherAI
-Model: openchat/openchat-3.5-1210</code></pre>
+Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="4">
@@ -180,8 +181,9 @@ Model: openchat/openchat-3.5-1210</code></pre>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="description-of-movie-chain" class="level3">
-<h3 class="anchored" data-anchor-id="description-of-movie-chain">Description of Movie Chain</h3>
+</section>
+<section id="movie-chain" class="level2">
+<h2 class="anchored" data-anchor-id="movie-chain">Movie Chain</h2>
 <p>We will analyze an extended movie plot summary, identify the genre(s) of the film, generate a tagline, and then create a short synopsis incorporating the tagline and genres. The process involves the following steps:</p>
 <ol type="1">
 <li><p><strong>Initial Movie Plot</strong>: The process starts with an extended movie plot summary, which is provided as a string variable.</p></li>
@@ -190,7 +192,6 @@ Model: openchat/openchat-3.5-1210</code></pre>
 <li><p><strong>Generate a Title</strong>: Based on the initial movie plot and the movie tagline generate a possible title.</p></li>
 <li><p><strong>Generate a Short Synopsis</strong>: Using the initial movie plot, the generated tagline and title, and the identified genre(s), generate a short synopsis for the movie.</p></li>
 </ol>
-</section>
 <section id="initial-movie-plot" class="level3">
 <h3 class="anchored" data-anchor-id="initial-movie-plot">Initial Movie Plot</h3>
 <p>Let’s start with the extended movie plot summary:</p>
@@ -242,7 +243,7 @@ Model: openchat/openchat-3.5-1210</code></pre>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>genre_response <span class="op">=</span> get_completion(genre_prompt)</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(genre_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>post-apocalyptic, action, adventure</code></pre>
+<pre><code>Science Fiction, Action, Adventure, Drama, Post-Apocalyptic</code></pre>
 </div>
 </div>
 </section>
@@ -260,7 +261,26 @@ Model: openchat/openchat-3.5-1210</code></pre>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>tagline_response <span class="op">=</span> get_completion(tagline_prompt)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tagline_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>"In a world shattered, seek the Oasis or perish in the attempt."</code></pre>
+<pre><code>"In a world of chaos, find your sanctuary."
+
+"The road to survival is paved with sacrifice."
+
+"The Oasis: A beacon of hope in a world of darkness."
+
+"Fight for your future in a world on the brink."
+
+"The journey to The Oasis: Where survival is a battle, and trust is a weapon."
+
+"In the ruins of civilization, a new hope emerges."
+
+"The Oasis: A chance to rebuild, a chance to survive."
+
+"In a world of lawlessness, find your tribe."
+
+"The Oasis: A promise of safety, a test of loyalty."
+
+"The road to The Oasis: Where every step is a battle, and every choice is a
+sacrifice."</code></pre>
 </div>
 </div>
 </section>
@@ -284,7 +304,7 @@ Model: openchat/openchat-3.5-1210</code></pre>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>title_response <span class="op">=</span> get_completion(title_prompt)</span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(title_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Title: "Oasis of the Shattered World"</code></pre>
+<pre><code>Title: "The Oasis: A Journey of Survival"</code></pre>
 </div>
 </div>
 </section>
@@ -312,16 +332,15 @@ Model: openchat/openchat-3.5-1210</code></pre>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>synopsis_response <span class="op">=</span> get_completion(synopsis_prompt)</span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(synopsis_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>In "Oasis of the Shattered World," a young woman named Tara embarks on a
-treacherous quest to find The Oasis, a rumored sanctuary promising safety and a
-chance to rebuild civilization in a post-apocalyptic world. Along the way, she
-forms an unlikely alliance with a group of survivors, facing off against
-ruthless marauders and mutated creatures. As they uncover clues and confront
-their own inner demons, the group must make difficult choices that test their
-morality and loyalty, ultimately determining their fate and the fate of those
-who may follow in their footsteps. With the line between survival and sacrifice
-blurred, the true cost of reaching The Oasis may be higher than they could have
-imagined.</code></pre>
+<pre><code>"The Oasis: A Journey of Survival" is a gripping post-apocalyptic science
+fiction adventure that follows the harrowing journey of a young woman named Tara
+as she searches for a fabled sanctuary called The Oasis. In a world ravaged by a
+devastating cataclysm, Tara and a ragtag group of survivors must navigate
+treacherous wastelands, face off against ruthless marauders, and confront their
+own inner demons to reach the fabled sanctuary that promises safety, resources,
+and a chance at rebuilding civilization. Along the way, they must make difficult
+choices that will test their morality, loyalty, and resolve, ultimately
+determining their fate and the fate of those who may follow in their footsteps.</code></pre>
 </div>
 </div>
 </section>
@@ -384,51 +403,71 @@ imagined.
 
 
 ### Identified Genre(s)
-post-apocalyptic, action, adventure
+Science Fiction, Action, Adventure, Drama, Post-Apocalyptic
 
 ### Movie Tagline
-"In a world shattered, seek the Oasis or perish in the attempt."
+"In a world of chaos, find your sanctuary."
+
+"The road to survival is paved with sacrifice."
+
+"The Oasis: A beacon of hope in a world of darkness."
+
+"Fight for your future in a world on the brink."
+
+"The journey to The Oasis: Where survival is a battle, and trust is a weapon."
+
+"In the ruins of civilization, a new hope emerges."
+
+"The Oasis: A chance to rebuild, a chance to survive."
+
+"In a world of lawlessness, find your tribe."
+
+"The Oasis: A promise of safety, a test of loyalty."
+
+"The road to The Oasis: Where every step is a battle, and every choice is a
+sacrifice."
 
 ### Movie Title
-Title: "Oasis of the Shattered World"
+Title: "The Oasis: A Journey of Survival"
 
 ### Short Movie Synopsis
-In "Oasis of the Shattered World," a young woman named Tara embarks on a
-treacherous quest to find The Oasis, a rumored sanctuary promising safety and a
-chance to rebuild civilization in a post-apocalyptic world. Along the way, she
-forms an unlikely alliance with a group of survivors, facing off against
-ruthless marauders and mutated creatures. As they uncover clues and confront
-their own inner demons, the group must make difficult choices that test their
-morality and loyalty, ultimately determining their fate and the fate of those
-who may follow in their footsteps. With the line between survival and sacrifice
-blurred, the true cost of reaching The Oasis may be higher than they could have
-imagined.
+"The Oasis: A Journey of Survival" is a gripping post-apocalyptic science
+fiction adventure that follows the harrowing journey of a young woman named Tara
+as she searches for a fabled sanctuary called The Oasis. In a world ravaged by a
+devastating cataclysm, Tara and a ragtag group of survivors must navigate
+treacherous wastelands, face off against ruthless marauders, and confront their
+own inner demons to reach the fabled sanctuary that promises safety, resources,
+and a chance at rebuilding civilization. Along the way, they must make difficult
+choices that will test their morality, loyalty, and resolve, ultimately
+determining their fate and the fate of those who may follow in their footsteps.
 </code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>prompt_template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">### Genre(s)</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{genre}</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">### Tagline</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="sc">{tagline}</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">### Title</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="sc">{title}</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="st">### Short Movie Synopsis</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="sc">{synopsis}</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> prompt_template.<span class="bu">format</span>(genre <span class="op">=</span> genre_prompt,</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                         tagline <span class="op">=</span> tagline_prompt,</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                         title <span class="op">=</span> title_prompt,</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>                         synopsis <span class="op">=</span> synopsis_prompt)</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="st">## Final Report</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">### Genre(s)</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{genre}</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">### Tagline</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="sc">{tagline}</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="st">### Title</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="sc">{title}</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="st">### Synopsis</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="sc">{synopsis}</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> prompt_template.<span class="bu">format</span>(genre <span class="op">=</span> genre_prompt,</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                         tagline <span class="op">=</span> tagline_prompt,</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>                         title <span class="op">=</span> title_prompt,</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>                         synopsis <span class="op">=</span> synopsis_prompt)</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
+## Final Report
 
 ### Genre(s)
 
@@ -537,10 +576,29 @@ imagined.
 
 
 Tagline:
-"In a world shattered, seek the Oasis or perish in the attempt."
+"In a world of chaos, find your sanctuary."
+
+"The road to survival is paved with sacrifice."
+
+"The Oasis: A beacon of hope in a world of darkness."
+
+"Fight for your future in a world on the brink."
+
+"The journey to The Oasis: Where survival is a battle, and trust is a weapon."
+
+"In the ruins of civilization, a new hope emerges."
+
+"The Oasis: A chance to rebuild, a chance to survive."
+
+"In a world of lawlessness, find your tribe."
+
+"The Oasis: A promise of safety, a test of loyalty."
+
+"The road to The Oasis: Where every step is a battle, and every choice is a
+sacrifice."
 
 
-### Short Movie Synopsis
+### Synopsis
 
 Based on the following movie plot, tagline, title, and genres, generate a short
 synopsis for the movie:
@@ -574,11 +632,30 @@ the true cost of reaching The Oasis may be higher than any of them could have
 imagined.
 
 
-Genres: post-apocalyptic, action, adventure
+Genres: Science Fiction, Action, Adventure, Drama, Post-Apocalyptic
 
-Tagline: "In a world shattered, seek the Oasis or perish in the attempt."
+Tagline: "In a world of chaos, find your sanctuary."
 
-Title: Title: "Oasis of the Shattered World"
+"The road to survival is paved with sacrifice."
+
+"The Oasis: A beacon of hope in a world of darkness."
+
+"Fight for your future in a world on the brink."
+
+"The journey to The Oasis: Where survival is a battle, and trust is a weapon."
+
+"In the ruins of civilization, a new hope emerges."
+
+"The Oasis: A chance to rebuild, a chance to survive."
+
+"In a world of lawlessness, find your tribe."
+
+"The Oasis: A promise of safety, a test of loyalty."
+
+"The road to The Oasis: Where every step is a battle, and every choice is a
+sacrifice."
+
+Title: Title: "The Oasis: A Journey of Survival"
 
 </code></pre>
 </div>

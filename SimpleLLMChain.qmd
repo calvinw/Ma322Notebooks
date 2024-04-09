@@ -1,0 +1,63 @@
+---
+title: "Simple LLM Chain"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+### Description of Simple LLM Chain
+
+Here we build a simple LLM Chain that makes two calls to the LLM. The second step depends on the answer from the first step. This shows the idea of a chain.
+
+### Step 1: What is the city {person} is from?
+
+```{python}
+city_template="""
+What city is {person} from? Only respond with the name of the city.
+"""
+
+city_prompt = city_template.format(person="Arnold Swartzeneggar")
+city_response = get_completion(city_prompt)
+print(city_prompt)
+print(city_response)
+```
+
+### Step 2: What country is {city} in?
+
+```{python}
+country_template="""
+What country is the city {city} in? Only respond in {language} with the name of
+the country.
+"""
+
+country_prompt = country_template.format(city=city_response,
+                                         language="french")
+country_response = get_completion(country_prompt)
+print(country_prompt)
+print(country_response)
+```
+
+### Final Report
+
+```{python}
+report_template="""
+## Final Report
+
+### Person
+{person}
+
+### City
+{city}
+
+### Language
+{language}
+
+### Country
+{country}
+"""
+
+report = report_template.format(person = "Arnold Swartzeneggar",
+                                city = city_response,
+                                language = "french",
+                                country= country_response)
+print(report)
+```

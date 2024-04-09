@@ -1,0 +1,52 @@
+---
+title: "Build Customer Profiles"
+---
+
+{{< include _llm_openrouter.qmd >}}
+
+```{python}
+info="""
+Fitbit Versa 2 Smartwatch - $149.95
+Yoga mat - $29.99
+Blender (NutriBullet) - $79.99
+Organic protein powder - $24.99 (for 2lb tub)
+Reusable water bottle - $19.95
+Noise-canceling headphones (Sony WH-1000XM4) - $348.00
+Kindle Paperwhite e-reader - $139.99
+Gardening tools (pruning shears, trowel, gloves) - $39.97
+Outdoor camping backpack - $89.95
+Hiking boots - $124.99
+Travel luggage set (3-piece) - $149.99
+Language learning software (Babbel subscription) - $12.95/month
+Cooking utensil set (10-piece) - $39.99
+Cast iron skillet - $24.99
+Subscription box (Keto snack box) - $38.00/month
+"""
+```
+
+```{python}
+prompt = """
+You are an AI assistant tasked with generating a customer profile based on the
+following list of recent products purchased by a customer. The list includes
+the product name and price:
+
+{customer_info}
+
+Using this information, provide a detailed customer profile that includes:
+
+Potential demographic details (age range, gender, location, household
+status) Interests and lifestyle (hobbies, activities, diet/health
+preferences) Income and spending habits (budget range, willingness to pay
+for certain products/services) Recommendations for other products/services
+this customer may be interested in based on their purchases Your response
+should be well-structured, providing the requested details in separate
+sections. Avoid making assumptions that cannot be reasonably inferred from
+the provided data.
+"""
+```
+
+```{python}
+prompt = prompt.format(customer_info = info)
+response = get_completion(prompt)
+print(response)
+```

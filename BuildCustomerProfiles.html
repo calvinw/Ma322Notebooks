@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Company Emoticon Chain</title>
+<title>Build Customer Profiles</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="CompanyEmoticonChain_files/libs/clipboard/clipboard.min.js"></script>
-<script src="CompanyEmoticonChain_files/libs/quarto-html/quarto.js"></script>
-<script src="CompanyEmoticonChain_files/libs/quarto-html/popper.min.js"></script>
-<script src="CompanyEmoticonChain_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="CompanyEmoticonChain_files/libs/quarto-html/anchor.min.js"></script>
-<link href="CompanyEmoticonChain_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="CompanyEmoticonChain_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="CompanyEmoticonChain_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="CompanyEmoticonChain_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="CompanyEmoticonChain_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="BuildCustomerProfiles_files/libs/clipboard/clipboard.min.js"></script>
+<script src="BuildCustomerProfiles_files/libs/quarto-html/quarto.js"></script>
+<script src="BuildCustomerProfiles_files/libs/quarto-html/popper.min.js"></script>
+<script src="BuildCustomerProfiles_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="BuildCustomerProfiles_files/libs/quarto-html/anchor.min.js"></script>
+<link href="BuildCustomerProfiles_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="BuildCustomerProfiles_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="BuildCustomerProfiles_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="BuildCustomerProfiles_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="BuildCustomerProfiles_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Company Emoticon Chain</h1>
+<h1 class="title">Build Customer Profiles</h1>
 </div>
 
 
@@ -99,12 +99,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Please set up your OPENROUTER_API_KEY</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"OPENROUTER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="setup-the-llm" class="level2">
-<h2 class="anchored" data-anchor-id="setup-the-llm">Setup the LLM</h2>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
@@ -117,24 +116,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"openchat/openchat-3.5-1210"</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "mistralai/mistral-7b-instruct:free"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openai/gpt-4"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openai/gpt-3.5-turbo"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mistral-medium"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mistral-large"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mixtral-8x7b-instruct"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>model_name<span class="op">=</span><span class="st">"anthropic/claude-3-haiku"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="anthropic/claude-3-sonnet"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="anthropic/claude-3-opus"</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openchat/openchat-7b:free"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openchat/openchat-7b"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="databricks/dbrx-instruct"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: Open Router"</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span>, model_name)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Provider: TogetherAI
-Model: openchat/openchat-3.5-1210</code></pre>
+<pre><code>Provider: Open Router
+Model:  anthropic/claude-3-haiku</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="4">
@@ -180,98 +184,100 @@ Model: openchat/openchat-3.5-1210</code></pre>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="suggest-company-and-upper-case-chain" class="level3">
-<h3 class="anchored" data-anchor-id="suggest-company-and-upper-case-chain">Suggest Company and Upper Case Chain</h3>
-</section>
-<section id="company-name" class="level3">
-<h3 class="anchored" data-anchor-id="company-name">Company Name</h3>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>car_product <span class="op">=</span><span class="st">"sports cars"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>info<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">Fitbit Versa 2 Smartwatch - $149.95</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">Yoga mat - $29.99</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">Blender (NutriBullet) - $79.99</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">Organic protein powder - $24.99 (for 2lb tub)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">Reusable water bottle - $19.95</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="st">Noise-canceling headphones (Sony WH-1000XM4) - $348.00</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="st">Kindle Paperwhite e-reader - $139.99</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="st">Gardening tools (pruning shears, trowel, gloves) - $39.97</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="st">Outdoor camping backpack - $89.95</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="st">Hiking boots - $124.99</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="st">Travel luggage set (3-piece) - $149.99</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="st">Language learning software (Babbel subscription) - $12.95/month</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">Cooking utensil set (10-piece) - $39.99</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="st">Cast iron skillet - $24.99</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="st">Subscription box (Keto snack box) - $38.00/month</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="suggest-a-funny-company-name" class="level3">
-<h3 class="anchored" data-anchor-id="suggest-a-funny-company-name">Suggest a Funny Company Name</h3>
-<p>Suggest a funny name for a company that makes a certain product.</p>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>company_template <span class="op">=</span><span class="st">"""</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">Create a funny name for a company that makes:</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{product}</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>company_prompt <span class="op">=</span> company_template.<span class="bu">format</span>(product<span class="op">=</span>car_product)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>company_response <span class="op">=</span> get_completion(company_prompt)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(company_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Speedy McQuack Motors</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">You are an AI assistant tasked with generating a customer profile based on the</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">following list of recent products purchased by a customer. The list includes</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">the product name and price:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{customer_info}</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">Using this information, provide a detailed customer profile that includes:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">Potential demographic details (age range, gender, location, household</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">status) Interests and lifestyle (hobbies, activities, diet/health</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">preferences) Income and spending habits (budget range, willingness to pay</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">for certain products/services) Recommendations for other products/services</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">this customer may be interested in based on their purchases Your response</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">should be well-structured, providing the requested details in separate</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">sections. Avoid making assumptions that cannot be reasonably inferred from</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">the provided data.</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</section>
-<section id="upper-case-the-name" class="level3">
-<h3 class="anchored" data-anchor-id="upper-case-the-name">Upper Case the Name</h3>
-<p>Upper case the Company Name</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>uppercase_template <span class="op">=</span><span class="st">"""</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">Please upper case the company name and the product:</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">Company:</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{company}</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="st">Product:</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="sc">{product}</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>uppercase_prompt <span class="op">=</span> uppercase_template.<span class="bu">format</span>(company<span class="op">=</span>company_response,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                                             product<span class="op">=</span>car_product)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>uppercase_response <span class="op">=</span> get_completion(uppercase_prompt)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(uppercase_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> prompt.<span class="bu">format</span>(customer_info <span class="op">=</span> info)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Company:
-SPEEDY MCQUACK MOTORS
+<pre><code>Based on the list of recent purchases, the following customer profile can be
+generated:
 
-Product:
-SPORTS CARS</code></pre>
+Demographic Details:
+- Age range: Likely between 25-45 years old
+- Gender: Likely a health-conscious individual, potentially female
+- Location: Difficult to determine, but likely lives in an urban or suburban
+area with access to a variety of retail and online shopping options
+- Household status: Likely lives independently or with a partner, potentially
+has a family
+
+Interests and Lifestyle:
+- Hobbies and activities: Fitness and wellness (Fitbit, yoga mat, protein
+powder, water bottle), technology and entertainment (noise-canceling headphones,
+Kindle), outdoor recreation (camping, hiking), cooking and home improvement
+(blender, cooking utensils, cast iron skillet)
+- Diet and health preferences: Interested in healthy and sustainable living,
+potentially following a specific diet (e.g., keto)
+
+Income and Spending Habits:
+- Budget range: Appears to have a moderate to high disposable income, with a
+willingness to invest in quality products across various categories
+- Spending habits: Likely values functionality, durability, and brand reputation
+when making purchases, as evidenced by the high-end products (e.g., Sony
+headphones, Kindle Paperwhite)
+- Subscription services: Interested in ongoing services that provide convenience
+and support their lifestyle (e.g., Babbel language learning, Keto snack box)
+
+Recommendations:
+Based on the customer's interests and spending habits, the following additional
+products and services may be of interest:
+- Fitness and wellness: Smart home gym equipment, fitness trackers, nutritional
+supplements, healthy meal delivery services
+- Outdoor recreation: Camping and hiking gear (e.g., tents, sleeping bags,
+navigation devices), outdoor apparel and accessories
+- Home and cooking: High-quality kitchen appliances (e.g., air fryer, instant
+pot), specialty cookware and utensils, meal planning and recipe subscription
+services
+- Technology and entertainment: Tablet or laptop, smart home devices, streaming
+service subscriptions
+- Travel and lifestyle: Luggage and travel accessories, subscription boxes for
+hobbies and interests (e.g., book, wine, or art-related)
+
+Overall, this customer appears to be a health-conscious, tech-savvy individual
+with a diverse range of interests and a willingness to invest in quality
+products and services that support their lifestyle. Targeting them with
+relevant, high-end offerings across various categories could be an effective
+marketing strategy.</code></pre>
 </div>
 </div>
-</section>
-<section id="final-report" class="level3">
-<h3 class="anchored" data-anchor-id="final-report">Final Report</h3>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">### Product</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="sc">{product}</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">### Company Name</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{company}</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="st">### Upper Cased Company and Product</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="sc">{uppercase}</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> template.<span class="bu">format</span>(product <span class="op">=</span> car_product,</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                         company <span class="op">=</span> company_response,</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                         uppercase <span class="op">=</span> uppercase_response)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(report)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-### Product
-sports cars
-
-### Company Name
-Speedy McQuack Motors
-
-### Upper Cased Company and Product
-Company:
-SPEEDY MCQUACK MOTORS
-
-Product:
-SPORTS CARS
-</code></pre>
-</div>
-</div>
-</section>
-</section>
 
 </main>
 <!-- /main column -->

@@ -1,12 +1,12 @@
 ---
-title: "Evaluating Inputs: Classification with LLMs"
+title: "Classifying Customer Queries"
 execute:
   enabled: true
 ---
 
 {{< include _llm_togetherai.qmd >}}
 
-## Classifying Customer Query Categories
+## Classifying Customer Queries Into Categories
 
 For this notebook we would like to set up classifying customer queries into a
 primary category and a secondary category. This might be the first step in
@@ -211,7 +211,6 @@ print(response)
 ### Additional Queries
 
 ```{python}
-#| eval: false
 additional_queries = [
     "I need help setting up parental controls on my streaming account.",
     "How do I change the primary account holder for my subscription?",

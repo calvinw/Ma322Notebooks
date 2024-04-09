@@ -1,0 +1,47 @@
+---
+title: "Review Chain Assignment"
+---
+
+### Description
+
+In this assignment, you will create an LLM Chain to analyze a customer
+review and generate a response. The process should follow these steps:
+
+1. **Initial Review**: The script should start by putting assigning the
+   customer review to a string variable.
+
+2. **Analyze the sentiment of the original review on a scale of 1 to 5**: Begin
+   by asking the LLM to analyze the sentiment of the provided review on
+   a scale of 1 (very negative) to 5 (very positive). This will be your
+   first call to the LLM. Create an appropriate prompt to do this.
+
+3. **Categorize the Review Based On the Main Issue**: Next prompt the LLM to
+   categorize the main issue or concern raised in the review into one of the
+   following categories: Product Quality, Shipping/Delivery, Customer Service,
+   Pricing, or Other. This will be your second call to the LLM. Create an
+   appropriate prompt for this part.
+
+4. **Suggest Potential Improvements Based On the Review**: Next prompt the LLM
+   to suggest at least three potential improvements or changes that could
+   address the customer's concerns This will be your third call to the LLM.
+   Create an appropriate prompt for this part.
+
+5. **Write an individualized email response to the customer**: Next prompt the
+   LLM to draft a polite and professional email response to the customer,
+   addressing their concerns and offering a resolution or next steps. This will
+   be your fourth call to the LLM. Create an appropriate prompt for this part.
+
+The final output of the script should be a report containing the following
+sections:
+
+- Initial Review
+- Sentiment Analysis (1 to 5 scale)
+- Categorized Main Issue
+- Potential Improvements
+- Improvements Individualized Email Response
+
+You are free to structure your code and prompts as you see fit, but make sure
+to follow the outlined steps and include all the required sections in the final
+report.
+
+Use the template code below as your starter for this assignment.

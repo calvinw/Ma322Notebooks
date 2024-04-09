@@ -1,0 +1,301 @@
+---
+title: "Segmenting Customers"
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+```{python}
+customers_info="""
+1. Polo shirt ($24.99), flat front shorts ($19.99), leather boat shoes ($44.99)
+Total: $89.97
+
+2. Leggings (2 for $24.99), oversized sweatshirt ($39.99), slip-on sneakers ($24.99)
+Total: $89.97
+
+3. Printed culotte jumpsuit ($49.99), floppy hat ($19.99), strappy sandals ($34.99), tote bag ($29.99)
+Total: $134.96
+
+4. Sundress ($29.99), cropped utility jacket ($39.99), ankle boots ($44.99), fanny pack ($14.99)
+Total: $129.96
+
+5. Lace romper ($39.99), embroidered kimono ($49.99), lace-up espadrilles ($29.99), circle sunglasses ($12.99)
+Total: $132.96
+
+6. Asymmetrical ruffle skirt ($39.99), cold-shoulder top ($24.99), over-the-knee boots ($59.99), chain belt ($19.99)
+Total: $144.96
+
+7. Trapeze dress ($39.99), denim jacket ($44.99), rain boots ($29.99), bucket hat ($14.99)
+Total: $129.96
+
+8. Crewneck sweatshirt ($24.99), joggers ($29.99), slippers ($12.99)
+Total: $67.97
+
+9. French terry joggers ($34.99), waffle knit top ($24.99), slippers ($12.99)
+Total: $72.97
+
+10. Men's dress shirt ($34.99), chino shorts ($29.99), boat shoes ($39.99), baseball cap ($12.99)
+Total: $117.96
+
+11. Off-shoulder floral dress ($49.99), denim jacket ($59.99), ankle booties ($39.99), round sunglasses ($14.99)
+Total: $164.96
+
+12. Halter bodysuit ($24.99), high-waist shorts ($29.99), lace-up flats ($34.99), tassel necklace ($19.99)
+Total: $109.96
+
+13. Tank dress ($29.99), military jacket ($44.99), combat boots ($49.99), crossbody bag ($19.99)
+Total: $144.96
+
+14. Sheath dress ($49.99), open front cardigan ($39.99), block heels ($44.99)
+Total: $134.97
+
+15. 3-pack v-neck tees ($17.99), chino shorts ($24.99), canvas sneakers ($29.99)
+Total: $72.97
+
+16. Silk blouse ($54.99), slim pants ($49.99), loafers ($44.99)
+Total: $149.97
+
+17. Blazer ($79.99), sheath dress ($49.99), pumps ($59.99)
+Total: $189.97
+
+18. Floral maxi dress ($54.99), denim jacket ($44.99), wedge sandals ($39.99), tassel earrings ($12.99)
+Total: $152.96
+
+19. Graphic tees (2 for $14.99), jean shorts ($24.99), flip flops ($9.99)
+Total: $49.97
+
+20. Joggers ($29.99), hoodie ($34.99), slides ($14.99), baseball cap ($12.99)
+Total: $92.96
+
+21. Men's t-shirt ($17.99), basketball shorts ($22.99), slides ($14.99), dad hat ($12.99)
+Total: $68.96
+
+22. Hoodie ($29.99), sweatpants ($24.99), sneakers ($39.99)
+Total: $94.97
+
+23. Gingham off-shoulder dress ($39.99), strappy sandals ($34.99), floppy hat ($19.99), round sunglasses ($12.99)
+Total: $107.96
+
+24. Printed high-low dress ($49.99), denim jacket ($44.99), embroidered mules ($39.99), fringe earrings ($14.99)
+Total: $149.96
+
+25. Button down shirt ($29.99), khakis ($34.99), belt ($12.99)
+Total: $77.97
+
+26. Sweat shorts ($19.99), graphic tee ($14.99), slides ($14.99)
+Total: $49.97
+
+27. Floral wrap dress ($39.99), ripped boyfriend jeans ($44.99), faux fur coat ($69.99), studded sandals ($29.99), fringe crossbody bag ($34.99), lace crop top ($19.99)
+Total: $239.94
+
+28. Blazer ($49.99), ankle pants ($44.99), ballet flats ($34.99)
+Total: $119.97
+
+29. Printed jumpsuit ($54.99), fedora hat ($24.99), fringe crossbody ($34.99), statement earrings ($14.99)
+Total: $129.96
+
+30. Skater dress ($34.99), moto jacket ($59.99), over-the-knee boots ($54.99), bucket bag ($29.99)
+Total: $179.96
+
+31. Puffer vest ($34.99), beanie ($9.99), sweatpants ($24.99)
+Total: $69.97
+
+32. Cold shoulder top ($24.99), high waist wide leg pants ($39.99), mules ($29.99), faux leather crossbody ($34.99)
+Total: $129.96
+
+33. Basic tee ($12.99), overalls ($44.99), sneakers ($39.99), dad hat ($9.99)
+Total: $107.96
+
+34. Active tee ($12.99), running shorts ($19.99), sneakers ($34.99)
+Total: $67.97
+
+35. Sleeveless swing dress ($29.99), denim jacket ($44.99), ankle boots ($39.99)
+Total: $114.97
+
+36. 5 pack basic crewneck tees ($24.99), chino shorts ($29.99), white sneakers ($39.99), lightweight windbreaker ($29.99)
+Total: $124.96
+
+37. Packable down jacket ($59.99), flannel shirt ($24.99), jeans ($39.99)
+Total: $124.97
+
+38. Maxi tee dress ($29.99), denim jacket ($39.99), slip-on sneakers ($29.99)
+Total: $99.97
+
+39. Crop top ($19.99), high-rise flare jeans ($44.99), platform sandals ($39.99), fringe crossbody ($29.99)
+Total: $134.96
+
+40. Bell sleeve top ($27.99), culottes ($39.99), sandals ($19.99), tote bag ($24.99)
+Total: $112.96
+
+41. Cozy sweater ($39.99), boyfriend jeans ($44.99), moccasin slippers ($19.99)
+Total: $104.97
+
+42. Henley ($22.99), cargo shorts ($29.99), Birkenstocks ($39.99), backpack ($34.99)
+Total: $127.96
+
+43. Suit set ($129.99), button up shirt ($34.99), oxfords ($49.99)
+Total: $214.97
+
+44. Button down ($34.99), bermuda shorts ($24.99), boat shoes ($39.99), baseball cap ($14.99)
+Total: $114.96
+
+45. Lace up bodysuit ($29.99), ripped mom shorts ($24.99), ankle booties ($44.99), pendant necklace ($19.99)
+Total: $119.96
+
+46. Ruffle sleeve romper ($39.99), faux suede jacket ($54.99), ankle strap heels ($44.99), bucket bag ($29.99)
+Total: $169.96
+
+47. Cami top ($14.99), high-waisted boyfriend jeans ($39.99), clogs ($29.99), crossbody bag ($24.99)
+Total: $109.96
+
+48. Long sleeve thermal ($17.99), lightweight puffer vest ($34.99), beanie ($9.99)
+Total: $62.97
+
+49. Wrap front top ($29.99), distressed girlfriend jeans ($44.99), studded slides ($24.99), bucket bag ($39.99)
+Total: $139.96
+
+50. Off-the-shoulder top ($24.99), wide leg linen pants ($39.99), ballet flats ($24.99), tote ($29.99)
+Total: $119.96
+
+51. 5-pack crew socks ($7.99), 3-pack boxer briefs ($17.99)
+Total: $25.98
+
+52. 4-pack undershirts ($15.99), 2-pack boxer briefs ($12.99)
+Total: $28.98
+
+53. Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt ($29.99), sneakers ($44.99)
+Total: $129.96
+
+54. Pleated metallic skirt ($39.99), lace camisole ($24.99), block heel sandals ($44.99), fringe crossbody ($29.99)
+Total: $139.96
+
+55. Wide leg trousers ($54.99), camisole ($17.99), loafers ($39.99)
+Total: $112.97
+
+56. Wrap crop top ($19.99), paper bag waist shorts ($29.99), slide sandals ($19.99), circle sunglasses ($14.99)
+Total: $84.96
+
+57. Tie-front crop top ($19.99), high waist mom jeans ($39.99), slide sandals ($24.99), circle belt bag ($29.99)
+Total: $114.96
+
+58. Off-shoulder eyelet top ($34.99), denim skirt ($29.99), espadrille wedges ($39.99), tassel earrings ($14.99)
+Total: $119.96
+
+59. Soft shorts ($19.99), muscle tank ($12.99), slides ($14.99)
+Total: $47.97
+
+60. Floral wrap dress ($44.99), denim jacket ($49.99), embroidered clutch ($29.99), fringe earrings ($19.99)
+Total: $144.96
+
+61. Polo ($24.99), drawstring pants ($29.99), slides ($19.99), visor ($9.99)
+Total: $84.96
+
+62. Tunic top ($29.99), palazzo pants ($39.99), gladiator sandals ($34.99), fedora ($19.99)
+Total: $124.96
+
+63. Bell sleeve top ($27.99), culottes ($39.99), sandals ($19.99), tote bag ($24.99)
+Total: $112.96
+
+64. Wrap dress ($59.99), trench coat ($99.99), knee high boots ($69.99)
+Total: $229.97
+
+65. Cold shoulder top ($24.99), paperbag pants ($39.99), peep toe booties ($49.99), faux suede crossbody ($34.99)
+Total: $149.96
+
+66. Shift dress ($44.99), blazer ($69.99), ballet flats ($29.99)
+Total: $144.97
+
+67. Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt ($29.99), sneakers ($44.99)
+Total: $129.96
+
+68. Henley shirt ($19.99), 5-pocket twill pants ($29.99), boat shoes ($39.99)
+Total: $89.97
+
+69. Off-shoulder ruffle top ($34.99), palazzo pants ($44.99), tassel earrings ($14.99), embroidered clutch ($29.99)
+Total: $124.96
+
+70. Halter neck top ($24.99), denim jacket ($44.99), ankle booties ($44.99), circle belt bag ($24.99)
+Total: $139.96
+
+71. Tiered maxi dress ($49.99), floppy hat ($24.99), flat sandals ($19.99), straw tote ($29.99)
+Total: $124.96
+
+72. Linen button-down ($34.99), drawstring shorts ($29.99), boat shoes ($39.99), baseball cap ($19.99)
+Total: $124.96
+
+73. Smocked off-shoulder top ($27.99), paper bag shorts ($24.99), espadrille flats ($19.99), circle sunglasses ($9.99)
+Total: $82.96
+
+74. Printed jumpsuit ($44.99), denim jacket ($49.99), wedge sandals ($39.99), tassel pendant ($14.99)
+Total: $149.96
+
+75. Racerback midi dress ($39.99), utility jacket ($49.99), ankle strap flats ($29.99), fanny pack ($19.99)
+Total: $139.96
+"""
+```
+
+```{python}
+prompt = """
+I have defined 5 customer profiles for a retail clothing store like H&M:
+
+1. Trendy Fashionista
+- Age: 18-30
+- Interests: Follows the latest fashion trends, values style and
+self-expression through clothing, active on social media Shopping Behavior:
+Frequently shops for new on-trend clothing, drawn to bold
+patterns/colors/accessories, likely to make impulse purchases
+
+2. Budget-Conscious Shopper
+- Age: 25-45
+- Interests: Finds good deals, values quality over quantity, practical fashion
+sense Shopping Behavior: Looks for sales/discounts, buys versatile wardrobe
+staples that can be mixed and matched, avoids fast fashion
+
+3. Casual Comfort Seeker
+- Age: 30-55
+- Interests: Low-maintenance style, prioritizes comfort over trendiness
+Shopping Behavior: Buys basic tees, loungewear like joggers/hoodies for casual
+wear, gravitates towards athleisure and activewear
+
+4. Minimalist Professional
+- Age: 30-50
+- Interests: Simple, classic styles for work/business casual settings Shopping
+Behavior: Buys high-quality basics like blazers, slacks, button-downs that can
+be mixed and matched, avoids trends
+
+5. Eco-Conscious Shopper
+- Age: 20-40
+- Interests: Sustainability, ethical/environmentally-friendly fashion Shopping
+Behavior: Seeks out organic materials, avoids fast fashion, looks for
+secondhand/vintage items
+
+I have some customers with their purchase histories at H&M over the past 6 months
+listed below. Can you classify each customer into one of the three profiles
+based on their purchases?
+
+{customers_info}
+
+For each customer, specify which of the 5 profiles you would assign them to
+and your reasoning based on the items purchased.
+
+Also print out the customers purchases and total spent.
+Give the output like this for each customer:
+
+Purchases: <<list the purchases>>
+Total Spent: <<total spent>>
+Profile: <<profile>>
+Reasons: <<reasons>>
+
+When you are finished with all the customers print out these totals:
+Trendy Fashionista: <<number of these>>
+Casual Comfort Seeker: <<number of these>>
+Minimalist Professional: <<number of these>>
+Budget-Conscious Shopper: <<number of these>>
+
+"""
+```
+
+```{python}
+prompt = prompt.format(customers_info = customers_info)
+response = get_completion(prompt)
+print(response)
+```
