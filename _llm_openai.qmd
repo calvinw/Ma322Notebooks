@@ -4,9 +4,7 @@
 #| eval: false
 #| code-fold: true
 import os
-
-if os.environ.get("OPENAI_API_KEY") is None:
-   os.environ["OPENAI_API_KEY"] = "paste your api key here"
+os.environ["OPENAI_API_KEY"] = "paste your api key here"
 ```
 
 ```{python}

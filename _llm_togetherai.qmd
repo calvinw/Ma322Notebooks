@@ -5,9 +5,7 @@
 #| eval: false
 #| code-fold: true
 import os
-
-if os.environ.get("TOGETHER_API_KEY") is None:
-   os.environ["TOGETHER_API_KEY"] = "paste_your_api_key_here"
+os.environ["TOGETHER_API_KEY"] = "paste_your_api_key_here"
 ```
 
 ## Setup the LLM

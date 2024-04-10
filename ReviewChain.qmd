@@ -8,10 +8,8 @@ title: "Review Chain"
 
 We will analyze a customer review and summarize it. Then try to compose a response.
 
-Here are the steps in the analysis:
-
-1. **Initial Review**: The process starts with a customer review, which is
-  provided as a string variable.
+Here are the steps in the analysis. Each of these will be a different call to
+the LLM. So we will call the LLM 4 times in this chain.
 
 1. **Analyze the sentiment of the original review on a scale of 1 to 5**: The
   sentiment of the original review is analyzed on a scale of 1 (very negative)
@@ -26,28 +24,61 @@ Here are the steps in the analysis:
   concerns based on the review.
 
 1. **Write an individualized email response to the customer**: A polite and
-  professional email response is drafted, addressing the customer's concerns
-  and offering a resolution or next steps.
+  professional email response is drafted, addressing the customer's concerns.
 
+We will use reviews from this page:
+
+[Brooks-Adrenaline-Womens-Supportive-Running](https://www.amazon.com/product-reviews/B08QVFHB8Y/ref=acr_dp_hist_1?ie=UTF8&filterByStar=one_star&reviewerType=all_reviews#reviews-filter-bar)
+
+We are going to use mostly negative reviews since we want compose an email to
+the customer about addressing their concerns.
 
 ### Initial Review
 
-Lets start with the review text.
+Lets start with the review text. We put them it the variable `current_review`
 
 ```{python}
-review = """I am very dissatisfied with the product I received. The quality is
-disappointing, and it does not match the descriptions on the website. Furthermore,
-the delivery was way too late, and the customer service was unhelpful. I expect
-an immediate resolution to this issue."""
-print(review)
+current_review = """
+I don't know if you can tell from these pictures, but the top part of these
+shoes do not look like these are a matched pair. Moreover, the quality in the
+Brooks Adrenaline has plummeted over the years. The material on top is thinner
+and just cheaper feeling/looking overall. The fit is more narrow. The
+cushioning barely there, feels uneven throughout the foot bed, rather than
+smooth not to mention a poor attempt at arch support. The outside of the sole
+is misleading with the appearance that there will be more support in the arch
+and a cushioned feel overall, but that isn't the reality. The other thing I
+don't like is how the front part of running shoes is getting thinner. But
+that's pretty much every brand doing that in the name of creating a rocking
+wave. Maybe the science says, "Yes, manufacturers, do this," but the painful
+balls of my feet and cramping toes say, "Please stop doing this!" And
+puhleez-the shoe laces are way too short. I barely, barely was able to get a
+small bow tied in the left shoe that looks navy. Maybe this was just a (highly)
+defective pair, but seriously, I have my doubts. I've been making do with my
+2019 version of Brooks Adrenaline because ever since then, the quality has been
+lacking. I was hoping for a better experience this time. Nope. If anything,
+this trial was the worst of them all. Looks like my days with Brooks are over.
+Time to find a better quality brand because these shoes are so not worth
+anywhere near the amount on the price tag listed. Disappointed! I hope you have
+a better experience. Please be sure to check who the seller is for the pair you
+want and what the return policy is just in case.
+"""
 ```
+
 
 ### Analyze the Sentiment
 
-Analyze the sentiment on scale of 1(very negative) to 5(very positive)
+Create a prompt to ask the LLM to analyze our review for a rating score.
+
+- Ask the LLM to analyze the review on a scale of 1(very negative) to 5(very
+  positive)
+- Instruct the LLM to return just the number 1 through 5
+- Include a template variable called `{review}` so you can pass in a review for
+  this prompt.
+- Template variables needed: `{review}`
 
 ```{python}
-sentiment_prompt = f"""
+# Solution:
+template = """
 Analyze the sentiment of the following review on a scale of 1 to 5, where 1 is
 very negative and 5 is very positive:
 
@@ -56,7 +87,20 @@ very negative and 5 is very positive:
 Just give the number only.
 """
 
-sentiment_response = get_completion(sentiment_prompt)
+prompt = template.format(review=current_review)
+sentiment_response= get_completion(prompt)
+print(sentiment_response)
+```
+```{python}
+#| eval: false
+template = """
+
+CODE
+
+"""
+
+prompt = template.format(review=current_review)
+sentiment_response= get_completion(prompt)
 print(sentiment_response)
 ```
 
@@ -64,27 +108,53 @@ print(sentiment_response)
 
 Categorize the Review Based On the Main Issue
 
+- Ask the LLM to categorize the main issue or concern raised in the review
+- Tell the LLM it should categorize it into the following categories: Product
+  Quality, Shipping/Delivery, Customer Service, Pricing, Other.
+- Ask it to just give the categories nothing more
+- Template variables needed: `{review}`
+
 ```{python}
-categorize_prompt = f"""
+# Solution:
+template ="""
 Categorize the main issue or concern raised in the following review:
 
 {review}
 
 Choose from the following categories: Product Quality, Shipping/Delivery,
 Customer Service, Pricing, Other.
+
 Just give the categories only.
 """
 
-category_response = get_completion(categorize_prompt)
-print(category_response)
+prompt = template.format(review=current_review)
+categorize_response = get_completion(prompt)
+print(categorize_response)
+```
+```{python}
+#| eval: false
+template ="""
+
+CODE
+
+"""
+
+prompt = template.format(review=current_review)
+categorize_response = get_completion(prompt)
+print(categorize_response)
 ```
 
-### Suggest Potential Improvements Based On the Review
+### Suggest Potential Improvements
 
 Lets suggest 3 potential improvements
 
+- Ask the LLM for three potential improvements or changes that could address
+  the customer's concerns
+- Template variables needed: `{review}`
+
 ```{python}
-improvement_prompt = f"""
+# Solution:
+template = """
 Based on the following review, suggest at least three potential improvements or
 changes that could address the customer's concerns:
 
@@ -93,7 +163,20 @@ changes that could address the customer's concerns:
 Give only the three potential improvements as your output.
 """
 
-improvements_response = get_completion(improvement_prompt)
+prompt = template.format(review=current_review)
+improvements_response = get_completion(prompt)
+print(improvements_response)
+```
+```{python}
+#| eval: false
+template = """
+
+CODE
+
+"""
+
+prompt = template.format(review=current_review)
+improvements_response = get_completion(prompt)
 print(improvements_response)
 ```
 
@@ -102,40 +185,73 @@ print(improvements_response)
 Write an individualized email response to the customer
 python
 
+- Ask the LLM to write a brief but polite and professional email response to the customer.
+- Tell the LLM not to mention any return policy or refund
+- Tell the LLM to mention that we are working on improvements
+- Template variables needed: `{review}`, `{improvements}`
 
 ```{python}
-individualized_prompt = f"""
-You have received the following review from a customer:
+#| eval: false
+template = """
 
-{review}
+CODE
 
-Please draft a polite and professional email response to the customer,
-addressing their concerns and offering a resolution or next steps.
 """
 
-individualized_response = get_completion(individualized_prompt)
-print(individualized_response)
+prompt = template.format(review=current_review,
+                          improvements=improvements_response)
+email_response = get_completion(prompt)
+print(email_response)
 ```
+
+```{python}
+# Solution:
+template = """
+Based on the review from a customer:
+
+Review:
+{review}
+
+Please draft a brief but polite and professional email response to the customer
+addressing their concerns. Do not mention any return policy or
+refund for now. Acknowledge the customers concerns and mention we are looking
+into the following improvements.
+
+Improvements:
+{improvements}
+"""
+
+prompt = template.format(review=current_review,
+                          improvements=improvements_response)
+email_response = get_completion(prompt)
+print(email_response)
+```
+
 
 ### Final Report for This Review
 
 ```{python}
-report = f"""
+report_template = """
 ### Initial Review
 {review}
 
 ### Sentiment 1 (very negative) to 5 (very positive)
-{sentiment_response}
+{sentiment}
 
 ### Categorized Main Issue
-{category_response}
+{categorize}
 
 ### Potential Improvements
-{improvements_response}
+{improvements}
 
 ### Individualized Email Response
-{individualized_response}
+{email}
 """
 
+report = report_template.format(review=current_review,
+                                sentiment=sentiment_response,
+                                categorize=categorize_response,
+                                improvements=improvements_response,
+                                email=email_response)
 print(report)
 ```

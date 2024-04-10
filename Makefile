@@ -1,7 +1,7 @@
 SHELL:=/bin/bash
 
 SOURCES:=$(wildcard *.qmd)
-SOURCES:= SimpleLLMChain.qmd MoreSimpleLLMChain.qmd LLMChain.qmd ClassifyCustomerQueries.qmd Roles.qmd
+SOURCES:= ReviewChain.qmd SimpleLLMChain.qmd MoreSimpleLLMChain.qmd LLMChain.qmd ClassifyCustomerQueries.qmd Roles.qmd
 
 #SOURCES:= Roles.qmd
 SOURCES:=$(filter-out index.qmd, $(SOURCES))

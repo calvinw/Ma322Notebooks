@@ -98,9 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="setup-the-llm" class="level2">
@@ -184,138 +182,231 @@ Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 <section id="description-of-review-chain" class="level3">
 <h3 class="anchored" data-anchor-id="description-of-review-chain">Description of Review Chain</h3>
 <p>We will analyze a customer review and summarize it. Then try to compose a response.</p>
-<p>Here are the steps in the analysis:</p>
+<p>Here are the steps in the analysis. Each of these will be a different call to the LLM. So we will call the LLM 4 times in this chain.</p>
 <ol type="1">
-<li><p><strong>Initial Review</strong>: The process starts with a customer review, which is provided as a string variable.</p></li>
 <li><p><strong>Analyze the sentiment of the original review on a scale of 1 to 5</strong>: The sentiment of the original review is analyzed on a scale of 1 (very negative) to 5 (very positive) by prompting a language model.</p></li>
 <li><p><strong>Categorize the Review Based On the Main Issue</strong>: The main issue or concern raised in the review is categorized into one of the following categories: Product Quality, Shipping/Delivery, Customer Service, Pricing, or Other.</p></li>
 <li><p><strong>Suggest Potential Improvements Based On the Review</strong>: At least three potential improvements or changes are suggested to address the customer’s concerns based on the review.</p></li>
-<li><p><strong>Write an individualized email response to the customer</strong>: A polite and professional email response is drafted, addressing the customer’s concerns and offering a resolution or next steps.</p></li>
+<li><p><strong>Write an individualized email response to the customer</strong>: A polite and professional email response is drafted, addressing the customer’s concerns.</p></li>
 </ol>
+<p>We will use reviews from this page:</p>
+<p><a href="https://www.amazon.com/product-reviews/B08QVFHB8Y/ref=acr_dp_hist_1?ie=UTF8&amp;filterByStar=one_star&amp;reviewerType=all_reviews#reviews-filter-bar">Brooks-Adrenaline-Womens-Supportive-Running</a></p>
+<p>We are going to use mostly negative reviews since we want compose an email to the customer about addressing their concerns.</p>
 </section>
 <section id="initial-review" class="level3">
 <h3 class="anchored" data-anchor-id="initial-review">Initial Review</h3>
-<p>Lets start with the review text.</p>
+<p>Lets start with the review text. We put them it the variable <code>current_review</code></p>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>review <span class="op">=</span> <span class="st">"""I am very dissatisfied with the product I received. The quality is</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">disappointing, and it does not match the descriptions on the website. Furthermore,</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">the delivery was way too late, and the customer service was unhelpful. I expect</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">an immediate resolution to this issue."""</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(review)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>I am very dissatisfied with the product I received. The quality is
-disappointing, and it does not match the descriptions on the website. Furthermore,
-the delivery was way too late, and the customer service was unhelpful. I expect
-an immediate resolution to this issue.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>current_review <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">I don't know if you can tell from these pictures, but the top part of these</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">shoes do not look like these are a matched pair. Moreover, the quality in the</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">Brooks Adrenaline has plummeted over the years. The material on top is thinner</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">and just cheaper feeling/looking overall. The fit is more narrow. The</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="st">cushioning barely there, feels uneven throughout the foot bed, rather than</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="st">smooth not to mention a poor attempt at arch support. The outside of the sole</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="st">is misleading with the appearance that there will be more support in the arch</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="st">and a cushioned feel overall, but that isn't the reality. The other thing I</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="st">don't like is how the front part of running shoes is getting thinner. But</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="st">that's pretty much every brand doing that in the name of creating a rocking</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="st">wave. Maybe the science says, "Yes, manufacturers, do this," but the painful</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="st">balls of my feet and cramping toes say, "Please stop doing this!" And</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="st">puhleez-the shoe laces are way too short. I barely, barely was able to get a</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="st">small bow tied in the left shoe that looks navy. Maybe this was just a (highly)</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="st">defective pair, but seriously, I have my doubts. I've been making do with my</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">2019 version of Brooks Adrenaline because ever since then, the quality has been</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">lacking. I was hoping for a better experience this time. Nope. If anything,</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="st">this trial was the worst of them all. Looks like my days with Brooks are over.</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="st">Time to find a better quality brand because these shoes are so not worth</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="st">anywhere near the amount on the price tag listed. Disappointed! I hope you have</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="st">a better experience. Please be sure to check who the seller is for the pair you</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="st">want and what the return policy is just in case.</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="analyze-the-sentiment" class="level3">
 <h3 class="anchored" data-anchor-id="analyze-the-sentiment">Analyze the Sentiment</h3>
-<p>Analyze the sentiment on scale of 1(very negative) to 5(very positive)</p>
+<p>Create a prompt to ask the LLM to analyze our review for a rating score.</p>
+<ul>
+<li>Ask the LLM to analyze the review on a scale of 1(very negative) to 5(very positive)</li>
+<li>Instruct the LLM to return just the number 1 through 5</li>
+<li>Include a template variable called <code>{review}</code> so you can pass in a review for this prompt.</li>
+<li>Template variables needed: <code>{review}</code></li>
+</ul>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sentiment_prompt <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ss">Analyze the sentiment of the following review on a scale of 1 to 5, where 1 is</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ss">very negative and 5 is very positive:</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>review<span class="sc">}</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ss">Just give the number only.</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>sentiment_response <span class="op">=</span> get_completion(sentiment_prompt)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sentiment_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">Analyze the sentiment of the following review on a scale of 1 to 5, where 1 is</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">very negative and 5 is very positive:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">Just give the number only.</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(review<span class="op">=</span>current_review)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>sentiment_response<span class="op">=</span> get_completion(prompt)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sentiment_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1</code></pre>
 </div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(review<span class="op">=</span>current_review)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>sentiment_response<span class="op">=</span> get_completion(prompt)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sentiment_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="categorize-the-review" class="level3">
 <h3 class="anchored" data-anchor-id="categorize-the-review">Categorize the Review</h3>
 <p>Categorize the Review Based On the Main Issue</p>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>categorize_prompt <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ss">Categorize the main issue or concern raised in the following review:</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>review<span class="sc">}</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ss">Choose from the following categories: Product Quality, Shipping/Delivery,</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ss">Customer Service, Pricing, Other.</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ss">Just give the categories only.</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>category_response <span class="op">=</span> get_completion(categorize_prompt)</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Ask the LLM to categorize the main issue or concern raised in the review</li>
+<li>Tell the LLM it should categorize it into the following categories: Product Quality, Shipping/Delivery, Customer Service, Pricing, Other.</li>
+<li>Ask it to just give the categories nothing more</li>
+<li>Template variables needed: <code>{review}</code></li>
+</ul>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">Categorize the main issue or concern raised in the following review:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">Choose from the following categories: Product Quality, Shipping/Delivery,</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">Customer Service, Pricing, Other.</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">Just give the categories only.</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(review<span class="op">=</span>current_review)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>categorize_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(categorize_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Product Quality, Shipping/Delivery, Customer Service</code></pre>
+<pre><code>Product Quality, Pricing, Other</code></pre>
 </div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(review<span class="op">=</span>current_review)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>categorize_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(categorize_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="suggest-potential-improvements-based-on-the-review" class="level3">
-<h3 class="anchored" data-anchor-id="suggest-potential-improvements-based-on-the-review">Suggest Potential Improvements Based On the Review</h3>
+<section id="suggest-potential-improvements" class="level3">
+<h3 class="anchored" data-anchor-id="suggest-potential-improvements">Suggest Potential Improvements</h3>
 <p>Lets suggest 3 potential improvements</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>improvement_prompt <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ss">Based on the following review, suggest at least three potential improvements or</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ss">changes that could address the customer's concerns:</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>review<span class="sc">}</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ss">Give only the three potential improvements as your output.</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>improvements_response <span class="op">=</span> get_completion(improvement_prompt)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(improvements_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Ask the LLM for three potential improvements or changes that could address the customer’s concerns</li>
+<li>Template variables needed: <code>{review}</code></li>
+</ul>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="st">Based on the following review, suggest at least three potential improvements or</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="st">changes that could address the customer's concerns:</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="st">Give only the three potential improvements as your output.</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(review<span class="op">=</span>current_review)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>improvements_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(improvements_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>1. Improve product quality to match the descriptions on the website.
-2. Enhance delivery speed to ensure timely delivery of products.
-3. Provide better customer service to address and resolve issues promptly.</code></pre>
+<pre><code>1. Improve the quality and consistency of the materials used in the shoes,
+particularly the top material and cushioning.
+2. Ensure a better fit for the shoes, addressing the narrowness and providing
+more even cushioning throughout the footbed.
+3. Reconsider the design of the front part of the shoes, addressing the thinness
+and potential discomfort it may cause to the wearer.</code></pre>
 </div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(review<span class="op">=</span>current_review)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>improvements_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(improvements_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="write-an-individualized-response" class="level3">
 <h3 class="anchored" data-anchor-id="write-an-individualized-response">Write an Individualized Response</h3>
 <p>Write an individualized email response to the customer python</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>individualized_prompt <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ss">You have received the following review from a customer:</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>review<span class="sc">}</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ss">Please draft a polite and professional email response to the customer,</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ss">addressing their concerns and offering a resolution or next steps.</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>individualized_response <span class="op">=</span> get_completion(individualized_prompt)</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(individualized_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Ask the LLM to write a brief but polite and professional email response to the customer.</li>
+<li>Tell the LLM not to mention any return policy or refund</li>
+<li>Tell the LLM to mention that we are working on improvements</li>
+<li>Template variables needed: <code>{review}</code>, <code>{improvements}</code></li>
+</ul>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(review<span class="op">=</span>current_review,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                          improvements<span class="op">=</span>improvements_response)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>email_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(email_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">Based on the review from a customer:</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="st">Review:</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">Please draft a brief but polite and professional email response to the customer</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">addressing their concerns. Do not mention any return policy or</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="st">refund for now. Acknowledge the customers concerns and mention we are looking</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="st">into the following improvements.</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="st">Improvements:</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="sc">{improvements}</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(review<span class="op">=</span>current_review,</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                          improvements<span class="op">=</span>improvements_response)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>email_response <span class="op">=</span> get_completion(prompt)</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(email_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dear [Customer's Name],
 
-Thank you for taking the time to share your feedback with us. We are sorry to
-hear that you are dissatisfied with your recent purchase. We understand how
-important it is for our customers to receive high-quality products that meet
-their expectations, and we apologize for any inconvenience this may have caused.
+Thank you for taking the time to share your feedback regarding your recent
+purchase of the Brooks Adrenaline shoes. We understand your concerns about the
+quality, fit, and design of the shoes, and we apologize for any disappointment
+you may have experienced.
 
-We would like to address your concerns regarding the quality and description of
-the product. We take pride in providing accurate information about our products,
-and we will investigate this matter further to ensure that our website
-accurately reflects the items we offer.
+We are committed to providing our customers with the best possible products and
+experiences, and we take your feedback very seriously. We are currently working
+on improving the quality and consistency of the materials used in our shoes,
+ensuring a better fit, and reconsidering the design of the front part of the
+shoes to address any potential discomfort.
 
-In addition, we apologize for the late delivery of your order. We strive to
-provide timely shipping and delivery, and we will review our shipping processes
-to prevent similar issues in the future.
+We appreciate your loyalty to our brand and hope that you will give us another
+chance to provide you with a better experience in the future. If you have any
+further questions or concerns, please do not hesitate to reach out to us.
 
-Lastly, we regret that our customer service team was unable to assist you to
-your satisfaction. We value open communication with our customers and will work
-to improve our service to better meet your needs.
-
-To resolve this issue, we would like to offer you a full refund or a replacement
-product, whichever you prefer. Please let us know your choice, and we will
-promptly process your request.
-
-Once again, we apologize for any inconvenience this situation may have caused.
-We appreciate your business and hope that you will give us another opportunity
-to serve you in the future.
+Thank you again for your valuable feedback, and we hope to have the opportunity
+to serve you better in the future.
 
 Sincerely,
 
@@ -327,72 +418,92 @@ Sincerely,
 </section>
 <section id="final-report-for-this-review" class="level3">
 <h3 class="anchored" data-anchor-id="final-report-for-this-review">Final Report for This Review</h3>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> <span class="ss">f"""</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ss">### Initial Review</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>review<span class="sc">}</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ss">### Sentiment 1 (very negative) to 5 (very positive)</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>sentiment_response<span class="sc">}</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="ss">### Categorized Main Issue</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>category_response<span class="sc">}</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="ss">### Potential Improvements</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>improvements_response<span class="sc">}</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="ss">### Individualized Email Response</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="sc">{</span>individualized_response<span class="sc">}</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="ss">"""</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(report)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>report_template <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st">### Initial Review</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="sc">{review}</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">### Sentiment 1 (very negative) to 5 (very positive)</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="sc">{sentiment}</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="st">### Categorized Main Issue</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="sc">{categorize}</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="st">### Potential Improvements</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="sc">{improvements}</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="st">### Individualized Email Response</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="sc">{email}</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> report_template.<span class="bu">format</span>(review<span class="op">=</span>current_review,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>                                sentiment<span class="op">=</span>sentiment_response,</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>                                categorize<span class="op">=</span>categorize_response,</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>                                improvements<span class="op">=</span>improvements_response,</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>                                email<span class="op">=</span>email_response)</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(report)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ### Initial Review
-I am very dissatisfied with the product I received. The quality is
-disappointing, and it does not match the descriptions on the website. Furthermore,
-the delivery was way too late, and the customer service was unhelpful. I expect
-an immediate resolution to this issue.
+
+I don't know if you can tell from these pictures, but the top part of these
+shoes do not look like these are a matched pair. Moreover, the quality in the
+Brooks Adrenaline has plummeted over the years. The material on top is thinner
+and just cheaper feeling/looking overall. The fit is more narrow. The
+cushioning barely there, feels uneven throughout the foot bed, rather than
+smooth not to mention a poor attempt at arch support. The outside of the sole
+is misleading with the appearance that there will be more support in the arch
+and a cushioned feel overall, but that isn't the reality. The other thing I
+don't like is how the front part of running shoes is getting thinner. But
+that's pretty much every brand doing that in the name of creating a rocking
+wave. Maybe the science says, "Yes, manufacturers, do this," but the painful
+balls of my feet and cramping toes say, "Please stop doing this!" And
+puhleez-the shoe laces are way too short. I barely, barely was able to get a
+small bow tied in the left shoe that looks navy. Maybe this was just a (highly)
+defective pair, but seriously, I have my doubts. I've been making do with my
+2019 version of Brooks Adrenaline because ever since then, the quality has been
+lacking. I was hoping for a better experience this time. Nope. If anything,
+this trial was the worst of them all. Looks like my days with Brooks are over.
+Time to find a better quality brand because these shoes are so not worth
+anywhere near the amount on the price tag listed. Disappointed! I hope you have
+a better experience. Please be sure to check who the seller is for the pair you
+want and what the return policy is just in case.
+
 
 ### Sentiment 1 (very negative) to 5 (very positive)
 1
 
 ### Categorized Main Issue
-Product Quality, Shipping/Delivery, Customer Service
+Product Quality, Pricing, Other
 
 ### Potential Improvements
-1. Improve product quality to match the descriptions on the website.
-2. Enhance delivery speed to ensure timely delivery of products.
-3. Provide better customer service to address and resolve issues promptly.
+1. Improve the quality and consistency of the materials used in the shoes,
+particularly the top material and cushioning.
+2. Ensure a better fit for the shoes, addressing the narrowness and providing
+more even cushioning throughout the footbed.
+3. Reconsider the design of the front part of the shoes, addressing the thinness
+and potential discomfort it may cause to the wearer.
 
 ### Individualized Email Response
 Dear [Customer's Name],
 
-Thank you for taking the time to share your feedback with us. We are sorry to
-hear that you are dissatisfied with your recent purchase. We understand how
-important it is for our customers to receive high-quality products that meet
-their expectations, and we apologize for any inconvenience this may have caused.
+Thank you for taking the time to share your feedback regarding your recent
+purchase of the Brooks Adrenaline shoes. We understand your concerns about the
+quality, fit, and design of the shoes, and we apologize for any disappointment
+you may have experienced.
 
-We would like to address your concerns regarding the quality and description of
-the product. We take pride in providing accurate information about our products,
-and we will investigate this matter further to ensure that our website
-accurately reflects the items we offer.
+We are committed to providing our customers with the best possible products and
+experiences, and we take your feedback very seriously. We are currently working
+on improving the quality and consistency of the materials used in our shoes,
+ensuring a better fit, and reconsidering the design of the front part of the
+shoes to address any potential discomfort.
 
-In addition, we apologize for the late delivery of your order. We strive to
-provide timely shipping and delivery, and we will review our shipping processes
-to prevent similar issues in the future.
+We appreciate your loyalty to our brand and hope that you will give us another
+chance to provide you with a better experience in the future. If you have any
+further questions or concerns, please do not hesitate to reach out to us.
 
-Lastly, we regret that our customer service team was unable to assist you to
-your satisfaction. We value open communication with our customers and will work
-to improve our service to better meet your needs.
-
-To resolve this issue, we would like to offer you a full refund or a replacement
-product, whichever you prefer. Please let us know your choice, and we will
-promptly process your request.
-
-Once again, we apologize for any inconvenience this situation may have caused.
-We appreciate your business and hope that you will give us another opportunity
-to serve you in the future.
+Thank you again for your valuable feedback, and we hope to have the opportunity
+to serve you better in the future.
 
 Sincerely,
 

@@ -4,9 +4,7 @@
 #| code-fold: true
 #| eval: false
 import os
-
-if os.environ.get("ANTHROPIC_API_KEY") is None:
-   os.environ["ANTHROPIC_API_KEY"] = "paste_your_api_key_here"
+os.environ["ANTHROPIC_API_KEY"] = "paste_your_api_key_here"
 ```
 
 ```{python}
