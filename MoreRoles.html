@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>More Simple LLM Chain</title>
+<title>More Roles</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,17 +57,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="MoreSimpleLLMChain_files/libs/clipboard/clipboard.min.js"></script>
-<script src="MoreSimpleLLMChain_files/libs/quarto-html/quarto.js"></script>
-<script src="MoreSimpleLLMChain_files/libs/quarto-html/popper.min.js"></script>
-<script src="MoreSimpleLLMChain_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="MoreSimpleLLMChain_files/libs/quarto-html/anchor.min.js"></script>
-<link href="MoreSimpleLLMChain_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="MoreSimpleLLMChain_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="MoreSimpleLLMChain_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="MoreSimpleLLMChain_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="MoreSimpleLLMChain_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="MoreRoles_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MoreRoles_files/libs/quarto-html/quarto.js"></script>
+<script src="MoreRoles_files/libs/quarto-html/popper.min.js"></script>
+<script src="MoreRoles_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="MoreRoles_files/libs/quarto-html/anchor.min.js"></script>
+<link href="MoreRoles_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MoreRoles_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="MoreRoles_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="MoreRoles_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="MoreRoles_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -79,7 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">More Simple LLM Chain</h1>
+<h1 class="title">More Roles</h1>
 </div>
 
 
@@ -184,107 +186,174 @@ Model: openchat/openchat-3.5-1210</code></pre>
 </div>
 </div>
 </section>
-<section id="step-1-suggest-a-funny-company-name" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-suggest-a-funny-company-name">Step 1: Suggest a Funny Company Name</h2>
+<section id="what-is-a-black-hole" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-black-hole">What is a Black Hole?</h2>
+<p>First like a physicist talking to their collegues</p>
 <ul>
-<li>Write a prompt template that has the LLM suggest one funny name for a company that makes a certain product.</li>
-<li>Use the template variable <code>{product}</code> in your template</li>
-<li>Pass “sports car” as the <code>product</code> variable in the <code>template.format</code> function</li>
-<li>Print out the <code>company_response</code> that is the response from the LLM</li>
+<li>Tell the LLM to adopt the role or persona of a physicist talking to other physicists.</li>
+<li>Ask the LLM to explain the concept of a black hole</li>
 </ul>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(product<span class="op">=</span>CODE)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>company_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(CODE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">Create a funny name for a company that makes </span><span class="sc">{product}</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(product<span class="op">=</span><span class="st">"sports car"</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>company_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(company_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">Act like a physicist speaking to some other physicists.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">Explain what a black hole is? 100 words.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Speedster Frenzy Inc.</code></pre>
+<pre><code>A black hole is a region in spacetime exhibiting gravitational acceleration so
+strong that nothing—no particles or even electromagnetic radiation such as
+light—can escape from it. It arises from the gravitational collapse of a massive
+star, which causes an infinitely dense point called a singularity. Black holes
+are characterized by their event horizon, or the boundary beyond which the
+escape velocity exceeds the speed of light, effectively forming an opaque
+barrier preventing communication with regions beyond the horizon.</code></pre>
 </div>
 </div>
-</section>
-<section id="step-2-upper-case-the-company-name" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-upper-case-the-company-name">Step 2: Upper Case the Company Name</h2>
-<p>Upper case the company name</p>
+<p>Now like a school teacher talking to some sixth grade students</p>
 <ul>
-<li>Write a prompt template using <code>{company}</code> as template variable, asking the LLM to upper case the company name</li>
-<li>Pass the <code>company_response</code> as the <code>company</code> variable Print the <code>uppercase_response</code></li>
+<li>Tell the LLM to adopt the role of a teacher talking to sixth grade students.</li>
+<li>Ask the LLM to explain the concept of a black hole</li>
 </ul>
 <div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(company<span class="op">=</span>CODE)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>uppercase_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(CODE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>template <span class="op">=</span><span class="st">"""</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">Please make this company name upper cased: </span><span class="sc">{company}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="st">Act like a school teaching speaking to her sixth grade class.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="st">Explain what a black hole is? 100 words.</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(company<span class="op">=</span>company_response)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>uppercase_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(uppercase_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>SPEEDSTER FRENZY INC.</code></pre>
+<pre><code>Hello, class! Today, we're going to learn about something really fascinating in
+space called a black hole. A black hole is a place in space where gravity is so
+strong that nothing can escape from it, not even light. You know how things fall
+to the ground when you drop them? Well, in a black hole, the gravity is so
+strong that it pulls everything towards it, even light, which is what helps us
+see things. Because light can't escape, we can't see black holes directly, but
+we can see the effects they have on the things around them. They're like
+invisible giants in space, pulling everything towards them!</code></pre>
 </div>
 </div>
 </section>
-<section id="step-3-final-report" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-final-report">Step 3 Final Report</h2>
+<section id="how-many-key-strokes-to-type-the-numbers-1-to-500" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-key-strokes-to-type-the-numbers-1-to-500">How many key strokes to type the numbers 1 to 500?</h2>
+<p>So this is a problem where LLM has to realize how many digits are in the numbers as it tries to figure this out.</p>
+<ul>
+<li>1 through 9 are just one digit, so one keystroke for them</li>
+<li>10 through 99 are two digits, so two keystrokes for them</li>
+<li>100 through 500 are three digits, so three keystrokes for them</li>
+</ul>
+<p>There are 9 different numbers with 1 digit, 90 different numbers with 2 digits, and 401 different numbers with 3 digits so:</p>
+<p><span class="math display">\[ 9(1) + 90(2) + 401(3) = 1392 \]</span></p>
+<p>Lets ask the LLM first without any role.</p>
+<ul>
+<li>Ask the LLM how many key strokes are needed to type the numbers from 1 to 500?</li>
+</ul>
 <div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>report_template <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">## Final Report</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">### Product</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="sc">{product}</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">### Company Name</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="sc">{company}</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="st">### Upper Cased Company Name</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="sc">{uppercase}</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>report <span class="op">=</span> report_template.<span class="bu">format</span>(product <span class="op">=</span> <span class="st">"sports car"</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                         company <span class="op">=</span> company_response,</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                         uppercase <span class="op">=</span> uppercase_response)</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(report)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">How many key strokes are needed to type the numbers from 1 to 500?</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-## Final Report
+<pre><code>To calculate the number of keystrokes needed to type the numbers from 1 to 500,
+we need to consider that each number from 1 to 9 requires one keystroke, while
+numbers from 10 to 500 require two keystrokes (one for the tens digit and one
+for the ones digit).
 
-### Product
-sports car
+There are 49 numbers from 1 to 9, so typing these numbers requires 49
+keystrokes.
 
-### Company Name
-Speedster Frenzy Inc.
+For the numbers from 10 to 500, there are 49 (500 - 10 + 1) numbers in this
+range. Each number has two digits, so there are 2 * 49 = 98 keystrokes for these
+numbers.
 
-### Upper Cased Company Name
-SPEEDSTER FRENZY INC.
-</code></pre>
+Adding the keystrokes for the numbers from 1 to 9 and from 10 to 500, we get 49
++ 98 = 147 keystrokes.
+
+Therefore, it would take approximately 147 keystrokes to type the numbers from 1
+to 500.</code></pre>
 </div>
 </div>
+<ul>
+<li>Ask the LLM how many key strokes are needed to type the numbers from 1 to 500</li>
+<li>Tell the LLM it should think step-by-step and that it is an expert at counting things.</li>
+</ul>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">CODE</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">Think step-by-step. You are good at counting things.</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">How many key strokes are needed to type the numbers from 1 to 500?</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>To determine the number of keystrokes needed to type the numbers from 1 to 500,
+we need to consider that:
+
+1. Each number from 1 to 9 only requires one keystroke (the number itself).
+2. Numbers from 10 to 99 require two keystrokes (the first digit and the second
+digit).
+3. Numbers from 100 to 500 require three keystrokes (the first digit, the second
+digit, and the letter "h" for hundreds).
+
+Now, let's calculate the number of keystrokes for each range:
+
+1. For numbers 1 to 9, there are 9 numbers, so it requires 9 keystrokes.
+2. For numbers 10 to 99, there are 90 numbers (9 numbers per decade times 10
+decades), so it requires 90 x 2 = 180 keystrokes.
+3. For numbers 100 to 500, there are 401 numbers (5 decades times 100 plus 1),
+so it requires 401 x 3 = 1203 keystrokes.
+
+Adding up the keystrokes for each range, we get:
+
+9 + 180 + 1203 = 1392 keystrokes.
+
+So, it would take 1392 keystrokes to type the numbers from 1 to 500.</code></pre>
+</div>
+</div>
+<p>For this last one you might try various wordings, the LLM we are using currently seems to respond slightly differently depending on how you word things.</p>
+<p>You may not get it to get the exact answer but often the answer is much better than its initial attempt.</p>
+<p>The answer still has some inaccuracies. In one version of an answer the LLM claimed:</p>
+<blockquote class="blockquote">
+<p>Numbers from 100 to 500 require three keystokes, (the first digit, the second digit and the letter “h” for hundreds)</p>
+</blockquote>
+<p>What? The letter “h” is not something that you type for a number with 3 digits. Not sure why it counted that.</p>
 </section>
 
 </main>

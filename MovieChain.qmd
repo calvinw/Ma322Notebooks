@@ -1,5 +1,5 @@
 ---
-title: "LLM Chain"
+title: "Movie Chain"
 ---
 
 {{< include _llm_togetherai.qmd >}}
@@ -66,7 +66,7 @@ imagined.
 Identify the primary genre(s) for the film based on the movie plot summary.
 
 ```{python}
-genre_template ="""
+template ="""
 Based on the following movie plot summary, identify the primary genre(s) for
 the film:
 
@@ -75,8 +75,8 @@ the film:
 Provide your answer in a comma-separated list.
 """
 
-genre_prompt = genre_template.format(plot=movie_plot)
-genre_response = get_completion(genre_prompt)
+prompt = template.format(plot=movie_plot)
+genre_response = get_completion(prompt)
 print(genre_response)
 ```
 
@@ -85,14 +85,14 @@ print(genre_response)
 Generate a catchy tagline for the movie based on the initial movie plot.
 
 ```{python}
-tagline_template ="""
+template ="""
 Based on the following movie plot, generate a catchy tagline for the movie:
 
 {plot}
 """
 
-tagline_prompt = tagline_template.format(plot=movie_plot)
-tagline_response = get_completion(tagline_prompt)
+prompt = template.format(plot=movie_plot)
+tagline_response = get_completion(prompt)
 print(tagline_response)
 ```
 
@@ -101,7 +101,7 @@ print(tagline_response)
 Based on the tagline and the plot summary, generate a title for the film.
 
 ```{python}
-title_template ="""
+template ="""
 Based on the following movie plot summary and tagline generate a title for the
 film.
 
@@ -112,9 +112,9 @@ Tagline:
 {tagline}
 """
 
-title_prompt = title_template.format(plot=movie_plot,
-                               tagline=tagline_response)
-title_response = get_completion(title_prompt)
+prompt = template.format(plot=movie_plot,
+                         tagline=tagline_response)
+title_response = get_completion(prompt)
 print(title_response)
 ```
 
@@ -124,7 +124,7 @@ Generate a short synopsis for the movie, incorporating the tagline and the
 identified genre(s).
 
 ```{python}
-synopsis_template = """
+template = """
 Based on the following movie plot, tagline, title, and genres, generate a short
 synopsis for the movie:
 
@@ -137,11 +137,11 @@ Tagline: {tagline}
 Title: {title}
 """
 
-synopsis_prompt = synopsis_template.format(plot=movie_plot,
-                                tagline=tagline_response,
-                                genre=genre_response,
-                                title=title_response)
-synopsis_response = get_completion(synopsis_prompt)
+prompt = template.format(plot=movie_plot,
+                        tagline=tagline_response,
+                        genre=genre_response,
+                        title=title_response)
+synopsis_response = get_completion(prompt)
 print(synopsis_response)
 ```
 
@@ -171,28 +171,4 @@ report = report_template.format(plot = movie_plot,
                          title = title_response,
                          synopsis = synopsis_response)
 print(report)
-```
-
-```{python}
-prompt_template = """
-## Final Report
-
-### Genre(s)
-{genre}
-
-### Tagline
-{tagline}
-
-### Title
-{title}
-
-### Synopsis
-{synopsis}
-"""
-
-prompt = prompt_template.format(genre = genre_prompt,
-                         tagline = tagline_prompt,
-                         title = title_prompt,
-                         synopsis = synopsis_prompt)
-print(prompt)
 ```

@@ -1,0 +1,135 @@
+---
+title: "More Roles"
+execute:
+  enabled: true
+---
+
+{{< include _llm_togetherai.qmd >}}
+
+## What is a Black Hole?
+
+First like a physicist talking to their collegues
+
+- Tell the LLM to adopt the role or persona of a physicist talking to other
+  physicists.
+- Ask the LLM to explain the concept of a black hole
+
+```{python}
+#| eval: false
+prompt = """
+CODE
+"""
+response=get_completion(prompt)
+print(response)
+```
+```{python}
+# Solution:
+prompt="""
+Act like a physicist speaking to some other physicists.
+Explain what a black hole is? 100 words.
+"""
+
+response=get_completion(prompt)
+print(response)
+```
+
+Now like a school teacher talking to some sixth grade students
+
+- Tell the LLM to adopt the role of a teacher talking to sixth grade students.
+- Ask the LLM to explain the concept of a black hole
+
+```{python}
+#| eval: false
+prompt = """
+CODE
+"""
+response=get_completion(prompt)
+print(response)
+```
+```{python}
+# Solution:
+prompt="""
+Act like a school teaching speaking to her sixth grade class.
+Explain what a black hole is? 100 words.
+"""
+
+response=get_completion(prompt)
+print(response)
+```
+## How many key strokes to type the numbers 1 to 500?
+
+So this is a problem where LLM has to realize how many digits are in the
+numbers as it tries to figure this out.
+
+- 1 through 9 are just one digit, so one keystroke for them
+- 10 through 99 are two digits, so two keystrokes for them
+- 100 through 500 are three digits, so three keystrokes for them
+
+There are 9 different numbers with 1 digit, 90 different numbers with 2 digits,
+and 401 different numbers with 3 digits so:
+
+$$ 9(1) + 90(2) + 401(3) = 1392 $$
+
+Lets ask the LLM first without any role.
+
+- Ask the LLM how many key strokes are needed to type the numbers from 1 to
+  500?
+
+```{python}
+#| eval: false
+prompt = """
+CODE
+"""
+response=get_completion(prompt)
+print(response)
+```
+```{python}
+# Solution:
+prompt="""
+How many key strokes are needed to type the numbers from 1 to 500?
+"""
+
+response=get_completion(prompt)
+print(response)
+```
+
+- Ask the LLM how many key strokes are needed to type the numbers from 1 to 500
+- Tell the LLM it should think step-by-step and that it is an expert at
+  counting things.
+
+```{python}
+#| eval: false
+prompt = """
+CODE
+"""
+response=get_completion(prompt)
+print(response)
+```
+```{python}
+# Solution:
+prompt="""
+Think step-by-step. You are good at counting things.
+
+How many key strokes are needed to type the numbers from 1 to 500?
+"""
+
+response=get_completion(prompt)
+print(response)
+```
+
+For this last one you might try various wordings, the LLM we are using
+currently seems to respond slightly differently depending on how you word
+things.
+
+You may not get it to get the exact answer but often the answer is much better
+than its initial attempt.
+
+The answer still has some inaccuracies. In one version of an answer the LLM
+claimed:
+
+>Numbers from 100 to 500 require three keystokes, (the first digit, the second
+>digit and the letter "h" for hundreds)
+
+What? The letter "h" is not something that you type for a number with 3 digits.
+Not sure why it counted that.
+

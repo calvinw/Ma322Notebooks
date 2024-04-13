@@ -2,113 +2,72 @@
 title: "More Simple LLM Chain"
 ---
 
-```{python}
-#| eval: false
-
-```
-```{python}
-# Solution:
-
-```
-
 {{< include _llm_togetherai.qmd >}}
 
-## Suggest a Company Name and Upper It
-
-### Step 1: Suggest a Funny Company Name
-
-Lets start by creating a variable for our product request.
-
-```{python}
-car = "sports cars"
-```
+## Step 1: Suggest a Funny Company Name
 
 - Write a prompt template that has the LLM suggest one funny name for a company
   that makes a certain product.
-- Make `product` a template variable and use `{product}` in your template
+- Use the template variable `{product}` in your template
+- Pass "sports car" as the `product` variable in the `template.format` function
+- Print out the `company_response` that is the response from the LLM
 
 ```{python}
 #| eval: false
-company_template ="""
+template ="""
 
 CODE
 
 """
-```
-```{python}
-# Solution:
-company_template ="""
-Create a funny name for a company that makes:
 
-{product}
-"""
-```
-
-- Pass `car` to the format function as the template variable `{product}`
-- Pass the `company_prompt` to `get_completion` to get the LLM's response
-- Print the `company_response`
-
-```{python}
-#| eval: false
-company_prompt = company_template.format(product=CODE)
-company_response = get_completion(CODE)
+prompt = template.format(product=CODE)
+company_response = get_completion(prompt)
 print(CODE)
 ```
 ```{python}
 # Solution:
-company_prompt = company_template.format(product=car)
-company_response = get_completion(company_prompt)
+template ="""
+Create a funny name for a company that makes {product}
+"""
+
+prompt = template.format(product="sports car")
+company_response = get_completion(prompt)
 print(company_response)
 ```
 
-### Step 2: Upper Case the Name and Product
+## Step 2: Upper Case the Company Name
 
-Upper case the company
+Upper case the company name
 
-- Write a prompt template using both `{product}` and `{company}` as template
-  variables, asking the LLM to upper case the company name and the product
+- Write a prompt template using `{company}` as template variable, asking the
+  LLM to upper case the company name
+- Pass the `company_response` as the `company` variable
+  Print the `uppercase_response`
 ```{python}
 #| eval: false
-uppercase_template ="""
+template ="""
 
 CODE
 
 """
-```
-```{python}
-# Solution:
-uppercase_template ="""
 
-Please upper case the company name and the product:
-
-Product:
-{product}
-
-Company:
-{company}
-"""
-```
-
-- Pass the `company_response` as the `company` variable and `car` as the
-  `product` variable
-- Pass the `uppercase_prompt` to `get_completion` to get the LLM's response
-  Print the `uppercase_response`
-```{python}
-#| eval: false
-uppercase_prompt = uppercase_template.format(company=CODE,
-                                             product=CODE)
-uppercase_response = get_completion(CODE)
+prompt = template.format(company=CODE)
+uppercase_response = get_completion(prompt)
 print(CODE)
 ```
 ```{python}
 # Solution:
-uppercase_prompt = uppercase_template.format(company=company_response,
-                                             product=car)
-uppercase_response = get_completion(uppercase_prompt)
+template ="""
+
+Please make this company name upper cased: {company}
+"""
+
+prompt = template.format(company=company_response)
+uppercase_response = get_completion(prompt)
 print(uppercase_response)
 ```
 
-### Final Report
+## Step 3 Final Report
 
 ```{python}
 report_template = """
@@ -120,11 +79,11 @@ report_template = """
 ### Company Name
 {company}
 
-### Upper Cased Company and Product
+### Upper Cased Company Name
 {uppercase}
 """
 
-report = report_template.format(product = car,
+report = report_template.format(product = "sports car",
                          company = company_response,
                          uppercase = uppercase_response)
 print(report)

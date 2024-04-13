@@ -1,5 +1,5 @@
 
-
+## Put Your Together AI key here
 
 ```{python}
 #| eval: false
@@ -7,14 +7,15 @@
 import os
 os.environ["TOGETHER_API_KEY"] = "paste_your_api_key_here"
 ```
-
-## Setup the LLM
+## Install Packages
 
 ```{python}
 #| eval: false
 #| code-fold: true
 !pip3 install langchain langchain_openai
 ```
+
+## Set up the LLM
 
 ```{python}
 #| eval: true
@@ -30,6 +31,8 @@ from langchain_openai import ChatOpenAI
 model_name = "openchat/openchat-3.5-1210"
 #model_name = "Qwen/Qwen1.5-72B-Chat"
 #model_name = "cognitivecomputations/dolphin-2.5-mixtral-8x7b"
+#model_name="databricks/dbrx-instruct"
+#model_name="mistralai/Mixtral-8x22B"
 
 print("Provider: TogetherAI")
 print("Model: " + model_name)
@@ -38,6 +41,5 @@ llm=ChatOpenAI(model_name=model_name,
                openai_api_key=os.environ.get("TOGETHER_API_KEY"),
                openai_api_base="https://api.together.xyz/v1/")
 
+{{< include _llm_utils.py >}}
 ```
-
-{{< include _llm_utils.qmd >}}

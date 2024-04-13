@@ -1,14 +1,22 @@
 ---
 title: "Roles"
-execute:
-  enabled: true
 ---
 
 {{< include _llm_togetherai.qmd >}}
 
+Many times it helps to give the LLM a role or a persona. That helps set the
+context for how it is meant to respond. This is a very common thing to do and
+is why you see many prompts that start with:
+
+- You are an expert at ...
+- You are a professional ...
+
+This instructions ground the LLMs responses with information about how it
+should act and respond.
+
 ## Act Like a Mouse
 
-We can tell the LLM in a `System` message that it is to act like a mouse.
+We can tell the LLM  that it is to act like a mouse.
 
 ```{python}
 prompt="""
@@ -32,8 +40,28 @@ print(response)
 
 ## Is a Married Person Looking at an Unmarried Person?
 
-In this part we ask the LLM to solve a logical problem. We just try to have it
-solve the problem without any additional prompting.
+In this part we ask the LLM to solve a logical problem. We will ask it to solve
+this problem twice. First without prompting it with a role. Then the second
+time we will ask it to answer by giving it a role and asking it to think about
+all the cases.
+
+So here is our question:
+
+>Jack is looking at Anne. Anne is looking at George. Jack is married, George is
+>not, and we don’t know if Anne is married. Is a married person looking at an
+>unmarried person?
+
+The answer to our question is yes. And the way to see it is to just think about
+the cases:
+
+- If Anne is married, then Anne (married) is looking at George (unmarried)
+- If Anne is unmarried, then Jack (married) is looking at Anne (unmarried)
+
+So in both cases the answer is yes, a married person is looking at an unmarried
+person.
+
+Now first we just try to have it solve the problem without any additional
+prompting about a role.
 
 ```{python}
 prompt="""
@@ -42,8 +70,11 @@ not, and we don’t know if Anne is married. Is a married person looking at an
 unmarried person?
 """
 response=get_completion(prompt)
-print_prompt_and_response(prompt, response)
+print(response)
 ```
+
+The answer above is right, but the LLM thinks its true since Jack is looking at
+George. Which is not quite correct.
 
 ## Act Like a Professor of Logic
 
@@ -51,7 +82,8 @@ But now we tell the LLM its a professor of logic and it should think through
 all the possibilities. With many LLMs this gets them closer to the right
 solution and sometimes they get it completly right with this kind of prompting.
 
-Asking a model to think "step-by-step" or by listing its reasoning is called "Chain of Thought(CoT)" prompting.
+Asking a model to think "step-by-step" or by listing its reasoning is called
+"Chain of Thought(CoT)" prompting.
 
 ```{python}
 prompt="""
@@ -67,7 +99,13 @@ person looking at an unmarried person?
 response=get_completion(prompt)
 print(response)
 ```
+
+This time the LLM does much better and you see it doing better thinking
+step-by-step.
+
 ## Is This Equation Solved Correctly?
+
+Here is another example involving a simple algebra problem.
 
 Without further prompting we ask the LLM if this (incorrect) problem solution
 is correct.
@@ -83,14 +121,19 @@ x=3
 response=get_completion(prompt)
 print(response)
 ```
+
+Hmm...it seems to think the solution is correct. It didn't see anything wrong
+with the solution.
+
 ## You are a Teacher of Math. Reason Step-By-Step
 
 Now we ask it again, but this time we tell it that its a teacher of math.
 
 ```{python}
 prompt = """
-You are a teacher of math. And can reason step-by-step to see if something is correct.
-First work out your own solution to the problem. Then carefully consider how to answer the following question:
+You are a teacher of math. And can reason step-by-step to see if something is
+correct. First work out your own solution to the problem. Then carefully
+consider how to answer the following question:
 
 Is this problem solved correctly below?
 2x-3=9
@@ -100,3 +143,8 @@ x=3
 response=get_completion(prompt)
 print(response)
 ```
+
+Here it does much better in the second attempt. It still says the problem is
+solved correctly originally, but then it finds that there is a mistake.
+Definitely the step-by-step reasoning it is doing is an improvement over its
+first answer.

@@ -98,13 +98,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"OPENROUTER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="setup-the-llm" class="level2">
-<h2 class="anchored" data-anchor-id="setup-the-llm">Setup the LLM</h2>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
@@ -117,25 +113,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"cognitivecomputations/dolphin-2.5-mixtral-8x7b"</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "mistralai/mistral-7b-instruct:free"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openai/gpt-4"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openai/gpt-3.5-turbo"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mistral-medium"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mistral-large"</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mixtral-8x7b-instruct"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="anthropic/claude-3-haiku"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="anthropic/claude-3-sonnet"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="anthropic/claude-3-opus"</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openchat/openchat-7b:free"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openchat/openchat-7b"</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="databricks/dbrx-instruct"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="huggingfaceh4/zephyr-orpo-141b-a35b"</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>model_name<span class="op">=</span><span class="st">"fireworks/mixtral-8x22b-instruct-preview"</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: Open Router"</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span>, model_name)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Provider: TogetherAI
-Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
+<pre><code>Provider: Open Router
+Model:  fireworks/mixtral-8x22b-instruct-preview</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="4">
@@ -181,7 +183,6 @@ Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-</section>
 <section id="movie-chain" class="level2">
 <h2 class="anchored" data-anchor-id="movie-chain">Movie Chain</h2>
 <p>We will analyze an extended movie plot summary, identify the genre(s) of the film, generate a tagline, and then create a short synopsis incorporating the tagline and genres. The process involves the following steps:</p>
@@ -243,7 +244,7 @@ Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>genre_response <span class="op">=</span> get_completion(genre_prompt)</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(genre_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Science Fiction, Action, Adventure, Drama, Post-Apocalyptic</code></pre>
+<pre><code>Post-apocalyptic, adventure, survival, drama</code></pre>
 </div>
 </div>
 </section>
@@ -261,26 +262,8 @@ Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>tagline_response <span class="op">=</span> get_completion(tagline_prompt)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tagline_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>"In a world of chaos, find your sanctuary."
-
-"The road to survival is paved with sacrifice."
-
-"The Oasis: A beacon of hope in a world of darkness."
-
-"Fight for your future in a world on the brink."
-
-"The journey to The Oasis: Where survival is a battle, and trust is a weapon."
-
-"In the ruins of civilization, a new hope emerges."
-
-"The Oasis: A chance to rebuild, a chance to survive."
-
-"In a world of lawlessness, find your tribe."
-
-"The Oasis: A promise of safety, a test of loyalty."
-
-"The road to The Oasis: Where every step is a battle, and every choice is a
-sacrifice."</code></pre>
+<pre><code>"In a world ravaged by chaos, hope blooms in the most unlikely places. Journey
+to The Oasis."</code></pre>
 </div>
 </div>
 </section>
@@ -304,7 +287,7 @@ sacrifice."</code></pre>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>title_response <span class="op">=</span> get_completion(title_prompt)</span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(title_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Title: "The Oasis: A Journey of Survival"</code></pre>
+<pre><code>"The Oasis: A Journey of Hope and Survival"</code></pre>
 </div>
 </div>
 </section>
@@ -332,15 +315,15 @@ sacrifice."</code></pre>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>synopsis_response <span class="op">=</span> get_completion(synopsis_prompt)</span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(synopsis_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>"The Oasis: A Journey of Survival" is a gripping post-apocalyptic science
-fiction adventure that follows the harrowing journey of a young woman named Tara
-as she searches for a fabled sanctuary called The Oasis. In a world ravaged by a
-devastating cataclysm, Tara and a ragtag group of survivors must navigate
-treacherous wastelands, face off against ruthless marauders, and confront their
-own inner demons to reach the fabled sanctuary that promises safety, resources,
-and a chance at rebuilding civilization. Along the way, they must make difficult
-choices that will test their morality, loyalty, and resolve, ultimately
-determining their fate and the fate of those who may follow in their footsteps.</code></pre>
+<pre><code>In a post-apocalyptic world ravaged by a devastating cataclysm, a young woman
+named Tara embarks on a perilous journey to find a rumored sanctuary known as
+The Oasis. Along the way, she forms an unlikely alliance with a ragtag group of
+survivors, facing off against ruthless marauders and mutated creatures. As they
+uncover clues and follow a trail of breadcrumbs left by those who came before,
+the group must confront their own inner demons and make difficult choices that
+will test their morality, loyalty, and resolve. In this harrowing journey, the
+line between survival and sacrifice blurs, and the true cost of reaching The
+Oasis may be higher than any of them could have imagined.</code></pre>
 </div>
 </div>
 </section>
@@ -403,43 +386,25 @@ imagined.
 
 
 ### Identified Genre(s)
-Science Fiction, Action, Adventure, Drama, Post-Apocalyptic
+Post-apocalyptic, adventure, survival, drama
 
 ### Movie Tagline
-"In a world of chaos, find your sanctuary."
-
-"The road to survival is paved with sacrifice."
-
-"The Oasis: A beacon of hope in a world of darkness."
-
-"Fight for your future in a world on the brink."
-
-"The journey to The Oasis: Where survival is a battle, and trust is a weapon."
-
-"In the ruins of civilization, a new hope emerges."
-
-"The Oasis: A chance to rebuild, a chance to survive."
-
-"In a world of lawlessness, find your tribe."
-
-"The Oasis: A promise of safety, a test of loyalty."
-
-"The road to The Oasis: Where every step is a battle, and every choice is a
-sacrifice."
+"In a world ravaged by chaos, hope blooms in the most unlikely places. Journey
+to The Oasis."
 
 ### Movie Title
-Title: "The Oasis: A Journey of Survival"
+"The Oasis: A Journey of Hope and Survival"
 
 ### Short Movie Synopsis
-"The Oasis: A Journey of Survival" is a gripping post-apocalyptic science
-fiction adventure that follows the harrowing journey of a young woman named Tara
-as she searches for a fabled sanctuary called The Oasis. In a world ravaged by a
-devastating cataclysm, Tara and a ragtag group of survivors must navigate
-treacherous wastelands, face off against ruthless marauders, and confront their
-own inner demons to reach the fabled sanctuary that promises safety, resources,
-and a chance at rebuilding civilization. Along the way, they must make difficult
-choices that will test their morality, loyalty, and resolve, ultimately
-determining their fate and the fate of those who may follow in their footsteps.
+In a post-apocalyptic world ravaged by a devastating cataclysm, a young woman
+named Tara embarks on a perilous journey to find a rumored sanctuary known as
+The Oasis. Along the way, she forms an unlikely alliance with a ragtag group of
+survivors, facing off against ruthless marauders and mutated creatures. As they
+uncover clues and follow a trail of breadcrumbs left by those who came before,
+the group must confront their own inner demons and make difficult choices that
+will test their morality, loyalty, and resolve. In this harrowing journey, the
+line between survival and sacrifice blurs, and the true cost of reaching The
+Oasis may be higher than any of them could have imagined.
 </code></pre>
 </div>
 </div>
@@ -576,26 +541,8 @@ imagined.
 
 
 Tagline:
-"In a world of chaos, find your sanctuary."
-
-"The road to survival is paved with sacrifice."
-
-"The Oasis: A beacon of hope in a world of darkness."
-
-"Fight for your future in a world on the brink."
-
-"The journey to The Oasis: Where survival is a battle, and trust is a weapon."
-
-"In the ruins of civilization, a new hope emerges."
-
-"The Oasis: A chance to rebuild, a chance to survive."
-
-"In a world of lawlessness, find your tribe."
-
-"The Oasis: A promise of safety, a test of loyalty."
-
-"The road to The Oasis: Where every step is a battle, and every choice is a
-sacrifice."
+"In a world ravaged by chaos, hope blooms in the most unlikely places. Journey
+to The Oasis."
 
 
 ### Synopsis
@@ -632,30 +579,12 @@ the true cost of reaching The Oasis may be higher than any of them could have
 imagined.
 
 
-Genres: Science Fiction, Action, Adventure, Drama, Post-Apocalyptic
+Genres: Post-apocalyptic, adventure, survival, drama
 
-Tagline: "In a world of chaos, find your sanctuary."
+Tagline: "In a world ravaged by chaos, hope blooms in the most unlikely places. Journey
+to The Oasis."
 
-"The road to survival is paved with sacrifice."
-
-"The Oasis: A beacon of hope in a world of darkness."
-
-"Fight for your future in a world on the brink."
-
-"The journey to The Oasis: Where survival is a battle, and trust is a weapon."
-
-"In the ruins of civilization, a new hope emerges."
-
-"The Oasis: A chance to rebuild, a chance to survive."
-
-"In a world of lawlessness, find your tribe."
-
-"The Oasis: A promise of safety, a test of loyalty."
-
-"The road to The Oasis: Where every step is a battle, and every choice is a
-sacrifice."
-
-Title: Title: "The Oasis: A Journey of Survival"
+Title: "The Oasis: A Journey of Hope and Survival"
 
 </code></pre>
 </div>

@@ -4,7 +4,7 @@ title: "Review Chain"
 
 {{< include _llm_togetherai.qmd >}}
 
-### Description of Review Chain
+## Review Chain
 
 We will analyze a customer review and summarize it. Then try to compose a response.
 
@@ -38,17 +38,16 @@ the customer about addressing their concerns.
 Lets start with the review text. We put them it the variable `current_review`
 
 ```{python}
-current_review = """
-I don't know if you can tell from these pictures, but the top part of these
-shoes do not look like these are a matched pair. Moreover, the quality in the
-Brooks Adrenaline has plummeted over the years. The material on top is thinner
-and just cheaper feeling/looking overall. The fit is more narrow. The
-cushioning barely there, feels uneven throughout the foot bed, rather than
-smooth not to mention a poor attempt at arch support. The outside of the sole
-is misleading with the appearance that there will be more support in the arch
-and a cushioned feel overall, but that isn't the reality. The other thing I
-don't like is how the front part of running shoes is getting thinner. But
-that's pretty much every brand doing that in the name of creating a rocking
+current_review = """I don't know if you can tell from these pictures, but the
+top part of these shoes do not look like these are a matched pair. Moreover,
+the quality in the Brooks Adrenaline has plummeted over the years. The material
+on top is thinner and just cheaper feeling/looking overall. The fit is more
+narrow. The cushioning barely there, feels uneven throughout the foot bed,
+rather than smooth not to mention a poor attempt at arch support. The outside
+of the sole is misleading with the appearance that there will be more support
+in the arch and a cushioned feel overall, but that isn't the reality. The other
+thing I don't like is how the front part of running shoes is getting thinner.
+But that's pretty much every brand doing that in the name of creating a rocking
 wave. Maybe the science says, "Yes, manufacturers, do this," but the painful
 balls of my feet and cramping toes say, "Please stop doing this!" And
 puhleez-the shoe laces are way too short. I barely, barely was able to get a
@@ -60,10 +59,8 @@ this trial was the worst of them all. Looks like my days with Brooks are over.
 Time to find a better quality brand because these shoes are so not worth
 anywhere near the amount on the price tag listed. Disappointed! I hope you have
 a better experience. Please be sure to check who the seller is for the pair you
-want and what the return policy is just in case.
-"""
+want and what the return policy is just in case."""
 ```
-
 
 ### Analyze the Sentiment
 
@@ -77,14 +74,11 @@ Create a prompt to ask the LLM to analyze our review for a rating score.
 - Template variables needed: `{review}`
 
 ```{python}
-# Solution:
+#| eval: false
 template = """
-Analyze the sentiment of the following review on a scale of 1 to 5, where 1 is
-very negative and 5 is very positive:
 
-{review}
+CODE
 
-Just give the number only.
 """
 
 prompt = template.format(review=current_review)
@@ -92,12 +86,12 @@ sentiment_response= get_completion(prompt)
 print(sentiment_response)
 ```
 ```{python}
-#| eval: false
-template = """
+# Solution:
+template = """Analyze the sentiment of the following review on a scale of 1 to 5, where 1 is very negative and 5 is very positive:
 
-CODE
+{review}
 
-"""
+Just give the number only."""
 
 prompt = template.format(review=current_review)
 sentiment_response= get_completion(prompt)
@@ -115,16 +109,11 @@ Categorize the Review Based On the Main Issue
 - Template variables needed: `{review}`
 
 ```{python}
-# Solution:
+#| eval: false
 template ="""
-Categorize the main issue or concern raised in the following review:
 
-{review}
+CODE
 
-Choose from the following categories: Product Quality, Shipping/Delivery,
-Customer Service, Pricing, Other.
-
-Just give the categories only.
 """
 
 prompt = template.format(review=current_review)
@@ -132,11 +121,20 @@ categorize_response = get_completion(prompt)
 print(categorize_response)
 ```
 ```{python}
-#| eval: false
-template ="""
+# Solution:
+template ="""Categorize the main issues or concerns raised in the following
+review enclosed in <review> </review> tags.
+Choose from the following categories:
 
-CODE
+- Product Quality
+- Shipping/Delivery
+- Customer Service
+- Pricing
+- Other
 
+<review>
+{review}
+</review>
 """
 
 prompt = template.format(review=current_review)
@@ -153,14 +151,11 @@ Lets suggest 3 potential improvements
 - Template variables needed: `{review}`
 
 ```{python}
-# Solution:
+#| eval: false
 template = """
-Based on the following review, suggest at least three potential improvements or
-changes that could address the customer's concerns:
 
-{review}
+CODE
 
-Give only the three potential improvements as your output.
 """
 
 prompt = template.format(review=current_review)
@@ -168,12 +163,13 @@ improvements_response = get_completion(prompt)
 print(improvements_response)
 ```
 ```{python}
-#| eval: false
-template = """
+# Solution:
+template = """Based on the following review, suggest at least three potential
+improvements or changes that could address the customer's concerns:
 
-CODE
+{review}
 
-"""
+Give only the three potential improvements as your output."""
 
 prompt = template.format(review=current_review)
 improvements_response = get_completion(prompt)
@@ -203,11 +199,9 @@ prompt = template.format(review=current_review,
 email_response = get_completion(prompt)
 print(email_response)
 ```
-
 ```{python}
 # Solution:
-template = """
-Based on the review from a customer:
+template = """Based on the review from a customer:
 
 Review:
 {review}
@@ -218,15 +212,13 @@ refund for now. Acknowledge the customers concerns and mention we are looking
 into the following improvements.
 
 Improvements:
-{improvements}
-"""
+{improvements}"""
 
 prompt = template.format(review=current_review,
                           improvements=improvements_response)
 email_response = get_completion(prompt)
 print(email_response)
 ```
-
 
 ### Final Report for This Review
 

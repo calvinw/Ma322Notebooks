@@ -12,12 +12,11 @@ Here we build a simple LLM Chain that makes two calls to the LLM. The second ste
 
 ```{python}
 city_template="""
-What city is {person} from? Only respond with the name of the city.
+Where is {person} from? Give just the city name
 """
 
-city_prompt = city_template.format(person="Arnold Swartzeneggar")
+city_prompt = city_template.format(person="Sean Connery")
 city_response = get_completion(city_prompt)
-print(city_prompt)
 print(city_response)
 ```
 
@@ -25,18 +24,21 @@ print(city_response)
 
 ```{python}
 country_template="""
-What country is the city {city} in? Only respond in {language} with the name of
-the country.
+What country is the city {city} in? Respond in {language} with just the name.
 """
 
 country_prompt = country_template.format(city=city_response,
-                                         language="french")
+                                         language="French")
 country_response = get_completion(country_prompt)
-print(country_prompt)
 print(country_response)
 ```
 
-### Final Report
+### Step 3: Final Report
+
+Sometimes we will want to print out a summary of the responses we get in a
+chain. This may or may not include the prompts we give as well. We can just use
+a template for this as well, even though this is not a prompt, it is a
+convenient way to set up a printed version of the information.
 
 ```{python}
 report_template="""
@@ -55,9 +57,10 @@ report_template="""
 {country}
 """
 
-report = report_template.format(person = "Arnold Swartzeneggar",
+# We pass the format function the values we used or got from the LLM
+report = report_template.format(person = "Sean Connery",
                                 city = city_response,
-                                language = "french",
+                                language = "French",
                                 country= country_response)
 print(report)
 ```
