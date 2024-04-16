@@ -11,16 +11,12 @@ The following sets up some templates to analyze reviews of this product: [Big Da
 Here's our template:
 
 ```{python}
-template ="""Give a short summary of the following review. The review is placed
-in the <text> tags. Use no more than 30 words.
-<text>
-{review}
-</text>"""
 ```
 
-Here's our first review:
+Let's take a look at some reviews
 
 ```{python}
+
 first_review = """So close! Aside from the technical issues — I ordered a small
 of the less busy face pattern, and received a medium in the more busy face
 pattern option instead. I’m 5’6” 135-140lbs. The sizes were European. This
@@ -30,19 +26,7 @@ well around your neck, and since the fabric is very thin and one-sided, you can
 see the back of the pattern when the collar is open (see photos). While okay for
 casual wear, and has a great boxy cut, the exposed back of fabric feels a bit
 cheap. Shirt is a good length for tucking in and a bit long otherwise."""
-```
 
-Lets pass in `first_review` as the `review` we want to use in the template:
-
-```{python}
-prompt=template.format(review=first_review)
-response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
-```
-
-Let's take a look at a few more reviews.
-
-```{python}
 second_review = """I love the pattern on this shirt, and I wanted to keep it so
 badly!! A few issues, though, made me send it back. 1 - The shirt looks much
 shinier/glossier on the models, and it's not. It's not shiny at all. It's a
@@ -70,28 +54,82 @@ warm water and dried them on low-medium setting (what was I thinking). They
 shrunk a full size all around. Because I like these shirts so much I am
 reordering my original and adding a couple more colors, BUT this time I will
 wash COLD, Gentle cycle, and Hang dry!"""
+
+fifth_review="""1 star since 0 is not an option-The color was not as pictured-
+I thought it was more of a cream and it was stark white. However, I figured I
+could make do. I tried it on, it fit, I washed before wearing. Put it on and it
+had shrunk at least two sizes!"""
 ```
 
-Lets do the `second_review`
-
 ```{python}
-prompt=template.format(review=second_review)
+#| eval: false
+template="""
+
+CODE
+
+Reviews:
+1)
+{review1}
+2)
+{review2}
+3)
+{review3}
+4)
+{review4}
+5)
+{review5}
+
+Response:
+Summary:<<your summary here>>
+Tags:<<your tags here>>
+"""
+
+prompt=template.format(review1=first_review,
+                     review2=second_review,
+                     review3=third_review,
+                     review4=fourth_review,
+                     review5=fifth_review)
+
 response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
+print(response)
+
 ```
-
-Lets do the `third_review`
-
 ```{python}
-prompt=template.format(review=third_review)
-response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
-```
+# Solution:
+template="""
+Given the following reviews write a one paragraph summary of what
+customers are saying about this product.
 
-And the `fourth_review`
+Come up with a short set of one word tags that involve things the customers
+mention most frequently. These can be things that customers mention in a
+positive way, or a negative way, or a neutral way.
 
-```{python}
-prompt=template.format(review=fourth_review)
+For each tag give the total number of positive mentions and the total number of
+negative mentions. Give short snippets of quotes that support your numbers.
+
+Reviews:
+1)
+{review1}
+2)
+{review2}
+3)
+{review3}
+4)
+{review4}
+5)
+{review5}
+
+Response:
+Summary:<<your summary here>>
+Tags:<<your tags here>>
+"""
+
+prompt=template.format(review1=first_review,
+                     review2=second_review,
+                     review3=third_review,
+                     review4=fourth_review,
+                     review5=fifth_review)
+
 response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
+print(response)
 ```
