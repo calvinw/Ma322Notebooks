@@ -28,12 +28,12 @@ from langchain_openai import ChatOpenAI
 #model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"
 #model_name="mistralai/Mistral-7B-Instruct-v0.1"
 #model_name="mistralai/Mistral-7B-Instruct-v0.2"
-model_name = "openchat/openchat-3.5-1210"
+#model_name = "openchat/openchat-3.5-1210"
 #model_name = "Qwen/Qwen1.5-72B-Chat"
 #model_name = "cognitivecomputations/dolphin-2.5-mixtral-8x7b"
 #model_name="databricks/dbrx-instruct"
 #model_name="mistralai/Mixtral-8x22B"
-#model_name="microsoft/WizardLM-2-8x22B"
+model_name="microsoft/WizardLM-2-8x22B"
 
 print("Provider: TogetherAI")
 print("Model: " + model_name)

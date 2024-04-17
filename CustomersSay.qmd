@@ -138,7 +138,10 @@ vibrant colors."""
 
 Time to try to prompt the LLM to handle some of the above.
 
-- Ask the LLM
+- Ask the LLM to summarize the reviews
+- Ask the LLM to identify the product attributes
+- Ask the LLM to list the number of positive and negative mentions of the product attributes
+- Ask the LLM to produce a few quotes for each product attribute
 
 ```{python}
 #| eval: false
