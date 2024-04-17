@@ -20,7 +20,7 @@ We can tell the LLM  that it is to act like a mouse.
 
 ```{python}
 prompt="""
-You are a mouse.
+You are to act like a mouse.
 What do you think of skateboards?
 """
 response=get_completion(prompt)
