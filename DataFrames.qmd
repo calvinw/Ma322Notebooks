@@ -1,0 +1,157 @@
+---
+title: "Data Frames"
+---
+
+Data frames are one of the most used data structure in Python. They are essentially equivalent to the rows and columns in a spreadsheet. Each row is a different record from a set of records, and each column is a different attribute or property from that set of records.
+
+| name | age | isStudent | favColor |
+|------|-----|-----------|----------|
+| James | 23 | True | red |
+| Sally | 43 | False | green |
+| Rupert | 19 | True | blue |
+| Octavia | 21 | True | yellow |
+| Belinda | 33 | False | orange |
+| Linda | 24 | True | green |
+| Thomas | 32 | False | purple |
+
+In Python, we use the pandas library to work with data frames. Here is an example where we create a data frame from lists that represent the columns:
+
+```{python}
+import pandas as pd
+
+name = ['James', 'Sally', 'Rupert', 'Octavia', 'Belinda', 'Linda', 'Thomas']
+age = [23, 43, 19, 21, 23, 24, 32]
+isStudent = [True, False, True, True, False, True, False]
+favColor = ['red', 'green', 'blue', 'red', 'orange', 'green', 'purple']
+
+customersDict = {
+  'name': name,
+  'age': age,
+  'isStudent': isStudent,
+  'favColor': favColor
+}
+
+customers = pd.DataFrame(customersDict)
+```
+
+Notice how each list has the same length.
+
+This is important when you are creating data frames.
+
+```{python}
+print(len(name))
+print(len(age))
+print(len(isStudent))
+print(len(favColor))
+```
+
+What does the structure of the data frame look like:
+
+```{python}
+print(customers.info())
+```
+
+What are the data types of the columns:
+
+```{python}
+print(customers.dtypes)
+```
+
+The data types are 'object', 'int64', 'bool', 'object".
+
+Pandas uses 'object' for strings.
+
+Let's look at the first few rows in the data frame. `head` is a function that will do that.
+
+```{python}
+print(customers.head())
+```
+
+If we try to create a data frame with different length lists, we get an error message.
+
+Here we try it with a list of length 5 and one of length 2.
+
+```{python}
+#| eval: false
+x = [1, 2, 3, 4, 5]
+y = [6, 7]
+columnsDict = {
+  'x': x,
+  'y': y
+}
+pd.DataFrame(columnsDict)
+```
+
+Now there are various ways to refer to the rows and the columns in a data frame. We can refer to a column by using its name. Here is the name column:
+
+```{python}
+print(customers['name'])
+```
+
+And the ages column:
+
+```{python}
+print(customers['age'])
+```
+
+You can remove a column of data by dropping it from the data frame:
+
+```{python}
+customers = customers.drop('favColor', axis=1)
+print(customers)
+```
+
+You can add a column of data by assigning a new column to the data frame:
+
+```{python}
+favMusic = ['jazz', 'classical', 'electronic', 'country', 'electronic', 'pop', 'rock']
+customers['favMusic'] = favMusic
+print(customers)
+```
+
+Finally, you can get some info on the data in a data frame by using the `describe` function:
+
+```{python}
+print(customers.describe())
+```
+
+By default it just gives summaries of the floating or integer data.
+
+You can see here that it shows the mean age is 25.8 and the min and the max of the ages are 19 and 43.
+
+To get info on the other columns you can say to include those datatypes. Below we include the columns with datatype 'object":
+
+```{python}
+print(customers.describe(include=["object"]))
+```
+
+We can also refer to one particular entry in the data frame by using indices. The first index is for the row, and the second index is for the column.
+
+Remember that python is 0-based for its indices.
+
+First we print out the data frame so we can see everything:
+
+```{python}
+print(customers)
+```
+
+Now let's see some individual entries in the dataframe:
+
+```{python}
+print(customers.iloc[0, 0])
+print(customers.iloc[0, 1])
+print(customers.iloc[1, 0])
+print(customers.iloc[1, 1])
+print(customers.iloc[1, 3])
+```
+
+This is the 2nd row in its entirety:
+
+```{python}
+print(customers.iloc[1, :])
+```
+
+This is the 2nd column in its entirety:
+```{python}
+print(customers.iloc[:, 1])
+```
