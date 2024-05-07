@@ -45,13 +45,14 @@ print(len(isStudent))
 print(len(favColor))
 ```
 
-What does the structure of the data frame look like:
+What does the structure of the data frame look like? You can call the info
+method of the customers dataframe to see that:
 
 ```{python}
 print(customers.info())
 ```
 
-What are the data types of the columns:
+What are the data types of the columns. You can examine the dtypes field of the customers dataframe:
 
 ```{python}
 print(customers.dtypes)
@@ -104,25 +105,9 @@ print(customers)
 You can add a column of data by assigning a new column to the data frame:
 
 ```{python}
-favMusic = ['jazz', 'classical', 'electronic', 'country', 'electronic', 'pop', 'rock']
-customers['favMusic'] = favMusic
+customers['favMusic'] = ['jazz', 'classical', 'electronic', 'country', 'electronic', 'pop', 'rock']
+
 print(customers)
-```
-
-Finally, you can get some info on the data in a data frame by using the `describe` function:
-
-```{python}
-print(customers.describe())
-```
-
-By default it just gives summaries of the floating or integer data.
-
-You can see here that it shows the mean age is 25.8 and the min and the max of the ages are 19 and 43.
-
-To get info on the other columns you can say to include those datatypes. Below we include the columns with datatype 'object":
-
-```{python}
-print(customers.describe(include=["object"]))
 ```
 
 We can also refer to one particular entry in the data frame by using indices. The first index is for the row, and the second index is for the column.

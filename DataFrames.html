@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 7</code></pre>
 </div>
 </div>
-<p>What does the structure of the data frame look like:</p>
+<p>What does the structure of the data frame look like? You can call the info method of the customers dataframe to see that:</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.info())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -199,7 +199,7 @@ memory usage: 303.0+ bytes
 None</code></pre>
 </div>
 </div>
-<p>What are the data types of the columns:</p>
+<p>What are the data types of the columns. You can examine the dtypes field of the customers dataframe:</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -280,8 +280,8 @@ Name: age, dtype: int64</code></pre>
 </div>
 <p>You can add a column of data by assigning a new column to the data frame:</p>
 <div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>favMusic <span class="op">=</span> [<span class="st">'jazz'</span>, <span class="st">'classical'</span>, <span class="st">'electronic'</span>, <span class="st">'country'</span>, <span class="st">'electronic'</span>, <span class="st">'pop'</span>, <span class="st">'rock'</span>]</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>customers[<span class="st">'favMusic'</span>] <span class="op">=</span> favMusic</span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>customers[<span class="st">'favMusic'</span>] <span class="op">=</span> [<span class="st">'jazz'</span>, <span class="st">'classical'</span>, <span class="st">'electronic'</span>, <span class="st">'country'</span>, <span class="st">'electronic'</span>, <span class="st">'pop'</span>, <span class="st">'rock'</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      name  age  isStudent    favMusic
@@ -294,39 +294,11 @@ Name: age, dtype: int64</code></pre>
 6   Thomas   32      False        rock</code></pre>
 </div>
 </div>
-<p>Finally, you can get some info on the data in a data frame by using the <code>describe</code> function:</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.describe())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             age
-count   7.000000
-mean   26.428571
-std     8.363754
-min    19.000000
-25%    22.000000
-50%    23.000000
-75%    28.000000
-max    43.000000</code></pre>
-</div>
-</div>
-<p>By default it just gives summaries of the floating or integer data.</p>
-<p>You can see here that it shows the mean age is 25.8 and the min and the max of the ages are 19 and 43.</p>
-<p>To get info on the other columns you can say to include those datatypes. Below we include the columns with datatype ’object”:</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.describe(include<span class="op">=</span>[<span class="st">"object"</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         name    favMusic
-count       7           7
-unique      7           6
-top     James  electronic
-freq        1           2</code></pre>
-</div>
-</div>
 <p>We can also refer to one particular entry in the data frame by using indices. The first index is for the row, and the second index is for the column.</p>
 <p>Remember that python is 0-based for its indices.</p>
 <p>First we print out the data frame so we can see everything:</p>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      name  age  isStudent    favMusic
 0    James   23       True        jazz
@@ -339,12 +311,12 @@ freq        1           2</code></pre>
 </div>
 </div>
 <p>Now let’s see some individual entries in the dataframe:</p>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">0</span>, <span class="dv">0</span>])</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">0</span>, <span class="dv">1</span>])</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, <span class="dv">0</span>])</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, <span class="dv">1</span>])</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, <span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, <span class="dv">0</span>])</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, <span class="dv">3</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>James
 23
@@ -354,8 +326,8 @@ classical</code></pre>
 </div>
 </div>
 <p>This is the 2nd row in its entirety:</p>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, :])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, :])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>name             Sally
 age                 43
@@ -365,8 +337,8 @@ Name: 1, dtype: object</code></pre>
 </div>
 </div>
 <p>This is the 2nd column in its entirety:</p>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[:, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[:, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0    23
 1    43

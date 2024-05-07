@@ -2,7 +2,7 @@ SHELL:=/bin/bash
 
 SOURCES:=$(wildcard *.qmd)
 #SOURCES:= SimpleCompletion.qmd ReviewChain.qmd SimpleLLMChain.qmd MoreSimpleLLMChain.qmd MovieChain.qmd ClassifyCustomerQueries.qmd Roles.qmd MoreRoles.qmd CustomersSay.qmd TwoProducts.qmd
-SOURCES:= DataFrames.qmd
+SOURCES:= MoreDataFrames.qmd DataFrames.qmd
 
 #SOURCES:= Roles.qmd
 SOURCES:=$(filter-out index.qmd, $(SOURCES))

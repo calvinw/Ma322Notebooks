@@ -1,0 +1,109 @@
+---
+title: "More DataFrames"
+---
+
+In this exercise, we will work with a data frame representing students in a classroom. The data frame has the following columns: `name`, `age`, `grade`, and `favSubject`.
+
+| name | age | grade | favSubject |
+|------|-----|-------|------------|
+| Emma | 14 | 9 | Math |
+| Liam | 15 | 10 | Science |
+| Olivia | 13 | 8 | English |
+| Noah | 15 | 10 | History |
+| Ava | 16 | 11 | Biology |
+| William | 14 | 9 | Physics |
+| Sophia | 13 | 8 | Art |
+| Jacob | 15 | 10 | Math |
+
+Here's how we create the data frame in Python using the pandas library:
+
+```{python}
+import pandas as pd
+
+name = ['Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'William', 'Sophia', 'Jacob']
+age = [14, 15, 13, 15, 16, 14, 13, 15]
+grade = [9, 10, 8, 10, 11, 9, 8, 10]
+favSubject = ['Math', 'Science', 'English', 'History', 'Biology', 'Physics', 'Art', 'Math']
+
+studentDict = {
+  'name': name,
+  'age': age,
+  'grade': grade,
+  'favSubject': favSubject
+}
+
+students = pd.DataFrame(studentDict)
+```
+
+Let's explore the data frame:
+
+- Print the first few rows of the data frame using the `head` method on the `students` dataframe:
+
+```{python}
+#| eval: false
+print(CODE)
+```
+```{python}
+# Solution:
+print(students.head())
+```
+
+- Check the data types of the columns using the `dtypes` field of the `students` dataframe
+
+```{python}
+#| eval: false
+print(CODE)
+```
+```{python}
+# Solution:
+print(students.dtypes)
+```
+
+- Select the 'name' column and print it out
+
+```{python}
+#| eval: false
+print(CODE)
+```
+```{python}
+# Solution:
+print(students['name'])
+```
+
+- Add a new column 'isSenior' with True/False values based on whether the student's grade is 11 or higher:
+
+```{python}
+#| eval: false
+CODE = [True, True, False, False, True, True, False, False]
+print(students)
+```
+```{python}
+# Solution:
+students['isSenior'] = [True, True, False, False, True, True, False, False]
+print(students)
+```
+
+- Remove the 'favSubject' column:
+
+```{python}
+#| eval: false
+CODE
+print(students)
+```
+```{python}
+# Solution:
+students = students.drop('favSubject', axis=1)
+print(students)
+```
+
+- Print out the element in the 2nd row and the 3rd column
+
+```{python}
+#| eval: false
+print(CODE)
+```
+```{python}
+# Solution:
+print(students.iloc[1,2])
+```
+
