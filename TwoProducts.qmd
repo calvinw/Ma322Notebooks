@@ -22,8 +22,6 @@ print(original_df)
 ### Rename the variables all with 0s and 1s
 
 ```{python}
-pd.set_option('future.no_silent_downcasting', True)
-
 mapping = {
     "gender": {"F": 0, "M": 1},
     "age": {"Adult": 0, "Young": 1},
@@ -104,8 +102,8 @@ plt.show()
 # Make predictions on test_df
 
 # make two predictions
-# one for F and Adult
-# one for M and Young
+# one for F and Young
+# one for M and Adult
 
 row1 = {"gender": 0, "age": 1}  # gender is F, age is Young
 row2 = {"gender": 1, "age": 0}  # gender is M, age is Adult
