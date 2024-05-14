@@ -1,0 +1,77 @@
+Sure, here's the Quarto file using Python instead of R:
+
+```yaml
+---
+title: "Decision Trees"
+jupyter: python3
+---
+
+```{python}
+import pandas as pd
+from sklearn import tree
+import matplotlib.pyplot as plt
+
+# Read data from URL
+url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFmRX4RW3PitgcJya0X2sRbSiD0J2t0oYewyhkkyWwR9i8NIaHiuQKrBtLlrwG9fzn4MvNOM92olnK/pub?gid=0&single=true&output=csv"
+df = pd.read_csv(url)
+```
+
+## Building a Decision Tree
+
+```{python}
+# Print the data
+print(df)
+```
+
+Let's sort it by gender:
+
+```{python}
+print(df.sort_values('gender'))
+```
+
+So, if we split on gender, here's what we would get:
+
+```{python}
+# Create a decision tree classifier and fit it to the data
+clf = tree.DecisionTreeClassifier(max_depth=1)
+clf = clf.fit(df[['gender']], df['product'])
+
+# Visualize the decision tree
+tree.plot_tree(clf, feature_names=['gender'], class_names=['product'], filled=True)
+plt.show()
+```
+
+Let's sort it by age:
+
+```{python}
+print(df.sort_values('age'))
+```
+
+```{python}
+# Create a decision tree classifier and fit it to the data
+clf = tree.DecisionTreeClassifier(max_depth=1)
+clf = clf.fit(df[['age']], df['product'])
+
+# Visualize the decision tree
+tree.plot_tree(clf, feature_names=['age'], class_names=['product'], filled=True)
+plt.show()
+```
+
+```{python}
+# Create a decision tree classifier and fit it to the data
+clf = tree.DecisionTreeClassifier(max_depth=3)
+clf = clf.fit(df[['age', 'gender']], df['product'])
+
+# Visualize the decision tree
+tree.plot_tree(clf, feature_names=['age', 'gender'], class_names=['product'], filled=True)
+plt.show()
+```
+
+```{python}
+# pred = clf.predict(testdf)
+# print(pred)
+```
+
+Note that in this Python version, I've used the scikit-learn library for building and visualizing the decision trees. The `tree.DecisionTreeClassifier` class is used to create the decision tree classifier, and the `tree.plot_tree` function is used to visualize the decision tree.
+
+Also, note that the last code block for making predictions on a test dataset is commented out, as we don't have a `testdf` defined in this example.

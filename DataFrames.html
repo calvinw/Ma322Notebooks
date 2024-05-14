@@ -94,6 +94,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="dataframes-and-pandas" class="level3">
+<h3 class="anchored" data-anchor-id="dataframes-and-pandas">DataFrames and Pandas</h3>
 <p>Data frames are one of the most used data structure in Python. They are essentially equivalent to the rows and columns in a spreadsheet. Each row is a different record from a set of records, and each column is a different attribute or property from that set of records.</p>
 <table class="table">
 <thead>
@@ -150,22 +152,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>In Python, we use the pandas library to work with data frames. Here is an example where we create a data frame from lists that represent the columns:</p>
+</section>
+<section id="create-the-columns-as-lists" class="level3">
+<h3 class="anchored" data-anchor-id="create-the-columns-as-lists">Create the Columns as Lists</h3>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> [<span class="st">'James'</span>, <span class="st">'Sally'</span>, <span class="st">'Rupert'</span>, <span class="st">'Octavia'</span>, <span class="st">'Belinda'</span>, <span class="st">'Linda'</span>, <span class="st">'Thomas'</span>]</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>age <span class="op">=</span> [<span class="dv">23</span>, <span class="dv">43</span>, <span class="dv">19</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">32</span>]</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>isStudent <span class="op">=</span> [<span class="va">True</span>, <span class="va">False</span>, <span class="va">True</span>, <span class="va">True</span>, <span class="va">False</span>, <span class="va">True</span>, <span class="va">False</span>]</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>favColor <span class="op">=</span> [<span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>, <span class="st">'red'</span>, <span class="st">'orange'</span>, <span class="st">'green'</span>, <span class="st">'purple'</span>]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>customersDict <span class="op">=</span> {</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">'name'</span>: name,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">'age'</span>: age,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">'isStudent'</span>: isStudent,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">'favColor'</span>: favColor</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> pd.DataFrame(customersDict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The columns</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> [<span class="st">'James'</span>, <span class="st">'Sally'</span>, <span class="st">'Rupert'</span>, <span class="st">'Octavia'</span>, <span class="st">'Belinda'</span>, <span class="st">'Linda'</span>, <span class="st">'Thomas'</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>age <span class="op">=</span> [<span class="dv">23</span>, <span class="dv">43</span>, <span class="dv">19</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">24</span>, <span class="dv">32</span>]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>isStudent <span class="op">=</span> [<span class="va">True</span>, <span class="va">False</span>, <span class="va">True</span>, <span class="va">True</span>, <span class="va">False</span>, <span class="va">True</span>, <span class="va">False</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>favColor <span class="op">=</span> [<span class="st">'red'</span>, <span class="st">'green'</span>, <span class="st">'blue'</span>, <span class="st">'red'</span>, <span class="st">'orange'</span>, <span class="st">'green'</span>, <span class="st">'purple'</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>customersDict <span class="op">=</span> {</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">'name'</span>: name,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">'age'</span>: age,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">'isStudent'</span>: isStudent,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">'favColor'</span>: favColor</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> pd.DataFrame(customersDict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Notice how each list has the same length.</p>
 <p>This is important when you are creating data frames.</p>
@@ -181,6 +187,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 7</code></pre>
 </div>
 </div>
+</section>
+<section id="show-the-structure-of-the-dataframe" class="level3">
+<h3 class="anchored" data-anchor-id="show-the-structure-of-the-dataframe">Show the Structure of the DataFrame</h3>
 <p>What does the structure of the data frame look like? You can call the info method of the customers dataframe to see that:</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.info())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -199,6 +208,9 @@ memory usage: 303.0+ bytes
 None</code></pre>
 </div>
 </div>
+</section>
+<section id="show-the-data-types-of-the-columns" class="level3">
+<h3 class="anchored" data-anchor-id="show-the-data-types-of-the-columns">Show the Data Types of the Columns</h3>
 <p>What are the data types of the columns. You can examine the dtypes field of the customers dataframe:</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -235,6 +247,9 @@ dtype: object</code></pre>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(columnsDict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="printing-a-column-of-a-dataframe" class="level3">
+<h3 class="anchored" data-anchor-id="printing-a-column-of-a-dataframe">Printing a Column of a DataFrame</h3>
 <p>Now there are various ways to refer to the rows and the columns in a data frame. We can refer to a column by using its name. Here is the name column:</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers[<span class="st">'name'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -263,6 +278,9 @@ Name: name, dtype: object</code></pre>
 Name: age, dtype: int64</code></pre>
 </div>
 </div>
+</section>
+<section id="removing-a-column-of-a-dataframe" class="level3">
+<h3 class="anchored" data-anchor-id="removing-a-column-of-a-dataframe">Removing a Column of a DataFrame</h3>
 <p>You can remove a column of data by dropping it from the data frame:</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> customers.drop(<span class="st">'favColor'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
@@ -278,6 +296,9 @@ Name: age, dtype: int64</code></pre>
 6   Thomas   32      False</code></pre>
 </div>
 </div>
+</section>
+<section id="adding-a-column-of-a-dataframe" class="level3">
+<h3 class="anchored" data-anchor-id="adding-a-column-of-a-dataframe">Adding a Column of a DataFrame</h3>
 <p>You can add a column of data by assigning a new column to the data frame:</p>
 <div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>customers[<span class="st">'favMusic'</span>] <span class="op">=</span> [<span class="st">'jazz'</span>, <span class="st">'classical'</span>, <span class="st">'electronic'</span>, <span class="st">'country'</span>, <span class="st">'electronic'</span>, <span class="st">'pop'</span>, <span class="st">'rock'</span>]</span>
@@ -294,6 +315,9 @@ Name: age, dtype: int64</code></pre>
 6   Thomas   32      False        rock</code></pre>
 </div>
 </div>
+</section>
+<section id="using-indices-to-refer-to-different-items" class="level3">
+<h3 class="anchored" data-anchor-id="using-indices-to-refer-to-different-items">Using Indices to Refer to Different Items</h3>
 <p>We can also refer to one particular entry in the data frame by using indices. The first index is for the row, and the second index is for the column.</p>
 <p>Remember that python is 0-based for its indices.</p>
 <p>First we print out the data frame so we can see everything:</p>
@@ -325,6 +349,9 @@ Sally
 classical</code></pre>
 </div>
 </div>
+</section>
+<section id="printing-a-row" class="level3">
+<h3 class="anchored" data-anchor-id="printing-a-row">Printing a Row</h3>
 <p>This is the 2nd row in its entirety:</p>
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[<span class="dv">1</span>, :])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -336,6 +363,9 @@ favMusic     classical
 Name: 1, dtype: object</code></pre>
 </div>
 </div>
+</section>
+<section id="printing-a-column" class="level3">
+<h3 class="anchored" data-anchor-id="printing-a-column">Printing a Column</h3>
 <p>This is the 2nd column in its entirety:</p>
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(customers.iloc[:, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -350,6 +380,7 @@ Name: 1, dtype: object</code></pre>
 Name: age, dtype: int64</code></pre>
 </div>
 </div>
+</section>
 
 </main>
 <!-- /main column -->

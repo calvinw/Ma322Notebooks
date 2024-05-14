@@ -2,6 +2,8 @@
 title: "Data Frames"
 ---
 
+### DataFrames and Pandas
+
 Data frames are one of the most used data structure in Python. They are essentially equivalent to the rows and columns in a spreadsheet. Each row is a different record from a set of records, and each column is a different attribute or property from that set of records.
 
 | name | age | isStudent | favColor |
@@ -16,9 +18,12 @@ Data frames are one of the most used data structure in Python. They are essentia
 
 In Python, we use the pandas library to work with data frames. Here is an example where we create a data frame from lists that represent the columns:
 
+### Create the Columns as Lists
+
 ```{python}
 import pandas as pd
 
+# The columns
 name = ['James', 'Sally', 'Rupert', 'Octavia', 'Belinda', 'Linda', 'Thomas']
 age = [23, 43, 19, 21, 23, 24, 32]
 isStudent = [True, False, True, True, False, True, False]
@@ -45,12 +50,16 @@ print(len(isStudent))
 print(len(favColor))
 ```
 
+### Show the Structure of the DataFrame
+
 What does the structure of the data frame look like? You can call the info
 method of the customers dataframe to see that:
 
 ```{python}
 print(customers.info())
 ```
+
+### Show the Data Types of the Columns
 
 What are the data types of the columns. You can examine the dtypes field of the customers dataframe:
 
@@ -83,6 +92,8 @@ columnsDict = {
 pd.DataFrame(columnsDict)
 ```
 
+### Printing a Column of a DataFrame
+
 Now there are various ways to refer to the rows and the columns in a data frame. We can refer to a column by using its name. Here is the name column:
 
 ```{python}
@@ -95,12 +106,16 @@ And the ages column:
 print(customers['age'])
 ```
 
+### Removing a Column of a DataFrame
+
 You can remove a column of data by dropping it from the data frame:
 
 ```{python}
 customers = customers.drop('favColor', axis=1)
 print(customers)
 ```
+
+### Adding a Column of a DataFrame
 
 You can add a column of data by assigning a new column to the data frame:
 
@@ -109,6 +124,8 @@ customers['favMusic'] = ['jazz', 'classical', 'electronic', 'country', 'electron
 
 print(customers)
 ```
+
+### Using Indices to Refer to Different Items
 
 We can also refer to one particular entry in the data frame by using indices. The first index is for the row, and the second index is for the column.
 
@@ -130,11 +147,15 @@ print(customers.iloc[1, 1])
 print(customers.iloc[1, 3])
 ```
 
+### Printing a Row
+
 This is the 2nd row in its entirety:
 
 ```{python}
 print(customers.iloc[1, :])
 ```
+
+### Printing a Column
 
 This is the 2nd column in its entirety:
 ```{python}
