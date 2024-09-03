@@ -2,7 +2,7 @@
 title: "Review Chain"
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ## Review Chain
 

@@ -16,12 +16,12 @@ You can find out the data type of a variable by using the `type()` function.
 
 ## Float (Decimal)
 
-The data type for decimal numbers like 3.2, -2.34, 0.0 is float.
+The data type for decimal numbers like 3.2, -2.34, 0.0 is `float`.
 
 The following variable has a data type of float:
 
 ```{python}
-x = 3.2
+x = 2.3 
 print(type(x))
 ```
 
@@ -34,13 +34,14 @@ Examples are "Bob", "We are the champions", "Fee Fi Fo".
 ```{python}
 y = "hi there"
 print(type(y))
+
 z = "XXXYYYZZZ"
 print(type(z))
 ```
 
 ## Integer
 
-There is a separate data type for integers (..., -3, -2, -1, 0, 1, 2, 3, ...).
+There is a separate data type for integers (..., -3, -2, -1, 0, 1, 2, 3, ...). Its called `int`.
 
 ```{python}
 a = 3
@@ -54,24 +55,26 @@ The data type for something that holds `True` or `False` is `bool`. This is Pyth
 ```{python}
 u = True
 print(type(u))
+
 v = False
 print(type(v))
 ```
 
-## Checking Types
+You can also just find the type of an expression without having to make it a variable. Here are all the examples from our table above.
 
-There are functions for checking the type of a variable or expression, which can be more convenient than using the `type()` function. Each of these returns `True` or `False` depending on whether the value is that type or not:
-
-|  Checking types    |  Function     | Example                   |
-|--------------------|----------------|-----------------------------|
-|  Float             |   `isinstance(x, float)`  | `isinstance(2.32, float)`  |
-|  String            |   `isinstance(x, str)`   | `isinstance("hello", str)`  |
-|  Integer           |   `isinstance(x, int)`   | `isinstance(2, int)`        |
-|  Boolean           |   `isinstance(x, bool)`  | `isinstance(True, bool)`    |
+```{python}
+print(type(2.32))
+print(type(-0.45))
+print(type("hello"))
+print(type("k"))
+print(type(12))
+print(type(True))
+print(type(False))
+```
 
 ## Converting Types
 
-You can change a variable's type if you need to using these functions:
+You can change a variable's type if you need. This is called *converting* the data from one type to another. 
 
 |  Changing types    |  Function     | Example                   |
 |--------------------|----------------|-----------------------------|
@@ -80,7 +83,12 @@ You can change a variable's type if you need to using these functions:
 |  Integer           |   `int(x)`    | `int(2.0)`                |
 |  Boolean           |   `bool(x)`   | `bool(1)`                 |
 
-### String to Float
+The first example converts `2` from `int` to a `float`  
+The second example converts `123` from `int` to a `str`  
+The third example converts `2.0` from `float` to a `int`  
+The fourth example converts `1` from `int`  to a `bool`  
+
+### Convert String to Float
 
 One use for this is to convert a string like "1.23" to a number 1.23. This happens frequently when reading data from files, as numbers are often stored as strings initially.
 
@@ -88,31 +96,29 @@ With quotes around it, a number will be seen as a string. Here is an example:
 
 ```{python}
 myData = "1.23"
-print(isinstance(myData, str))
-print(isinstance(myData, float))
+print(type(myData))
 ```
 
 To change the string "1.23" to a number, we must use `float()` to convert the string to a float:
 
 ```{python}
 myOtherData = float(myData)
-print(isinstance(myOtherData, float))
-print(myOtherData)
+print(type(myOtherData))
 ```
 
-### Float to String
+What happened above was that `myData` was a string data type, but `myOtherData` was a float data type. We call this a *conversion*  when we change the data from one data type to another
 
-We can also convert a number to a string.
+### Convert Float to String
+
+We can also convert a number to a string. This sometimes happens when data is stored to a file.
 
 Below, we create a number, then convert it to a string.
 
 ```{python}
 aNumber = 4.56
-print(aNumber)
-print(isinstance(aNumber, float))
+print(type(aNumber))
 
 aString = str(aNumber)
-print(aString)
-print(isinstance(aString, str))
+print(type(aString))
 ```
 

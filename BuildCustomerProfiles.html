@@ -94,54 +94,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell" data-execution_count="1">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Please set up your OPENROUTER_API_KEY</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"OPENROUTER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<section id="put-your-openrouter_api_key-here" class="level3">
+<h3 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h3>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"OPENROUTER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "mistralai/mistral-7b-instruct:free"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openai/gpt-4"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openai/gpt-3.5-turbo"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mistral-medium"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mistral-large"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/mixtral-8x7b-instruct"</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>model_name<span class="op">=</span><span class="st">"anthropic/claude-3-haiku"</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="anthropic/claude-3-sonnet"</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="anthropic/claude-3-opus"</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openchat/openchat-7b:free"</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openchat/openchat-7b"</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="databricks/dbrx-instruct"</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: Open Router"</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span>, model_name)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    model_name</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">NameError</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model Name:"</span>, model_name)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider:"</span>, <span class="st">"OpenRouter AI"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Provider: Open Router
-Model:  anthropic/claude-3-haiku</code></pre>
+<pre><code>Model Name: openai/gpt-4o-mini
+Provider: OpenRouter AI</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
@@ -184,7 +175,7 @@ Model:  anthropic/claude-3-haiku</code></pre>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>info<span class="op">=</span><span class="st">"""</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">Fitbit Versa 2 Smartwatch - $149.95</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">Yoga mat - $29.99</span></span>
@@ -203,7 +194,7 @@ Model:  anthropic/claude-3-haiku</code></pre>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="st">Subscription box (Keto snack box) - $38.00/month</span></span>
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">You are an AI assistant tasked with generating a customer profile based on the</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">following list of recent products purchased by a customer. The list includes</span></span>
@@ -223,61 +214,116 @@ Model:  anthropic/claude-3-haiku</code></pre>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">the provided data.</span></span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> prompt.<span class="bu">format</span>(customer_info <span class="op">=</span> info)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Based on the list of recent purchases, the following customer profile can be
-generated:
+<pre><code>Prompt: 
+You are an AI assistant tasked with generating a customer profile based on the
+following list of recent products purchased by a customer. The list includes
+the product name and price:
 
-Demographic Details:
-- Age range: Likely between 25-45 years old
-- Gender: Likely a health-conscious individual, potentially female
-- Location: Difficult to determine, but likely lives in an urban or suburban
-area with access to a variety of retail and online shopping options
-- Household status: Likely lives independently or with a partner, potentially
-has a family
 
-Interests and Lifestyle:
-- Hobbies and activities: Fitness and wellness (Fitbit, yoga mat, protein
-powder, water bottle), technology and entertainment (noise-canceling headphones,
-Kindle), outdoor recreation (camping, hiking), cooking and home improvement
-(blender, cooking utensils, cast iron skillet)
-- Diet and health preferences: Interested in healthy and sustainable living,
-potentially following a specific diet (e.g., keto)
+Fitbit Versa 2 Smartwatch - $149.95
+Yoga mat - $29.99
+Blender (NutriBullet) - $79.99
+Organic protein powder - $24.99 (for 2lb tub)
+Reusable water bottle - $19.95
+Noise-canceling headphones (Sony WH-1000XM4) - $348.00
+Kindle Paperwhite e-reader - $139.99
+Gardening tools (pruning shears, trowel, gloves) - $39.97
+Outdoor camping backpack - $89.95
+Hiking boots - $124.99
+Travel luggage set (3-piece) - $149.99
+Language learning software (Babbel subscription) - $12.95/month
+Cooking utensil set (10-piece) - $39.99
+Cast iron skillet - $24.99
+Subscription box (Keto snack box) - $38.00/month
 
-Income and Spending Habits:
-- Budget range: Appears to have a moderate to high disposable income, with a
-willingness to invest in quality products across various categories
-- Spending habits: Likely values functionality, durability, and brand reputation
-when making purchases, as evidenced by the high-end products (e.g., Sony
-headphones, Kindle Paperwhite)
-- Subscription services: Interested in ongoing services that provide convenience
-and support their lifestyle (e.g., Babbel language learning, Keto snack box)
 
-Recommendations:
-Based on the customer's interests and spending habits, the following additional
-products and services may be of interest:
-- Fitness and wellness: Smart home gym equipment, fitness trackers, nutritional
-supplements, healthy meal delivery services
-- Outdoor recreation: Camping and hiking gear (e.g., tents, sleeping bags,
-navigation devices), outdoor apparel and accessories
-- Home and cooking: High-quality kitchen appliances (e.g., air fryer, instant
-pot), specialty cookware and utensils, meal planning and recipe subscription
-services
-- Technology and entertainment: Tablet or laptop, smart home devices, streaming
-service subscriptions
-- Travel and lifestyle: Luggage and travel accessories, subscription boxes for
-hobbies and interests (e.g., book, wine, or art-related)
+Using this information, provide a detailed customer profile that includes:
 
-Overall, this customer appears to be a health-conscious, tech-savvy individual
-with a diverse range of interests and a willingness to invest in quality
-products and services that support their lifestyle. Targeting them with
-relevant, high-end offerings across various categories could be an effective
-marketing strategy.</code></pre>
+Potential demographic details (age range, gender, location, household
+status) Interests and lifestyle (hobbies, activities, diet/health
+preferences) Income and spending habits (budget range, willingness to pay
+for certain products/services) Recommendations for other products/services
+this customer may be interested in based on their purchases Your response
+should be well-structured, providing the requested details in separate
+sections. Avoid making assumptions that cannot be reasonably inferred from
+the provided data.
+
+Response: 
+### Customer Profile
+
+#### Demographic Details
+- **Age Range**: Likely between 25-45 years old. This age range is inferred from
+the types of products purchased, which suggest a focus on health, fitness, and
+technology.
+- **Gender**: Gender is not explicitly indicated, but the variety of products
+suggests a unisex profile. However, the inclusion of gardening tools and cooking
+items may hint at a female demographic, though this is not definitive.
+- **Location**: Likely resides in an urban or suburban area where access to
+fitness, outdoor activities, and technology is prevalent. The purchase of items
+like hiking boots and camping gear suggests proximity to outdoor recreational
+areas.
+- **Household Status**: Potentially single or in a relationship, possibly
+without children. The focus on personal fitness, travel, and hobbies suggests a
+lifestyle that prioritizes individual interests over family-oriented purchases.
+
+#### Interests and Lifestyle
+- **Hobbies**:
+  - Fitness and wellness (evidenced by the purchase of a smartwatch, yoga mat,
+protein powder, and noise-canceling headphones for workouts).
+  - Outdoor activities (indicated by the purchase of hiking boots, camping
+backpack, and gardening tools).
+  - Reading and learning (suggested by the Kindle Paperwhite and language
+learning software).
+  - Cooking and healthy eating (reflected in the purchase of cooking utensils, a
+cast iron skillet, and a subscription box for keto snacks).
+
+- **Activities**: Engages in regular exercise, outdoor adventures, and possibly
+cooking or meal prep. Likely enjoys reading and self-improvement through
+language learning.
+
+- **Diet/Health Preferences**: Shows a preference for health-conscious products,
+such as organic protein powder and keto snacks, indicating an interest in
+fitness and possibly a low-carb or health-focused diet.
+
+#### Income and Spending Habits
+- **Budget Range**: Likely has a moderate to high disposable income, as
+indicated by the willingness to spend on quality products (e.g., noise-canceling
+headphones, Fitbit, and travel luggage set).
+- **Willingness to Pay**: Willing to invest in health and fitness-related
+products, technology, and quality cooking tools. The customer appears to
+prioritize quality and functionality over price, as seen in the selection of
+premium brands and products.
+
+#### Recommendations for Other Products/Services
+Based on the customer's purchasing behavior, the following products and services
+may be of interest:
+
+1. **Fitness Equipment**: Resistance bands, kettlebells, or a yoga block for
+home workouts.
+2. **Outdoor Gear**: A portable camping stove, sleeping bag, or a multi-tool for
+camping trips.
+3. **Health and Wellness Subscriptions**: A meal kit delivery service focused on
+healthy eating or a fitness app subscription for guided workouts.
+4. **Books and E-books**: Titles related to fitness, healthy cooking, or
+personal development to complement the Kindle Paperwhite.
+5. **Travel Accessories**: Packing cubes, travel-sized toiletries, or a travel
+pillow for comfort during trips.
+6. **Gardening Supplies**: Organic seeds, plant care books, or a compost bin for
+sustainable gardening practices.
+7. **Tech Gadgets**: Smart home devices or fitness trackers that integrate with
+the Fitbit for enhanced health monitoring.
+
+This customer profile provides a comprehensive overview of the individual's
+preferences and lifestyle, allowing for targeted marketing and product
+recommendations.</code></pre>
 </div>
 </div>
+</section>
 
 </main>
 <!-- /main column -->

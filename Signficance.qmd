@@ -1,0 +1,242 @@
+---
+title: "Regression Models and Significance"
+format: 
+  revealjs:
+    theme: simple
+    transition: slide
+    slide-number: true
+---
+
+## Significant ( $p < .05$ )
+
+- There is a **significant** linear relationship between the $y$ and the $x$ 
+
+- This means you **can use the regression equation** for predictions, provided the accuracy is good enough (see the standard error for this)
+
+- Graphically this means **there is enough data and you are convinced where the trendline is**
+
+- We say: _The model is significant_
+
+## Not Significant ( $p \geq .05$ )
+
+- There is **not a significant** linear relationship between the $y$ and the $x$ 
+
+- This means you **can not use the regression equation** for predictions
+
+- Graphically this means **there is not enough data or you are not convinced where the trendline is**
+
+- We say: _The model is not significant_
+
+##
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import random
+from scipy import stats
+import pandas as pd
+
+np.random.seed(42)
+
+def generate_data(slope, intercept, noise, n=75):
+    x = np.linspace(0, 10, n)
+    y = slope * x + intercept + np.random.normal(0, noise, n)
+    return x, np.clip(y, 0, 10)
+
+def create_plot(ax, x, y):
+    sns.scatterplot(x=x, y=y, ax=ax, s=100)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 10)
+
+plt.style.use('default')
+sns.set_theme(style="whitegrid")
+
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+fig.suptitle("Linear Relationships in Bivariate Data (75 data points)", fontsize=16)
+
+plots = [
+    (1, 0, 1),
+    (-1, 10, 1),
+    (0.5, 2, 1),
+    (-0.5, 8, 2),
+    (0.2, 4, 2),
+    (-0.2, 6, 2)
+]
+
+random.shuffle(plots)
+
+datasets_75 = []
+
+for (i, j), (slope, intercept, noise) in zip(np.ndindex(2, 3), plots):
+    x, y = generate_data(slope, intercept, noise)
+    create_plot(axes[i, j], x, y)
+    datasets_75.append(pd.DataFrame({'x': x, 'y': y}))
+
+plt.tight_layout()
+plt.show()
+
+# Save datasets
+for i, dataset in enumerate(datasets_75):
+    dataset.to_csv(f'dataset_75points_{i+1}.csv', index=False)
+```
+
+## P-values (75 data values) 
+
+```{python}
+import pandas as pd
+from scipy import stats
+
+# Load datasets and calculate p-values
+p_values_75 = []
+for i in range(6):
+    df = pd.read_csv(f'dataset_75points_{i+1}.csv')
+    p_value = stats.linregress(df['x'], df['y']).pvalue
+    p_values_75.append(p_value)
+
+# Create a DataFrame with the p-values
+df_p_values_75 = pd.DataFrame({
+    'Dataset': [f'Dataset {i+1}' for i in range(6)],
+    'P-value': p_values_75
+})
+
+# Display the p-values in regular notation
+pd.set_option('display.float_format', '{:.50f}'.format)
+print(df_p_values_75.to_string(index=False))
+```
+
+##
+
+```{python}
+np.random.seed(34)
+
+def generate_data(slope, intercept, noise, n=10):
+    x = np.linspace(0, 10, n)
+    y = slope * x + intercept + np.random.normal(0, noise, n)
+    return x, np.clip(y, 0, 10)
+
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+fig.suptitle("Linear Relationships in Bivariate Data (10 data points)", fontsize=16)
+
+random.shuffle(plots)
+
+datasets_10 = []
+
+for (i, j), (slope, intercept, noise) in zip(np.ndindex(2, 3), plots):
+    x, y = generate_data(slope, intercept, noise)
+    create_plot(axes[i, j], x, y)
+    datasets_10.append(pd.DataFrame({'x': x, 'y': y}))
+
+plt.tight_layout()
+plt.show()
+
+# Save datasets
+for i, dataset in enumerate(datasets_10):
+    dataset.to_csv(f'dataset_10points_{i+1}.csv', index=False)
+```
+
+## P-values (10 data values) 
+
+```{python}
+# Load datasets and calculate p-values
+p_values_10 = []
+for i in range(6):
+    df = pd.read_csv(f'dataset_10points_{i+1}.csv')
+    p_value = stats.linregress(df['x'], df['y']).pvalue
+    p_values_10.append(p_value)
+
+# Create a DataFrame with the p-values
+df_p_values_10 = pd.DataFrame({
+    'Dataset': [f'Dataset {i+1}' for i in range(6)],
+    'P-value': p_values_10
+})
+
+# Display the p-values
+pd.set_option('display.float_format', '{:.10f}'.format)
+print(df_p_values_10.to_string(index=False))
+```
+
+## 
+
+```{python}
+np.random.seed(12)
+
+def generate_data(slope, intercept, noise, n=4):
+    x = np.linspace(0, 10, n)
+    y = slope * x + intercept + np.random.normal(0, noise, n)
+    return x, y
+
+def create_plot(ax, x, y):
+    sns.scatterplot(x=x, y=y, ax=ax, s=300)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    
+    x_min, x_max = min(x), max(x)
+    y_min, y_max = min(y), max(y)
+    x_padding = (x_max - x_min) * 0.1
+    y_padding = (y_max - y_min) * 0.1
+    ax.set_xlim(x_min - x_padding, x_max + x_padding)
+    ax.set_ylim(y_min - y_padding, y_max + y_padding)
+
+fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+fig.suptitle("Linear Relationships in Bivariate Data (4 data points)", fontsize=16)
+
+random.shuffle(plots)
+
+datasets_4 = []
+
+for (i, j), (slope, intercept, noise) in zip(np.ndindex(2, 3), plots):
+    x, y = generate_data(slope, intercept, noise)
+    create_plot(axes[i, j], x, y)
+    datasets_4.append(pd.DataFrame({'x': x, 'y': y}))
+
+plt.tight_layout()
+plt.show()
+
+# Save datasets
+for i, dataset in enumerate(datasets_4):
+    dataset.to_csv(f'dataset_4points_{i+1}.csv', index=False)
+```
+
+## P-values (4 data values) 
+
+```{python}
+# Load datasets and calculate p-values
+p_values_4 = []
+for i in range(6):
+    df = pd.read_csv(f'dataset_4points_{i+1}.csv')
+    p_value = stats.linregress(df['x'], df['y']).pvalue
+    p_values_4.append(p_value)
+
+# Create a DataFrame with the p-values
+df_p_values_4 = pd.DataFrame({
+    'Dataset': [f'Dataset {i+1}' for i in range(6)],
+    'P-value': p_values_4
+})
+
+# Display the p-values
+pd.set_option('display.float_format', '{:.5f}'.format)
+print(df_p_values_4.to_string(index=False))
+```
+
+## Comparison of P-values Across All Datasets
+
+```{python}
+import pandas as pd
+
+# Reset float format to default
+pd.reset_option('display.float_format')
+
+# Combine all p-values into a single DataFrame
+df_all_p_values = pd.DataFrame({
+    'Dataset': [f'Dataset {i+1}' for i in range(6)],
+    'P-value (75 points)': p_values_75,
+    'P-value (10 points)': p_values_10,
+    'P-value (4 points)': p_values_4
+})
+
+# Display the combined p-values
+print(df_all_p_values.to_string(index=False))
+```

@@ -2,7 +2,7 @@
 title: "Delimiters"
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ## Calling an LLM without delimiters
 

@@ -1,4 +1,13 @@
 ```{python}
+#| eval: true
+#| echo: false
+#| output: false
+from dotenv import load_dotenv
+load_dotenv()
+```
+### Put Your OPENROUTER_API_KEY here
+
+```{python}
 #| eval: false
 #| code-fold: true
 import os
@@ -9,29 +18,20 @@ os.environ["OPENROUTER_API_KEY"] = "paste_your_api_key_here"
 #| code-fold: true
 !pip3 install langchain langchain_openai
 ```
+
 ```{python}
 #| eval: true
 #| code-fold: true
 import os
 from langchain_openai import ChatOpenAI
 
-#model_name = "mistralai/mistral-7b-instruct:free"
-#model_name="openai/gpt-4"
-#model_name="openai/gpt-3.5-turbo"
-#model_name="mistralai/mistral-medium"
-#model_name="mistralai/mistral-large"
-#model_name="mistralai/mixtral-8x7b-instruct"
-model_name="anthropic/claude-3-haiku"
-#model_name="anthropic/claude-3-sonnet"
-#model_name="anthropic/claude-3-opus"
-#model_name="openchat/openchat-7b:free"
-#model_name="openchat/openchat-7b"
-#model_name="databricks/dbrx-instruct"
-#model_name="huggingfaceh4/zephyr-orpo-141b-a35b"
-#model_name="fireworks/mixtral-8x22b-instruct-preview"
+try:
+    model_name
+except NameError:
+    model_name="openai/gpt-4o-mini"
 
-print("Provider: Open Router")
-print("Model: ", model_name)
+print("Model Name:", model_name)
+print("Provider:", "OpenRouter AI")
 
 llm=ChatOpenAI(model_name=model_name,
                openai_api_key=os.environ.get("OPENROUTER_API_KEY"),

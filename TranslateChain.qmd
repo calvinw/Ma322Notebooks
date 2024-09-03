@@ -2,7 +2,7 @@
 title: "Translate Chain"
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 We will analyze a customer review, including translating and summarizing it.
 Then try to compose a response

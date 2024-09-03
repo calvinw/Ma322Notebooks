@@ -1,8 +1,12 @@
 ---
 title: "More Functions"
+execute:
+    eval: false
 ---
 
 ## Defining and Calling Functions
+
+__Problem__: 
 
 - Below finish defining a function called `say_hi` that prints "Hi there!" when
   called. Part of the definition is already there. Just finish it where you see
@@ -10,31 +14,30 @@ title: "More Functions"
 - After fixing it, execute the code block to define your function
 
 ```{python}
-#| eval: false
 def say_hi():
   CODE
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__
 def say_hi():
     print("Hi there!")
-
 ```
+
+__Problem__: 
 
 - Call the `say_hi` function you defined above.
 
 ```{python}
-#| eval: false
 CODE
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__
 say_hi()
 ```
 
 ## Function Arguments
+
+__Problem__: 
 
 - Define a function called `greet_by_name` that takes a `name` argument and
   prints "Welcome [name]" when called. Some of the function is already set up.
@@ -42,32 +45,31 @@ say_hi()
 - After fixing it, execute the code block to define your function
 
 ```{python}
-#| eval: false
 CODE greet_by_name(CODE):
   print("Welcome " + name)
-
 ```
 
 ```{python}
-# Solution:
+# __SOLUTION__
 def greet_by_name(name):
   print("Welcome, " + name)
-
 ```
+
+__Problem__: 
 
 - Call the `greet_by_name` function with the argument "John".
 
 ```{python}
-#| eval: false
 CODE
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__ 
 greet_by_name("John")
 ```
 
 ## Default Arguments
+
+__Problem__: 
 
 - Define a function called `greet_with_default_name` that takes a `name`
   argument with a default value of "Guest" and prints "Hello [name] Nice to
@@ -75,76 +77,75 @@ greet_by_name("John")
 - After fixing it, execute the code block to define your function
 
 ```{python}
-#| eval: false
 def greet_with_default_name(CODE):
   print("Hello " + name +" Nice to meet you")
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__ 
 def greet_with_default_name(name="Guest"):
   print("Hello, " + name + "! Nice to meet you.")
 ```
 
+__Problem__: 
+
 - Call the `greet_with_default_name` function with no argument.
 
 ```{python}
-#| eval: false
 CODE
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__ 
 greet_with_default_name()
 ```
 
+__Problem__: 
 - Call the `greet_with_default_name` function with the argument "Sam".
 
 ```{python}
-#| eval: false
 CODE
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__ 
 greet_with_default_name("Sam")
 ```
 
 ## Return Values
 
+__Problem__: 
+
 - Define a function called `add_numbers` that takes two arguments `num1` and `num2`, adds them, and returns the result.
 - After fixing it, execute the code block to define your function
 
 ```{python}
-#| eval: false
 def add_numbers(num1, num2):
   CODE
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__ 
 def add_numbers(num1, num2):
     result = num1 + num2
     return result
 
 ```
 
+__Problem__: 
+
 - Call the `add_numbers` function with arguments 5 and 7, and store the result in a variable called `sum_result`.
 - Print out `sum_result`
 
 ```{python}
-#| eval: false
 CODE = add_numbers(CODE, CODE)
 print(CODE)
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__
 sum_result = add_numbers(5, 7)
 print(sum_result)
 ```
 
 ## Keyword Arguments
+
+__Problem__: 
 
 - Define a function called `introduce_person` that takes two arguments `name`
   and `age`, and prints "This is [name] they are [age] years old." when called.
@@ -152,28 +153,26 @@ print(sum_result)
 - After fixing it, execute the code block to define your function
 
 ```{python}
-#| eval: false
 def introduce_person(CODE):
   print("This is " + name + "they are " + str(age) + "years old")
 
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__
 def introduce_person(name, age):
     print("This is " + name + " they are " + str(age) + " years old")
 
 ```
 
+__Problem__: 
+
 - Call the `introduce_person` function using keyword arguments with
   `name="Alice"` and `age=25`.
 
 ```{python}
-#| eval: false
 introduce_person(CODE)
 ```
-
 ```{python}
-# Solution:
+# __SOLUTION__
 introduce_person(name="Alice", age=25)
 ```

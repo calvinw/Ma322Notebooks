@@ -2,7 +2,7 @@
 title: 'Product Inquiries'
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 # Product Inquiries for a Retail Store
 

@@ -94,48 +94,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell" data-execution_count="1">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
+<section id="put-your-openrouter_api_key-here" class="level3">
+<h3 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h3>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"OPENROUTER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    model_name</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">NameError</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model Name:"</span>, model_name)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider:"</span>, <span class="st">"OpenRouter AI"</span>)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Provider: TogetherAI
-Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
+<pre><code>Model Name: openai/gpt-4o-mini
+Provider: OpenRouter AI</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
@@ -178,10 +175,11 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
 <section id="implement-a-complex-task-with-multiple-prompts" class="level3">
 <h3 class="anchored" data-anchor-id="implement-a-complex-task-with-multiple-prompts">Implement a complex task with multiple prompts</h3>
 <p>Extract relevant product and category names</p>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>delimiter <span class="op">=</span> <span class="st">"####"</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>examples<span class="op">=</span><span class="ss">f"""</span></span>
@@ -275,7 +273,7 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 'Dresses'}]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>user_message_2 <span class="op">=</span> <span class="ss">f"""</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ss">Can you tell me about your jeans? Also your jackets and coats."""</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span>  [</span>
@@ -291,7 +289,7 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 </section>
 <section id="retrieve-detailed-product-information-for-extracted-products-and-categories" class="level3">
 <h3 class="anchored" data-anchor-id="retrieve-detailed-product-information-for-extracted-products-and-categories">Retrieve detailed product information for extracted products and categories</h3>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># product information</span></span>
@@ -569,25 +567,25 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 <span id="cb10-273"><a href="#cb10-273" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_product_by_name(name):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> products.get(name, <span class="va">None</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_products_by_category(category):</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [product <span class="cf">for</span> product <span class="kw">in</span> products.values() <span class="cf">if</span> product[<span class="st">"category"</span>] <span class="op">==</span> category]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_product_by_name(<span class="st">"Floral Print Blouse"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'name': 'Floral Print Blouse', 'category': 'Tops &amp; Blouses', 'brand': 'Blooming Beauty', 'price': 39.99, 'rating': 4.4, 'features': ['Floral print', 'V-neckline', 'Short sleeves', 'Lightweight fabric'], 'description': 'A pretty and feminine floral print blouse perfect for spring and summer.'}</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(get_products_by_category(<span class="st">"Dresses"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[{'name': 'Boho Chic Maxi Dress', 'category': 'Dresses', 'brand': 'Bohemian Vibes', 'price': 79.99, 'rating': 4.5, 'features': ['Flowy silhouette', 'Floral print', 'Adjustable straps', 'Lined'], 'description': 'A beautiful and comfortable maxi dress perfect for summer days and music festivals.'}, {'name': 'Little Black Dress', 'category': 'Dresses', 'brand': 'Classic Chic', 'price': 99.99, 'rating': 4.7, 'features': ['Sleeveless', 'Scoop neckline', 'Fitted waist', 'Knee-length'], 'description': 'A timeless and versatile little black dress for any occasion.'}, {'name': 'Floral Sundress', 'category': 'Dresses', 'brand': 'Sunny Days', 'price': 49.99, 'rating': 4.3, 'features': ['Spaghetti straps', 'Sweetheart neckline', 'Elastic waist', 'Midi length'], 'description': 'A cute and feminine sundress with a lovely floral print.'}, {'name': 'Off-the-Shoulder Dress', 'category': 'Dresses', 'brand': 'Romantic Ruffles', 'price': 69.99, 'rating': 4.6, 'features': ['Off-the-shoulder neckline', 'Ruffled sleeves', 'Fitted bodice', 'Flared skirt'], 'description': 'A romantic and flirty off-the-shoulder dress for special occasions.'}, {'name': 'Lace Cocktail Dress', 'category': 'Dresses', 'brand': 'Elegant Evening', 'price': 129.99, 'rating': 4.8, 'features': ['Lace overlay', 'Illusion neckline', 'Fitted silhouette', 'Back zipper'], 'description': 'A stunning lace cocktail dress for elegant events and parties.'}]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(user_message_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -596,7 +594,7 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
  Also tell me about your dresses.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_and_product_response_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[{'category': 'Tops &amp; Blouses', 'products': ['Floral Print Blouse']},
@@ -607,7 +605,7 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 </section>
 <section id="read-python-string-into-python-list-of-dictionaries" class="level3">
 <h3 class="anchored" data-anchor-id="read-python-string-into-python-list-of-dictionaries">Read Python string into Python list of dictionaries</h3>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_string_to_list(input_string):</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> input_string <span class="kw">is</span> <span class="va">None</span>:</span>
@@ -621,14 +619,14 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Error: Invalid JSON String"</span>)</span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>category_and_product_list <span class="op">=</span> read_string_to_list(category_and_product_response_1)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(category_and_product_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[{'category': 'Tops &amp; Blouses', 'products': ['Floral Print Blouse']}, {'category': 'Shoes', 'products': ['Leather Ankle Boots']}, {'category': 'Dresses'}]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_output_string(data_list):</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    output_string <span class="op">=</span> <span class="st">""</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> data_list <span class="kw">is</span> <span class="va">None</span>:</span>
@@ -654,7 +652,7 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 <span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> output_string</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>product_information_for_user_message_1 <span class="op">=</span> generate_output_string(category_and_product_list)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(product_information_for_user_message_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -762,7 +760,7 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 </section>
 <section id="generate-answer-to-user-query-based-on-detailed-product-information" class="level3">
 <h3 class="anchored" data-anchor-id="generate-answer-to-user-query-based-on-detailed-product-information">Generate answer to user query based on detailed product information</h3>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>system_message <span class="op">=</span> <span class="ss">f"""</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ss">You are a customer service assistant for a large fashion retailer. Your role is</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ss">to provide friendly and helpful information about the store's products to</span></span>
@@ -791,34 +789,42 @@ Model: NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT</code></pre>
 <span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>final_response <span class="op">=</span> get_completion_messages(messages)</span>
 <span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(final_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The Floral Print Blouse is a pretty and feminine blouse from the brand Blooming
-Beauty. It features a floral print, a V-neckline, short sleeves, and is made of
-lightweight fabric. This blouse is perfect for spring and summer and has a
-customer rating of 4.4 stars.
+<pre><code>Sure!
 
-The Leather Ankle Boots are a pair of stylish and versatile boots from the brand
-Urban Chic. They are made of genuine leather, have a stacked heel, a side
-zipper, and a pointed toe. These boots are suitable for any occasion and have a
-customer rating of 4.7 stars.
-As for our dresses, we have a variety of styles to choose from. Some of our
-popular dresses include:
+**Floral Print Blouse**: This blouse from the brand Blooming Beauty features a
+lovely floral print that makes it perfect for spring and summer. It has a
+flattering V-neckline, short sleeves, and is made from a lightweight fabric,
+ensuring comfort and breathability. Priced at $39.99, it has a customer rating
+of 4.4, reflecting its popularity.
 
-1. Boho Chic Maxi Dress: This dress is perfect for summer days and music
-festivals. It features a flowy silhouette, a lovely floral print, adjustable
-straps, and is lined.
-2. Little Black Dress: This timeless and versatile dress is perfect for any
-occasion. It has a sleeveless design, a scoop neckline, a fitted waist, and a
-knee-length skirt.
-3. Floral Sundress: This cute and feminine sundress features spaghetti straps, a
-sweetheart neckline, an elastic waist, and a midi-length skirt.
-4. Off-the-Shoulder Dress: This romantic and flirty dress has an off-the-
-shoulder neckline, ruffled sleeves, a fitted bodice, and a flared skirt.
-5. Lace Cocktail Dress: This stunning lace cocktail dress is perfect for elegant
-events and parties. It features a lace overlay, an illusion neckline, a fitted
-silhouette, and a back zipper.</code></pre>
+**Leather Ankle Boots**: From Urban Chic, these ankle boots are crafted from
+genuine leather, offering both style and durability. They feature a stacked
+heel, a side zipper for easy wear, and a pointed toe design, making them
+versatile for various occasions. They are priced at $119.99 and have an
+impressive rating of 4.7.
+
+As for our **dresses**, we have a variety of styles to suit different occasions:
+
+1. **Boho Chic Maxi Dress**: A flowy silhouette with a floral print, adjustable
+straps, and a lined design, perfect for summer days at $79.99 (rating: 4.5).
+
+2. **Little Black Dress**: A timeless piece with a sleeveless design, scoop
+neckline, and fitted waist, ideal for any event at $99.99 (rating: 4.7).
+
+3. **Floral Sundress**: This cute sundress features spaghetti straps, a
+sweetheart neckline, and an elastic waist, available for $49.99 (rating: 4.3).
+
+4. **Off-the-Shoulder Dress**: A romantic option with ruffled sleeves and a
+flared skirt, priced at $69.99 (rating: 4.6).
+
+5. **Lace Cocktail Dress**: A stunning choice for elegant events, featuring a
+lace overlay and illusion neckline, priced at $129.99 (rating: 4.8).
+
+If you have any specific preferences or need more details about any of these
+items, feel free to ask!</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>user_messages <span class="op">=</span> [</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I'm looking for a new dress for a summer wedding. Can you tell me about the Floral Sundress and the Off-the-Shoulder Dress?"</span>,</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I need some new jeans for everyday wear. What options do you have in the Jeans category?"</span>,</span>

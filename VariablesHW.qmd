@@ -1,202 +1,180 @@
 ---
 title: "Variables HW"
-jupyter:
-  python3
+execute:
+    eval: false
 ---
 
-In the code block below (replace the word `CODE`):
-
+__Problem__: 
 - Store the number 8 in a variable called `x`
 - Print out `x`
 - Execute the code block
 
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 x=8
 x
 ```
 
 The output of the above should be `8`
 
-In the code block below:
-
+__Problem__: 
 - Now assign `y` to be `5*x+3`
 - Print out `y`
 - Execute the code block
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 y=5*x+3
 y
 ```
 
 The output of the above should be `43`
 
-In the code block below:
-
+__Problem__: 
 - Find the square root of 119025 using the function `sqrt`
 - Execute the code block
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 import math
 math.sqrt(119025)
 ```
 The output of the above should be `345`
 
 
-In the code block below:
-
+__Problem__: 
 - Use the function `ceiling` to round up the value `1.3`
 - Execute the code block
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 math.ceil(1.3)
 ```
 
 The output of the above should be `2`
 
-In the code block below:
-
+__Problem__: 
 - Use the function `floor` to round down the value `3.8`
 - Execute the code block
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 math.floor(3.8)
 ```
 
 The output of the above should be `3`
 
-In the code block below:
-
+__Problem__: 
 - Store a new number 10 in the variable called `x`.
 - Print out `x`
 - Execute the code block
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 x=10
 x
 ```
 
 The output of the above should be `10`
 
-In the code block below:
-
+__Problem__: 
 - Assign the variable `myVal` to be `x+y`
 - Print out `myVal`
 - Execute the code block
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 myVal=x+y
 myVal
 ```
 The output of the above should be `53`
 
-In the code block below:
-
+__Problem__: 
 - Enter and the expression `14/2-1+3`
 - Execute the code block, it outputs  `9`
 - Put in parentheses so that it outputs `17` instead
 
 ```{python}
-#| eval: false
 14/2-1+3
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 14/(2-1)+3
 ```
 
-In the code block below:
-
+__Problem__: 
 - Enter and the expression `8*3+9-9`
 - Execute the code block, it outputs  `24`
 - Put in parentheses so that it outputs `87` instead
 
 ```{python}
-#| eval: false
 8*3+9-9
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 8*(3+9)-9
 ```
 
-In the code block below:
-
+__Problem__: 
 - Enter and the expression `10-9*24/8*6`
 - Execute the code block, it outputs  `-152`
 - Put in parentheses so that it outputs `18` instead
 
 ```{python}
-#| eval: false
 10-9*24/8*6
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 (10-9)*24/8*6
 ```
 
-In the code block below:
-
+__Problem__: 
 - Assume you have this code `5(3)`
 - Execute the code block, it outputs  an error
 - Fix the code so that it outputs 15
 
 ```{python}
-#| eval: false
 5(3)
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 5*3
 ```
 
+__Problem__: 
 - Assign a variable `z=7`
 - Try to print out this expression: `2z`
 - Execute the code, it outputs  an error
 - Fix the code so that it outputs `14`
 
 ```{python}
-#| eval: false
 z=7
 2z
 ```
 ```{python}
-# Solution:
+__SOLUTION__
 z=7
 2*z
 ```

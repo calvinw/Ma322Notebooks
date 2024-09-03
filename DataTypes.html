@@ -129,10 +129,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You can find out the data type of a variable by using the <code>type()</code> function.</p>
 <section id="float-decimal" class="level2">
 <h2 class="anchored" data-anchor-id="float-decimal">Float (Decimal)</h2>
-<p>The data type for decimal numbers like 3.2, -2.34, 0.0 is float.</p>
+<p>The data type for decimal numbers like 3.2, -2.34, 0.0 is <code>float</code>.</p>
 <p>The following variable has a data type of float:</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fl">3.2</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="fl">2.3</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'float'&gt;</code></pre>
@@ -146,8 +146,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="st">"hi there"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(y))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> <span class="st">"XXXYYYZZZ"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> <span class="st">"XXXYYYZZZ"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'str'&gt;
 &lt;class 'str'&gt;</code></pre>
@@ -156,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="integer" class="level2">
 <h2 class="anchored" data-anchor-id="integer">Integer</h2>
-<p>There is a separate data type for integers (…, -3, -2, -1, 0, 1, 2, 3, …).</p>
+<p>There is a separate data type for integers (…, -3, -2, -1, 0, 1, 2, 3, …). Its called <code>int</code>.</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(a))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -171,57 +172,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> <span class="va">True</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(u))</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(v))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(v))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'bool'&gt;
 &lt;class 'bool'&gt;</code></pre>
 </div>
 </div>
-</section>
-<section id="checking-types" class="level2">
-<h2 class="anchored" data-anchor-id="checking-types">Checking Types</h2>
-<p>There are functions for checking the type of a variable or expression, which can be more convenient than using the <code>type()</code> function. Each of these returns <code>True</code> or <code>False</code> depending on whether the value is that type or not:</p>
-<table class="table">
-<colgroup>
-<col style="width: 30%">
-<col style="width: 24%">
-<col style="width: 44%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Checking types</th>
-<th>Function</th>
-<th>Example</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Float</td>
-<td><code>isinstance(x, float)</code></td>
-<td><code>isinstance(2.32, float)</code></td>
-</tr>
-<tr class="even">
-<td>String</td>
-<td><code>isinstance(x, str)</code></td>
-<td><code>isinstance("hello", str)</code></td>
-</tr>
-<tr class="odd">
-<td>Integer</td>
-<td><code>isinstance(x, int)</code></td>
-<td><code>isinstance(2, int)</code></td>
-</tr>
-<tr class="even">
-<td>Boolean</td>
-<td><code>isinstance(x, bool)</code></td>
-<td><code>isinstance(True, bool)</code></td>
-</tr>
-</tbody>
-</table>
+<p>You can also just find the type of an expression without having to make it a variable. Here are all the examples from our table above.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="fl">2.32</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="op">-</span><span class="fl">0.45</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="st">"hello"</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="st">"k"</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="dv">12</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="va">True</span>))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(<span class="va">False</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'float'&gt;
+&lt;class 'float'&gt;
+&lt;class 'str'&gt;
+&lt;class 'str'&gt;
+&lt;class 'int'&gt;
+&lt;class 'bool'&gt;
+&lt;class 'bool'&gt;</code></pre>
+</div>
+</div>
 </section>
 <section id="converting-types" class="level2">
 <h2 class="anchored" data-anchor-id="converting-types">Converting Types</h2>
-<p>You can change a variable’s type if you need to using these functions:</p>
+<p>You can change a variable’s type if you need. This is called <em>converting</em> the data from one type to another.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -253,47 +234,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<section id="string-to-float" class="level3">
-<h3 class="anchored" data-anchor-id="string-to-float">String to Float</h3>
+<p>The first example converts <code>2</code> from <code>int</code> to a <code>float</code><br>
+The second example converts <code>123</code> from <code>int</code> to a <code>str</code><br>
+The third example converts <code>2.0</code> from <code>float</code> to a <code>int</code><br>
+The fourth example converts <code>1</code> from <code>int</code> to a <code>bool</code></p>
+<section id="convert-string-to-float" class="level3">
+<h3 class="anchored" data-anchor-id="convert-string-to-float">Convert String to Float</h3>
 <p>One use for this is to convert a string like “1.23” to a number 1.23. This happens frequently when reading data from files, as numbers are often stored as strings initially.</p>
 <p>With quotes around it, a number will be seen as a string. Here is an example:</p>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>myData <span class="op">=</span> <span class="st">"1.23"</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(myData, <span class="bu">str</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(myData, <span class="bu">float</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>myData <span class="op">=</span> <span class="st">"1.23"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(myData))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>True
-False</code></pre>
+<pre><code>&lt;class 'str'&gt;</code></pre>
 </div>
 </div>
 <p>To change the string “1.23” to a number, we must use <code>float()</code> to convert the string to a float:</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>myOtherData <span class="op">=</span> <span class="bu">float</span>(myData)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(myOtherData, <span class="bu">float</span>))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(myOtherData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True
-1.23</code></pre>
-</div>
-</div>
-</section>
-<section id="float-to-string" class="level3">
-<h3 class="anchored" data-anchor-id="float-to-string">Float to String</h3>
-<p>We can also convert a number to a string.</p>
-<p>Below, we create a number, then convert it to a string.</p>
 <div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>aNumber <span class="op">=</span> <span class="fl">4.56</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(aNumber)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(aNumber, <span class="bu">float</span>))</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>aString <span class="op">=</span> <span class="bu">str</span>(aNumber)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(aString)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(aString, <span class="bu">str</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>myOtherData <span class="op">=</span> <span class="bu">float</span>(myData)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(myOtherData))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>4.56
-True
-4.56
-True</code></pre>
+<pre><code>&lt;class 'float'&gt;</code></pre>
+</div>
+</div>
+<p>What happened above was that <code>myData</code> was a string data type, but <code>myOtherData</code> was a float data type. We call this a <em>conversion</em> when we change the data from one data type to another</p>
+</section>
+<section id="convert-float-to-string" class="level3">
+<h3 class="anchored" data-anchor-id="convert-float-to-string">Convert Float to String</h3>
+<p>We can also convert a number to a string. This sometimes happens when data is stored to a file.</p>
+<p>Below, we create a number, then convert it to a string.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>aNumber <span class="op">=</span> <span class="fl">4.56</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(aNumber))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>aString <span class="op">=</span> <span class="bu">str</span>(aNumber)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(aString))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'float'&gt;
+&lt;class 'str'&gt;</code></pre>
 </div>
 </div>
 </section>

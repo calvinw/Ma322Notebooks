@@ -1,5 +1,7 @@
 ---
 title: "More DataFrames"
+execute:
+    eval: false
 ---
 
 In this exercise, we will work with a data frame representing students in a classroom. The data frame has the following columns: `name`, `age`, `grade`, and `favSubject`.
@@ -18,6 +20,7 @@ In this exercise, we will work with a data frame representing students in a clas
 Here's how we create the data frame in Python using the pandas library:
 
 ```{python}
+# __REGULAR_BLOCK__
 import pandas as pd
 
 name = ['Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'William', 'Sophia', 'Jacob']
@@ -37,73 +40,63 @@ students = pd.DataFrame(studentDict)
 
 Let's explore the data frame:
 
-- Print the first few rows of the data frame using the `head` method on the `students` dataframe:
-
+__Problem__: Print the first few rows of the data frame using the `head` method on the `students` dataframe:
 ```{python}
-#| eval: false
 print(CODE)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 print(students.head())
 ```
 
-- Check the data types of the columns using the `dtypes` field of the `students` dataframe
-
+ __Problem__: Check the data types of the columns using the `dtypes` field of the `students` dataframe
 ```{python}
 #| eval: false
 print(CODE)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 print(students.dtypes)
 ```
 
-- Select the 'name' column and print it out
-
+__Problem__: Select the 'name' column and print it out
 ```{python}
 #| eval: false
 print(CODE)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 print(students['name'])
 ```
 
-- Add a new column 'isSenior' with True/False values based on whether the student's grade is 11 or higher:
-
+__Problem__: Add a new column 'isSenior' with True/False values based on whether the student's grade is 11 or higher:
 ```{python}
-#| eval: false
 CODE = [True, True, False, False, True, True, False, False]
 print(students)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 students['isSenior'] = [True, True, False, False, True, True, False, False]
 print(students)
 ```
 
-- Remove the 'favSubject' column:
-
+__Problem__: Remove the 'favSubject' column:
 ```{python}
-#| eval: false
 CODE
 print(students)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 students = students.drop('favSubject', axis=1)
 print(students)
 ```
 
-- Print out the element in the 2nd row and the 3rd column
-
+__Problem__: Print out the element in the 2nd row and the 3rd column
 ```{python}
-#| eval: false
 print(CODE)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 print(students.iloc[1,2])
 ```
 

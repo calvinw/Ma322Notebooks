@@ -1,4 +1,11 @@
 
+```{python}
+#| echo: false
+#| output: false
+from dotenv import load_dotenv
+load_dotenv()
+```
+
 ## Put Your Together AI key here
 
 ```{python}
@@ -23,17 +30,12 @@ os.environ["TOGETHER_API_KEY"] = "paste_your_api_key_here"
 import os
 from langchain_openai import ChatOpenAI
 
-#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"
-#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"
-#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"
-#model_name="mistralai/Mistral-7B-Instruct-v0.1"
-#model_name="mistralai/Mistral-7B-Instruct-v0.2"
-#model_name = "openchat/openchat-3.5-1210"
-#model_name = "Qwen/Qwen1.5-72B-Chat"
-#model_name = "cognitivecomputations/dolphin-2.5-mixtral-8x7b"
-#model_name="databricks/dbrx-instruct"
-#model_name="mistralai/Mixtral-8x22B"
-model_name="microsoft/WizardLM-2-8x22B"
+#model_name="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
+model_name="meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
+#model_name="meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo"
+
+#model_name="google/gemma-2-27b-it"
+#model_name="google/gemma-2-9b-it"
 
 print("Provider: TogetherAI")
 print("Model: " + model_name)

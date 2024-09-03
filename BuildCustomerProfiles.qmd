@@ -48,5 +48,5 @@ the provided data.
 ```{python}
 prompt = prompt.format(customer_info = info)
 response = get_completion(prompt)
-print(response)
+print_prompt_and_response(prompt, response)
 ```

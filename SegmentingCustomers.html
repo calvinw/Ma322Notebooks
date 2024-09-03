@@ -94,51 +94,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell" data-execution_count="1">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>) <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>   os.environ[<span class="st">"TOGETHER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<section id="setup-the-llm" class="level2">
-<h2 class="anchored" data-anchor-id="setup-the-llm">Setup the LLM</h2>
+<section id="put-your-openrouter_api_key-here" class="level3">
+<h3 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h3>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"OPENROUTER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-SFT"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "NousResearch/Nous-Hermes-2-Mixtral-8x7B-DPO"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.1"</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="mistralai/Mistral-7B-Instruct-v0.2"</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "openchat/openchat-3.5-1210"</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name = "Qwen/Qwen1.5-72B-Chat"</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"cognitivecomputations/dolphin-2.5-mixtral-8x7b"</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: TogetherAI"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span> <span class="op">+</span> model_name)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"TOGETHER_API_KEY"</span>),</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://api.together.xyz/v1/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    model_name</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">NameError</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model Name:"</span>, model_name)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider:"</span>, <span class="st">"OpenRouter AI"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Provider: TogetherAI
-Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
+<pre><code>Model Name: openai/gpt-4o-mini
+Provider: OpenRouter AI</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
@@ -181,7 +175,7 @@ Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>customers_info<span class="op">=</span><span class="st">"""</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">1. Polo shirt ($24.99), flat front shorts ($19.99), leather boat shoes ($44.99)</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $89.97</span></span>
@@ -409,7 +403,7 @@ Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 <span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a><span class="st">Total: $139.96</span></span>
 <span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">I have defined 5 customer profiles for a retail clothing store like H&amp;M:</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -469,527 +463,479 @@ Model: cognitivecomputations/dolphin-2.5-mixtral-8x7b</code></pre>
 <span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> prompt.<span class="bu">format</span>(customers_info <span class="op">=</span> customers_info)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Purchases: Polo shirt ($24.99), flat front shorts ($19.99), leather boat shoes
-($44.99)
-Total Spent: $89.97
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a polo shirt and leather boat
-shoes, which are typical for someone who follows fashion trends.
+<pre><code>Here’s the classification of each customer based on their purchases:
 
-Purchases: Leggings (2 for $24.99), oversized sweatshirt ($39.99), slip-on
-sneakers ($24.99)
-Total Spent: $89.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like leggings and an oversized
-sweatshirt, indicating a preference for low-maintenance style.
+1. **Purchases:** Polo shirt ($24.99), flat front shorts ($19.99), leather boat
+shoes ($44.99)
+   **Total Spent:** $89.97
+   **Profile:** Minimalist Professional
+   **Reasons:** The items are classic and versatile, suitable for a professional
+setting.
 
-Purchases: Printed culotte jumpsuit ($49.99), floppy hat ($19.99), strappy
-sandals ($34.99), tote bag ($29.99)
-Total Spent: $134.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a printed jumpsuit and strappy
-sandals, indicating a preference for following fashion trends.
+2. **Purchases:** Leggings (2 for $24.99), oversized sweatshirt ($39.99), slip-
+on sneakers ($24.99)
+   **Total Spent:** $89.97
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on comfort with loungewear and athleisure items.
 
-Purchases: Sundress ($29.99), cropped utility jacket ($39.99), ankle boots
-($44.99), fanny pack ($14.99)
-Total Spent: $129.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a sundress and cropped utility
-jacket, indicating a preference for following fashion trends.
+3. **Purchases:** Printed culotte jumpsuit ($49.99), floppy hat ($19.99),
+strappy sandals ($34.99), tote bag ($29.99)
+   **Total Spent:** $134.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are trendy and stylish, appealing to someone who
+follows fashion.
 
-Purchases: Lace romper ($39.99), embroidered kimono ($49.99), lace-up
+4. **Purchases:** Sundress ($29.99), cropped utility jacket ($39.99), ankle
+boots ($44.99), fanny pack ($14.99)
+   **Total Spent:** $129.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The combination of a sundress and trendy accessories indicates a
+fashion-forward mindset.
+
+5. **Purchases:** Lace romper ($39.99), embroidered kimono ($49.99), lace-up
 espadrilles ($29.99), circle sunglasses ($12.99)
-Total Spent: $132.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a lace romper and embroidered
-kimono, indicating a preference for following fashion trends.
+   **Total Spent:** $132.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and on-trend, appealing to a fashion-
+conscious shopper.
 
-Purchases: Asymmetrical ruffle skirt ($39.99), cold-shoulder top ($24.99), over-
-the-knee boots ($59.99), chain belt ($19.99)
-Total Spent: $144.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like an asymmetrical ruffle skirt
-and over-the-knee boots, indicating a preference for following fashion trends.
+6. **Purchases:** Asymmetrical ruffle skirt ($39.99), cold-shoulder top
+($24.99), over-the-knee boots ($59.99), chain belt ($19.99)
+   **Total Spent:** $144.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are bold and trendy, indicating a focus on current
+fashion.
 
-Purchases: Trapeze dress ($39.99), denim jacket ($44.99), rain boots ($29.99),
-bucket hat ($14.99)
-Total Spent: $129.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a trapeze dress and rain
-boots, indicating a preference for low-maintenance style.
+7. **Purchases:** Trapeze dress ($39.99), denim jacket ($44.99), rain boots
+($29.99), bucket hat ($14.99)
+   **Total Spent:** $129.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
-Purchases: Crewneck sweatshirt ($24.99), joggers ($29.99), slippers ($12.99)
-Total Spent: $67.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a crewneck sweatshirt and
-joggers, indicating a preference for low-maintenance style.
-
-Purchases: French terry joggers ($34.99), waffle knit top ($24.99), slippers
+8. **Purchases:** Crewneck sweatshirt ($24.99), joggers ($29.99), slippers
 ($12.99)
-Total Spent: $72.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like French terry joggers and
-a waffle knit top, indicating a preference for low-maintenance style.
+   **Total Spent:** $67.97
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on comfort and casual wear.
 
-Purchases: Men's dress shirt ($34.99), chino shorts ($29.99), boat shoes
+9. **Purchases:** French terry joggers ($34.99), waffle knit top ($24.99),
+slippers ($12.99)
+   **Total Spent:** $72.97
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Emphasis on comfortable, low-maintenance clothing.
+
+10. **Purchases:** Men's dress shirt ($34.99), chino shorts ($29.99), boat shoes
 ($39.99), baseball cap ($12.99)
-Total Spent: $117.96
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a dress shirt and chino
-shorts, indicating a preference for simple, classic styles.
+    **Total Spent:** $117.96
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and versatile items suitable for a professional
+setting.
 
-Purchases: Off-shoulder floral dress ($49.99), denim jacket ($44.99), ankle
-booties ($39.99), round sunglasses ($14.99)
-Total Spent: $152.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like an off-shoulder floral dress
-and ankle booties, indicating a preference for following fashion trends.
+11. **Purchases:** Off-shoulder floral dress ($49.99), denim jacket ($59.99),
+ankle booties ($39.99), round sunglasses ($14.99)
+    **Total Spent:** $164.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
 
-Purchases: Halter bodysuit ($24.99), high-waist shorts ($29.99), lace-up flats
-($34.99), tassel necklace ($19.99)
-Total Spent: $109.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a halter bodysuit and lace-up
-flats, indicating a preference for following fashion trends.
+12. **Purchases:** Halter bodysuit ($24.99), high-waist shorts ($29.99), lace-up
+flats ($34.99), tassel necklace ($19.99)
+    **Total Spent:** $109.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are trendy and stylish, appealing to a fashion-
+conscious shopper.
 
-Purchases: Tank dress ($29.99), military jacket ($44.99), combat boots ($49.99),
-crossbody bag ($19.99)
-Total Spent: $144.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a tank dress and combat boots,
-indicating a preference for following fashion trends.
+13. **Purchases:** Tank dress ($29.99), military jacket ($44.99), combat boots
+($49.99), crossbody bag ($19.99)
+    **Total Spent:** $144.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The combination of trendy items indicates a fashion-forward
+mindset.
 
-Purchases: Sheath dress ($49.99), open front cardigan ($39.99), block heels
-($44.99)
-Total Spent: $134.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a sheath dress and block
-heels, indicating a preference for simple, classic styles.
+14. **Purchases:** Sheath dress ($49.99), open front cardigan ($39.99), block
+heels ($44.99)
+    **Total Spent:** $134.97
+    **Profile:** Minimalist Professional
+    **Reasons:** The items are classic and suitable for a professional setting.
 
-Purchases: 3-pack v-neck tees ($17.99), chino shorts ($24.99), canvas sneakers
-($29.99)
-Total Spent: $72.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like v-neck tees and chino
-shorts, indicating a preference for low-maintenance style.
+15. **Purchases:** 3-pack v-neck tees ($17.99), chino shorts ($24.99), canvas
+sneakers ($29.99)
+    **Total Spent:** $72.97
+    **Profile:** Budget-Conscious Shopper
+    **Reasons:** Focus on versatile basics and value for money.
 
-Purchases: Silk blouse ($54.99), slim pants ($49.99), loafers ($44.99)
-Total Spent: $149.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a silk blouse and slim pants,
-indicating a preference for simple, classic styles.
+16. **Purchases:** Silk blouse ($54.99), slim pants ($49.99), loafers ($44.99)
+    **Total Spent:** $149.97
+    **Profile:** Minimalist Professional
+    **Reasons:** High-quality basics suitable for a professional environment.
 
-Purchases: Blazer ($79.99), sheath dress ($49.99), pumps ($59.99)
-Total Spent: $189.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a blazer and sheath dress,
-indicating a preference for simple, classic styles.
+17. **Purchases:** Blazer ($79.99), sheath dress ($49.99), pumps ($59.99)
+    **Total Spent:** $189.97
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and professional items suitable for work.
 
-Purchases: Floral maxi dress ($54.99), denim jacket ($44.99), wedge sandals
-($39.99), tassel earrings ($12.99)
-Total Spent: $152.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a floral maxi dress and wedge
-sandals, indicating a preference for following fashion trends.
+18. **Purchases:** Floral maxi dress ($54.99), denim jacket ($44.99), wedge
+sandals ($39.99), tassel earrings ($12.99)
+    **Total Spent:** $152.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
 
-Purchases: Graphic tees (2 for $14.99), jean shorts ($24.99), flip flops ($9.99)
-Total Spent: $49.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like graphic tees and jean
-shorts, indicating a preference for low-maintenance style.
-
-Purchases: Joggers ($29.99), hoodie ($34.99), slides ($14.99), baseball cap
-($12.99)
-Total Spent: $92.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like joggers and a hoodie,
-indicating a preference for low-maintenance style.
-
-Purchases: Men's t-shirt ($17.99), basketball shorts ($22.99), slides ($14.99),
-dad hat ($12.99)
-Total Spent: $68.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a men's t-shirt and
-basketball shorts, indicating a preference for low-maintenance style.
-
-Purchases: Hoodie ($29.99), sweatpants ($24.99), sneakers ($39.99)
-Total Spent: $94.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a hoodie and sweatpants,
-indicating a preference for low-maintenance style.
-
-Purchases: Gingham off-shoulder dress ($39.99), strappy sandals ($34.99), floppy
-hat ($19.99), round sunglasses ($12.99)
-Total Spent: $107.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a gingham off-shoulder dress
-and strappy sandals, indicating a preference for following fashion trends.
-
-Purchases: Printed high-low dress ($49.99), denim jacket ($44.99), embroidered
-mules ($39.99), fringe earrings ($14.99)
-Total Spent: $149.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a printed high-low dress and
-embroidered mules, indicating a preference for following fashion trends.
-
-Purchases: Button down shirt ($29.99), khakis ($34.99), belt ($12.99)
-Total Spent: $77.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a button down shirt and
-khakis, indicating a preference for simple, classic styles.
-
-Purchases: Sweat shorts ($19.99), graphic tee ($14.99), slides ($14.99)
-Total Spent: $49.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like sweat shorts and a
-graphic tee, indicating a preference for low-maintenance style.
-
-Purchases: Floral wrap dress ($39.99), ripped boyfriend jeans ($44.99), faux fur
-coat ($69.99), studded sandals ($29.99), fringe crossbody bag ($34.99), lace
-crop top ($19.99)
-Total Spent: $239.94
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a floral wrap dress and ripped
-boyfriend jeans, indicating a preference for following fashion trends.
-
-Purchases: Blazer ($49.99), ankle pants ($44.99), ballet flats ($34.99)
-Total Spent: $119.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a blazer and ankle pants,
-indicating a preference for simple, classic styles.
-
-Purchases: Printed jumpsuit ($54.99), fedora hat ($24.99), fringe crossbody
-($34.99), statement earrings ($14.99)
-Total Spent: $129.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a printed jumpsuit and
-statement earrings, indicating a preference for following fashion trends.
-
-Purchases: Skater dress ($34.99), moto jacket ($59.99), over-the-knee boots
-($54.99), bucket bag ($29.99)
-Total Spent: $179.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a skater dress and moto
-jacket, indicating a preference for following fashion trends.
-
-Purchases: Puffer vest ($34.99), beanie ($9.99), sweatpants ($24.99)
-Total Spent: $69.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a puffer vest and
-sweatpants, indicating a preference for low-maintenance style.
-
-Purchases: Cold shoulder top ($24.99), high waist wide leg pants ($39.99), mules
-($29.99), faux leather crossbody ($34.99)
-Total Spent: $129.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a cold shoulder top and high
-waist wide leg pants, indicating a preference for following fashion trends.
-
-Purchases: Basic tee ($12.99), overalls ($44.99), sneakers ($39.99), dad hat
+19. **Purchases:** Graphic tees (2 for $14.99), jean shorts ($24.99), flip flops
 ($9.99)
-Total Spent: $107.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a basic tee and overalls,
-indicating a preference for low-maintenance style.
+    **Total Spent:** $49.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on casual and comfortable items.
 
-Purchases: Active tee ($12.99), running shorts ($19.99), sneakers ($34.99)
-Total Spent: $67.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like an active tee and running
-shorts, indicating a preference for low-maintenance style.
+20. **Purchases:** Joggers ($29.99), hoodie ($34.99), slides ($14.99), baseball
+cap ($12.99)
+    **Total Spent:** $92.96
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Emphasis on comfort and casual wear.
 
-Purchases: Sleeveless swing dress ($29.99), denim jacket ($44.99), ankle boots
+21. **Purchases:** Men's t-shirt ($17.99), basketball shorts ($22.99), slides
+($14.99), dad hat ($12.99)
+    **Total Spent:** $68.96
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on comfortable, casual clothing.
+
+22. **Purchases:** Hoodie ($29.99), sweatpants ($24.99), sneakers ($39.99)
+    **Total Spent:** $94.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Emphasis on comfort and casual wear.
+
+23. **Purchases:** Gingham off-shoulder dress ($39.99), strappy sandals
+($34.99), floppy hat ($19.99), round sunglasses ($12.99)
+    **Total Spent:** $107.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+24. **Purchases:** Printed high-low dress ($49.99), denim jacket ($44.99),
+embroidered mules ($39.99), fringe earrings ($14.99)
+    **Total Spent:** $149.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+25. **Purchases:** Button down shirt ($29.99), khakis ($34.99), belt ($12.99)
+    **Total Spent:** $77.97
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and versatile items suitable for a professional
+setting.
+
+26. **Purchases:** Sweat shorts ($19.99), graphic tee ($14.99), slides ($14.99)
+    **Total Spent:** $49.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on casual and comfortable items.
+
+27. **Purchases:** Floral wrap dress ($39.99), ripped boyfriend jeans ($44.99),
+faux fur coat ($69.99), studded sandals ($29.99), fringe crossbody bag ($34.99),
+lace crop top ($19.99)
+    **Total Spent:** $239.94
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are bold and trendy, indicating a fashion-forward
+mindset.
+
+28. **Purchases:** Blazer ($49.99), ankle pants ($44.99), ballet flats ($34.99)
+    **Total Spent:** $119.97
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and professional items suitable for work.
+
+29. **Purchases:** Printed jumpsuit ($54.99), fedora hat ($24.99), fringe
+crossbody ($34.99), statement earrings ($14.99)
+    **Total Spent:** $129.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+30. **Purchases:** Skater dress ($34.99), moto jacket ($59.99), over-the-knee
+boots ($54.99), bucket bag ($29.99)
+    **Total Spent:** $179.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are bold and trendy, indicating a fashion-forward
+mindset.
+
+31. **Purchases:** Puffer vest ($34.99), beanie ($9.99), sweatpants ($24.99)
+    **Total Spent:** $69.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on comfort and casual wear.
+
+32. **Purchases:** Cold shoulder top ($24.99), high waist wide leg pants
+($39.99), mules ($29.99), faux leather crossbody ($34.99)
+    **Total Spent:** $129.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+33. **Purchases:** Basic tee ($12.99), overalls ($44.99), sneakers ($39.99), dad
+hat ($9.99)
+    **Total Spent:** $107.96
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on casual and comfortable items.
+
+34. **Purchases:** Active tee ($12.99), running shorts ($19.99), sneakers
+($34.99)
+    **Total Spent:** $67.97
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on comfortable, activewear items.
+
+35. **Purchases:** Sleeveless swing dress ($29.99), denim jacket ($44.99), ankle
+boots ($39.99)
+    **Total Spent:** $114.97
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+36. **Purchases:** 5 pack basic crewneck tees ($24.99), chino shorts ($29.99),
+white sneakers ($39.99), lightweight windbreaker ($29.99)
+    **Total Spent:** $124.96
+    **Profile:** Budget-Conscious Shopper
+    **Reasons:** Focus on versatile basics and value for money.
+
+37. **Purchases:** Packable down jacket ($59.99), flannel shirt ($24.99), jeans
 ($39.99)
-Total Spent: $114.97
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a sleeveless swing dress and
-denim jacket, indicating a preference for following fashion trends.
+    **Total Spent:** $124.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on comfortable and practical items.
 
-Purchases: 5 pack basic crewneck tees ($24.99), chino shorts ($29.99), white
-sneakers ($39.99), lightweight windbreaker ($29.99)
-Total Spent: $124.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like basic crewneck tees and
-chino shorts, indicating a preference for low-maintenance style.
+38. **Purchases:** Maxi tee dress ($29.99), denim jacket ($39.99), slip-on
+sneakers ($29.99)
+    **Total Spent:** $99.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on casual and comfortable items.
 
-Purchases: Packable down jacket ($59.99), flannel shirt ($24.99), jeans ($39.99)
-Total Spent: $124.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a packable down jacket and
-jeans, indicating a preference for simple, classic styles.
+39. **Purchases:** Crop top ($19.99), high-rise flare jeans ($44.99), platform
+sandals ($39.99), fringe crossbody ($29.99)
+    **Total Spent:** $134.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
 
-Purchases: Maxi tee dress ($29.99), denim jacket ($39.99), slip-on sneakers
-($29.99)
-Total Spent: $99.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a maxi tee dress and
-slip-on sneakers, indicating a preference for low-maintenance style.
-
-Purchases: Crop top ($19.99), high-rise flare jeans ($44.99), platform sandals
-($39.99), fringe crossbody bag ($29.99)
-Total Spent: $134.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a crop top and high-rise flare
-jeans, indicating a preference for following fashion trends.
-
-Purchases: Bell sleeve top ($27.99), culottes ($39.99), sandals ($19.99), tote
-bag ($24.99)
-Total Spent: $112.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a bell sleeve top and
-culottes, indicating a preference for following fashion trends.
-
-Purchases: Cozy sweater ($39.99), boyfriend jeans ($44.99), moccasin slippers
-($19.99)
-Total Spent: $104.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a cozy sweater and
-boyfriend jeans, indicating a preference for low-maintenance style.
-
-Purchases: Henley ($22.99), cargo shorts ($29.99), Birkenstocks ($39.99),
-backpack ($34.99)
-Total Spent: $127.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a Henley and cargo
-shorts, indicating a preference for low-maintenance style.
-
-Purchases: Suit set ($129.99), button up shirt ($34.99), oxfords ($49.99)
-Total Spent: $214.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a suit set and button up
-shirt, indicating a preference for simple, classic styles.
-
-Purchases: Button down ($34.99), bermuda shorts ($24.99), boat shoes ($39.99),
-baseball cap ($14.99)
-Total Spent: $114.96
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a button down and bermuda
-shorts, indicating a preference for simple, classic styles.
-
-Purchases: Lace up bodysuit ($29.99), ripped mom shorts ($24.99), ankle booties
-($44.99), pendant necklace ($19.99)
-Total Spent: $119.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a lace up bodysuit and ripped
-mom shorts, indicating a preference for following fashion trends.
-
-Purchases: Ruffle sleeve romper ($39.99), faux suede jacket ($54.99), ankle
-strap heels ($44.99), bucket bag ($29.99)
-Total Spent: $169.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a ruffle sleeve romper and
-faux suede jacket, indicating a preference for following fashion trends.
-
-Purchases: Cami top ($14.99), high-waisted boyfriend jeans ($39.99), clogs
-($29.99), crossbody bag ($24.99)
-Total Spent: $109.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a cami top and high-
-waisted boyfriend jeans, indicating a preference for low-maintenance style.
-
-Purchases: Long sleeve thermal ($17.99), lightweight puffer vest ($34.99),
-beanie ($9.99)
-Total Spent: $62.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a long sleeve thermal and
-lightweight puffer vest, indicating a preference for low-maintenance style.
-
-Purchases: Wrap front top ($29.99), distressed girlfriend jeans ($44.99),
-studded slides ($24.99), bucket bag ($39.99)
-Total Spent: $139.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a wrap front top and
-distressed girlfriend jeans, indicating a preference for following fashion
-trends.
-
-Purchases: Off-the-shoulder top ($24.99), wide leg linen pants ($39.99), ballet
-flats ($24.99), tote ($29.99)
-Total Spent: $119.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like an off-the-shoulder top and
-wide leg linen pants, indicating a preference for following fashion trends.
-
-Purchases: 5-pack crew socks ($7.99), 3-pack boxer briefs ($17.99)
-Total Spent: $25.98
-Profile: Budget-Conscious Shopper
-Reasons: The customer purchased items in bulk, indicating a preference for
-finding good deals.
-
-Purchases: 4-pack undershirts ($15.99), 2-pack boxer briefs ($12.99)
-Total Spent: $28.98
-Profile: Budget-Conscious Shopper
-Reasons: The customer purchased items in bulk, indicating a preference for
-finding good deals.
-
-Purchases: Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt ($29.99),
-sneakers ($44.99)
-Total Spent: $129.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a graphic tee and skinny
-jeans, indicating a preference for following fashion trends.
-
-Purchases: Pleated metallic skirt ($39.99), lace camisole ($24.99), block heel
-sandals ($44.99), fringe crossbody ($34.99)
-Total Spent: $139.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a pleated metallic skirt and
-block heel sandals, indicating a preference for following fashion trends.
-
-Purchases: Wide leg trousers ($54.99), camisole ($17.99), loafers ($39.99)
-Total Spent: $112.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like wide leg trousers and
-loafers, indicating a preference for simple, classic styles.
-
-Purchases: Wrap crop top ($19.99), paper bag waist shorts ($29.99), slide
-sandals ($19.99), circle sunglasses ($14.99)
-Total Spent: $84.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a wrap crop top and paper
-bag waist shorts, indicating a preference for low-maintenance style.
-
-Purchases: Tie-front crop top ($19.99), high waist mom jeans ($39.99), slide
-sandals ($24.99), circle belt bag ($29.99)
-Total Spent: $114.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a tie-front crop top and
-high waist mom jeans, indicating a preference for low-maintenance style.
-
-Purchases: Off-shoulder eyelet top ($34.99), denim skirt ($29.99), espadrille
-wedges ($39.99), tassel earrings ($14.99)
-Total Spent: $119.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like an off-shoulder eyelet top and
-espadrille wedges, indicating a preference for following fashion trends.
-
-Purchases: Soft shorts ($19.99), muscle tank ($12.99), slides ($14.99)
-Total Spent: $47.97
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like soft shorts and a muscle
-tank, indicating a preference for low-maintenance style.
-
-Purchases: Floral wrap dress ($44.99), denim jacket ($49.99), embroidered clutch
-($29.99), fringe earrings ($19.99)
-Total Spent: $144.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a floral wrap dress and
-embroidered clutch, indicating a preference for following fashion trends.
-
-Purchases: Polo ($24.99), drawstring pants ($29.99), slides ($19.99), visor
-($9.99)
-Total Spent: $84.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like drawstring pants and
-slides, indicating a preference for low-maintenance style.
-
-Purchases: Tunic top ($29.99), palazzo pants ($39.99), gladiator sandals
-($34.99), fedora ($19.99)
-Total Spent: $124.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a tunic top and palazzo pants,
-indicating a preference for following fashion trends.
-
-Purchases: Bell sleeve top ($27.99), culottes ($39.99), sandals ($19.99), tote
-bag ($24.99)
-Total Spent: $112.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a bell sleeve top and
-culottes, indicating a preference for following fashion trends.
-
-Purchases: Wrap dress ($59.99), trench coat ($99.99), knee high boots ($69.99)
-Total Spent: $229.97
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a wrap dress and knee high
-boots, indicating a preference for following fashion trends.
-
-Purchases: Cold shoulder top ($24.99), paperbag pants ($39.99), peep toe booties
-($49.99), faux suede crossbody ($34.99)
-Total Spent: $149.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a cold shoulder top and peep
-toe booties, indicating a preference for following fashion trends.
-
-Purchases: Shift dress ($44.99), blazer ($69.99), ballet flats ($29.99)
-Total Spent: $144.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a shift dress and blazer,
-indicating a preference for simple, classic styles.
-
-Purchases: Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt ($29.99),
-sneakers ($44.99)
-Total Spent: $129.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a graphic tee and skinny
-jeans, indicating a preference for following fashion trends.
-
-Purchases: Henley shirt ($19.99), 5-pocket twill pants ($29.99), boat shoes
-($39.99)
-Total Spent: $89.97
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a Henley shirt and 5-pocket
-twill pants, indicating a preference for simple, classic styles.
-
-Purchases: Off-shoulder ruffle top ($34.99), palazzo pants ($44.99), sandals
+40. **Purchases:** Bell sleeve top ($27.99), culottes ($39.99), sandals
 ($19.99), tote bag ($24.99)
-Total Spent: $112.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like an off-shoulder ruffle top and
-palazzo pants, indicating a preference for following fashion trends.
+    **Total Spent:** $112.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
 
-Purchases: Halter neck top ($24.99), denim jacket ($44.99), ankle booties
-($44.99), circle belt bag ($24.99)
-Total Spent: $139.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a halter neck top and ankle
-booties, indicating a preference for following fashion trends.
+41. **Purchases:** Cozy sweater ($39.99), boyfriend jeans ($44.99), moccasin
+slippers ($19.99)
+    **Total Spent:** $104.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on comfort and casual wear.
 
-Purchases: Tiered maxi dress ($49.99), floppy hat ($24.99), flat sandals
+42. **Purchases:** Henley ($22.99), cargo shorts ($29.99), Birkenstocks
+($39.99), backpack ($34.99)
+    **Total Spent:** $127.96
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on casual and comfortable items.
+
+43. **Purchases:** Suit set ($129.99), button up shirt ($34.99), oxfords
+($49.99)
+    **Total Spent:** $214.97
+    **Profile:** Minimalist Professional
+    **Reasons:** High-quality, professional items suitable for work.
+
+44. **Purchases:** Button down ($34.99), bermuda shorts ($24.99), boat shoes
+($39.99), baseball cap ($14.99)
+    **Total Spent:** $114.96
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and versatile items suitable for a professional
+setting.
+
+45. **Purchases:** Lace up bodysuit ($29.99), ripped mom shorts ($24.99), ankle
+booties ($44.99), pendant necklace ($19.99)
+    **Total Spent:** $119.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+46. **Purchases:** Ruffle sleeve romper ($39.99), faux suede jacket ($54.99),
+ankle strap heels ($44.99), bucket bag ($29.99)
+    **Total Spent:** $169.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are bold and trendy, indicating a fashion-forward
+mindset.
+
+47. **Purchases:** Cami top ($14.99), high-waisted boyfriend jeans ($39.99),
+clogs ($29.99), crossbody bag ($24.99)
+    **Total Spent:** $109.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+48. **Purchases:** Long sleeve thermal ($17.99), lightweight puffer vest
+($34.99), beanie ($9.99)
+    **Total Spent:** $62.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on comfortable and practical items.
+
+49. **Purchases:** Wrap front top ($29.99), distressed girlfriend jeans
+($44.99), studded slides ($24.99), bucket bag ($39.99)
+    **Total Spent:** $139.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+50. **Purchases:** Off-the-shoulder top ($24.99), wide leg linen pants ($39.99),
+ballet flats ($24.99), tote ($29.99)
+    **Total Spent:** $119.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+51. **Purchases:** 5-pack crew socks ($7.99), 3-pack boxer briefs ($17.99)
+    **Total Spent:** $25.98
+    **Profile:** Budget-Conscious Shopper
+    **Reasons:** Focus on practical and budget-friendly items.
+
+52. **Purchases:** 4-pack undershirts ($15.99), 2-pack boxer briefs ($12.99)
+    **Total Spent:** $28.98
+    **Profile:** Budget-Conscious Shopper
+    **Reasons:** Focus on practical and budget-friendly items.
+
+53. **Purchases:** Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt
+($29.99), sneakers ($44.99)
+    **Total Spent:** $129.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+54. **Purchases:** Pleated metallic skirt ($39.99), lace camisole ($24.99),
+block heel sandals ($44.99), fringe crossbody ($29.99)
+    **Total Spent:** $139.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+55. **Purchases:** Wide leg trousers ($54.99), camisole ($17.99), loafers
+($39.99)
+    **Total Spent:** $112.97
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and versatile items suitable for a professional
+setting.
+
+56. **Purchases:** Wrap crop top ($19.99), paper bag waist shorts ($29.99),
+slide sandals ($19.99), circle sunglasses ($14.99)
+    **Total Spent:** $84.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+57. **Purchases:** Tie-front crop top ($19.99), high waist mom jeans ($39.99),
+slide sandals ($24.99), circle belt bag ($29.99)
+    **Total Spent:** $114.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+58. **Purchases:** Off-shoulder eyelet top ($34.99), denim skirt ($29.99),
+espadrille wedges ($39.99), tassel earrings ($14.99)
+    **Total Spent:** $119.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+59. **Purchases:** Soft shorts ($19.99), muscle tank ($12.99), slides ($14.99)
+    **Total Spent:** $47.97
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on casual and comfortable items.
+
+60. **Purchases:** Floral wrap dress ($44.99), denim jacket ($49.99),
+embroidered clutch ($29.99), fringe earrings ($19.99)
+    **Total Spent:** $144.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+61. **Purchases:** Polo ($24.99), drawstring pants ($29.99), slides ($19.99),
+visor ($9.99)
+    **Total Spent:** $84.96
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on casual and comfortable items.
+
+62. **Purchases:** Tunic top ($29.99), palazzo pants ($39.99), gladiator sandals
+($34.99), fedora ($19.99)
+    **Total Spent:** $124.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+63. **Purchases:** Bell sleeve top ($27.99), culottes ($39.99), sandals
+($19.99), tote bag ($24.99)
+    **Total Spent:** $112.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+64. **Purchases:** Wrap dress ($59.99), trench coat ($99.99), knee high boots
+($69.99)
+    **Total Spent:** $229.97
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are bold and trendy, indicating a fashion-forward
+mindset.
+
+65. **Purchases:** Cold shoulder top ($24.99), paperbag pants ($39.99), peep toe
+booties ($49.99), faux suede crossbody ($34.99)
+    **Total Spent:** $149.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+66. **Purchases:** Shift dress ($44.99), blazer ($69.99), ballet flats ($29.99)
+    **Total Spent:** $144.97
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and professional items suitable for work.
+
+67. **Purchases:** Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt
+($29.99), sneakers ($44.99)
+    **Total Spent:** $129.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+68. **Purchases:** Henley shirt ($19.99), 5-pocket twill pants ($29.99), boat
+shoes ($39.99)
+    **Total Spent:** $89.97
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and versatile items suitable for a professional
+setting.
+
+69. **Purchases:** Off-shoulder ruffle top ($34.99), palazzo pants ($44.99),
+tassel earrings ($14.99), embroidered clutch ($29.99)
+    **Total Spent:** $124.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+70. **Purchases:** Halter neck top ($24.99), denim jacket ($44.99), ankle
+booties ($44.99), circle belt bag ($24.99)
+    **Total Spent:** $139.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
+
+71. **Purchases:** Tiered maxi dress ($49.99), floppy hat ($24.99), flat sandals
 ($19.99), straw tote ($29.99)
-Total Spent: $124.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a tiered maxi dress and floppy
-hat, indicating a preference for following fashion trends.
+    **Total Spent:** $124.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
 
-Purchases: Linen button-down ($34.99), drawstring shorts ($29.99), boat shoes
-($39.99), baseball cap ($19.99)
-Total Spent: $124.96
-Profile: Minimalist Professional
-Reasons: The customer purchased classic items like a linen button-down and
-drawstring shorts, indicating a preference for simple, classic styles.
+72. **Purchases:** Linen button-down ($34.99), drawstring shorts ($29.99), boat
+shoes ($39.99), baseball cap ($19.99)
+    **Total Spent:** $124.96
+    **Profile:** Minimalist Professional
+    **Reasons:** Classic and versatile items suitable for a professional
+setting.
 
-Purchases: Smocked off-shoulder top ($27.99), paper bag shorts ($24.99),
+73. **Purchases:** Smocked off-shoulder top ($27.99), paper bag shorts ($24.99),
 espadrille flats ($19.99), circle sunglasses ($9.99)
-Total Spent: $82.96
-Profile: Casual Comfort Seeker
-Reasons: The customer purchased comfortable items like a smocked off-shoulder
-top and paper bag shorts, indicating a preference for low-maintenance style.
+    **Total Spent:** $82.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
 
-Purchases: Printed jumpsuit ($44.99), denim jacket ($49.99), wedge sandals
-($39.99), tassel pendant ($14.99)
-Total Spent: $149.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a printed jumpsuit and wedge
-sandals, indicating a preference for following fashion trends.
+74. **Purchases:** Printed jumpsuit ($44.99), denim jacket ($49.99), wedge
+sandals ($39.99), tassel pendant ($14.99)
+    **Total Spent:** $149.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are stylish and reflect current fashion trends.
 
-Purchases: Racerback midi dress ($39.99), utility jacket ($49.99), ankle strap
-flats ($29.99), fanny pack ($19.99)
-Total Spent: $139.96
-Profile: Trendy Fashionista
-Reasons: The customer purchased trendy items like a racerback midi dress and
-utility jacket, indicating a preference for following fashion trends.
+75. **Purchases:** Racerback midi dress ($39.99), utility jacket ($49.99), ankle
+strap flats ($29.99), fanny pack ($19.99)
+    **Total Spent:** $139.96
+    **Profile:** Trendy Fashionista
+    **Reasons:** The items are bold and trendy, indicating a fashion-forward
+mindset.
 
-Trendy Fashionista: 25
-Casual Comfort Seeker: 15
-Minimalist Professional: 10
-Budget-Conscious Shopper: 2
+### Summary of Profiles:
+- **Trendy Fashionista:** 43
+- **Casual Comfort Seeker:** 15
+- **Minimalist Professional:** 12
+- **Budget-Conscious Shopper:** 5
 
-Note: The classification is based on the items purchased and may not be 100%
-accurate for all customers.</code></pre>
+This classification reflects the purchasing behavior and preferences of each
+customer based on the items they bought.</code></pre>
 </div>
 </div>
 </section>

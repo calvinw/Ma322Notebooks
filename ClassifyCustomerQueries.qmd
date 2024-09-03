@@ -1,10 +1,8 @@
 ---
 title: "Classifying Customer Queries"
-execute:
-  enabled: true
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ## Classifying Customer Queries Into Categories
 

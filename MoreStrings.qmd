@@ -1,35 +1,35 @@
 ---
-title: "More Strings In Python"
+title: "More Strings"
+execute:
+    eval: false
 ---
 
 ## Defining Strings
 
-Define a string variable called `aString` by using the string `Hello Cruel World` by using single quotes for the string. Print it.
+__Problem__: Define a string variable called `aString` by using the string `Hello Cruel World` by using single quotes for the string. Print it.
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 aString = 'Hello Cruel World'
 print(aString)
 ```
 
-Define a string variable called `aString` by using the string `Goodbye Cruel World` by using double quotes for the string. Print it.
+__Problem__: Define a string variable called `aString` by using the string `Goodbye Cruel World` by using double quotes for the string. Print it.
 
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 aString = "Hello Cruel World"
 print(aString)
 ```
 
-Define a multiline string variable called `aString` using `See you later alligator`
+__Problem__: Define a multiline string variable called `aString` using `See you later alligator`
 
 using triple quotes and put each word on a separate line like this:
 
@@ -41,11 +41,10 @@ alligator
 ```
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 aString = """
 See
 you
@@ -58,40 +57,39 @@ print(aString)
 ## Accessing Parts of a String (Indexing)
 
 
-Define a string variable called `aString` to be `"Python"`. and print the first character using index notation.
+__Problem__: Define a string variable called `aString` to be `"Hello there"`. and print the first character using index notation.
 
 ```{python}
-#| eval: false
- CODE
+aString = "Hello there"
+CODE
 ```
 ```{python}
-# Solution:
-aString = "Python"
+# __SOLUTION__
+aString = "Hello there"
 print(aString[0])
 ```
 
-Define a string variable called `aString` to be `"Programming"`, and print the last three characters.
+__Problem__: Define a string variable called `aString` to be `"Ma322 is the most fun, it is just unbelievable!"`, and print the last three characters.
 
 ```{python}
-#| eval: false
- CODE
+aString = "Ma322 is the most fun, it is just unbelievable!"
+CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 aString = "Ma322 is the most fun, it is just unbelievable!"
 print(aString[-3:])
 ```
 
 ## Concatenating Strings
 
-Concatenate two strings, `"Welcome "` and `"to Ma322!"`, and print the result.
+__Problem__: Concatenate two strings, `"Welcome "` and `"to Ma322!"`, and print the result.
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 aString1 = "Welcome "
 aString2 = "to Ma322!"
 print(aString1+aString2)
@@ -99,46 +97,72 @@ print(aString1+aString2)
 
 ## Replicating Strings
 
-Create a string that repeats `"Coding "` three times and print it.
+__Problem__: Create a string that repeats `"Coding is Fun!"` three times and print it.
 
 ```{python}
-#| eval: false
+aString = "Coding is Fun!"
 CODE
 ```
 ```{python}
-# Solution:
-aString = "Coding "
+# __SOLUTION__
+aString = "Coding is Fun!"
 print(3*aString)
 ```
 
 ## String Methods
 
-Given the string `"The quick brown fox jumps over the lazy dog."`, replace `"lazy dog"` with `"energetic puppy"` using the `replace()` method and print the new string.
+__Problem__: Given the string `"The quick brown fox jumps over the lazy dog."`, replace `"lazy dog"` with `"energetic puppy"` using the `replace()` method and print the new string.
 
 ```{python}
-#| eval: false
+original_string = "The quick brown fox jumps over the lazy dog."
+new_string = original_string.replace(CODE, CODE)
 CODE
 ```
-
-Given the string `"book,pen,paper,notebook"`, split it into a list of substrings using the `split()` method and print the list.
-
 ```{python}
-#| eval: false
-CODE
+# __SOLUTION__
+original_string = "The quick brown fox jumps over the lazy dog."
+new_string = original_string.replace("lazy dog", "energetic puppy")
+print(new_string)
 ```
 
-Given the list `['Python', 'is', 'awesome']`, join the elements into a single string using the `join()` method with `'xoxoxo'` as the separator, and print the resulting string.
+__Problem__: Given the string `"book,pen,paper,notebook"`, split it into a list of substrings using the `split()` method and print the list.
 
 ```{python}
-#| eval: false
+original_string = "book-pen-paper-notebook"
+item_list = original_string.split(CODE)
 CODE
+```
+```{python}
+# __SOLUTION__
+original_string = "book-pen-paper-notebook"
+item_list = original_string.split('-')
+print(item_list)
+```
+
+__Problem__: Given the list `['Python', 'is', 'awesome']`, join the elements into a single string using the `join()` method with `'xoxoxo'` as the separator, and print the resulting string.
+
+```{python}
+word_list = ['Python', 'is', 'awesome']
+CODE
+```
+```{python}
+# __SOLUTION__
+word_list = ['Python', 'is', 'awesome']
+result_string = 'xoxoxo'.join(word_list)
+print(result_string)
 ```
 
 ## Length of a String
 
-Given the string `"Learn Python today!"`, print its length using the `len()` function.
+__Problem__: Given the string `"Learn Python today!"`, print its length using the `len()` function.
 
 ```{python}
-#| eval: false
+my_string = "Learn Python today!"
 CODE
+```
+```{python}
+# __SOLUTION__
+my_string = "Learn Python today!"
+length = len(my_string)
+print(length)
 ```

@@ -1,234 +1,197 @@
 ---
 title: "More Calculator"
-jupyter:
-  python3
+execute:
+    eval: false
 ---
 
-Calculate `4+5` by replacing the line `CODE` with `4+5` and then execute it by hitting the _Run Cell_ button
+__Problem__:   
+
+Calculate `4+5` 
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 4+5
 ```
+
+__Problem__: 
 
 Calculate `4*5`
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 4*5
 ```
 
+__Problem__: 
+
 Calculate `4-5`
+
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 4-5
 ```
 
+__Problem__: 
+
 Calculate `4/5`
+
 ```{python}
-#| eval: false
-#| question: true
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 4/5
 ```
 
+__Problem__: 
+
 Calculate `4**2`
+
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 4**2
 ```
 
-Check  $4^2=4(4)=16$
+Check:  $4^2=4(4)=16$
 
-Calculate `5**6`
+__Problem__: Calculate `5**6`
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 5**6
 ```
 
-Check  $5^6=(5)(5)(5)(5)(5)(5)=15625$
+Check:  $5^6=(5)(5)(5)(5)(5)(5)=15625$
 
-
-Calculate `sqrt(36)`
+__Problem__: Calculate `sqrt(36)`
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 import math
 math.sqrt(36)
 ```
 
-Check:
-$$ \sqrt{ 36 } = 6 $$
+Check: $\sqrt{36} = 6$
 
-Find `round(2.45)`
-
+__Problem__: Calculate `round(2.45)`
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 round(2.45)
 ```
+Check: The answer should be 2
 
-The answer should be 2
-
-Find `math.ceil(2.45)`
+__Problem__: Calculate`math.ceil(2.45)`
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 math.ceil(2.45)
 ```
+Check: The answer should be 3
 
-The answer should be 3
-
-Find `24%10`, which is the remainder of $24/10$
+__Problem__: Calculate `24%10`, which is the remainder of $24/10$
 ```{python}
-#| question: true
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 24%10
 ```
-
-Put parentheses in the expression `4+2*3` so it gives 18.
-
-As is, it is 10
-
+__Problem__: Put parentheses in the expression `4+2*3` so it gives 18. As is, it is 10
 ```{python}
-#| eval: false
 4+2*3
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 (4+2)*3
 ```
 
-Put parentheses in the expression `4*5+3` so it gives 32.
-
-As is, it is 23
-
+__Problem__: Put parentheses in the expression `4*5+3` so it gives 32. As is, it is 23
 ```{python}
-#| eval: false
 4*5+3
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 4*(5+3)
 ```
 
-Put parentheses in the expression `20/4*5` so it gives 1.
-
-As is, it is 25
-
+__Problem__: Put parentheses in the expression `20/4*5` so it gives 1. As is, it is 25
 ```{python}
-#| eval: false
 20/4*5
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 20/(4*5)
 ```
 
-Put parentheses in the expression `2*9/3*2-1` so it gives 2.
-
-As is, it is 11
-
+__Problem__: Write code that puts in parentheses for `2*9/3*2-1` so it gives 2. As is, it is 11
 ```{python}
-#| eval: false
 2*9/3*2-1
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 2*9/(3*2)-1
 ```
 
-The code below generates an error.
-
+__Problem__: The code below generates an error. Run it to see this.
+Produce a correct version that computes the square root of 49, which is 7
 ```{python}
-#| eval: false
 sqrt(49)
 ```
-
-Produce a correct version that computes the square root of 49, which is 7
-
 ```{python}
-# Solution:
-import math
-
+# __SOLUTION__
 math.sqrt(49)
 ```
 
-The code below generates an error.
-
+__Problem__: The code below generates an error. Run it to see this.
+Produce a correct version with no errors and that gives 10
 ```{python}
-#| eval: false
 ceil(9.45)
 ```
-Produce a correct version below with no errors and that gives 10
-
 ```{python}
-# Solution:
-math.ceil(9.45)
+# __SOLUTION__
+math.sqrt(49)
 ```
 
-The code below generates an error.
+__Problem__: The code below generates an error. Run it to see this.
+Produce a correct version with no errors and that gives 9
 ```{python}
-#| eval: false
 floor(9.45)
 ```
-
-Produce a correct version below with no errors and that gives 9
-
 ```{python}
-# Solution:
+# __SOLUTION__
 math.floor(9.45)
 ```
 
-Below we are trying to print out the two expressions: `3-4` and `5+8`.
-
+__Problem__: Below we are trying to print out the two expressions: `3-4` and `5+8`.
+But it only prints out the second one.
+Produce a correct version by using the `print` function:
 ```{python}
 3-4
 5+8
 ```
-
-But it only prints out the second one.
-
-Produce a correct version by using the `print` function:
-
 ```{python}
-# Solution:
+# __SOLUTION__
 print(3-4)
 print(5+8)
 ```

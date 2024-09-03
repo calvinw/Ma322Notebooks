@@ -2,7 +2,7 @@
 title: "Roles"
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 Many times it helps to give the LLM a role or a persona. That helps set the
 context for how it is meant to respond. This is a very common thing to do and

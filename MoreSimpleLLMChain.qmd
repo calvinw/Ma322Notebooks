@@ -1,10 +1,14 @@
 ---
 title: "More Simple LLM Chain"
+execute:
+    eval: false
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ## Step 1: Suggest a Funny Company Name
+
+__Problem__:
 
 - Write a prompt template that has the LLM suggest one funny name for a company
   that makes a certain product.
@@ -13,11 +17,8 @@ title: "More Simple LLM Chain"
 - Print out the `company_response` that is the response from the LLM
 
 ```{python}
-#| eval: false
 template ="""
-
 CODE
-
 """
 
 prompt = template.format(product=CODE)
@@ -25,7 +26,7 @@ company_response = get_completion(prompt)
 print(CODE)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 template ="""
 Create a funny name for a company that makes {product}
 """
@@ -37,6 +38,8 @@ print(company_response)
 
 ## Step 2: Upper Case the Company Name
 
+__Problem__:
+
 Upper case the company name
 
 - Write a prompt template using `{company}` as template variable, asking the
@@ -44,11 +47,8 @@ Upper case the company name
 - Pass the `company_response` as the `company` variable
   Print the `uppercase_response`
 ```{python}
-#| eval: false
 template ="""
-
 CODE
-
 """
 
 prompt = template.format(company=CODE)
@@ -56,7 +56,7 @@ uppercase_response = get_completion(prompt)
 print(CODE)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 template ="""
 
 Please make this company name upper cased: {company}
@@ -70,6 +70,7 @@ print(uppercase_response)
 ## Step 3 Final Report
 
 ```{python}
+# __REGULAR_BLOCK__
 report_template = """
 ## Final Report
 

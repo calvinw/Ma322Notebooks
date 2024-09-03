@@ -5,7 +5,7 @@ execute:
 ---
 
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 Here is an example of a simple chain with 2 calls to an LLM. The first call asks for 3 names of a company, then the second call asks the LLM to take the response from the first call and upper case it.
 

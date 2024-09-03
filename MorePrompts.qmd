@@ -1,5 +1,7 @@
 ---
 title: "More Prompts"
+execute:
+    eval: false
 ---
 
 In this section we will create a template string to ask the LLM the capital of
@@ -8,68 +10,71 @@ provide some formatting guidelines in our prompt.
 
 ## Template For Asking For the Capital of a `{place}`
 
-- Define a string called `template` that asks for the capital of a place. Use
-  the template variable `{place}`
+__Problem__: 
+
+Define a string called `template` that asks for the capital of a place. Use the template variable `{place}`
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 template = "What is the capital of {place}?"
 ```
 
-- Evaluate it using `template.format` and passing `place="Texas"` to it
+__Problem__: 
+
+Evaluate it using `template.format` and passing `place="Texas"` to it
 
 ```{python}
-#| eval: false
 prompt=template.format(CODE)
 print(prompt)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt=template.format(place="Texas")
 print(prompt)
 ```
 
-- Evaluate the template using `place="France"`
+__Problem__: 
+
+Evaluate the template using `place="France"`
 
 ```{python}
-#| eval: false
 prompt=template.format(CODE)
 print(prompt)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt=template.format(place="France")
 print(prompt)
 ```
 
 ## Add a Template Variable Called `{num}`
 
-- Add the template variable called `{num}` to your template string. Use it to
-  ask for `{num}` facts about the capital of `{place}`. Your template string
-  `template` will contain both `{place}` and `{num}` somewhere in it now.
+__Problem__: 
 
+Add the template variable called `{num}` to your template string. Use it to
+ask for `{num}` facts about the capital of `{place}`. Your template string
+`template` will contain both `{place}` and `{num}` somewhere in it now.
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 template = "What is the capital of {place}? Give me {num} facts about it."
 ```
 
-- Evaluate the template when `place="Texas"` and `num=3`
+__Problem__: 
+
+Evaluate the template when `place="Texas"` and `num=3`
 
 ```{python}
-#| eval: false
 prompt=template.format(CODE)
 print(prompt)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt=template.format(place="Texas", num=3)
 print(prompt)
 ```
@@ -79,28 +84,28 @@ print(prompt)
 Add a template variable so you can pass in the desired format for the facts you
 asked for.
 
-- Add a template variable `{format}` to the template above
+__Problem__: 
 
+Add a template variable `{format}` to the template above
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 template = """What is the capital of {place}?
 Give me {num} facts about it.
 Format the facts as {format}."""
 ```
 
-- Evaluate the template using `place="Texas"` and `num=3` and `format="upper case"`
+__Problem__: 
 
+Evaluate the template using `place="Texas"` and `num=3` and `format="upper case"`
 ```{python}
-#| eval: false
 prompt=template.format(CODE)
 print(prompt)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 # Define template here
 prompt=template.format(place="Texas", num=3, format="upper case")
 print(prompt)

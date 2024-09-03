@@ -1,21 +1,23 @@
 ---
 title: "More Roles"
 execute:
-  enabled: true
+    eval: false
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ## What is a Black Hole?
 
 First like a physicist talking to their collegues
+
+
+__Problem__:  
 
 - Tell the LLM to adopt the role or persona of a physicist talking to other
   physicists.
 - Ask the LLM to explain the concept of a black hole
 
 ```{python}
-#| eval: false
 prompt = """
 CODE
 """
@@ -23,7 +25,7 @@ response=get_completion(prompt)
 print(response)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt="""
 Act like a physicist speaking to some other physicists.
 Explain what a black hole is? 100 words.
@@ -35,11 +37,12 @@ print(response)
 
 Now like a school teacher talking to some sixth grade students
 
+__Problem__:  
+
 - Tell the LLM to adopt the role of a teacher talking to sixth grade students.
 - Ask the LLM to explain the concept of a black hole
 
 ```{python}
-#| eval: false
 prompt = """
 CODE
 """
@@ -47,7 +50,7 @@ response=get_completion(prompt)
 print(response)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt="""
 Act like a school teaching speaking to her sixth grade class.
 Explain what a black hole is? 100 words.
@@ -72,11 +75,12 @@ $$ 9(1) + 90(2) + 401(3) = 1392 $$
 
 Lets ask the LLM first without any role.
 
+__Problem__:  
+
 - Ask the LLM how many key strokes are needed to type the numbers from 1 to
   500?
 
 ```{python}
-#| eval: false
 prompt = """
 CODE
 """
@@ -84,7 +88,7 @@ response=get_completion(prompt)
 print(response)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt="""
 How many key strokes are needed to type the numbers from 1 to 500?
 """
@@ -93,12 +97,13 @@ response=get_completion(prompt)
 print(response)
 ```
 
+__Problem__:  
+
 - Ask the LLM how many key strokes are needed to type the numbers from 1 to 500
 - Tell the LLM it should think step-by-step and that it is an expert at
   counting things.
 
 ```{python}
-#| eval: false
 prompt = """
 CODE
 """
@@ -106,7 +111,7 @@ response=get_completion(prompt)
 print(response)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt="""
 Think step-by-step. You are good at counting things.
 

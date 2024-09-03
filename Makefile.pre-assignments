@@ -1,0 +1,100 @@
+SHELL:=/bin/bash
+
+SOURCES:= \
+Calculator.qmd \
+Strings.qmd \
+Functions.qmd \
+Lists.qmd \
+Variables.qmd \
+DataTypes.qmd \
+DataFrames.qmd \
+DecisionTree.qmd \
+Dicts.qmd \
+ForLoops.qmd \
+FStringChains.qmd \
+FStrings.qmd \
+Lists.qmd \
+PromptsLLMByHand.qmd \
+Prompts.qmd \
+TwoProducts.qmd
+
+ASSIGNMENT_SOURCES:= \
+MoreCalculator.qmd \
+MoreDataFrames.qmd \
+MorePrompts.qmd \
+MoreStrings.qmd \
+MoreFunctions.qmd \
+MoreVariables.qmd \
+VariablesHW.qmd \
+MoreDataTypes.qmd
+
+LLM_SOURCES:= \
+BuildCustomerProfiles.qmd \
+ChainOfThoughtReasoning-DLai.qmd \
+ChainOfThoughtReasoning.qmd \
+ClassifyCustomerQueries.qmd \
+CustomersSay.qmd \
+Delimiters.qmd \
+FStringChains.qmd \
+LLMs.qmd \
+MovieChain.qmd \
+ProductInquiries.qmd \
+ProductInquiries.short.qmd \
+ProductSpec.qmd \
+PromptsLLMByHand.qmd \
+ReviewChainAssign.qmd \
+ReviewChain.qmd \
+Roles.qmd \
+SegmentingCustomers.qmd \
+SimpleCompletion.qmd \
+SimpleLLMChain.qmd \
+Simple.qmd \
+TranslateChain.qmd
+
+LLM_ASSIGNMENT_SOURCES:= \
+MoreLLMs.qmd \
+MoreReviews.qmd \
+MoreRoles.qmd \
+MoreSimpleLLMChain.qmd
+
+ALL_SOURCES:= $(SOURCES) $(LLM_SOURCES)
+ALL_ASSIGNMENT_SOURCES := $(ASSIGNMENT_SOURCES) $(LLM_ASSIGNMENT_SOURCES)
+
+REGULAR_HTML_FILES = $(ALL_SOURCES:%.qmd=%.html)
+REGULAR_IPYNB_FILES = $(ALL_SOURCES:%.qmd=%.ipynb)
+
+PROBLEM_HTML_FILES = $(ALL_ASSIGNMENT_SOURCES:%.qmd=%.html)
+PROBLEM_IPYNB_FILES = $(ALL_ASSIGNMENT_SOURCES:%.qmd=%.ipynb)
+
+SOLUTION_HTML_FILES = $(ALL_ASSIGNMENT_SOURCES:%.qmd=%Solution.html)
+
+all: html ipynb problem_html solution_ipynb solution_html 
+	@echo All files are now up to date
+
+clean:
+	@echo Removing files...
+	rm -rf $(HTML_FILES) $(IPYNB_FILES) $(SOLUTION_HTML_FILES) $(REGULAR_HTML_FILES) $(REGULAR_IPYNB_FILES) *_files *Solution.qmd
+
+html: $(HTML_FILES)
+
+ipynb: $(IPYNB_FILES)
+
+problem_html: $(PROBLEM_HTML_FILES)
+
+problem_ipynb: $(PROBLEM_IPYNB_FILES)
+
+solution_html: $(SOLUTION_HTML_FILES)
+
+%.html: %.qmd
+	quarto render $< --to html
+
+%.ipynb: %.qmd
+	quarto render $< --to ipynb --no-execute
+
+%Solution.html: %Solution.qmd
+	quarto render $< --to html
+
+%Solution.qmd: %.qmd
+	sed -e 's/#| *echo: *\(false\|true\)/#| eval: true/g' $< > $@
+
+.PHONY: all clean html ipynb solutions

@@ -1,7 +1,5 @@
 ---
-title: "Variables In Python"
-jupyter:
-  python3
+title: "Variables in Python"
 ---
 
 Python is a programming language and so has variables. Variables can hold data, and can be used in calculations and in program logic. Understanding how variables work is very important in any programming language.

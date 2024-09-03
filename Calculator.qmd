@@ -1,7 +1,5 @@
 ---
 title: "Calculator"
-jupyter:
-  python3
 ---
 
 Python can do calculations, just like a calculator:
@@ -73,7 +71,9 @@ number?
 
 ```{python}
 #|eval: false
-math.sqrt(-25)
+import cmath
+
+cmath.sqrt(-25)
 ```
 
 It tells us there is a `math domain error`

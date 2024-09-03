@@ -2,7 +2,7 @@
 title: "Segmenting Customers"
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ```{python}
 customers_info="""

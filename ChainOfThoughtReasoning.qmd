@@ -2,7 +2,7 @@
 title: "Chain Of Thought Reasoning"
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ## Chain of Thought Reasoning - Customer Queries
 

@@ -1,11 +1,12 @@
 ---
 title: "LLMS"
-execute:
-  eval: true
 ---
 
-{{< include _llm_togetherai.qmd >}}
-
+```{python}
+#| eval: true 
+model_name="openai/gpt-4o-mini"
+```
+{{< include _llm_openrouter.qmd >}}
 
 ## Calling an LLM with `get_completion`
 

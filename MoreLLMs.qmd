@@ -1,26 +1,30 @@
 ---
 title: "More LLMS"
+execute:
+    eval: false
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ## Calling an LLM
+
+__Problem__:  
 
 - Choose a question and set up a prompt to send the question to the LLM. Any
 question you like.
 
 ```{python}
-#| eval: false
 prompt = CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__ 
 prompt = "Why do people like Barbie? 50 words please"
 ```
 
 - Run the cell below to print out your response
 
 ```{python}
+# __REGULAR_BLOCK__ 
 response = get_completion(prompt)
 print(response)
 ```
@@ -28,6 +32,7 @@ print(response)
 - Run the cell below to print out your prompt and your response together
 
 ```{python}
+# __REGULAR_BLOCK__ 
 response = get_completion(prompt)
 print_prompt_and_response(prompt,response)
 ```
@@ -36,15 +41,16 @@ print_prompt_and_response(prompt,response)
 
 Call the LLM 3 times with your question above, using temperature 0.0 for these.
 
+__Problem__:  
+
 - Using the same prompt as above call `get_completion` three times with `temperature=0`
 - Each time print out the response you get
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 response = get_completion(prompt, temperature = 0.0)
 print(response)
 
@@ -58,15 +64,16 @@ print(" ")
 response = get_completion(prompt, temperature = 0.0)
 print(response)
 ```
+
+__Problem__:  
 
 - Exactly the same as above but use `temperature=0.7` instead
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 response = get_completion(prompt, temperature = 0.7)
 print(response)
 
@@ -83,24 +90,26 @@ print(response)
 
 ## Template For Asking For a Capital
 
+__Problem__:  
+
 - Create a template string with using a template variable `{place}` for asking the LLM
   to give you the capital of `{place}`.
 
 ```{python}
-#| eval: false
 template = CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 template = "Can you tell me the capital of {place}?"
 ```
+
+__Problem__:  
 
 - Evaluate your template with `place="Texas"`
 - Call `get_completion` to get the response from the LLM
 - print the response using `print_prompt_and_response`
 
 ```{python}
-#| eval: false
 prompt=template.format(CODE)
 
 # Call the LLM by passing the prompt to get_completion
@@ -110,7 +119,7 @@ response=get_completion(CODE)
 print_prompt_and_response(prompt,response)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt=template.format(place="Texas")
 
 # Call the LLM by passing the prompt to get_completion
@@ -122,62 +131,67 @@ print_prompt_and_response(prompt,response)
 
 ## Adding a Variable Called `num`
 
+__Problem__:  
+
 - Add another template variable called `{num}` to the template and ask the LLM
   to provide you with `num` facts about the capital that you specified with
   `{place}`.
 
 ```{python}
-#| eval: false
 template = CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 template = """Can you tell me the capital of {place} and give me {num} simple
 facts about it?"""
 ```
+
+__Problem__:  
 
 - Evaluate your template with `place="Texas"` and `num=3` and save it in the
   `prompt` variable
 
 ```{python}
-#| eval: false
 prompt=template.format(CODE)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 prompt=template.format(place="Texas", num=3)
 ```
+
+__Problem__:  
 
 - Now call `get_completion` with the prompt and get the response. Store it in the `response` variable
 
 ```{python}
-#| eval: false
 response = get_completion(CODE)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 response = get_completion(prompt)
 ```
+
+__Problem__:  
 
 - Use `print_prompt_and_response` to print out the prompt and completion.
 
 ```{python}
-#| eval: false
 CODE
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 print_prompt_and_response(prompt,response)
 ```
 
 ## Ask To Format the Response
+
+__Problem__:  
 
 - Add a template variable called `format` so you can pass in the desired format
   for the facts that are given.
 - Call your template with "Texas" and 3 facts and "uppercase" for the format
 
 ```{python}
-#| eval: false
 # Define template here
 template = CODE
 
@@ -189,7 +203,7 @@ response = get_completion(prompt)
 print_prompt_and_response(prompt,response)
 ```
 ```{python}
-# Solution:
+# __SOLUTION__
 # Define template here
 template ="""Can you tell me the capital of {place} and give me {num} simple
 facts about it?. Format the facts using {format}"""

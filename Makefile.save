@@ -1,0 +1,92 @@
+SHELL:=/bin/bash
+
+#SOURCES:=$(wildcard *.qmd)
+
+SOURCES_NO_API:= \
+Booleans.qmd \
+Calculator.qmd \
+DataFrames.qmd \
+DataTypes.qmd \
+DecisionTree.qmd \
+Dicts.qmd \
+ForLoops.qmd \
+FStringChains.qmd \
+FStrings.qmd \
+Functions.qmd \
+Lists.qmd \
+MoreCalculator.qmd \
+MoreDataFrames.qmd \
+MoreDataTypes.qmd \
+MoreFunctions.qmd \
+MorePrompts.qmd \
+MoreStrings.qmd \
+MoreVariables.qmd \
+PromptsLLMByHand.qmd \
+Prompts.qmd \
+Strings.qmd \
+TwoProducts.qmd \
+VariablesHW.qmd \
+Variables.qmd
+
+SOURCES_LLMS_API:= \
+BuildCustomerProfiles.qmd \
+ChainOfThoughtReasoning-DLai.qmd \
+ChainOfThoughtReasoning.qmd \
+ClassifyCustomerQueries.qmd \
+CustomersSay.qmd \
+Delimiters.qmd \
+FStringChains.qmd \
+LLMs.qmd \
+MoreLLMs.qmd \
+MoreReviews.qmd \
+MoreRoles.qmd \
+MoreSimpleLLMChain.qmd \
+MovieChain.qmd \
+ProductInquiries.qmd \
+ProductInquiries.short.qmd \
+ProductSpec.qmd \
+PromptsLLMByHand.qmd \
+ReviewChainAssign.qmd \
+ReviewChain.qmd \
+Roles.qmd \
+SegmentingCustomers.qmd \
+SimpleCompletion.qmd \
+SimpleLLMChain.qmd \
+Simple.qmd \
+TranslateChain.qmd
+
+#SOURCES:= $(SOURCES_NO_API) $(SOURCES_LLMS_API)
+#SOURCES:= $(SOURCES_LLMS_API)
+
+SOURCES:= MoreCalculator.qmd
+
+IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)
+HTML_FILES = $(SOURCES:%.qmd=%.html)
+_FILES = $(SOURCES:%.qmd=%_files)
+
+all : html ipynb
+	@echo All files are now up to date
+
+debug:
+	@echo $(HTML_FILES)
+	@echo $(IPYNB_FILES)
+	@echo $(LLM_FILES)
+
+clean :
+	@echo Removing files...
+	rm -rf $(HTML_FILES) $(IPYNB_FILES) $(_FILES)
+
+html   : $(HTML_FILES)
+
+ipynb  : $(IPYNB_FILES)
+
+%.html : %.qmd
+	quarto render $< --to html
+
+%.md : %.qmd
+	quarto render $< --to md
+
+%.ipynb : %.qmd
+	quarto render $< --to ipynb 
+
+.PHONY: all clean

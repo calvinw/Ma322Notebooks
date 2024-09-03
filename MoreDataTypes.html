@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="MoreDataTypes_files/libs/clipboard/clipboard.min.js"></script>
-<script src="MoreDataTypes_files/libs/quarto-html/quarto.js"></script>
-<script src="MoreDataTypes_files/libs/quarto-html/popper.min.js"></script>
-<script src="MoreDataTypes_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="MoreDataTypes_files/libs/quarto-html/anchor.min.js"></script>
-<link href="MoreDataTypes_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="MoreDataTypes_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="MoreDataTypes_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="MoreDataTypes_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="MoreDataTypes_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="MoreDataTypesAssignment_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MoreDataTypesAssignment_files/libs/quarto-html/quarto.js"></script>
+<script src="MoreDataTypesAssignment_files/libs/quarto-html/popper.min.js"></script>
+<script src="MoreDataTypesAssignment_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="MoreDataTypesAssignment_files/libs/quarto-html/anchor.min.js"></script>
+<link href="MoreDataTypesAssignment_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MoreDataTypesAssignment_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="MoreDataTypesAssignment_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="MoreDataTypesAssignment_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="MoreDataTypesAssignment_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -94,183 +94,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<p><strong>Problem</strong>:</p>
 <ul>
-<li>Assign a variable using <code>myFloat = 1.2</code></li>
-<li>Print out info on <code>myFloat</code> using the <code>type</code> function</li>
+<li>Assign a variable using <code>x = 1.2</code></li>
+<li>Print out info on <code>x</code> using the <code>type</code> function</li>
 </ul>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>myFloat <span class="op">=</span> <span class="fl">1.2</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(myFloat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;class 'float'&gt;</code></pre>
-</div>
-</div>
 <p>This should output <code>&lt;class 'float'&gt;</code> which means <code>float</code></p>
+<p>Let’s look at string types:</p>
+<p><strong>Problem</strong>:</p>
 <ul>
-<li>Use the <code>isinstance</code> function to check if <code>myFloat</code> is a float data type.</li>
+<li>Assign a variable using <code>y = "hello"</code></li>
+<li>Print out info on <code>y</code> using the <code>type</code> function</li>
 </ul>
 <div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(myFloat, <span class="bu">float</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True</code></pre>
-</div>
-</div>
-<p>The output should be <code>True</code> since <code>myFloat</code> is a float data type.</p>
-<p>Let’s look at string types</p>
-<ul>
-<li>Assign a variable using <code>myString = "hello"</code></li>
-<li>Print out info on <code>myString</code> using the <code>type</code> function</li>
-</ul>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>myString <span class="op">=</span> <span class="st">"hello"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(myString))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;class 'str'&gt;</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This should output <code>&lt;class 'str'&gt;</code> which means <code>string</code></p>
-<ul>
-<li>Use the <code>isinstance</code> function to check if <code>myString</code> is a string data type</li>
-</ul>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(myString, <span class="bu">str</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True</code></pre>
-</div>
-</div>
-<p>The output should be <code>True</code> since <code>myString</code> is a string data type.</p>
 <p>Let’s look at boolean type:</p>
+<p><strong>Problem</strong>:</p>
 <ul>
-<li>Assign a variable using <code>myBoolean = True</code></li>
-<li>Print out info on <code>myBoolean</code> using the <code>type</code> function</li>
+<li>Assign a variable using <code>z = True</code></li>
+<li>Print out info on <code>z</code> using the <code>type</code> function</li>
 </ul>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>myBoolean <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(myBoolean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;class 'bool'&gt;</code></pre>
-</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This should output <code>&lt;class 'bool'&gt;</code> which means <code>boolean</code>.</p>
-<ul>
-<li>Use the <code>isinstance</code> function to check the data type of <code>myBoolean</code> from above</li>
-</ul>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(myBoolean, <span class="bu">bool</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True</code></pre>
-</div>
-</div>
-<p>The output should be <code>True</code> since <code>myBoolean</code> is a boolean data type.</p>
 <p>One conversion that is frequently used is from a string like “1.23” to a number 1.23.</p>
 <p>With quotes around it, a number will be seen as a string:</p>
+<p><strong>Problem</strong>:</p>
 <ul>
-<li>Define a variable <code>aString = "1.23"</code></li>
-<li>print out whether it is a string using <code>isinstance</code></li>
-<li>print out whether it is a float using <code>isinstance</code></li>
+<li>Define a variable <code>a = "1.23"</code></li>
+<li>Print out the data type of <code>a</code> using the <code>type</code> function</li>
 </ul>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>aString <span class="op">=</span> <span class="st">"1.23"</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(aString, <span class="bu">str</span>))</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(aString, <span class="bu">float</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True
-False</code></pre>
-</div>
-</div>
-<p>The output of <code>isinstance(aString, str)</code> should be <code>True</code> since <code>aString</code> was a string.</p>
-<p>The output of <code>isinstance(aString, float)</code> should be <code>False</code> since <code>aString</code> was not a float.</p>
 <p>So if we want to change the string “1.23” to a number, we must use <code>float</code> to convert the string to a number:</p>
+<p><strong>Problem</strong>:</p>
 <ul>
-<li>Define a variable <code>aNumber</code> by using the function <code>float</code> on <code>aString</code></li>
-<li>print out whether <code>aNumber</code> is a float using <code>isinstance</code></li>
+<li>Define a variable <code>b</code> and use it to convert the variable <code>a</code> from above to a <code>float</code></li>
+<li>Print out the data type of <code>b</code> using the <code>type</code> function</li>
 </ul>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>aNumber <span class="op">=</span> <span class="bu">float</span>(aString)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">isinstance</span>(aNumber, <span class="bu">float</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>True</code></pre>
-</div>
-</div>
-<p>The output of <code>isinstance(aNumber, float)</code> should be <code>True</code> since <code>aNumber</code> was a float.</p>
-<p>Finally for the code below add a couple of <code>type</code> functions to display information about the variables.</p>
+<p>Finally for the code below add a couple of <code>type</code> functions to display information about the variables:</p>
+<p><strong>Problem</strong>:</p>
 <ul>
 <li>Print out info on <code>x</code> using the <code>type</code> function</li>
 <li>Print out info on <code>y</code> using the <code>type</code> function</li>
 </ul>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="st">"1.23"</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">float</span>(<span class="st">"1.23"</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="st">"1.23"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">float</span>(x)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="st">"1.23"</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">float</span>(<span class="st">"1.23"</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(x))</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;class 'str'&gt;
-&lt;class 'float'&gt;</code></pre>
-</div>
-</div>
-<p><code>x</code> is a string since there are quotation marks so that makes it a string.</p>
-<p><code>y</code> is a float since it was converted to a float with <code>float</code>.</p>
+<p><code>x</code> is a string since there are quotation marks so that makes it a string. <code>y</code> is a float since it was converted to a float with <code>float</code>.</p>
 <p>Once again, for the code below add a couple of <code>type</code> functions to display information about the variables.</p>
+<p><strong>Problem</strong>:</p>
 <ul>
 <li>Print out info on <code>z</code> using the <code>type</code> function</li>
 <li>Print out info on <code>w</code> using the <code>type</code> function</li>
 </ul>
-<div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> <span class="st">"TRUE"</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="bu">bool</span>(<span class="st">"TRUE"</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> <span class="st">"True"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="bu">bool</span>(z)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> <span class="st">"TRUE"</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="bu">bool</span>(<span class="st">"TRUE"</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(z))</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(w))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;class 'str'&gt;
-&lt;class 'bool'&gt;</code></pre>
-</div>
-</div>
-<p><code>z</code> is a string since there are quotation marks so that makes it a string.</p>
-<p><code>w</code> is a boolean since it was converted to a boolean with <code>bool</code>.</p>
+<p><code>z</code> is a string since there are quotation marks so that makes it a string. <code>w</code> is a boolean since it was converted to a boolean with <code>bool</code>.</p>
 
 </main>
 <!-- /main column -->

@@ -1,8 +1,10 @@
 ---
 title: "More Analyzing Reviews with LLMs"
+execute:
+    eval: false
 ---
 
-{{< include _llm_togetherai.qmd >}}
+{{< include _llm_openrouter.qmd >}}
 
 ## Analyzing Amazon Reviews
 
@@ -17,6 +19,7 @@ Go to the page above and find some reviews to analyze.
 Here's our template:
 
 ```{python}
+# __REGULAR_BLOCK__
 template ="""Give a short summary of the following review. The review is placed
 in the <text> tags. Use no more than 30 words.
 <text>
@@ -26,24 +29,24 @@ in the <text> tags. Use no more than 30 words.
 
 ### First Review
 
+__Problem__:  
+
 - Paste your first review where it says CODE below
 
 ```{python}
-#| eval: false
 first_review = """
 CODE
 """
 ```
 ```{python}
-# Solution:
-first_review = """
-
-"""
+# __SOLUTION__
+first_review = """Love this hoodie. It is thin and not bulky or ill fitting. It looks good with most anything. The pockets could be a bit deeper so my phone doesn’t slip out. I have the dark blue, light blue and salmon color. If you are buying the salmon color be warned that dark colors will show through. Someone didn’t like the printed on fabric label but honestly I didn’t even notice it because the hood covers it and it is very faint. I have had the dk blue for over 2 years and it has faded a bit but what wouldn’t. I bought 2 mediums and a small which both fit just fine. It is long and the sleeves are a bit long but that is part of what makes it comfortable. It has held up over many washings and the zipper hasn’t given out on me. I want to order a gray one too if they restock it."""
 ```
 
 - Run the below and get summary of the `first_review`
 
 ```{python}
+# __REGULAR_BLOCK__
 prompt=template.format(review=first_review)
 response = get_completion(prompt)
 print_prompt_and_response(prompt, response)
@@ -51,24 +54,24 @@ print_prompt_and_response(prompt, response)
 
 ### Second Review
 
+__Problem__:  
+
 Lets do the `second_review`
 
 ```{python}
-#| eval: false
 second_review = """
 CODE
 """
 ```
 ```{python}
-# Solution:
-second_review = """
-
-"""
+# __SOLUTION__
+second_review = """So, first off, these are THIN, like a tee. Do not be expecting a warm fleece hoodie. This is the kind of hoodie you bring to a breezy beach at sunset. I purchased the white and it is somewhat see-through, which some reviewers don’t like but I expected it and it’s fine with me. With a 39” bust, I always order Large in tops. At first I though maybe I should have gotten a Medium because it was quite roomy. But after washing, the the whole thing including the sleeves got shorter and it got a bit more fitted (though still a little too roomy in the waist/hip). Mine seems well-sewn and the zipper works smoothly. For the price, I’m satisfied with having a lightweight layer when I need it. """
 ```
 
 - Run the below and get summary of the `second_review`
 
 ```{python}
+# __REGULAR_BLOCK__
 prompt=template.format(review=second_review)
 response = get_completion(prompt)
 print_prompt_and_response(prompt, response)
@@ -76,32 +79,24 @@ print_prompt_and_response(prompt, response)
 
 ### Third Review
 
+__Problem__:  
+
 Lets do the `third_review`
 
 ```{python}
-#| eval: false
 third_review = """
 CODE
 """
 ```
 ```{python}
-# Solution:
-third_review= """
-
-"""
+# __SOLUTION__
+third_review= """I ordered this in a few colors when they went on sale. I wasn't expecting much considering the brand and price so I wasn't very disappointed when they arrived and the quality seemed so-so. I was mostly looking for a lightweight jacket to throw over leggings and a t-shirt for quick errands or to wear for yard work/gardening without being too hot but getting some cover from the sun too. I think I got what I wanted though I'd warn these are extremely thin and I doubt they will hold up for very long. I read they were t-shirt material but I think that's an overstatement. If I bought a t-shirt as thin as this I'd return it immediately because it would be see through. The white jacket is see through. I was wearing a navy tank top when I tried it on and you see the dark color very clearly through the jacket, I'd only wear the white with a pale shirt underneath otherwise it looks cheap. I had a fair amount of loose strings on the jacket and several hanging off the seams that I either tied off or trimmed. Amazon recommended a large but I ordered an x-lrg thinking I'd like it looser for working outside or casual errands. If I had to order again I would of just gone with the large, I think they run a size up based on how it fits, but I'm not exchanging them as they'll work fine for my intended purposes. Lastly, these are very long jackets. If you're average height looking to cover your tush, these will work very well. I'm 4'10, which I know makes me an outlier, but anyone around 5ft should know with a loose fit these jackets will hit mid thigh."""
 ```
 
 - Run the below and get summary of the `third_review`
 
 ```{python}
-prompt=template.format(review=third_review)
-response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
-```
-
-- Lets do the `third_review`
-
-```{python}
+# __REGULAR_BLOCK__
 prompt=template.format(review=third_review)
 response = get_completion(prompt)
 print_prompt_and_response(prompt, response)
@@ -110,6 +105,7 @@ print_prompt_and_response(prompt, response)
 ### Summarize all Reviews
 
 ```{python}
+# __REGULAR_BLOCK__
 template ="""Summarize all of the following reviews, enclosed in <review> tags.
 List commonalities between the reviews and differences. If there are issues
 that multiple customers mention, please list those. If there are things that
@@ -131,6 +127,7 @@ viewpoint of the reviews.
 ```
 
 ```{python}
+# __REGULAR_BLOCK__
 prompt=template.format(first_review=first_review,
                        second_review=second_review,
                        third_review=third_review)
@@ -138,4 +135,3 @@ prompt=template.format(first_review=first_review,
 response = get_completion(prompt)
 print_prompt_and_response(prompt, response)
 ```
-
