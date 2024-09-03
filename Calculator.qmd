@@ -71,9 +71,9 @@ number?
 
 ```{python}
 #|eval: false
-import cmath
+import math
 
-cmath.sqrt(-25)
+math.sqrt(-25)
 ```
 
 It tells us there is a `math domain error`
