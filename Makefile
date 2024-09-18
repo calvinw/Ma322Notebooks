@@ -50,8 +50,8 @@ MoreReviews.qmd \
 MoreRoles.qmd \
 MoreSimpleLLMChain.qmd
 
-ASSIGNMENT_SOURCES:= \
-MoreCalculator.qmd
+# ASSIGNMENT_SOURCES:= \
+# MoreCalculator.qmd
 
 REGULAR_HTML_FILES = $(SOURCES:%.qmd=%.html)
 REGULAR_IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)

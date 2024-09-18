@@ -4,6 +4,11 @@ execute:
     eval: false
 ---
 
+```{python}
+#| eval: true 
+model_name="openai/gpt-3.5-turbo"
+```
+
 {{< include _llm_openrouter.qmd >}}
 
 ## What is a Black Hole?
@@ -100,8 +105,7 @@ print(response)
 __Problem__:  
 
 - Ask the LLM how many key strokes are needed to type the numbers from 1 to 500
-- Tell the LLM it should think step-by-step and that it is an expert at
-  counting things.
+- Tell the LLM it is an expert at counting keystrokes and it can reason about it very well (try different variations too) 
 
 ```{python}
 prompt = """
@@ -113,7 +117,7 @@ print(response)
 ```{python}
 # __SOLUTION__
 prompt="""
-Think step-by-step. You are good at counting things.
+Think step-by-step. Show all steps of your reasoning. 
 
 How many key strokes are needed to type the numbers from 1 to 500?
 """

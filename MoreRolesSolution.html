@@ -96,40 +96,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="put-your-openrouter_api_key-here" class="level2">
-<h2 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h2>
-<div class="cell" data-execution_count="2">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"OPENROUTER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model_name<span class="op">=</span><span class="st">"openai/gpt-3.5-turbo"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="put-your-openrouter_api_key-here" class="level3">
+<h3 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h3>
 <div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"OPENROUTER_API_KEY"</span>] <span class="op">=</span> <span class="st">"paste_your_api_key_here"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: Open Router"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span>, model_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Provider: Open Router
-Model:  openai/gpt-4o-mini</code></pre>
-</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="5">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    model_name</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">NameError</span>:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model Name:"</span>, model_name)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider:"</span>, <span class="st">"OpenRouter AI"</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model Name: openai/gpt-3.5-turbo
+Provider: OpenRouter AI</code></pre>
+</div>
 </div>
 <div class="cell" data-execution_count="6">
 <details>
@@ -200,16 +206,14 @@ Model:  openai/gpt-4o-mini</code></pre>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>A black hole is a region in spacetime where gravitational forces are so intense
-that nothing, not even light, can escape from it. Formed from the remnants of
-massive stars after they undergo gravitational collapse, black holes are
-characterized by their event horizon—the boundary beyond which escape is
-impossible. They can be classified into stellar, supermassive, and intermediate
-black holes, depending on their mass. The singularity at the center represents a
-point of infinite density, where our current understanding of physics breaks
-down. Black holes are crucial for studying fundamental physics, including
-general relativity and quantum mechanics, and they play a significant role in
-cosmic evolution.</code></pre>
+<pre><code>Alright, fellow physicists, let's delve into the fascinating topic of black
+holes. A black hole is a region in space where the gravitational pull is so
+strong that nothing, not even light, can escape its grasp. This occurs when a
+massive star collapses under its own gravity, creating a singularity with
+infinite density and zero volume at its center. The event horizon marks the
+point of no return, beyond which nothing can escape. Black holes can vary in
+size, with supermassive black holes found at the centers of galaxies and stellar
+black holes formed from the remnants of massive stars.</code></pre>
 </div>
 </div>
 <p>Now like a school teacher talking to some sixth grade students</p>
@@ -235,14 +239,14 @@ cosmic evolution.</code></pre>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Alright, class! Today, we’re going to talk about something really cool: black
-holes! A black hole is a region in space where gravity is so strong that
-nothing, not even light, can escape from it. Imagine a giant vacuum cleaner that
-sucks everything in! They form when massive stars run out of fuel and collapse
-under their own gravity. Black holes can be tiny or super huge, and we can’t see
-them directly, but we know they’re there because they affect nearby stars and
-gas. Scientists study black holes to learn more about the universe. Isn’t that
-fascinating?</code></pre>
+<pre><code>Good morning class! Today we are going to learn about black holes. A black hole
+is a region in space where the gravitational pull is so strong that nothing, not
+even light, can escape from it. They are formed when a massive star collapses in
+on itself, creating a dense core. Black holes can vary in size, with some being
+as small as a single atom and others being millions of times larger than our
+sun. Despite their name, black holes are not actually holes, but rather
+incredibly dense objects with a powerful gravitational force. They are truly
+fascinating and mysterious phenomena in our universe.</code></pre>
 </div>
 </div>
 </section>
@@ -277,43 +281,22 @@ fascinating?</code></pre>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>To calculate the total number of keystrokes needed to type the numbers from 1 to
-500, we can break it down by the number of digits in the numbers.
+<pre><code>To type the numbers from 1 to 500, you would need a total of 1900 key strokes.
 
-1. **Numbers from 1 to 9**:
-   - There are 9 numbers (1 to 9).
-   - Each number has 1 digit.
-   - Total keystrokes = 9 × 1 = 9.
+Here's the breakdown:
+- Numbers 1 to 9 require 9 key strokes (1, 2, 3, 4, 5, 6, 7, 8, 9)
+- Numbers 10 to 99 require 180 key strokes (10-99 = 90 numbers x 2 key strokes
+each)
+- Numbers 100 to 500 require 1711 key strokes (100-500 = 401 numbers x 3 key
+strokes each)
 
-2. **Numbers from 10 to 99**:
-   - There are 90 numbers (10 to 99).
-   - Each number has 2 digits.
-   - Total keystrokes = 90 × 2 = 180.
-
-3. **Numbers from 100 to 499**:
-   - There are 400 numbers (100 to 499).
-   - Each number has 3 digits.
-   - Total keystrokes = 400 × 3 = 1200.
-
-4. **Number 500**:
-   - There is 1 number (500).
-   - It has 3 digits.
-   - Total keystrokes = 1 × 3 = 3.
-
-Now, we can sum all the keystrokes:
-
-\[
-9 + 180 + 1200 + 3 = 1392
-\]
-
-Therefore, the total number of keystrokes needed to type the numbers from 1 to
-500 is **1392**.</code></pre>
+Adding these up: 9 + 180 + 1711 = 1900 key strokes.</code></pre>
 </div>
 </div>
 <p><strong>Problem</strong>:</p>
 <ul>
 <li>Ask the LLM how many key strokes are needed to type the numbers from 1 to 500</li>
-<li>Tell the LLM it should think step-by-step and that it is an expert at counting things.</li>
+<li>Tell the LLM it is an expert at counting keystrokes and it can reason about it very well (try different variations too)</li>
 </ul>
 <div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
@@ -325,7 +308,7 @@ Therefore, the total number of keystrokes needed to type the numbers from 1 to
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span><span class="st">"""</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">Think step-by-step. You are good at counting things.</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">Think step-by-step. Show all steps of your reasoning. </span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="st">How many key strokes are needed to type the numbers from 1 to 500?</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
@@ -333,40 +316,29 @@ Therefore, the total number of keystrokes needed to type the numbers from 1 to
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>To determine the total number of keystrokes needed to type the numbers from 1 to
-500, we can break it down by the number of digits in the numbers.
+<pre><code>To calculate the number of key strokes needed to type the numbers from 1 to 500,
+we need to consider the following:
 
-1. **Count the numbers from 1 to 9 (1-digit numbers)**:
-   - There are 9 numbers (1 to 9).
-   - Each number has 1 digit.
-   - Total keystrokes = 9 numbers × 1 digit = 9 keystrokes.
+1. Count the number of key strokes needed to type each digit from 1 to 9. Each
+digit requires one key stroke.
 
-2. **Count the numbers from 10 to 99 (2-digit numbers)**:
-   - There are 90 numbers (10 to 99).
-   - Each number has 2 digits.
-   - Total keystrokes = 90 numbers × 2 digits = 180 keystrokes.
+2. Count the number of key strokes needed to type the numbers from 10 to 99.
+Each number in this range has two digits, so each number requires two key
+strokes.
 
-3. **Count the numbers from 100 to 499 (3-digit numbers)**:
-   - There are 400 numbers (100 to 499).
-   - Each number has 3 digits.
-   - Total keystrokes = 400 numbers × 3 digits = 1200 keystrokes.
+3. Count the number of key strokes needed to type the numbers from 100 to 500.
+Each number in this range has three digits, so each number requires three key
+strokes.
 
-4. **Count the number 500 (3-digit number)**:
-   - There is 1 number (500).
-   - It has 3 digits.
-   - Total keystrokes = 1 number × 3 digits = 3 keystrokes.
+Now, let's calculate the total number of key strokes needed:
 
-Now, we can sum all the keystrokes:
+- For numbers from 1 to 9: 9 key strokes
+- For numbers from 10 to 99: 90 numbers * 2 key strokes = 180 key strokes
+- For numbers from 100 to 500: 400 numbers * 3 key strokes = 1200 key strokes
 
-- From 1 to 9: 9 keystrokes
-- From 10 to 99: 180 keystrokes
-- From 100 to 499: 1200 keystrokes
-- From 500: 3 keystrokes
+Total key strokes needed = 9 + 180 + 1200 = 1389
 
-Total keystrokes = 9 + 180 + 1200 + 3 = 1392 keystrokes.
-
-Therefore, the total number of keystrokes needed to type the numbers from 1 to
-500 is **1392**.</code></pre>
+Therefore, 1389 key strokes are needed to type the numbers from 1 to 500.</code></pre>
 </div>
 </div>
 <p>For this last one you might try various wordings, the LLM we are using currently seems to respond slightly differently depending on how you word things.</p>
