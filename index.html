@@ -5,10 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python File Links</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
         .comment {
-            color: #666;
+            color: #7f8c8d;
             font-style: italic;
-            margin-left: 10px;
         }
     </style>
 </head>
@@ -17,57 +40,58 @@
 
     <h2>Sources</h2>
     <ul>
-        <li><a href="Calculator.html">Calculator.html</a> | <a href="Calculator.qmd">Calculator.qmd</a> | <a href="Calculator.ipynb">Calculator.ipynb</a></li>
-        <li><a href="Strings.html">Strings.html</a> | <a href="Strings.qmd">Strings.qmd</a> | <a href="Strings.ipynb">Strings.ipynb</a></li>
-        <li><a href="Functions.html">Functions.html</a> | <a href="Functions.qmd">Functions.qmd</a> | <a href="Functions.ipynb">Functions.ipynb</a></li>
-        <li><a href="Variables.html">Variables.html</a> | <a href="Variables.qmd">Variables.qmd</a> | <a href="Variables.ipynb">Variables.ipynb</a></li>
-        <li><a href="DataTypes.html">DataTypes.html</a> | <a href="DataTypes.qmd">DataTypes.qmd</a> | <a href="DataTypes.ipynb">DataTypes.ipynb</a></li>
-        <li><a href="DataFrames.html">DataFrames.html</a> | <a href="DataFrames.qmd">DataFrames.qmd</a> | <a href="DataFrames.ipynb">DataFrames.ipynb</a></li>
-        <li><a href="SystemPrompting.html">SystemPrompting.html</a> | <a href="SystemPrompting.qmd">SystemPrompting.qmd</a> | <a href="SystemPrompting.ipynb">SystemPrompting.ipynb</a></li>
-        <li><a href="DecisionTree.html">DecisionTree.html</a> | <a href="DecisionTree.qmd">DecisionTree.qmd</a> | <a href="DecisionTree.ipynb">DecisionTree.ipynb</a></li>
-        <li><a href="Dicts.html">Dicts.html</a> | <a href="Dicts.qmd">Dicts.qmd</a> | <a href="Dicts.ipynb">Dicts.ipynb</a></li>
-        <li><a href="ForLoops.html">ForLoops.html</a> | <a href="ForLoops.qmd">ForLoops.qmd</a> | <a href="ForLoops.ipynb">ForLoops.ipynb</a></li>
-        <li><a href="FStrings.html">FStrings.html</a> | <a href="FStrings.qmd">FStrings.qmd</a> | <a href="FStrings.ipynb">FStrings.ipynb</a> <span class="comment">Basic FStrings</span></li>
-        <li><a href="Lists.html">Lists.html</a> | <a href="Lists.qmd">Lists.qmd</a> | <a href="Lists.ipynb">Lists.ipynb</a></li>
-        <li><a href="PromptsLLMByHand.html">PromptsLLMByHand.html</a> | <a href="PromptsLLMByHand.qmd">PromptsLLMByHand.qmd</a> | <a href="PromptsLLMByHand.ipynb">PromptsLLMByHand.ipynb</a></li>
-        <li><a href="Prompts.html">Prompts.html</a> | <a href="Prompts.qmd">Prompts.qmd</a> | <a href="Prompts.ipynb">Prompts.ipynb</a></li>
-        <li><a href="TwoProducts.html">TwoProducts.html</a> | <a href="TwoProducts.qmd">TwoProducts.qmd</a> | <a href="TwoProducts.ipynb">TwoProducts.ipynb</a></li>
-        <li><a href="BuildCustomerProfiles.html">BuildCustomerProfiles.html</a> | <a href="BuildCustomerProfiles.qmd">BuildCustomerProfiles.qmd</a> | <a href="BuildCustomerProfiles.ipynb">BuildCustomerProfiles.ipynb</a></li>
-        <li><a href="ChainOfThoughtReasoning-DLai.html">ChainOfThoughtReasoning-DLai.html</a> | <a href="ChainOfThoughtReasoning-DLai.qmd">ChainOfThoughtReasoning-DLai.qmd</a> | <a href="ChainOfThoughtReasoning-DLai.ipynb">ChainOfThoughtReasoning-DLai.ipynb</a></li>
-        <li><a href="ChainOfThoughtReasoning.html">ChainOfThoughtReasoning.html</a> | <a href="ChainOfThoughtReasoning.qmd">ChainOfThoughtReasoning.qmd</a> | <a href="ChainOfThoughtReasoning.ipynb">ChainOfThoughtReasoning.ipynb</a> <span class="comment">CoT reasoning before answering customer Query</span></li>
-        <li><a href="CustomersSay.html">CustomersSay.html</a> | <a href="CustomersSay.qmd">CustomersSay.qmd</a> | <a href="CustomersSay.ipynb">CustomersSay.ipynb</a></li>
-        <li><a href="Delimiters.html">Delimiters.html</a> | <a href="Delimiters.qmd">Delimiters.qmd</a> | <a href="Delimiters.ipynb">Delimiters.ipynb</a></li>
-        <li><a href="FStringChains.html">FStringChains.html</a> | <a href="FStringChains.qmd">FStringChains.qmd</a> | <a href="FStringChains.ipynb">FStringChains.ipynb</a> <span class="comment">Fstrings version of 3 companys then format with upper case</span></li>
-        <li><a href="LLMs.html">LLMs.html</a> | <a href="LLMs.qmd">LLMs.qmd</a> | <a href="LLMs.ipynb">LLMs.ipynb</a> <span class="comment">Basic LLM Calls</span></li>
-        <li><a href="MovieChain.html">MovieChain.html</a> | <a href="MovieChain.qmd">MovieChain.qmd</a> | <a href="MovieChain.ipynb">MovieChain.ipynb</a></li>
-        <li><a href="ProductInquiries.html">ProductInquiries.html</a> | <a href="ProductInquiries.qmd">ProductInquiries.qmd</a> | <a href="ProductInquiries.ipynb">ProductInquiries.ipynb</a> <span class="comment">Recognize Categories and Products, fetch details, write detailed response to customer - Retail situation</span></li>
-        <li><a href="ProductInquiries.short.html">ProductInquiries.short.html</a> | <a href="ProductInquiries.short.qmd">ProductInquiries.short.qmd</a> | <a href="ProductInquiries.short.ipynb">ProductInquiries.short.ipynb</a></li>
-        <li><a href="ProductSpec.html">ProductSpec.html</a> | <a href="ProductSpec.qmd">ProductSpec.qmd</a> | <a href="ProductSpec.ipynb">ProductSpec.ipynb</a> <span class="comment">Meant to be Andrew ng product spec analysis</span></li>
-        <li><a href="ReviewChainAssign.html">ReviewChainAssign.html</a> | <a href="ReviewChainAssign.qmd">ReviewChainAssign.qmd</a> | <a href="ReviewChainAssign.ipynb">ReviewChainAssign.ipynb</a></li>
-        <li><a href="Roles.html">Roles.html</a> | <a href="Roles.qmd">Roles.qmd</a> | <a href="Roles.ipynb">Roles.ipynb</a> <span class="comment">Roles for improved responses. Equation correct, Logic problem</span></li>
-        <li><a href="SegmentingCustomers.html">SegmentingCustomers.html</a> | <a href="SegmentingCustomers.qmd">SegmentingCustomers.qmd</a> | <a href="SegmentingCustomers.ipynb">SegmentingCustomers.ipynb</a></li>
-        <li><a href="SimpleCompletion.html">SimpleCompletion.html</a> | <a href="SimpleCompletion.qmd">SimpleCompletion.qmd</a> | <a href="SimpleCompletion.ipynb">SimpleCompletion.ipynb</a> <span class="comment">For testing LLM api key set up correctly</span></li>
-        <li><a href="SimpleLLMChain.html">SimpleLLMChain.html</a> | <a href="SimpleLLMChain.qmd">SimpleLLMChain.qmd</a> | <a href="SimpleLLMChain.ipynb">SimpleLLMChain.ipynb</a></li>
-        <li><a href="Simple.html">Simple.html</a> | <a href="Simple.qmd">Simple.qmd</a> | <a href="Simple.ipynb">Simple.ipynb</a></li>
-        <li><a href="TranslateChain.html">TranslateChain.html</a> | <a href="TranslateChain.qmd">TranslateChain.qmd</a> | <a href="TranslateChain.ipynb">TranslateChain.ipynb</a> <span class="comment">Longer version of ReviewChain</span></li>
+        <li><a href="Calculator.html">Calculator.html</a> | <a href="Calculator.qmd">Calculator.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Calculator.ipynb">Calculator.ipynb</a></li>
+        <li><a href="Strings.html">Strings.html</a> | <a href="Strings.qmd">Strings.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Strings.ipynb">Strings.ipynb</a></li>
+        <li><a href="Functions.html">Functions.html</a> | <a href="Functions.qmd">Functions.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Functions.ipynb">Functions.ipynb</a></li>
+        <li><a href="Variables.html">Variables.html</a> | <a href="Variables.qmd">Variables.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Variables.ipynb">Variables.ipynb</a></li>
+        <li><a href="DataTypes.html">DataTypes.html</a> | <a href="DataTypes.qmd">DataTypes.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/DataTypes.ipynb">DataTypes.ipynb</a></li>
+        <li><a href="DataFrames.html">DataFrames.html</a> | <a href="DataFrames.qmd">DataFrames.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/DataFrames.ipynb">DataFrames.ipynb</a></li>
+        <li><a href="SystemPrompting.html">SystemPrompting.html</a> | <a href="SystemPrompting.qmd">SystemPrompting.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/SystemPrompting.ipynb">SystemPrompting.ipynb</a></li>
+        <li><a href="DecisionTree.html">DecisionTree.html</a> | <a href="DecisionTree.qmd">DecisionTree.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/DecisionTree.ipynb">DecisionTree.ipynb</a></li>
+        <li><a href="Dicts.html">Dicts.html</a> | <a href="Dicts.qmd">Dicts.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Dicts.ipynb">Dicts.ipynb</a></li>
+        <li><a href="ForLoops.html">ForLoops.html</a> | <a href="ForLoops.qmd">ForLoops.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ForLoops.ipynb">ForLoops.ipynb</a></li>
+        <li><a href="FStrings.html">FStrings.html</a> | <a href="FStrings.qmd">FStrings.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/FStrings.ipynb">FStrings.ipynb</a> <span class="comment">Basic FStrings</span></li>
+        <li><a href="Lists.html">Lists.html</a> | <a href="Lists.qmd">Lists.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Lists.ipynb">Lists.ipynb</a></li>
+        <li><a href="PromptsLLMByHand.html">PromptsLLMByHand.html</a> | <a href="PromptsLLMByHand.qmd">PromptsLLMByHand.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/PromptsLLMByHand.ipynb">PromptsLLMByHand.ipynb</a></li>
+        <li><a href="Prompts.html">Prompts.html</a> | <a href="Prompts.qmd">Prompts.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Prompts.ipynb">Prompts.ipynb</a></li>
+        <li><a href="TwoProducts.html">TwoProducts.html</a> | <a href="TwoProducts.qmd">TwoProducts.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/TwoProducts.ipynb">TwoProducts.ipynb</a></li>
+        <li><a href="BuildCustomerProfiles.html">BuildCustomerProfiles.html</a> | <a href="BuildCustomerProfiles.qmd">BuildCustomerProfiles.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/BuildCustomerProfiles.ipynb">BuildCustomerProfiles.ipynb</a></li>
+        <li><a href="ChainOfThoughtReasoning-DLai.html">ChainOfThoughtReasoning-DLai.html</a> | <a href="ChainOfThoughtReasoning-DLai.qmd">ChainOfThoughtReasoning-DLai.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ChainOfThoughtReasoning-DLai.ipynb">ChainOfThoughtReasoning-DLai.ipynb</a></li>
+        <li><a href="ChainOfThoughtReasoning.html">ChainOfThoughtReasoning.html</a> | <a href="ChainOfThoughtReasoning.qmd">ChainOfThoughtReasoning.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ChainOfThoughtReasoning.ipynb">ChainOfThoughtReasoning.ipynb</a> <span class="comment">CoT reasoning before answering customer Query</span></li>
+        <li><a href="CustomersSay.html">CustomersSay.html</a> | <a href="CustomersSay.qmd">CustomersSay.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/CustomersSay.ipynb">CustomersSay.ipynb</a></li>
+        <li><a href="Delimiters.html">Delimiters.html</a> | <a href="Delimiters.qmd">Delimiters.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Delimiters.ipynb">Delimiters.ipynb</a></li>
+        <li><a href="FStringChains.html">FStringChains.html</a> | <a href="FStringChains.qmd">FStringChains.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/FStringChains.ipynb">FStringChains.ipynb</a> <span class="comment">Fstrings version of 3 companys then format with upper case</span></li>
+        <li><a href="LLMs.html">LLMs.html</a> | <a href="LLMs.qmd">LLMs.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/LLMs.ipynb">LLMs.ipynb</a> <span class="comment">Basic LLM Calls</span></li>
+        <li><a href="MovieChain.html">MovieChain.html</a> | <a href="MovieChain.qmd">MovieChain.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MovieChain.ipynb">MovieChain.ipynb</a></li>
+        <li><a href="ProductInquiries.html">ProductInquiries.html</a> | <a href="ProductInquiries.qmd">ProductInquiries.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ProductInquiries.ipynb">ProductInquiries.ipynb</a> <span class="comment">Recognize Categories and Products, fetch details, write detailed response to customer - Retail situation</span></li>
+        <li><a href="ProductInquiries.short.html">ProductInquiries.short.html</a> | <a href="ProductInquiries.short.qmd">ProductInquiries.short.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ProductInquiries.short.ipynb">ProductInquiries.short.ipynb</a></li>
+        <li><a href="ProductSpec.html">ProductSpec.html</a> | <a href="ProductSpec.qmd">ProductSpec.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ProductSpec.ipynb">ProductSpec.ipynb</a> <span class="comment">Meant to be Andrew ng product spec analysis</span></li>
+        <li><a href="ReviewChainAssign.html">ReviewChainAssign.html</a> | <a href="ReviewChainAssign.qmd">ReviewChainAssign.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ReviewChainAssign.ipynb">ReviewChainAssign.ipynb</a></li>
+        <li><a href="Roles.html">Roles.html</a> | <a href="Roles.qmd">Roles.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Roles.ipynb">Roles.ipynb</a> <span class="comment">Roles for improved responses. Equation correct, Logic problem</span></li>
+        <li><a href="SegmentingCustomers.html">SegmentingCustomers.html</a> | <a href="SegmentingCustomers.qmd">SegmentingCustomers.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/SegmentingCustomers.ipynb">SegmentingCustomers.ipynb</a></li>
+        <li><a href="SimpleCompletion.html">SimpleCompletion.html</a> | <a href="SimpleCompletion.qmd">SimpleCompletion.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/SimpleCompletion.ipynb">SimpleCompletion.ipynb</a> <span class="comment">For testing LLM api key set up correctly</span></li>
+        <li><a href="SimpleLLMChain.html">SimpleLLMChain.html</a> | <a href="SimpleLLMChain.qmd">SimpleLLMChain.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/SimpleLLMChain.ipynb">SimpleLLMChain.ipynb</a></li>
+        <li><a href="Simple.html">Simple.html</a> | <a href="Simple.qmd">Simple.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/Simple.ipynb">Simple.ipynb</a></li>
+        <li><a href="TranslateChain.html">TranslateChain.html</a> | <a href="TranslateChain.qmd">TranslateChain.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/TranslateChain.ipynb">TranslateChain.ipynb</a> <span class="comment">Longer version of ReviewChain</span></li>
     </ul>
+
 
     <h2>Assignment Files</h2>
     <ul>
-        <li><a href="ClassifyCustomerQueries.html">ClassifyCustomerQueries.html</a> | <a href="ClassifyCustomerQueries.qmd">ClassifyCustomerQueries.qmd</a> | <a href="ClassifyCustomerQueries.ipynb">ClassifyCustomerQueries.ipynb</a></li>
-        <li><a href="MoreCalculator.html">MoreCalculator.html</a> | <a href="MoreCalculator.qmd">MoreCalculator.qmd</a> | <a href="MoreCalculator.ipynb">MoreCalculator.ipynb</a></li>
-        <li><a href="MoreDataFrames.html">MoreDataFrames.html</a> | <a href="MoreDataFrames.qmd">MoreDataFrames.qmd</a> | <a href="MoreDataFrames.ipynb">MoreDataFrames.ipynb</a></li>
-        <li><a href="MorePrompts.html">MorePrompts.html</a> | <a href="MorePrompts.qmd">MorePrompts.qmd</a> | <a href="MorePrompts.ipynb">MorePrompts.ipynb</a></li>
-        <li><a href="MoreStrings.html">MoreStrings.html</a> | <a href="MoreStrings.qmd">MoreStrings.qmd</a> | <a href="MoreStrings.ipynb">MoreStrings.ipynb</a></li>
-        <li><a href="MoreFunctions.html">MoreFunctions.html</a> | <a href="MoreFunctions.qmd">MoreFunctions.qmd</a> | <a href="MoreFunctions.ipynb">MoreFunctions.ipynb</a></li>
-        <li><a href="MoreVariables.html">MoreVariables.html</a> | <a href="MoreVariables.qmd">MoreVariables.qmd</a> | <a href="MoreVariables.ipynb">MoreVariables.ipynb</a></li>
-        <li><a href="VariablesHW.html">VariablesHW.html</a> | <a href="VariablesHW.qmd">VariablesHW.qmd</a> | <a href="VariablesHW.ipynb">VariablesHW.ipynb</a></li>
-        <li><a href="MoreDataTypes.html">MoreDataTypes.html</a> | <a href="MoreDataTypes.qmd">MoreDataTypes.qmd</a> | <a href="MoreDataTypes.ipynb">MoreDataTypes.ipynb</a></li>
-        <li><a href="MoreLLMs.html">MoreLLMs.html</a> | <a href="MoreLLMs.qmd">MoreLLMs.qmd</a> | <a href="MoreLLMs.ipynb">MoreLLMs.ipynb</a> <span class="comment">Extra LLM basic problems.</span></li>
-        <li><a href="MoreReviews.html">MoreReviews.html</a> | <a href="MoreReviews.qmd">MoreReviews.qmd</a> | <a href="MoreReviews.ipynb">MoreReviews.ipynb</a> <span class="comment">Unfinished exercises for summarzing Amazon Reviews</span></li>
-        <li><a href="MoreRoles.html">MoreRoles.html</a> | <a href="MoreRoles.qmd">MoreRoles.qmd</a> | <a href="MoreRoles.ipynb">MoreRoles.ipynb</a></li>
-        <li><a href="MoreSimpleLLMChain.html">MoreSimpleLLMChain.html</a> | <a href="MoreSimpleLLMChain.qmd">MoreSimpleLLMChain.qmd</a> | <a href="MoreSimpleLLMChain.ipynb">MoreSimpleLLMChain.ipynb</a></li>
-        <li><a href="ReviewChain.html">ReviewChain.html</a> | <a href="ReviewChain.qmd">ReviewChain.qmd</a> | <a href="ReviewChain.ipynb">ReviewChain.ipynb</a> <span class="comment">Review chain, guesses sentiment, improvements, writes letter.</span></li>
+        <li><a href="ClassifyCustomerQueries.html">ClassifyCustomerQueries.html</a> | <a href="ClassifyCustomerQueries.qmd">ClassifyCustomerQueries.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ClassifyCustomerQueries.ipynb">ClassifyCustomerQueries.ipynb</a></li>
+        <li><a href="MoreCalculator.html">MoreCalculator.html</a> | <a href="MoreCalculator.qmd">MoreCalculator.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreCalculator.ipynb">MoreCalculator.ipynb</a></li>
+        <li><a href="MoreDataFrames.html">MoreDataFrames.html</a> | <a href="MoreDataFrames.qmd">MoreDataFrames.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreDataFrames.ipynb">MoreDataFrames.ipynb</a></li>
+        <li><a href="MorePrompts.html">MorePrompts.html</a> | <a href="MorePrompts.qmd">MorePrompts.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MorePrompts.ipynb">MorePrompts.ipynb</a></li>
+        <li><a href="MoreStrings.html">MoreStrings.html</a> | <a href="MoreStrings.qmd">MoreStrings.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreStrings.ipynb">MoreStrings.ipynb</a></li>
+        <li><a href="MoreFunctions.html">MoreFunctions.html</a> | <a href="MoreFunctions.qmd">MoreFunctions.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreFunctions.ipynb">MoreFunctions.ipynb</a></li>
+        <li><a href="MoreVariables.html">MoreVariables.html</a> | <a href="MoreVariables.qmd">MoreVariables.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreVariables.ipynb">MoreVariables.ipynb</a></li>
+        <li><a href="VariablesHW.html">VariablesHW.html</a> | <a href="VariablesHW.qmd">VariablesHW.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/VariablesHW.ipynb">VariablesHW.ipynb</a></li>
+        <li><a href="MoreDataTypes.html">MoreDataTypes.html</a> | <a href="MoreDataTypes.qmd">MoreDataTypes.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreDataTypes.ipynb">MoreDataTypes.ipynb</a></li>
+        <li><a href="MoreLLMs.html">MoreLLMs.html</a> | <a href="MoreLLMs.qmd">MoreLLMs.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreLLMs.ipynb">MoreLLMs.ipynb</a> <span class="comment">Extra LLM basic problems.</span></li>
+        <li><a href="MoreReviews.html">MoreReviews.html</a> | <a href="MoreReviews.qmd">MoreReviews.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreReviews.ipynb">MoreReviews.ipynb</a> <span class="comment">Unfinished exercises for summarizing Amazon Reviews</span></li>
+        <li><a href="MoreRoles.html">MoreRoles.html</a> | <a href="MoreRoles.qmd">MoreRoles.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreRoles.ipynb">MoreRoles.ipynb</a></li>
+        <li><a href="MoreSimpleLLMChain.html">MoreSimpleLLMChain.html</a> | <a href="MoreSimpleLLMChain.qmd">MoreSimpleLLMChain.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/MoreSimpleLLMChain.ipynb">MoreSimpleLLMChain.ipynb</a></li>
+        <li><a href="ReviewChain.html">ReviewChain.html</a> | <a href="ReviewChain.qmd">ReviewChain.qmd</a> | <a href="https://colab.research.google.com/github/calvinw/Ma322Notebooks/blob/main/ReviewChain.ipynb">ReviewChain.ipynb</a> <span class="comment">Review chain, guesses sentiment, improvements, writes letter.</span></li>
     </ul>
 </body>
 </html>
