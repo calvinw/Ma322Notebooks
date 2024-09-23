@@ -24,7 +24,7 @@ print(city_response)
 
 ```{python}
 country_template="""
-What country is the city {city} in? Respond in {language} with just the name.
+What country is the city {city} in? Respond with just the name of the country 
 """
 
 country_prompt = country_template.format(city=city_response,
@@ -50,9 +50,6 @@ report_template="""
 ### City
 {city}
 
-### Language
-{language}
-
 ### Country
 {country}
 """
@@ -60,7 +57,6 @@ report_template="""
 # We pass the format function the values we used or got from the LLM
 report = report_template.format(person = "Sean Connery",
                                 city = city_response,
-                                language = "French",
                                 country= country_response)
 print(report)
 ```

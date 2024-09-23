@@ -68,11 +68,13 @@ Identify the primary genre(s) for the film based on the movie plot summary.
 ```{python}
 template ="""
 Based on the following movie plot summary, identify the primary genre(s) for
-the film:
+the film. The plot is enclosed in <plot> </plot> tags:
 
+<plot>
 {plot}
+</plot>
 
-Provide your answer in a comma-separated list.
+Provide your answer in a comma-separated list:
 """
 
 prompt = template.format(plot=movie_plot)
@@ -86,9 +88,12 @@ Generate a catchy tagline for the movie based on the initial movie plot.
 
 ```{python}
 template ="""
-Based on the following movie plot, generate a catchy tagline for the movie:
+Based on the following movie plot, generate a catchy tagline for the movie.
+The plot is enclosed in <plot> </plot> tags:
 
+<plot>
 {plot}
+</plot>
 """
 
 prompt = template.format(plot=movie_plot)
@@ -103,13 +108,16 @@ Based on the tagline and the plot summary, generate a title for the film.
 ```{python}
 template ="""
 Based on the following movie plot summary and tagline generate a title for the
-film.
+movie. The plot is enclosed in <plot> </plot> tags and the tagline is enclosed
+in <tagline> </tagline> tags
 
-Movie Plot:
+<plot>
 {plot}
+</plot>
 
-Tagline:
+<tagline>
 {tagline}
+</tagline>
 """
 
 prompt = template.format(plot=movie_plot,
@@ -126,20 +134,30 @@ identified genre(s).
 ```{python}
 template = """
 Based on the following movie plot, tagline, title, and genres, generate a short
-synopsis for the movie:
+synopsis for the movie of 50 words or less. The plot is contained in <plot>
+tags, the tagline is contained in <tagline> tags, the genres are contained
+<genres> tags, the title is contained in <title> tags. 
 
-Plot: {plot}
+<plot>
+{plot}
+</plot>
 
-Genres: {genre}
+<genres> 
+{genres}
+</genres> 
 
-Tagline: {tagline}
+<tagline>
+{tagline}
+</tagline>
 
-Title: {title}
+<title>
+{title}
+</title>
 """
 
 prompt = template.format(plot=movie_plot,
                         tagline=tagline_response,
-                        genre=genre_response,
+                        genres=genre_response,
                         title=title_response)
 synopsis_response = get_completion(prompt)
 print(synopsis_response)

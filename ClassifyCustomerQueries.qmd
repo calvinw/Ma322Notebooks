@@ -1,5 +1,7 @@
 ---
 title: "Classifying Customer Queries"
+execute:
+    eval: false
 ---
 
 {{< include _llm_openrouter.qmd >}}
@@ -46,9 +48,22 @@ And here are some examples of the kinds of queries we will classify:
 | I need help setting up parental controls on my streaming account. |
 | How do I change the primary account holder for my subscription? |
 
-Here is our prompt that we will use:
+- set up a prompt that accomplishes classifying the above into a primary and secondary category.
+- tell the LLM what format to put the answer in
+- the {query} template variable is already included and enclosed in tags.
 
 ```{python}
+template = """
+
+<<REPLACE THIS AND PUT YOUR PROMPT TEMPLATE HERE>>
+
+<query>
+{query}
+</query>
+"""
+```
+```{python}
+# __SOLUTION__ 
 template ="""
 You will be provided with a customer service query in <query></query> tags
 below.
@@ -98,11 +113,12 @@ General Inquiry secondary categories:
 Set up the query string and send to the llm:
 
 ```{python}
-first_query = """
+# __REGULAR_BLOCK__ 
+query = """
 I want you to delete my profile and all of my user data
 """
 
-prompt=template.format(query=first_query)
+prompt=template.format(query=query)
 response = get_completion(prompt)
 print(response)
 ```
@@ -112,11 +128,12 @@ print(response)
 Set up the query string and send to the llm:
 
 ```{python}
-second_query = """
+# __REGULAR_BLOCK__ 
+query = """
 Tell me more about your flat screen tvs
 """
 
-prompt=template.format(query=second_query)
+prompt=template.format(query=query)
 response = get_completion(prompt)
 print(response)
 ```
@@ -126,11 +143,12 @@ print(response)
 Set up the query string and send to the llm:
 
 ```{python}
-third_query = """
+# __REGULAR_BLOCK__ 
+query = """
 I can't log into my account. Can you reset my password?
 """
 
-prompt=template.format(query=third_query)
+prompt=template.format(query=query)
 response = get_completion(prompt)
 print(response)
 ```
@@ -140,11 +158,12 @@ print(response)
 Set up the query string and send to the llm:
 
 ```{python}
-fourth_query = """
+# __REGULAR_BLOCK__ 
+query = """
 I'm having trouble connecting my smart TV to the internet. Can you help me troubleshoot this issue?
 """
 
-prompt=template.format(query=fourth_query)
+prompt=template.format(query=query)
 response = get_completion(prompt)
 print(response)
 ```
@@ -154,6 +173,7 @@ print(response)
 Set up the query string and send to the llm:
 
 ```{python}
+# __REGULAR_BLOCK__ 
 fifth_query = """
 I'd like to cancel my subscription and get a refund for the remaining months.
 """
@@ -168,11 +188,12 @@ print(response)
 Set up the query string and send to the llm:
 
 ```{python}
-sixth_query = """
+# __REGULAR_BLOCK__ 
+query = """
 How do I update my email address and password on my account?
 """
 
-prompt=template.format(query=sixth_query)
+prompt=template.format(query=query)
 response = get_completion(prompt)
 print(response)
 ```
@@ -182,11 +203,12 @@ print(response)
 Set up the query string and send to the llm:
 
 ```{python}
+# __REGULAR_BLOCK__ 
 seventh_query = """
 What are the key features of your premium streaming package compared to the basic plan?
 """
 
-prompt=template.format(query=seventh_query)
+prompt=template.format(query=query)
 response = get_completion(prompt)
 print(response)
 
@@ -197,18 +219,22 @@ print(response)
 Set up the query string and send to the llm:
 
 ```{python}
-eighth_query = """
+# __REGULAR_BLOCK__ 
+query = """
 I have some feedback about improving the user interface of your mobile app.
 """
 
-prompt=template.format(query=eighth_query)
+prompt=template.format(query=query)
 response = get_completion(prompt)
 print(response)
 ```
 
 ### Additional Queries
 
+Its pretty easy to set up a loop to evaluate a lot of these for testing.
+
 ```{python}
+# __REGULAR_BLOCK__ 
 additional_queries = [
     "I need help setting up parental controls on my streaming account.",
     "How do I change the primary account holder for my subscription?",

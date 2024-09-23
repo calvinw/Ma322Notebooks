@@ -206,14 +206,15 @@ Provider: OpenRouter AI</code></pre>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Alright, fellow physicists, let's delve into the fascinating topic of black
-holes. A black hole is a region in space where the gravitational pull is so
-strong that nothing, not even light, can escape its grasp. This occurs when a
-massive star collapses under its own gravity, creating a singularity with
-infinite density and zero volume at its center. The event horizon marks the
-point of no return, beyond which nothing can escape. Black holes can vary in
-size, with supermassive black holes found at the centers of galaxies and stellar
-black holes formed from the remnants of massive stars.</code></pre>
+<pre><code>Alright, fellow physicists, let's delve into the fascinating concept of black
+holes. A black hole is a region in spacetime where gravity is so strong that
+nothing, not even light, can escape its grasp. This occurs when a massive star
+collapses under its own gravity, creating a singularity with infinite density
+and curvature. The event horizon marks the point of no return, beyond which
+nothing can escape. Black holes exhibit unique properties such as time dilation
+and gravitational lensing, making them a subject of intense study and
+speculation in the field of astrophysics. Their existence challenges our
+understanding of the fundamental laws of physics.</code></pre>
 </div>
 </div>
 <p>Now like a school teacher talking to some sixth grade students</p>
@@ -285,12 +286,12 @@ fascinating and mysterious phenomena in our universe.</code></pre>
 
 Here's the breakdown:
 - Numbers 1 to 9 require 9 key strokes (1, 2, 3, 4, 5, 6, 7, 8, 9)
-- Numbers 10 to 99 require 180 key strokes (10-99 = 90 numbers x 2 key strokes
-each)
-- Numbers 100 to 500 require 1711 key strokes (100-500 = 401 numbers x 3 key
-strokes each)
+- Numbers 10 to 99 require 180 key strokes (10-99, each number requires 2 key
+strokes)
+- Numbers 100 to 500 require 1711 key strokes (100-500, each number requires 3
+key strokes)
 
-Adding these up: 9 + 180 + 1711 = 1900 key strokes.</code></pre>
+Total key strokes = 9 + 180 + 1711 = 1900</code></pre>
 </div>
 </div>
 <p><strong>Problem</strong>:</p>
@@ -323,22 +324,24 @@ we need to consider the following:
 digit requires one key stroke.
 
 2. Count the number of key strokes needed to type the numbers from 10 to 99.
-Each number in this range has two digits, so each number requires two key
-strokes.
+Each two-digit number requires two key strokes.
 
 3. Count the number of key strokes needed to type the numbers from 100 to 500.
-Each number in this range has three digits, so each number requires three key
-strokes.
+Each three-digit number requires three key strokes.
 
-Now, let's calculate the total number of key strokes needed:
+Now, let's calculate:
 
-- For numbers from 1 to 9: 9 key strokes
-- For numbers from 10 to 99: 90 numbers * 2 key strokes = 180 key strokes
-- For numbers from 100 to 500: 400 numbers * 3 key strokes = 1200 key strokes
+1. Number of key strokes for digits 1 to 9: 9 key strokes
+2. Number of key strokes for numbers 10 to 99: (90 numbers * 2 key strokes per
+number) = 180 key strokes
+3. Number of key strokes for numbers 100 to 500: (400 numbers * 3 key strokes
+per number) = 1200 key strokes
 
-Total key strokes needed = 9 + 180 + 1200 = 1389
+Adding all the key strokes together:
 
-Therefore, 1389 key strokes are needed to type the numbers from 1 to 500.</code></pre>
+9 + 180 + 1200 = 1389 key strokes
+
+Therefore, it would take 1389 key strokes to type the numbers from 1 to 500.</code></pre>
 </div>
 </div>
 <p>For this last one you might try various wordings, the LLM we are using currently seems to respond slightly differently depending on how you word things.</p>

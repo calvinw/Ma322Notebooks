@@ -94,8 +94,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="put-your-openrouter_api_key-here" class="level2">
-<h2 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h2>
+<section id="put-your-openrouter_api_key-here" class="level3">
+<h3 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h3>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
@@ -115,19 +115,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openai/gpt-4o"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: Open Router"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span>, model_name)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    model_name</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">NameError</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model Name:"</span>, model_name)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider:"</span>, <span class="st">"OpenRouter AI"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Provider: Open Router
-Model:  openai/gpt-4o-mini</code></pre>
+<pre><code>Model Name: openai/gpt-4o-mini
+Provider: OpenRouter AI</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="5">
@@ -196,9 +198,9 @@ Model:  openai/gpt-4o-mini</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She encourages creativity through diverse roles and careers,
-inspiring children to dream big. Barbie's evolving image reflects societal
-changes, promoting inclusivity and self-expression. Nostalgia also plays a role,
-as many adults cherish memories of playing with Barbie dolls.</code></pre>
+inspiring children to dream big. Barbie's evolution reflects societal changes,
+promoting inclusivity and self-expression. Nostalgia also plays a role, as many
+adults cherish memories of playing with Barbie dolls.</code></pre>
 </div>
 </div>
 <ul>
@@ -214,9 +216,9 @@ Why do people like Barbie? 50 words please
 Response: 
 People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She encourages creativity through diverse roles and careers,
-inspiring children to dream big. Barbie's evolution reflects societal changes,
-promoting inclusivity and self-expression. Nostalgia also plays a role, as many
-adults cherish memories of playing with Barbie dolls.</code></pre>
+inspiring children to dream big. Barbie's evolving image reflects societal
+changes, promoting inclusivity and self-expression. Nostalgia also plays a role,
+as many adults cherish memories of playing with Barbie dolls.</code></pre>
 </div>
 </div>
 </section>
@@ -250,19 +252,19 @@ adults cherish memories of playing with Barbie dolls.</code></pre>
 imagination. She encourages creativity through diverse roles and careers,
 inspiring children to dream big. Barbie's evolution reflects societal changes,
 promoting inclusivity and self-expression. Nostalgia also plays a role, as many
-adults cherish memories of playing with Barbie dolls in childhood.
+adults cherish memories of playing with Barbie dolls.
  
 People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She encourages creativity through diverse roles and careers,
 inspiring children to dream big. Barbie's evolution reflects societal changes,
 promoting inclusivity and self-expression. Nostalgia also plays a role, as many
-adults cherish memories of playing with Barbie dolls in childhood.
+adults cherish memories of playing with Barbie dolls.
  
 People like Barbie for her iconic status, representing empowerment, fashion, and
-imagination. She embodies diverse careers and lifestyles, inspiring creativity
-in children. Barbie's ability to evolve with societal changes, along with her
-strong brand presence, fosters nostalgia and connection for adults, making her a
-beloved figure across generations.</code></pre>
+imagination. She encourages creativity through diverse roles and careers,
+inspiring children to dream big. Barbie's evolution reflects societal changes,
+promoting inclusivity and self-expression. Nostalgia also plays a role, as many
+adults cherish memories of playing with Barbie dolls.</code></pre>
 </div>
 </div>
 <p><strong>Problem</strong>:</p>
@@ -287,24 +289,23 @@ beloved figure across generations.</code></pre>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>People like Barbie for her timeless appeal and versatility, representing various
-careers, styles, and cultures. She encourages creativity and imagination in
-play, allowing children to explore different narratives. Additionally, Barbie's
-evolution reflects changing societal values, promoting empowerment and
-inclusivity, making her relatable to both children and adults across
-generations.
+<pre><code>People like Barbie for her iconic status, diverse representation, and ability to
+inspire creativity. She embodies various careers, styles, and narratives,
+encouraging imagination and play. Barbie promotes self-expression and
+empowerment, appealing to different generations. Her cultural impact, combined
+with nostalgic memories, makes her a beloved figure in popular culture.
  
-People like Barbie for various reasons, including nostalgia, empowerment, and
-creativity. The iconic doll represents diverse careers and lifestyles, inspiring
-imagination and ambition. Barbie's ability to adapt to cultural trends fosters
-relatability, while her vast array of styles allows for personal expression,
-making her a beloved figure across generations.
+People like Barbie for her versatility and representation of diverse careers and
+lifestyles, which inspire creativity and imagination. She embodies empowerment
+and self-expression, allowing individuals to explore identities and aspirations.
+Nostalgia also plays a role, as many grew up with Barbie, creating lasting
+connections and fond memories associated with the brand.
  
-People like Barbie for her iconic status, versatility, and representation of
-empowerment. She embodies creativity, imagination, and aspirations, allowing
-individuals to explore different identities and careers. Additionally, Barbie's
-cultural impact, evolving designs, and collaborations resonate with various
-generations, making her a beloved figure that inspires play and self-expression.</code></pre>
+People like Barbie for her timeless appeal, versatility, and empowerment. She
+represents various careers, styles, and lifestyles, inspiring creativity and
+imagination in children. Barbie's ability to adapt to cultural shifts while
+promoting inclusivity and self-expression resonates with fans of all ages,
+making her a beloved icon in popular culture.</code></pre>
 </div>
 </div>
 </section>
@@ -460,12 +461,11 @@ facts about it?. Format the facts using uppercase
 Response: 
 The capital of Texas is Austin. Here are three simple facts about it:
 
-1. AUSTIN IS KNOWN AS THE "LIVE MUSIC CAPITAL OF THE WORLD" DUE TO ITS VIBRANT
-MUSIC SCENE.
+1. AUSTIN IS KNOWN AS THE "LIVE MUSIC CAPITAL OF THE WORLD."
 2. AUSTIN IS HOME TO THE UNIVERSITY OF TEXAS, ONE OF THE LARGEST UNIVERSITIES IN
-THE UNITED STATES.
-3. AUSTIN HOSTS THE ANNUAL SOUTH BY SOUTHWEST (SXSW) FESTIVAL, WHICH CELEBRATES
-FILM, MUSIC, AND INTERACTIVE MEDIA.</code></pre>
+THE U.S.
+3. AUSTIN HAS A THRIVING TECH INDUSTRY AND IS OFTEN REFERRED TO AS "SILICON
+HILLS."</code></pre>
 </div>
 </div>
 </section>

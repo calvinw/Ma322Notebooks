@@ -192,8 +192,8 @@ Provider: OpenRouter AI</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths, making the sky look blue to our eyes. This effect is more
-pronounced when the sun is high in the sky.</code></pre>
+wavelengths. This scattering causes the blue light to be more visible, giving
+the sky its characteristic color during the day.</code></pre>
 </div>
 </div>
 <p>Sometimes its nice to print out the prompt and the response when we are working like this. We can use the function <code>print_prompt_and_response</code> and pass it the prompt and the response we got from the <code>get_completion</code> function.</p>
@@ -207,8 +207,8 @@ Why is the sky blue? In 50 words or less.
 Response: 
 The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible, giving
-the sky its characteristic color during the day.</code></pre>
+wavelengths, making the sky look blue to our eyes. This effect is more
+pronounced when the sun is high in the sky.</code></pre>
 </div>
 </div>
 </section>
@@ -263,8 +263,8 @@ the sky look blue during the day.
 ------
 The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible, giving
-the sky its characteristic color during the day.
+wavelengths. This scattering causes the blue light to be more visible, making
+the sky look blue during the day.
 ------</code></pre>
 </div>
 </div>
@@ -285,20 +285,21 @@ the sky its characteristic color during the day.
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The sky appears blue due to Rayleigh scattering. Sunlight, which contains all
-colors, scatters more in shorter wavelengths (blue) as it passes through the
-atmosphere. When the sun is high, blue light is scattered in all directions,
-making the sky look blue to our eyes.
+<pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
+Earth's atmosphere, shorter blue wavelengths scatter more than longer red
+wavelengths. This scattering causes the blue light to dominate our view of the
+sky, especially when the sun is high overhead.
 ------
 The sky appears blue due to Rayleigh scattering. Sunlight, which contains
-various colors, interacts with air molecules. Shorter blue wavelengths scatter
-more than longer red wavelengths, making the sky look blue to our eyes,
-especially when the sun is high in the sky.
+multiple colors, scatters off air molecules. Blue light, having a shorter
+wavelength, scatters more than other colors, making the sky predominantly blue
+during the day. At sunrise and sunset, the light travels further, resulting in
+red and orange hues.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters the
-Earth's atmosphere, shorter blue wavelengths scatter more than other colors.
-This scattering causes the blue light to spread across the sky, making it
-predominantly visible to our eyes, especially when the sun is high in the sky.
+The sky appears blue due to Rayleigh scattering. Sunlight, which contains all
+colors, scatters more in shorter wavelengths (blue) when it passes through the
+Earth's atmosphere. This scattering causes blue light to be more visible, giving
+the sky its characteristic color during the day.
 ------</code></pre>
 </div>
 </div>
@@ -318,21 +319,21 @@ predominantly visible to our eyes, especially when the sun is high in the sky.
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The sky appears blue due to Rayleigh scattering. Sunlight, which contains all
-colors, scatters when it passes through the atmosphere. Blue light, being
-shorter in wavelength, scatters more than other colors, making the sky appear
-predominantly blue to our eyes, especially when the sun is high.
+<pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
+atmosphere, shorter blue wavelengths scatter more than other colors. This
+scattering distributes blue light throughout the sky, making it visible from
+various angles. During sunrise and sunset, longer wavelengths, like red and
+orange, dominate due to different scattering effects.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters the
-Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible from
-various angles, giving the sky its characteristic blue color during the day.
+The sky appears blue due to Rayleigh scattering, where shorter blue wavelengths
+of sunlight scatter more than longer red wavelengths when sunlight passes
+through the atmosphere. This scattering is more effective at high frequencies,
+making the sky look predominantly blue during the day.
 ------
-The sky appears blue due to Rayleigh scattering. Shorter blue wavelengths
-scatter more than other colors when sunlight interacts with atmospheric
-particles. During the day, this scattering causes the blue light to be more
-prominent, while during sunrise and sunset, longer wavelengths like red and
-orange dominate.
+The sky appears blue due to Rayleigh scattering. When sunlight enters Earth’s
+atmosphere, shorter blue wavelengths scatter more than longer wavelengths like
+red. This scattering causes the blue light to dominate the sky’s color,
+especially when the sun is high.
 ------</code></pre>
 </div>
 </div>
@@ -354,18 +355,18 @@ orange dominate.
 Recommend a name for a company that makes cars
 
 Response: 
-Sure! Here are some name suggestions for a car manufacturing company:
+Here are some name suggestions for a car manufacturing company:
 
 1. **Velocity Motors**
 2. **Apex Automotive**
-3. **Nexus Drive**
-4. **Eclipse Vehicles**
+3. **NexGen Vehicles**
+4. **EcoDrive Innovations**
 5. **Pinnacle Motors**
 6. **Fusion AutoWorks**
-7. **RevTech Cars**
-8. **Summit Automotive**
-9. **Ignite Motors**
-10. **Zenith Car Co.**
+7. **RevTech Automotive**
+8. **Stellar Rides**
+9. **Quantum Cars**
+10. **Vanguard Vehicles**
 
 Feel free to mix and match or modify these suggestions to find the perfect fit
 for your company!</code></pre>
@@ -386,16 +387,16 @@ Recommend a name for a company that makes books
 Response: 
 Here are some name ideas for a company that makes books:
 
-1. **Boundless Books**
-2. **PageTurner Press**
+1. **PageTurner Press**
+2. **Boundless Books**
 3. **Ink &amp; Imagination**
 4. **StoryCraft Publishing**
-5. **Literary Loom**
+5. **Literary Lane**
 6. **Quill &amp; Quire**
 7. **Narrative Nest**
 8. **Epic Editions**
-9. **Tome &amp; Tale**
-10. **Chapter House Publishing**
+9. **Book Haven**
+10. **Tome &amp; Tale**
 
 Feel free to mix and match or modify these suggestions to find the perfect fit
 for your company!</code></pre>
@@ -426,7 +427,7 @@ sense of dynamic performance.
 name suggests a focus on environmentally friendly vehicles.
 
 3. **Apex Automotive** - Suggesting peak performance and quality, this name
-conveys a sense of excellence in design and engineering.
+conveys a sense of excellence in engineering and design.
 
 Feel free to mix and match or modify these suggestions to better fit your
 vision!</code></pre>

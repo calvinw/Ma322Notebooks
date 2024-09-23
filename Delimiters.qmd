@@ -10,8 +10,7 @@ First set up a prompt we can use:
 
 ```{python}
 template ='''
-Below is a list of sentences. Tell me the second item on the list.
-- Each is about an animal, like rabbits.
+Below is a list of sentences. Tell me the second item on the list. Each is about an animal, like rabbits.
 {sentences}
 '''
 

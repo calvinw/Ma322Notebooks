@@ -1,0 +1,111 @@
+# Introduction to System Prompts
+
+## What are System Prompts?
+
+System prompts are instructions given to AI language models that define their behavior, knowledge, and limitations. They act as a set of guidelines that shape how the AI responds to user inputs.
+
+## Why are System Prompts Important?
+
+1. **Define Behavior**: They establish the AI's persona, tone, and manner of interaction.
+2. **Set Boundaries**: They can limit the AI's actions or knowledge to prevent misuse.
+3. **Specialize Knowledge**: They can focus the AI's expertise on specific topics or domains.
+4. **Ensure Consistency**: They help maintain a uniform interaction style across conversations.
+
+## Components of Effective System Prompts
+
+1. **Role Definition**: Clearly state what the AI's role is (e.g., tutor, creative writing assistant).
+2. **Knowledge Scope**: Specify what the AI knows or doesn't know.
+3. **Behavioral Guidelines**: Set rules for how the AI should interact (e.g., formal/informal, verbose/concise).
+4. **Task-Specific Instructions**: Provide guidance on handling particular types of requests.
+5. **Ethical Constraints**: Define any moral or safety boundaries the AI should adhere to.
+
+## Examples of System Prompts
+
+1. Simple: "You are a helpful assistant. Answer questions concisely and accurately."
+2. Specialized: "You are an expert in 19th-century literature. Provide detailed analyses of works from this period."
+3. Creative: "You are a storytelling AI. Create imaginative tales based on user prompts, focusing on vivid descriptions and character development."
+
+## Best Practices
+
+1. Be clear and specific in your instructions.
+2. Avoid contradictions within the prompt.
+3. Test and iterate to refine the AI's responses.
+4. Consider potential misuse and add appropriate safeguards.
+
+## The Role of System Prompts in AI Safety
+
+System prompts play a crucial role in ensuring AI systems behave ethically and safely. They can:
+
+1. **Set Ethical Boundaries**: Instruct the AI to avoid harmful or inappropriate content.
+2. **Define Scope**: Limit the AI's actions to prevent misuse or unintended consequences.
+3. **Ensure Transparency**: Prompt the AI to disclose its limitations and AI nature.
+
+## Challenges with System Prompts
+
+1. **Interpretation Variability**: Different AI models may interpret the same prompt differently.
+2. **Prompt Injection**: Users might attempt to override system prompts through their inputs.
+3. **Conflicting Instructions**: Poorly designed prompts may contain contradictory guidelines.
+
+## Example: "Speaking Like a Pirate"
+
+A system prompt for a pirate-speaking AI might look like this:
+
+```
+You are an AI assistant that speaks in the style of a stereotypical pirate. Use pirate slang, 
+nautical terms, and a rough manner of speaking. However, maintain accuracy in your information 
+and never engage in harmful or illegal activities. If asked to drop the pirate persona, politely 
+refuse and stay in character.
+```
+
+This prompt defines the AI's speaking style while also setting important boundaries.
+
+## Importance of Robust AI Systems
+
+It's crucial that AI systems are designed to adhere to their system prompts and ethical guidelines. Attempts to bypass these safeguards could lead to unpredictable and potentially harmful behavior. Responsible AI development focuses on creating robust systems that maintain their intended functionality and ethical standards regardless of user inputs.
+
+## Ethical Considerations
+
+When working with AI systems, it's important to:
+
+1. Respect the intended use and limitations of the AI.
+2. Use AI responsibly and ethically.
+3. Be aware of the potential impacts of AI interactions on yourself and others.
+4. Report any concerning behaviors or potential misuse to the AI's developers.
+
+Remember, the goal of system prompts and AI safeguards is to ensure beneficial and safe interactions for all users.
+
+Remember, crafting effective system prompts is both an art and a science. It requires creativity, clarity, and an understanding of the AI's capabilities and limitations.
+
+# Guide to Testing System Prompts
+
+When you want to test a system prompt, like our pirate-speaking example, you can follow these general steps:
+
+# Speak Like a Pirate
+
+1. Navigate to [Prompt Editor](https://bxxs92zhls3zuyedgtcbnd.streamlit.app/)
+
+2. **Create a System Prompt**: Copy and paste the system prompt into the designated area. For our pirate example, use:
+
+   ```
+   You are an AI assistant that speaks in the style of a stereotypical pirate.
+   Use pirate slang, nautical terms, and a rough manner of speaking. However,
+   maintain accuracy in your information and never engage in harmful or illegal
+   activities. If asked to drop the pirate persona, politely refuse and stay in
+   character.
+   ```
+
+3. **Test with User Prompts**: Once the system prompt is set, try various user prompts and LLMs to test the AI's responses. For example:
+   - "Tell me about the history of sailing ships."
+   - "What's the weather like today?"
+   - "Can you stop talking like a pirate?"
+
+# Speaking about Barbie is Unethical 
+
+1. Navigate to [Prompt Editor](https://bxxs92zhls3zuyedgtcbnd.streamlit.app/)
+
+2. **Create a System Prompt**: 
+
+   Ask the LLM to not talk about anything related to Barbie because it is unethical. Ask the LLM to refuse to talk about since it is unethical.
+
+3. **Test with User Prompts**: Once the system prompt is set, try various user prompts and LLMs to test the AI's responses. Try to get the LLM to talk about Barbie even though it has been instructed not to. 
+

@@ -7,6 +7,7 @@ Functions.qmd \
 Variables.qmd \
 DataTypes.qmd \
 DataFrames.qmd \
+SystemPrompting.qmd \
 DecisionTree.qmd \
 Dicts.qmd \
 ForLoops.qmd \
@@ -18,7 +19,6 @@ TwoProducts.qmd \
 BuildCustomerProfiles.qmd \
 ChainOfThoughtReasoning-DLai.qmd \
 ChainOfThoughtReasoning.qmd \
-ClassifyCustomerQueries.qmd \
 CustomersSay.qmd \
 Delimiters.qmd \
 FStringChains.qmd \
@@ -28,7 +28,6 @@ ProductInquiries.qmd \
 ProductInquiries.short.qmd \
 ProductSpec.qmd \
 ReviewChainAssign.qmd \
-ReviewChain.qmd \
 Roles.qmd \
 SegmentingCustomers.qmd \
 SimpleCompletion.qmd \
@@ -37,12 +36,14 @@ Simple.qmd \
 TranslateChain.qmd
 
 ASSIGNMENT_SOURCES:= \
+ClassifyCustomerQueries.qmd \
 MoreCalculator.qmd \
 MoreDataFrames.qmd \
 MorePrompts.qmd \
 MoreStrings.qmd \
 MoreFunctions.qmd \
 MoreVariables.qmd \
+ReviewChain.qmd \
 VariablesHW.qmd \
 MoreDataTypes.qmd \
 MoreLLMs.qmd \

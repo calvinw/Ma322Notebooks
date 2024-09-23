@@ -94,8 +94,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="put-your-openrouter_api_key-here" class="level2">
-<h2 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h2>
+<section id="put-your-openrouter_api_key-here" class="level3">
+<h3 class="anchored" data-anchor-id="put-your-openrouter_api_key-here">Put Your OPENROUTER_API_KEY here</h3>
 <div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
@@ -115,19 +115,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_openai <span class="im">import</span> ChatOpenAI</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#model_name="openai/gpt-4o"</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider: Open Router"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model: "</span>, model_name)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    model_name</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">NameError</span>:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    model_name<span class="op">=</span><span class="st">"openai/gpt-4o-mini"</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model Name:"</span>, model_name)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Provider:"</span>, <span class="st">"OpenRouter AI"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span>model_name,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>               openai_api_key<span class="op">=</span>os.environ.get(<span class="st">"OPENROUTER_API_KEY"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>               openai_api_base<span class="op">=</span><span class="st">"https://openrouter.ai/api/v1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Provider: Open Router
-Model:  openai/gpt-4o-mini</code></pre>
+<pre><code>Model Name: openai/gpt-4o-mini
+Provider: OpenRouter AI</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="5">
@@ -273,9 +275,9 @@ I’m satisfied with having a lightweight layer when I need it.
 &lt;/text&gt;
 
 Response: 
-The hoodie is thin and lightweight, suitable for breezy conditions. It fits
-roomy initially but shrinks slightly after washing. Overall, the reviewer is
-satisfied with the purchase.</code></pre>
+The hoodie is thin and lightweight, suitable for breezy conditions, with a roomy
+fit that shrinks slightly after washing. Overall, the reviewer is satisfied for
+the price.</code></pre>
 </div>
 </div>
 </section>
@@ -327,9 +329,9 @@ around 5ft should know with a loose fit these jackets will hit mid thigh.
 &lt;/text&gt;
 
 Response: 
-The reviewer found the jackets lightweight and suitable for casual wear, but
-noted they are very thin, see-through, and have quality issues, yet they serve
-their intended purpose.</code></pre>
+The reviewer found the lightweight jackets suitable for casual wear but noted
+their thin quality, see-through fabric, and loose fit, recommending caution for
+those of average height.</code></pre>
 </div>
 </div>
 </section>
@@ -446,23 +448,22 @@ work, or as a light cover-up.
 1. **Quality Perception:** The first reviewer had a more positive view of the
 quality, stating it has held up well over time, while the other two found the
 quality to be "so-so" and expressed concerns about durability.
-2. **Transparency Issues:** One reviewer specifically pointed out that the white
-jacket is see-through, which was not mentioned by the first reviewer.
-3. **Label Visibility:** The first reviewer did not mind the printed label,
-while the others did not mention it at all, indicating a difference in
-sensitivity to such details.
+2. **Transparency Issues:** The second and third reviewers specifically pointed
+out that the white jacket is see-through, which was not mentioned by the first
+reviewer.
+3. **Label Visibility:** The first reviewer noted that the printed label was not
+an issue for them, while the others did not mention it at all.
 
 **Issues Mentioned by Multiple Customers:**
 - **Thinness of Material:** Several customers expressed concerns about the
 thinness of the fabric and its potential lack of durability.
-- **Loose Threads:** One reviewer noted loose strings and seams, which could
-indicate quality control issues.
+- **Loose Threads:** The presence of loose strings and hanging threads was noted
+by the second and third reviewers.
 
 **Likes Shared by All Customers:**
-- **Comfortable Fit:** The long and comfortable fit was appreciated by all,
-making it suitable for various body types and casual wear.
-- **Versatile Use:** The jackets are seen as versatile for different casual
-activities, which is a common positive point across the reviews.</code></pre>
+- **Comfortable Fit:** The long and comfortable fit was appreciated by all.
+- **Versatility:** The jackets are seen as versatile for various casual
+activities.</code></pre>
 </div>
 </div>
 </section>
