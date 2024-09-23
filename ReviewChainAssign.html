@@ -69,6 +69,16 @@ ul.task-list li input[type="checkbox"] {
 <li><p><strong>Suggest Potential Improvements Based On the Review</strong>: Next prompt the LLM to suggest at least three potential improvements or changes that could address the customer’s concerns This will be your third call to the LLM. Create an appropriate prompt for this part.</p></li>
 <li><p><strong>Write an individualized email response to the customer</strong>: Next prompt the LLM to draft a polite and professional email response to the customer, addressing their concerns and offering a resolution or next steps. This will be your fourth call to the LLM. Create an appropriate prompt for this part.</p></li>
 </ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ReviewChainFlow1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Parts of the ReviewChain flow</figcaption>
+</figure>
+</div>
+<ul>
+<li>Yellow boxes are response from the LLM</li>
+<li>Blue boxes are calls to the LLM</li>
+</ul>
 <p>The final output of the script should be a report containing the following sections:</p>
 <ul>
 <li>Initial Review</li>

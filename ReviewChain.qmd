@@ -28,6 +28,8 @@ the LLM. So we will call the LLM 4 times in this chain.
 1. **Write an individualized email response to the customer**: A polite and
   professional email response is drafted, addressing the customer's concerns.
 
+![Parts of the ReviewChain flow](ReviewChainFlow1.png)
+
 We will use reviews from this page:
 
 [Brooks-Adrenaline-Womens-Supportive-Running](https://www.amazon.com/product-reviews/B08QVFHB8Y/ref=acr_dp_hist_1?ie=UTF8&filterByStar=one_star&reviewerType=all_reviews#reviews-filter-bar)

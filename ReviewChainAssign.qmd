@@ -29,6 +29,11 @@ review and generate a response. The process should follow these steps:
    addressing their concerns and offering a resolution or next steps. This will
    be your fourth call to the LLM. Create an appropriate prompt for this part.
 
+![Parts of the ReviewChain flow](ReviewChainFlow1.png)
+
+- Yellow boxes are response from the LLM
+- Blue boxes are calls to the LLM
+
 The final output of the script should be a report containing the following
 sections:
 

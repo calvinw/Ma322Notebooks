@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+  
+  <!-- Initial Review Box -->
+  <rect x="50" y="300" width="160" height="60" rx="10" ry="10" fill="#f0f0f0" stroke="#333" stroke-width="2"/>
+  <text x="130" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Initial Review</text>
+  
+  <!-- Prompt Boxes -->
+  <rect x="250" y="50" width="160" height="60" rx="10" ry="10" fill="#e6f3ff" stroke="#333" stroke-width="2"/>
+  <text x="330" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Analyze Sentiment</text>
+  
+  <rect x="250" y="150" width="160" height="60" rx="10" ry="10" fill="#e6f3ff" stroke="#333" stroke-width="2"/>
+  <text x="330" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Categorize Review</text>
+  
+  <rect x="250" y="250" width="160" height="60" rx="10" ry="10" fill="#e6f3ff" stroke="#333" stroke-width="2"/>
+  <text x="330" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Suggest Improvements</text>
+  
+  <rect x="450" y="450" width="160" height="60" rx="10" ry="10" fill="#e6f3ff" stroke="#333" stroke-width="2"/>
+  <text x="530" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Write Email Response</text>
+  
+  <!-- Response Boxes -->
+  <rect x="450" y="50" width="160" height="60" rx="10" ry="10" fill="#fff0e6" stroke="#333" stroke-width="2"/>
+  <text x="530" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Sentiment Score</text>
+  
+  <rect x="450" y="150" width="160" height="60" rx="10" ry="10" fill="#fff0e6" stroke="#333" stroke-width="2"/>
+  <text x="530" y="185" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Main Issue Category</text>
+  
+  <rect x="450" y="250" width="160" height="60" rx="10" ry="10" fill="#fff0e6" stroke="#333" stroke-width="2"/>
+  <text x="530" y="285" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Improvement List</text>
+  
+  <rect x="650" y="450" width="160" height="60" rx="10" ry="10" fill="#fff0e6" stroke="#333" stroke-width="2"/>
+  <text x="730" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Email Content</text>
+  
+  <!-- Final Report Box -->
+  <rect x="780" y="300" width="160" height="60" rx="10" ry="10" fill="#e6ffe6" stroke="#333" stroke-width="2"/>
+  <text x="860" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="14">Final Report</text>
+  
+  <!-- Arrows -->
+  <line x1="210" y1="330" x2="250" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="210" y1="330" x2="250" y2="180" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="210" y1="330" x2="250" y2="280" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="210" y1="330" x2="450" y2="480" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <line x1="410" y1="80" x2="450" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="410" y1="180" x2="450" y2="180" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="410" y1="280" x2="450" y2="280" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <line x1="530" y1="310" x2="530" y2="450" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="610" y1="480" x2="650" y2="480" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <line x1="610" y1="80" x2="780" y2="330" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="610" y1="180" x2="780" y2="330" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="610" y1="280" x2="780" y2="330" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="810" y1="450" x2="860" y2="360" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+</svg>
