@@ -2,7 +2,8 @@ SHELL:=/bin/bash
 
 PAGES= \
 SystemPrompting.qmd \
-BarbieSystemPrompt.qmd
+BarbieSystemPrompt.qmd \
+SpeakLikeAPirate.qmd
 
 SOURCES:= \
 Calculator.qmd \
