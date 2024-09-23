@@ -28,7 +28,7 @@ the LLM. So we will call the LLM 4 times in this chain.
 1. **Write an individualized email response to the customer**: A polite and
   professional email response is drafted, addressing the customer's concerns.
 
-![More info on this Assignment](https://calvinw.github.io/Ma322Notebooks/ReviewChainAssign.html)
+![hello](https://calvinw.github.io/Ma322Notebooks/ReviewChainFlow1.png)
 
 We will use reviews from this page:
 
