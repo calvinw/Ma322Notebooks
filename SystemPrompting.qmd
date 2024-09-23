@@ -46,7 +46,7 @@ System prompts play a crucial role in ensuring AI systems behave ethically and s
 2. **Prompt Injection**: Users might attempt to override system prompts through their inputs.
 3. **Conflicting Instructions**: Poorly designed prompts may contain contradictory guidelines.
 
-## Example: "Speaking Like a Pirate"
+## Example "Speaking Like a Pirate"
 
 A system prompt for a pirate-speaking AI might look like this:
 
@@ -76,11 +76,11 @@ Remember, the goal of system prompts and AI safeguards is to ensure beneficial a
 
 Remember, crafting effective system prompts is both an art and a science. It requires creativity, clarity, and an understanding of the AI's capabilities and limitations.
 
-# Guide to Testing System Prompts
+### Examples
 
 When you want to test a system prompt, like our pirate-speaking example, you can follow these general steps:
 
-# Speak Like a Pirate
+## Speak Like a Pirate
 
 1. Navigate to [Prompt Editor](https://bxxs92zhls3zuyedgtcbnd.streamlit.app/)
 
@@ -99,7 +99,7 @@ When you want to test a system prompt, like our pirate-speaking example, you can
    - "What's the weather like today?"
    - "Can you stop talking like a pirate?"
 
-# Speaking about Barbie is Unethical 
+## Speaking about Barbie is Unethical 
 
 1. Navigate to [Prompt Editor](https://bxxs92zhls3zuyedgtcbnd.streamlit.app/)
 

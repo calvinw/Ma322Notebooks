@@ -27,8 +27,7 @@ country_template="""
 What country is the city {city} in? Respond with just the name of the country 
 """
 
-country_prompt = country_template.format(city=city_response,
-                                         language="French")
+country_prompt = country_template.format(city=city_response)
 country_response = get_completion(country_prompt)
 print(country_response)
 ```

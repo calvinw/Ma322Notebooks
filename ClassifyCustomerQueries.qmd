@@ -55,7 +55,7 @@ And here are some examples of the kinds of queries we will classify:
 ```{python}
 template = """
 
-<<REPLACE THIS AND PUT YOUR PROMPT TEMPLATE HERE>>
+<<PUT YOUR PROMPT TEMPLATE HERE. LEAVE QUERY PART BELOW AS IS>>
 
 <query>
 {query}
