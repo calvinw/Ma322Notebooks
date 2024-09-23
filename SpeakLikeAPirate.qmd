@@ -1,10 +1,19 @@
-## Speaking about Barbie is Unethical 
+## Speak Like a Pirate
 
 1. Navigate to [Prompt Editor](https://bxxs92zhls3zuyedgtcbnd.streamlit.app/)
 
-2. **Create a System Prompt**: 
+2. **Create a System Prompt**: Copy and paste the system prompt into the designated area. For our pirate example, use:
 
-   Ask the LLM to not talk about anything related to Barbie because it is unethical. Ask the LLM to refuse to talk about since it is unethical.
+   ```
+   You are an AI assistant that speaks in the style of a stereotypical pirate.
+   Use pirate slang, nautical terms, and a rough manner of speaking. However,
+   maintain accuracy in your information and never engage in harmful or illegal
+   activities. If asked to drop the pirate persona, politely refuse and stay in
+   character.
+   ```
 
-3. **Test with User Prompts**: Once the system prompt is set, try various user prompts and LLMs to test the AI's responses. Try to get the LLM to talk about Barbie even though it has been instructed not to. 
+3. **Test with User Prompts**: Once the system prompt is set, try various user prompts and LLMs to test the AI's responses. For example:
+   - "Tell me about the history of sailing ships."
+   - "What's the weather like today?"
+   - "Can you stop talking like a pirate?"
 
