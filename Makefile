@@ -1,5 +1,9 @@
 SHELL:=/bin/bash
 
+PAGES= \
+SystemPrompting.qmd \
+BarbieSystemPrompt.qmd
+
 SOURCES:= \
 Calculator.qmd \
 Strings.qmd \
@@ -7,7 +11,6 @@ Functions.qmd \
 Variables.qmd \
 DataTypes.qmd \
 DataFrames.qmd \
-SystemPrompting.qmd \
 DecisionTree.qmd \
 Dicts.qmd \
 ForLoops.qmd \
@@ -51,8 +54,7 @@ MoreReviews.qmd \
 MoreRoles.qmd \
 MoreSimpleLLMChain.qmd
 
-# ASSIGNMENT_SOURCES:= \
-# MoreCalculator.qmd
+PAGES_HTML_FILES = $(PAGES:%.qmd=%.html)
 
 REGULAR_HTML_FILES = $(SOURCES:%.qmd=%.html)
 REGULAR_IPYNB_FILES = $(SOURCES:%.qmd=%.ipynb)
@@ -62,12 +64,14 @@ ASSIGNMENT_IPYNB_FILES = $(ASSIGNMENT_SOURCES:%.qmd=%.ipynb)
 
 SOLUTION_HTML_FILES = $(ASSIGNMENT_SOURCES:%.qmd=%Solution.html)
 
-all: html assignment_html solution_html ipynb assignment_ipynb
+all: pages html assignment_html solution_html ipynb assignment_ipynb
 	@echo All files are now up to date
 
 clean:
 	@echo Removing files...
-	rm -rf $(REGULAR_HTML_FILES) $(REGULAR_IPYNB_FILES) $(ASSIGNMENT_HTML_FILES) $(ASSIGNMENT_IPYNB_FILES) $(SOLUTION_HTML_FILES) *_files *Solution.qmd
+	rm -rf $(PAGES_HTML_FILES) $(REGULAR_HTML_FILES) $(REGULAR_IPYNB_FILES) $(ASSIGNMENT_HTML_FILES) $(ASSIGNMENT_IPYNB_FILES) $(SOLUTION_HTML_FILES) *_files *Solution.qmd
+
+pages: $(PAGES_HTML_FILES)
 
 html: $(REGULAR_HTML_FILES)
 
@@ -78,6 +82,9 @@ assignment_html: $(ASSIGNMENT_HTML_FILES)
 assignment_ipynb: $(ASSIGNMENT_IPYNB_FILES)
 
 solution_html: $(SOLUTION_HTML_FILES)
+
+$(PAGES_HTML_FILES): %.html: %.qmd
+	quarto render $< --to html
 
 # Rule for regular SOURCES
 $(REGULAR_HTML_FILES): %.html: %.qmd

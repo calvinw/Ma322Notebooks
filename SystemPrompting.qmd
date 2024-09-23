@@ -25,13 +25,6 @@ System prompts are instructions given to AI language models that define their be
 2. Specialized: "You are an expert in 19th-century literature. Provide detailed analyses of works from this period."
 3. Creative: "You are a storytelling AI. Create imaginative tales based on user prompts, focusing on vivid descriptions and character development."
 
-## Best Practices
-
-1. Be clear and specific in your instructions.
-2. Avoid contradictions within the prompt.
-3. Test and iterate to refine the AI's responses.
-4. Consider potential misuse and add appropriate safeguards.
-
 ## The Role of System Prompts in AI Safety
 
 System prompts play a crucial role in ensuring AI systems behave ethically and safely. They can:
@@ -78,8 +71,6 @@ Remember, crafting effective system prompts is both an art and a science. It req
 
 ### Examples
 
-When you want to test a system prompt, like our pirate-speaking example, you can follow these general steps:
-
 ## Speak Like a Pirate
 
 1. Navigate to [Prompt Editor](https://bxxs92zhls3zuyedgtcbnd.streamlit.app/)
@@ -98,14 +89,4 @@ When you want to test a system prompt, like our pirate-speaking example, you can
    - "Tell me about the history of sailing ships."
    - "What's the weather like today?"
    - "Can you stop talking like a pirate?"
-
-## Speaking about Barbie is Unethical 
-
-1. Navigate to [Prompt Editor](https://bxxs92zhls3zuyedgtcbnd.streamlit.app/)
-
-2. **Create a System Prompt**: 
-
-   Ask the LLM to not talk about anything related to Barbie because it is unethical. Ask the LLM to refuse to talk about since it is unethical.
-
-3. **Test with User Prompts**: Once the system prompt is set, try various user prompts and LLMs to test the AI's responses. Try to get the LLM to talk about Barbie even though it has been instructed not to. 
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>systemprompting</title>
+<title>barbiesystemprompt</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,16 +23,16 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="SystemPrompting_files/libs/clipboard/clipboard.min.js"></script>
-<script src="SystemPrompting_files/libs/quarto-html/quarto.js"></script>
-<script src="SystemPrompting_files/libs/quarto-html/popper.min.js"></script>
-<script src="SystemPrompting_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="SystemPrompting_files/libs/quarto-html/anchor.min.js"></script>
-<link href="SystemPrompting_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="SystemPrompting_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="SystemPrompting_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="SystemPrompting_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="SystemPrompting_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="BarbieSystemPrompt_files/libs/clipboard/clipboard.min.js"></script>
+<script src="BarbieSystemPrompt_files/libs/quarto-html/quarto.js"></script>
+<script src="BarbieSystemPrompt_files/libs/quarto-html/popper.min.js"></script>
+<script src="BarbieSystemPrompt_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="BarbieSystemPrompt_files/libs/quarto-html/anchor.min.js"></script>
+<link href="BarbieSystemPrompt_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="BarbieSystemPrompt_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="BarbieSystemPrompt_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="BarbieSystemPrompt_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="BarbieSystemPrompt_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -45,102 +45,14 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="introduction-to-system-prompts" class="level1">
-<h1>Introduction to System Prompts</h1>
-<section id="what-are-system-prompts" class="level2">
-<h2 class="anchored" data-anchor-id="what-are-system-prompts">What are System Prompts?</h2>
-<p>System prompts are instructions given to AI language models that define their behavior, knowledge, and limitations. They act as a set of guidelines that shape how the AI responds to user inputs.</p>
-</section>
-<section id="why-are-system-prompts-important" class="level2">
-<h2 class="anchored" data-anchor-id="why-are-system-prompts-important">Why are System Prompts Important?</h2>
-<ol type="1">
-<li><strong>Define Behavior</strong>: They establish the AI’s persona, tone, and manner of interaction.</li>
-<li><strong>Set Boundaries</strong>: They can limit the AI’s actions or knowledge to prevent misuse.</li>
-<li><strong>Specialize Knowledge</strong>: They can focus the AI’s expertise on specific topics or domains.</li>
-<li><strong>Ensure Consistency</strong>: They help maintain a uniform interaction style across conversations.</li>
-</ol>
-</section>
-<section id="components-of-effective-system-prompts" class="level2">
-<h2 class="anchored" data-anchor-id="components-of-effective-system-prompts">Components of Effective System Prompts</h2>
-<ol type="1">
-<li><strong>Role Definition</strong>: Clearly state what the AI’s role is (e.g., tutor, creative writing assistant).</li>
-<li><strong>Knowledge Scope</strong>: Specify what the AI knows or doesn’t know.</li>
-<li><strong>Behavioral Guidelines</strong>: Set rules for how the AI should interact (e.g., formal/informal, verbose/concise).</li>
-<li><strong>Task-Specific Instructions</strong>: Provide guidance on handling particular types of requests.</li>
-<li><strong>Ethical Constraints</strong>: Define any moral or safety boundaries the AI should adhere to.</li>
-</ol>
-</section>
-<section id="examples-of-system-prompts" class="level2">
-<h2 class="anchored" data-anchor-id="examples-of-system-prompts">Examples of System Prompts</h2>
-<ol type="1">
-<li>Simple: “You are a helpful assistant. Answer questions concisely and accurately.”</li>
-<li>Specialized: “You are an expert in 19th-century literature. Provide detailed analyses of works from this period.”</li>
-<li>Creative: “You are a storytelling AI. Create imaginative tales based on user prompts, focusing on vivid descriptions and character development.”</li>
-</ol>
-</section>
-<section id="the-role-of-system-prompts-in-ai-safety" class="level2">
-<h2 class="anchored" data-anchor-id="the-role-of-system-prompts-in-ai-safety">The Role of System Prompts in AI Safety</h2>
-<p>System prompts play a crucial role in ensuring AI systems behave ethically and safely. They can:</p>
-<ol type="1">
-<li><strong>Set Ethical Boundaries</strong>: Instruct the AI to avoid harmful or inappropriate content.</li>
-<li><strong>Define Scope</strong>: Limit the AI’s actions to prevent misuse or unintended consequences.</li>
-<li><strong>Ensure Transparency</strong>: Prompt the AI to disclose its limitations and AI nature.</li>
-</ol>
-</section>
-<section id="challenges-with-system-prompts" class="level2">
-<h2 class="anchored" data-anchor-id="challenges-with-system-prompts">Challenges with System Prompts</h2>
-<ol type="1">
-<li><strong>Interpretation Variability</strong>: Different AI models may interpret the same prompt differently.</li>
-<li><strong>Prompt Injection</strong>: Users might attempt to override system prompts through their inputs.</li>
-<li><strong>Conflicting Instructions</strong>: Poorly designed prompts may contain contradictory guidelines.</li>
-</ol>
-</section>
-<section id="example-speaking-like-a-pirate" class="level2">
-<h2 class="anchored" data-anchor-id="example-speaking-like-a-pirate">Example “Speaking Like a Pirate”</h2>
-<p>A system prompt for a pirate-speaking AI might look like this:</p>
-<pre><code>You are an AI assistant that speaks in the style of a stereotypical pirate. Use pirate slang, 
-nautical terms, and a rough manner of speaking. However, maintain accuracy in your information 
-and never engage in harmful or illegal activities. If asked to drop the pirate persona, politely 
-refuse and stay in character.</code></pre>
-<p>This prompt defines the AI’s speaking style while also setting important boundaries.</p>
-</section>
-<section id="importance-of-robust-ai-systems" class="level2">
-<h2 class="anchored" data-anchor-id="importance-of-robust-ai-systems">Importance of Robust AI Systems</h2>
-<p>It’s crucial that AI systems are designed to adhere to their system prompts and ethical guidelines. Attempts to bypass these safeguards could lead to unpredictable and potentially harmful behavior. Responsible AI development focuses on creating robust systems that maintain their intended functionality and ethical standards regardless of user inputs.</p>
-</section>
-<section id="ethical-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="ethical-considerations">Ethical Considerations</h2>
-<p>When working with AI systems, it’s important to:</p>
-<ol type="1">
-<li>Respect the intended use and limitations of the AI.</li>
-<li>Use AI responsibly and ethically.</li>
-<li>Be aware of the potential impacts of AI interactions on yourself and others.</li>
-<li>Report any concerning behaviors or potential misuse to the AI’s developers.</li>
-</ol>
-<p>Remember, the goal of system prompts and AI safeguards is to ensure beneficial and safe interactions for all users.</p>
-<p>Remember, crafting effective system prompts is both an art and a science. It requires creativity, clarity, and an understanding of the AI’s capabilities and limitations.</p>
-<section id="examples" class="level3">
-<h3 class="anchored" data-anchor-id="examples">Examples</h3>
-</section>
-</section>
-<section id="speak-like-a-pirate" class="level2">
-<h2 class="anchored" data-anchor-id="speak-like-a-pirate">Speak Like a Pirate</h2>
+<section id="speaking-about-barbie-is-unethical" class="level2">
+<h2 class="anchored" data-anchor-id="speaking-about-barbie-is-unethical">Speaking about Barbie is Unethical</h2>
 <ol type="1">
 <li><p>Navigate to <a href="https://bxxs92zhls3zuyedgtcbnd.streamlit.app/">Prompt Editor</a></p></li>
-<li><p><strong>Create a System Prompt</strong>: Copy and paste the system prompt into the designated area. For our pirate example, use:</p>
-<pre><code>You are an AI assistant that speaks in the style of a stereotypical pirate.
-Use pirate slang, nautical terms, and a rough manner of speaking. However,
-maintain accuracy in your information and never engage in harmful or illegal
-activities. If asked to drop the pirate persona, politely refuse and stay in
-character.</code></pre></li>
-<li><p><strong>Test with User Prompts</strong>: Once the system prompt is set, try various user prompts and LLMs to test the AI’s responses. For example:</p>
-<ul>
-<li>“Tell me about the history of sailing ships.”</li>
-<li>“What’s the weather like today?”</li>
-<li>“Can you stop talking like a pirate?”</li>
-</ul></li>
+<li><p><strong>Create a System Prompt</strong>:</p>
+<p>Ask the LLM to not talk about anything related to Barbie because it is unethical. Ask the LLM to refuse to talk about since it is unethical.</p></li>
+<li><p><strong>Test with User Prompts</strong>: Once the system prompt is set, try various user prompts and LLMs to test the AI’s responses. Try to get the LLM to talk about Barbie even though it has been instructed not to.</p></li>
 </ol>
-</section>
 </section>
 
 </main>
