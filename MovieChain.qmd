@@ -26,6 +26,8 @@ tagline and genres. The process involves the following steps:
    tagline and title, and the identified genre(s), generate a short synopsis
    for the movie.
 
+![Movie Chain Flow](https://calvinw.github.io/Ma322Notebooks/prompt-chain-graph.png)
+
 ### Initial Movie Plot
 
 Let's start with the extended movie plot summary:
