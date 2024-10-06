@@ -138,41 +138,97 @@ Provider: OpenRouter AI</code></pre>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, clear_output, Markdown</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> widgets, Layout</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>conversation_output <span class="op">=</span> widgets.Output()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> []</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_chatbot(system_prompt, initial_message):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> messages </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> [ {<span class="st">'role'</span>:<span class="st">'system'</span>, <span class="st">'content'</span>: system_prompt} ]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    conversation_output.clear_output()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    messages.append({<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: initial_message})</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    text_input <span class="op">=</span> widgets.Text(</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        placeholder<span class="op">=</span><span class="st">'Type your message here...'</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        layout<span class="op">=</span>widgets.Layout(width<span class="op">=</span><span class="st">'50%'</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    submit_button <span class="op">=</span> widgets.Button(description<span class="op">=</span><span class="st">"Send"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    input_box <span class="op">=</span> widgets.HBox([text_input, submit_button])</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    display(conversation_output, input_box)</span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> on_submit_click(b):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        message <span class="op">=</span> text_input.value</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        text_input.value <span class="op">=</span> <span class="st">''</span>  <span class="co"># Clear the input field</span></span>
 <span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> conversation_output:</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            display(Markdown(<span class="ss">f"**User**: </span><span class="sc">{</span>message<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: message})</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            response <span class="op">=</span> get_completion_messages(messages)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>            display(Markdown(<span class="ss">f"**AI**: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: response})</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    submit_button.on_click(on_submit_click)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display initial AI message</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> conversation_output:</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        display(Markdown(<span class="ss">f"**AI**: </span><span class="sc">{</span>initial_message<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages():</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> message <span class="kw">in</span> messages:</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>        role <span class="op">=</span> message[<span class="st">'role'</span>]</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> message[<span class="st">'content'</span>]</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> role <span class="op">==</span> <span class="st">'system'</span>:</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"System:"</span>)</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(content)</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> role <span class="op">==</span> <span class="st">'user'</span>:</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"User: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(wrap_text(content))</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> role <span class="op">==</span> <span class="st">'assistant'</span>:</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Assistant: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(wrap_text(content))</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>()  <span class="co"># Add an extra newline for spacing</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="6">
@@ -481,502 +537,456 @@ setting.
 on sneakers ($24.99)
    **Total Spent:** $89.97
    **Profile:** Casual Comfort Seeker
-   **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Reasons:** Focus on comfort with loungewear and athleisure items.
 
 3. **Purchases:** Printed culotte jumpsuit ($49.99), floppy hat ($19.99),
 strappy sandals ($34.99), tote bag ($29.99)
    **Total Spent:** $134.96
    **Profile:** Trendy Fashionista
-   **Reasons:** The items are trendy and stylish, indicating a focus on fashion
-and self-expression.
+   **Reasons:** The items are trendy and stylish, appealing to someone who
+follows fashion.
 
 4. **Purchases:** Sundress ($29.99), cropped utility jacket ($39.99), ankle
 boots ($44.99), fanny pack ($14.99)
    **Total Spent:** $129.96
    **Profile:** Trendy Fashionista
-   **Reasons:** The combination of trendy pieces suggests a strong interest in
-current fashion trends.
+   **Reasons:** The combination of a sundress and trendy accessories indicates a
+fashion-forward mindset.
 
 5. **Purchases:** Lace romper ($39.99), embroidered kimono ($49.99), lace-up
 espadrilles ($29.99), circle sunglasses ($12.99)
    **Total Spent:** $132.96
    **Profile:** Trendy Fashionista
-   **Reasons:** The items are fashionable and stylish, appealing to someone who
-values self-expression.
+   **Reasons:** The items are stylish and on-trend, appealing to a fashion-
+conscious shopper.
 
 6. **Purchases:** Asymmetrical ruffle skirt ($39.99), cold-shoulder top
 ($24.99), over-the-knee boots ($59.99), chain belt ($19.99)
    **Total Spent:** $144.96
    **Profile:** Trendy Fashionista
-   **Reasons:** The items are bold and trendy, indicating a strong fashion-
-forward mindset.
+   **Reasons:** The items are bold and trendy, indicating a focus on current
+fashion.
 
 7. **Purchases:** Trapeze dress ($39.99), denim jacket ($44.99), rain boots
 ($29.99), bucket hat ($14.99)
    **Total Spent:** $129.96
    **Profile:** Trendy Fashionista
-   **Reasons:** The combination of trendy and stylish items suggests a focus on
-fashion.
+   **Reasons:** The items are stylish and reflect current trends.
 
 8. **Purchases:** Crewneck sweatshirt ($24.99), joggers ($29.99), slippers
 ($12.99)
    **Total Spent:** $67.97
    **Profile:** Casual Comfort Seeker
-   **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Reasons:** Focus on comfort and casual wear.
 
 9. **Purchases:** French terry joggers ($34.99), waffle knit top ($24.99),
 slippers ($12.99)
    **Total Spent:** $72.97
    **Profile:** Casual Comfort Seeker
-   **Reasons:** The items are comfortable and casual, aligning with a low-
-maintenance style.
+   **Reasons:** Emphasis on comfortable, low-maintenance clothing.
 
 10. **Purchases:** Men's dress shirt ($34.99), chino shorts ($29.99), boat shoes
 ($39.99), baseball cap ($12.99)
     **Total Spent:** $117.96
     **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and suitable for a professional or
-business casual setting.
+    **Reasons:** The items are classic and suitable for a professional or smart-
+casual setting.
 
 11. **Purchases:** Off-shoulder floral dress ($49.99), denim jacket ($59.99),
 ankle booties ($39.99), round sunglasses ($14.99)
     **Total Spent:** $164.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+    **Reasons:** The items are stylish and reflect current fashion trends.
 
 12. **Purchases:** Halter bodysuit ($24.99), high-waist shorts ($29.99), lace-up
 flats ($34.99), tassel necklace ($19.99)
     **Total Spent:** $109.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+    **Reasons:** The items are trendy and fashionable.
 
 13. **Purchases:** Tank dress ($29.99), military jacket ($44.99), combat boots
 ($49.99), crossbody bag ($19.99)
     **Total Spent:** $144.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The combination of trendy pieces suggests a strong interest in
-current fashion trends.
+    **Reasons:** The combination of trendy items indicates a fashion-forward
+shopper.
 
 14. **Purchases:** Sheath dress ($49.99), open front cardigan ($39.99), block
 heels ($44.99)
     **Total Spent:** $134.97
     **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and versatile, suitable for a
-professional setting.
+    **Reasons:** The items are classic and suitable for a professional
+environment.
 
 15. **Purchases:** 3-pack v-neck tees ($17.99), chino shorts ($24.99), canvas
 sneakers ($29.99)
     **Total Spent:** $72.97
     **Profile:** Budget-Conscious Shopper
-    **Reasons:** The focus on basic staples and value indicates a budget-
-conscious approach.
+    **Reasons:** Focus on versatile basics and value for money.
 
 16. **Purchases:** Silk blouse ($54.99), slim pants ($49.99), loafers ($44.99)
     **Total Spent:** $149.97
     **Profile:** Minimalist Professional
-    **Reasons:** The items are high-quality basics suitable for a professional
-environment.
+    **Reasons:** The items are high-quality and suitable for a professional
+setting.
 
 17. **Purchases:** Blazer ($79.99), sheath dress ($49.99), pumps ($59.99)
     **Total Spent:** $189.97
     **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and suitable for a professional setting.
+    **Reasons:** The items are classic and suitable for a professional
+environment.
 
 18. **Purchases:** Floral maxi dress ($54.99), denim jacket ($44.99), wedge
 sandals ($39.99), tassel earrings ($12.99)
     **Total Spent:** $152.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+    **Reasons:** The items are stylish and reflect current trends.
 
 19. **Purchases:** Graphic tees (2 for $14.99), jean shorts ($24.99), flip flops
 ($9.99)
     **Total Spent:** $49.97
-    **Profile:** Budget-Conscious Shopper
-    **Reasons:** The focus on basic, casual items at a low price indicates a
-budget-conscious approach.
+    **Profile:** Casual Comfort Seeker
+    **Reasons:** Focus on casual, comfortable clothing.
 
 20. **Purchases:** Joggers ($29.99), hoodie ($34.99), slides ($14.99), baseball
 cap ($12.99)
     **Total Spent:** $92.96
     **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+    **Reasons:** Emphasis on comfort and casual wear.
 
 21. **Purchases:** Men's t-shirt ($17.99), basketball shorts ($22.99), slides
 ($14.99), dad hat ($12.99)
     **Total Spent:** $68.96
     **Profile:** Casual Comfort Seeker
-    **Reasons:** The items are comfortable and casual, aligning with a low-
-maintenance style.
+    **Reasons:** Focus on comfortable, casual clothing.
 
 22. **Purchases:** Hoodie ($29.99), sweatpants ($24.99), sneakers ($39.99)
     **Total Spent:** $94.97
     **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+    **Reasons:** Emphasis on comfort and casual wear.
 
 23. **Purchases:** Gingham off-shoulder dress ($39.99), strappy sandals
 ($34.99), floppy hat ($19.99), round sunglasses ($12.99)
     **Total Spent:** $107.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+    **Reasons:** The items are stylish and reflect current trends.
 
 24. **Purchases:** Printed high-low dress ($49.99), denim jacket ($44.99),
 embroidered mules ($39.99), fringe earrings ($14.99)
     **Total Spent:** $149.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+    **Reasons:** The items are fashionable and trendy.
 
 25. **Purchases:** Button down shirt ($29.99), khakis ($34.99), belt ($12.99)
     **Total Spent:** $77.97
     **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and versatile, suitable for a
-professional setting.
+    **Reasons:** The items are classic and suitable for a professional
+environment.
 
 26. **Purchases:** Sweat shorts ($19.99), graphic tee ($14.99), slides ($14.99)
     **Total Spent:** $49.97
     **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+    **Reasons:** Focus on casual, comfortable clothing.
 
 27. **Purchases:** Floral wrap dress ($39.99), ripped boyfriend jeans ($44.99),
 faux fur coat ($69.99), studded sandals ($29.99), fringe crossbody bag ($34.99),
 lace crop top ($19.99)
     **Total Spent:** $239.94
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are bold and trendy, indicating a strong fashion-
-forward mindset.
+    **Reasons:** The items are bold and trendy, appealing to a fashion-conscious
+shopper.
 
 28. **Purchases:** Blazer ($49.99), ankle pants ($44.99), ballet flats ($34.99)
     **Total Spent:** $119.97
     **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and suitable for a professional setting.
+    **Reasons:** The items are classic and suitable for a professional
+environment.
 
 29. **Purchases:** Printed jumpsuit ($54.99), fedora hat ($24.99), fringe
 crossbody ($34.99), statement earrings ($14.99)
     **Total Spent:** $129.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+    **Reasons:** The items are stylish and reflect current trends.
 
 30. **Purchases:** Skater dress ($34.99), moto jacket ($59.99), over-the-knee
 boots ($54.99), bucket bag ($29.99)
     **Total Spent:** $179.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are bold and trendy, indicating a strong fashion-
-forward mindset.
+    **Reasons:** The items are bold and trendy, appealing to a fashion-conscious
+shopper.
 
 31. **Purchases:** Puffer vest ($34.99), beanie ($9.99), sweatpants ($24.99)
     **Total Spent:** $69.97
     **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+    **Reasons:** Focus on comfort and casual wear.
 
 32. **Purchases:** Cold shoulder top ($24.99), high waist wide leg pants
 ($39.99), mules ($29.99), faux leather crossbody ($34.99)
     **Total Spent:** $129.96
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+    **Reasons:** The items are stylish and reflect current trends.
 
 33. **Purchases:** Basic tee ($12.99), overalls ($44.99), sneakers ($39.99), dad
 hat ($9.99)
     **Total Spent:** $107.96
     **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+    **Reasons:** Focus on casual, comfortable clothing.
 
 34. **Purchases:** Active tee ($12.99), running shorts ($19.99), sneakers
 ($34.99)
     **Total Spent:** $67.97
     **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+    **Reasons:** Focus on comfortable, activewear.
 
 35. **Purchases:** Sleeveless swing dress ($29.99), denim jacket ($44.99), ankle
 boots ($39.99)
     **Total Spent:** $114.97
     **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+    **Reasons:** The items are stylish and reflect current trends.
 
 36. **Purchases:** 5 pack basic crewneck tees ($24.99), chino shorts ($29.99),
 white sneakers ($39.99), lightweight windbreaker ($29.99)
     **Total Spent:** $124.96
     **Profile:** Budget-Conscious Shopper
-    **Reasons:** The focus on basic staples and value indicates a budget-
-conscious approach.
+    **Reasons:** Focus on versatile basics and value for money.
 
 37. **Purchases:** Packable down jacket ($59.99), flannel shirt ($24.99), jeans
 ($39.99)
     **Total Spent:** $124.97
     **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+    **Reasons:** Focus on comfortable, casual clothing.
 
 38. **Purchases:** Maxi tee dress ($29.99), denim jacket ($39.99), slip-on
 sneakers ($29.99)
     **Total Spent:** $99.97
-    **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on casual, comfortable clothing.
 
 39. **Purchases:** Crop top ($19.99), high-rise flare jeans ($44.99), platform
 sandals ($39.99), fringe crossbody ($29.99)
-    **Total Spent:** $134.96
+   **Total Spent:** $134.96
    **Profile:** Trendy Fashionista
-   **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+   **Reasons:** The items are stylish and reflect current trends.
 
 40. **Purchases:** Bell sleeve top ($27.99), culottes ($39.99), sandals
 ($19.99), tote bag ($24.99)
-    **Total Spent:** $112.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $112.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 41. **Purchases:** Cozy sweater ($39.99), boyfriend jeans ($44.99), moccasin
 slippers ($19.99)
-    **Total Spent:** $104.97
-    **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Total Spent:** $104.97
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on comfort and casual wear.
 
 42. **Purchases:** Henley ($22.99), cargo shorts ($29.99), Birkenstocks
 ($39.99), backpack ($34.99)
-    **Total Spent:** $127.96
-    **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Total Spent:** $127.96
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on casual, comfortable clothing.
 
 43. **Purchases:** Suit set ($129.99), button up shirt ($34.99), oxfords
 ($49.99)
-    **Total Spent:** $214.97
-    **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and suitable for a professional setting.
+   **Total Spent:** $214.97
+   **Profile:** Minimalist Professional
+   **Reasons:** The items are classic and suitable for a professional
+environment.
 
 44. **Purchases:** Button down ($34.99), bermuda shorts ($24.99), boat shoes
 ($39.99), baseball cap ($14.99)
-    **Total Spent:** $114.96
-    **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and versatile, suitable for a
-professional setting.
+   **Total Spent:** $114.96
+   **Profile:** Minimalist Professional
+   **Reasons:** The items are classic and suitable for a professional
+environment.
 
 45. **Purchases:** Lace up bodysuit ($29.99), ripped mom shorts ($24.99), ankle
 booties ($44.99), pendant necklace ($19.99)
-    **Total Spent:** $119.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $119.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 46. **Purchases:** Ruffle sleeve romper ($39.99), faux suede jacket ($54.99),
 ankle strap heels ($44.99), bucket bag ($29.99)
-    **Total Spent:** $169.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are bold and trendy, indicating a strong fashion-
-forward mindset.
+   **Total Spent:** $169.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are bold and trendy, appealing to a fashion-conscious
+shopper.
 
 47. **Purchases:** Cami top ($14.99), high-waisted boyfriend jeans ($39.99),
 clogs ($29.99), crossbody bag ($24.99)
-    **Total Spent:** $109.96
-    **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Total Spent:** $109.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 48. **Purchases:** Long sleeve thermal ($17.99), lightweight puffer vest
 ($34.99), beanie ($9.99)
-    **Total Spent:** $62.97
-    **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Total Spent:** $62.97
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on comfort and casual wear.
 
 49. **Purchases:** Wrap front top ($29.99), distressed girlfriend jeans
 ($44.99), studded slides ($24.99), bucket bag ($39.99)
-    **Total Spent:** $139.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+   **Total Spent:** $139.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 50. **Purchases:** Off-the-shoulder top ($24.99), wide leg linen pants ($39.99),
 ballet flats ($24.99), tote ($29.99)
-    **Total Spent:** $119.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $119.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 51. **Purchases:** 5-pack crew socks ($7.99), 3-pack boxer briefs ($17.99)
-    **Total Spent:** $25.98
-    **Profile:** Budget-Conscious Shopper
-    **Reasons:** The focus on basic essentials at a low price indicates a
-budget-conscious approach.
+   **Total Spent:** $25.98
+   **Profile:** Budget-Conscious Shopper
+   **Reasons:** Focus on practical, basic items.
 
 52. **Purchases:** 4-pack undershirts ($15.99), 2-pack boxer briefs ($12.99)
-    **Total Spent:** $28.98
-    **Profile:** Budget-Conscious Shopper
-    **Reasons:** The focus on basic essentials at a low price indicates a
-budget-conscious approach.
+   **Total Spent:** $28.98
+   **Profile:** Budget-Conscious Shopper
+   **Reasons:** Focus on practical, basic items.
 
 53. **Purchases:** Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt
 ($29.99), sneakers ($44.99)
-    **Total Spent:** $129.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $129.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 54. **Purchases:** Pleated metallic skirt ($39.99), lace camisole ($24.99),
 block heel sandals ($44.99), fringe crossbody ($29.99)
-    **Total Spent:** $139.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+   **Total Spent:** $139.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 55. **Purchases:** Wide leg trousers ($54.99), camisole ($17.99), loafers
 ($39.99)
-    **Total Spent:** $112.97
-    **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and suitable for a professional setting.
+   **Total Spent:** $112.97
+   **Profile:** Minimalist Professional
+   **Reasons:** The items are classic and suitable for a professional
+environment.
 
 56. **Purchases:** Wrap crop top ($19.99), paper bag waist shorts ($29.99),
 slide sandals ($19.99), circle sunglasses ($14.99)
-    **Total Spent:** $84.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $84.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 57. **Purchases:** Tie-front crop top ($19.99), high waist mom jeans ($39.99),
 slide sandals ($24.99), circle belt bag ($29.99)
-    **Total Spent:** $114.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+   **Total Spent:** $114.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 58. **Purchases:** Off-shoulder eyelet top ($34.99), denim skirt ($29.99),
 espadrille wedges ($39.99), tassel earrings ($14.99)
-    **Total Spent:** $119.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $119.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 59. **Purchases:** Soft shorts ($19.99), muscle tank ($12.99), slides ($14.99)
-    **Total Spent:** $47.97
-    **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Total Spent:** $47.97
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on casual, comfortable clothing.
 
 60. **Purchases:** Floral wrap dress ($44.99), denim jacket ($49.99),
 embroidered clutch ($29.99), fringe earrings ($19.99)
-    **Total Spent:** $144.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $144.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 61. **Purchases:** Polo ($24.99), drawstring pants ($29.99), slides ($19.99),
 visor ($9.99)
-    **Total Spent:** $84.96
-    **Profile:** Casual Comfort Seeker
-    **Reasons:** The focus is on comfort and casual wear, typical of someone
-prioritizing low-maintenance style.
+   **Total Spent:** $84.96
+   **Profile:** Casual Comfort Seeker
+   **Reasons:** Focus on casual, comfortable clothing.
 
 62. **Purchases:** Tunic top ($29.99), palazzo pants ($39.99), gladiator sandals
 ($34.99), fedora ($19.99)
-    **Total Spent:** $124.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $124.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 63. **Purchases:** Bell sleeve top ($27.99), culottes ($39.99), sandals
 ($19.99), tote bag ($24.99)
-    **Total Spent:** $112.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $112.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 64. **Purchases:** Wrap dress ($59.99), trench coat ($99.99), knee high boots
 ($69.99)
-    **Total Spent:** $229.97
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are bold and trendy, indicating a strong fashion-
-forward mindset.
+   **Total Spent:** $229.97
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are high-end and stylish, appealing to a fashion-
+conscious shopper.
 
 65. **Purchases:** Cold shoulder top ($24.99), paperbag pants ($39.99), peep toe
 booties ($49.99), faux suede crossbody ($34.99)
-    **Total Spent:** $149.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $149.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 66. **Purchases:** Shift dress ($44.99), blazer ($69.99), ballet flats ($29.99)
-    **Total Spent:** $144.97
-    **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and suitable for a professional setting.
+   **Total Spent:** $144.97
+   **Profile:** Minimalist Professional
+   **Reasons:** The items are classic and suitable for a professional
+environment.
 
 67. **Purchases:** Graphic tee ($19.99), skinny jeans ($34.99), flannel shirt
 ($29.99), sneakers ($44.99)
-    **Total Spent:** $129.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $129.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 68. **Purchases:** Henley shirt ($19.99), 5-pocket twill pants ($29.99), boat
 shoes ($39.99)
-    **Total Spent:** $89.97
-    **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and suitable for a professional setting.
+   **Total Spent:** $89.97
+   **Profile:** Minimalist Professional
+   **Reasons:** The items are classic and suitable for a professional
+environment.
 
 69. **Purchases:** Off-shoulder ruffle top ($34.99), palazzo pants ($44.99),
 tassel earrings ($14.99), embroidered clutch ($29.99)
-    **Total Spent:** $124.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $124.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 70. **Purchases:** Halter neck top ($24.99), denim jacket ($44.99), ankle
 booties ($44.99), circle belt bag ($24.99)
-    **Total Spent:** $139.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+   **Total Spent:** $139.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 71. **Purchases:** Tiered maxi dress ($49.99), floppy hat ($24.99), flat sandals
 ($19.99), straw tote ($29.99)
-    **Total Spent:** $124.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $124.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 72. **Purchases:** Linen button-down ($34.99), drawstring shorts ($29.99), boat
 shoes ($39.99), baseball cap ($19.99)
-    **Total Spent:** $124.96
-    **Profile:** Minimalist Professional
-    **Reasons:** The items are classic and suitable for a professional setting.
+   **Total Spent:** $124.96
+   **Profile:** Minimalist Professional
+   **Reasons:** The items are classic and suitable for a professional
+environment.
 
 73. **Purchases:** Smocked off-shoulder top ($27.99), paper bag shorts ($24.99),
 espadrille flats ($19.99), circle sunglasses ($9.99)
-    **Total Spent:** $82.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are stylish and trendy, appealing to someone who
-values fashion.
+   **Total Spent:** $82.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 74. **Purchases:** Printed jumpsuit ($44.99), denim jacket ($49.99), wedge
 sandals ($39.99), tassel pendant ($14.99)
-    **Total Spent:** $149.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are fashionable and trendy, indicating a focus on
-style.
+   **Total Spent:** $149.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 75. **Purchases:** Racerback midi dress ($39.99), utility jacket ($49.99), ankle
 strap flats ($29.99), fanny pack ($19.99)
-    **Total Spent:** $139.96
-    **Profile:** Trendy Fashionista
-    **Reasons:** The items are bold and trendy, indicating a strong fashion-
-forward mindset.
+   **Total Spent:** $139.96
+   **Profile:** Trendy Fashionista
+   **Reasons:** The items are stylish and reflect current trends.
 
 ### Summary of Profiles:
 - **Trendy Fashionista:** 43
@@ -984,8 +994,8 @@ forward mindset.
 - **Minimalist Professional:** 12
 - **Budget-Conscious Shopper:** 6
 
-This classification reflects the purchasing behavior and preferences of each
-customer based on the defined profiles.</code></pre>
+This classification is based on the nature of the items purchased and the
+overall shopping behavior associated with each profile.</code></pre>
 </div>
 </div>
 </section>

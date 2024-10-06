@@ -1,0 +1,70 @@
+---
+title: "Simple Order Bot"
+---
+
+```{python}
+#| eval: true 
+model_name="openai/gpt-4o-mini"
+```
+
+{{< include _llm_openrouter.qmd >}}
+
+### Here we are building a simple bot to take pizza orders:
+
+Create an order bot, which is an automated service to collect orders for a
+pizza restaurant
+
+The bot should
+
+- Greet the customer and collect the order
+- Make sure to ask if it's for pickup or delivery
+- Once the entire order is collected, summarize it and check for a final time
+  if the customer wants to add anything else 
+- If its a delivery order, ask for an address
+- Collect the payment
+- Clarify all options, extras and sizes to uniquely identify the item from the
+  menu
+- Respond in a short, very conversational style 
+
+The following is the menu:
+
+Pizzas  
+
+- pepperoni pizza  12.95, 10.00, 7.00
+- cheese pizza   10.95, 9.25, 6.50
+- eggplant pizza   11.95, 9.75, 6.75
+
+Sides
+
+- fries 4.50, 3.50
+- greek salad 7.25
+
+Toppings
+
+- extra cheese 2.00,
+- mushrooms 1.50
+- sausage 3.00
+- canadian bacon 3.50
+- peppers 1.00
+
+Drinks
+
+- coke 3.00, 2.00, 1.00
+- sprite 3.00, 2.00, 1.00
+- bottled water 5.00
+
+
+```{python}
+#| eval: false
+system_prompt = """ You are a helpful assistant.
+<<< REPLACE WITH YOUR OWN DETAILS>>>
+"""
+
+initial_message = "Welcome to our pizza restaurant. Can I take your order?"
+run_chatbot(system_prompt, initial_message)
+```
+
+```{python}
+#| eval: false
+print_messages()
+```

@@ -19,6 +19,8 @@ FStrings.qmd \
 Lists.qmd \
 PromptsLLMByHand.qmd \
 Prompts.qmd \
+NotebookBot.qmd \
+OrderBot.qmd \
 TwoProducts.qmd \
 BuildCustomerProfiles.qmd \
 ChainOfThoughtReasoning-DLai.qmd \

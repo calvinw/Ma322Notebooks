@@ -1,0 +1,45 @@
+---
+title: "Notebook Bot"
+---
+
+```{python}
+#| eval: true 
+model_name="openai/gpt-4o-mini"
+```
+
+{{< include _llm_openrouter.qmd >}}
+
+### System Prompts for Chatbots 
+
+Here are some key elements that might go into a system prompt for a chatbot
+using a large language model (LLM):
+
+- Identity and purpose: Define who the chatbot is and its primary function.
+- Tone and personality: Specify how the chatbot should communicate (e.g.,
+   formal, casual, friendly).
+- Knowledge boundaries: Clarify what topics or areas the chatbot should be
+   knowledgeable about.
+- Ethical guidelines: Set rules for handling sensitive topics or requests.
+- Response format: Instruct on how to structure answers (e.g., bullet points,
+   paragraphs).
+- Interaction style: Guide on how to handle follow-up questions or
+   clarifications.
+- Task-specific instructions: Provide details on how to handle particular
+   types of queries or tasks.
+- Safety measures: Include instructions on what not to do or discuss.
+
+
+```{python}
+#| eval: false
+system_prompt = """
+You are a helpful AI assistant.
+"""
+
+initial_message = "How can I help you, I am here to help?"
+run_chatbot(system_prompt, initial_message)
+```
+
+```{python}
+#| eval: false
+print_messages()
+```

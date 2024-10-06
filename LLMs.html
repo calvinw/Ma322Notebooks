@@ -141,41 +141,97 @@ Provider: OpenRouter AI</code></pre>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, clear_output, Markdown</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> widgets, Layout</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>conversation_output <span class="op">=</span> widgets.Output()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> []</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_chatbot(system_prompt, initial_message):</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> messages </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> [ {<span class="st">'role'</span>:<span class="st">'system'</span>, <span class="st">'content'</span>: system_prompt} ]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    conversation_output.clear_output()</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    messages.append({<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: initial_message})</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    text_input <span class="op">=</span> widgets.Text(</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        placeholder<span class="op">=</span><span class="st">'Type your message here...'</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        layout<span class="op">=</span>widgets.Layout(width<span class="op">=</span><span class="st">'50%'</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    submit_button <span class="op">=</span> widgets.Button(description<span class="op">=</span><span class="st">"Send"</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    input_box <span class="op">=</span> widgets.HBox([text_input, submit_button])</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    display(conversation_output, input_box)</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> on_submit_click(b):</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        message <span class="op">=</span> text_input.value</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        text_input.value <span class="op">=</span> <span class="st">''</span>  <span class="co"># Clear the input field</span></span>
 <span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> conversation_output:</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>            display(Markdown(<span class="ss">f"**User**: </span><span class="sc">{</span>message<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: message})</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>            response <span class="op">=</span> get_completion_messages(messages)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>            display(Markdown(<span class="ss">f"**AI**: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: response})</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    submit_button.on_click(on_submit_click)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display initial AI message</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> conversation_output:</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>        display(Markdown(<span class="ss">f"**AI**: </span><span class="sc">{</span>initial_message<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages():</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> message <span class="kw">in</span> messages:</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>        role <span class="op">=</span> message[<span class="st">'role'</span>]</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> message[<span class="st">'content'</span>]</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> role <span class="op">==</span> <span class="st">'system'</span>:</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"System:"</span>)</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(content)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> role <span class="op">==</span> <span class="st">'user'</span>:</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"User: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(wrap_text(content))</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> role <span class="op">==</span> <span class="st">'assistant'</span>:</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Assistant: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(wrap_text(content))</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>()  <span class="co"># Add an extra newline for spacing</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -207,8 +263,8 @@ Why is the sky blue? In 50 words or less.
 Response: 
 The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths, making the sky look blue to our eyes. This effect is more
-pronounced when the sun is high in the sky.</code></pre>
+wavelengths. This scattering causes the blue light to be more visible, giving
+the sky its characteristic color during the day.</code></pre>
 </div>
 </div>
 </section>
@@ -256,15 +312,15 @@ Earth's atmosphere, shorter blue wavelengths scatter more than longer red
 wavelengths. This scattering causes the blue light to be more visible, making
 the sky look blue during the day.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters the
-Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible, making
-the sky look blue during the day.
+The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
+atmosphere, shorter blue wavelengths scatter more than longer red wavelengths.
+This scattering causes the blue light to be more visible, making the sky look
+blue during the day.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters the
-Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible, making
-the sky look blue during the day.
+The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
+atmosphere, shorter blue wavelengths scatter more than longer red wavelengths.
+This scattering causes the blue light to be more visible, making the sky look
+blue during the day.
 ------</code></pre>
 </div>
 </div>
@@ -287,19 +343,18 @@ the sky look blue during the day.
 <div class="cell-output cell-output-stdout">
 <pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to dominate our view of the
-sky, especially when the sun is high overhead.
-------
-The sky appears blue due to Rayleigh scattering. Sunlight, which contains
-multiple colors, scatters off air molecules. Blue light, having a shorter
-wavelength, scatters more than other colors, making the sky predominantly blue
-during the day. At sunrise and sunset, the light travels further, resulting in
-red and orange hues.
+wavelengths, making the sky look blue to our eyes. This effect is more
+pronounced when the sun is higher in the sky.
 ------
 The sky appears blue due to Rayleigh scattering. Sunlight, which contains all
-colors, scatters more in shorter wavelengths (blue) when it passes through the
-Earth's atmosphere. This scattering causes blue light to be more visible, giving
-the sky its characteristic color during the day.
+colors, scatters more blue light when it passes through the Earth's atmosphere.
+This scattering causes the blue wavelengths to spread across the sky, making it
+look blue to our eyes, especially when the sun is high.
+------
+The sky appears blue due to Rayleigh scattering. Sunlight, which contains
+multiple colors, scatters more in shorter wavelengths (blue) when it passes
+through the Earth's atmosphere. This scattering causes the blue light to be more
+prominent, making the sky look blue during the day.
 ------</code></pre>
 </div>
 </div>
@@ -319,21 +374,20 @@ the sky its characteristic color during the day.
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
-atmosphere, shorter blue wavelengths scatter more than other colors. This
-scattering distributes blue light throughout the sky, making it visible from
-various angles. During sunrise and sunset, longer wavelengths, like red and
-orange, dominate due to different scattering effects.
+<pre><code>The sky appears blue due to Rayleigh scattering, where shorter blue wavelengths
+of sunlight scatter more than other colors when they interact with atmospheric
+molecules. When sunlight passes through the atmosphere, blue light is scattered
+in all directions, making the sky look blue to our eyes.
 ------
-The sky appears blue due to Rayleigh scattering, where shorter blue wavelengths
-of sunlight scatter more than longer red wavelengths when sunlight passes
-through the atmosphere. This scattering is more effective at high frequencies,
-making the sky look predominantly blue during the day.
+The sky appears blue due to Rayleigh scattering. Sunlight, which contains
+various colors, is scattered in all directions by molecules in the atmosphere.
+Blue light is scattered more than other colors because it travels in shorter,
+smaller waves, making the sky predominantly blue during the day.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters Earth’s
-atmosphere, shorter blue wavelengths scatter more than longer wavelengths like
-red. This scattering causes the blue light to dominate the sky’s color,
-especially when the sun is high.
+The sky appears blue due to Rayleigh scattering. When sunlight enters the
+Earth's atmosphere, shorter blue wavelengths scatter more than longer
+wavelengths. This scattering causes the direct sunlight to appear less blue,
+while the surrounding sky takes on a blue hue, especially when the sun is high.
 ------</code></pre>
 </div>
 </div>
@@ -364,8 +418,8 @@ Here are some name suggestions for a car manufacturing company:
 5. **Pinnacle Motors**
 6. **Fusion AutoWorks**
 7. **RevTech Automotive**
-8. **Stellar Rides**
-9. **Quantum Cars**
+8. **Stellar Cars**
+9. **Quantum Drive**
 10. **Vanguard Vehicles**
 
 Feel free to mix and match or modify these suggestions to find the perfect fit
@@ -396,7 +450,7 @@ Here are some name ideas for a company that makes books:
 7. **Narrative Nest**
 8. **Epic Editions**
 9. **Book Haven**
-10. **Tome &amp; Tale**
+10. **Tome Treasures**
 
 Feel free to mix and match or modify these suggestions to find the perfect fit
 for your company!</code></pre>
@@ -420,17 +474,13 @@ Recommend 3 names for a company that makes cars
 Response: 
 Sure! Here are three name suggestions for a car manufacturing company:
 
-1. **Velocity Motors** - Emphasizing speed and innovation, this name conveys a
-sense of dynamic performance.
+1. **Velocity Motors** - Emphasizes speed and innovation in automotive design.
+2. **EcoDrive Automotive** - Highlights a focus on sustainability and eco-
+friendly vehicles.
+3. **Apex Automotive** - Suggests a commitment to high performance and top-tier
+engineering.
 
-2. **EcoDrive Automotive** - Highlighting a commitment to sustainability, this
-name suggests a focus on environmentally friendly vehicles.
-
-3. **Apex Automotive** - Suggesting peak performance and quality, this name
-conveys a sense of excellence in engineering and design.
-
-Feel free to mix and match or modify these suggestions to better fit your
-vision!</code></pre>
+Feel free to mix and match or modify these names to better suit your vision!</code></pre>
 </div>
 </div>
 <section id="add-a-template-variable-format" class="level3">

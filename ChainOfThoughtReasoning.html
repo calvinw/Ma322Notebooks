@@ -138,41 +138,97 @@ Provider: OpenRouter AI</code></pre>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> textwrap</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain_core.prompts <span class="im">import</span> ChatPromptTemplate</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, clear_output, Markdown</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> widgets, Layout</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>conversation_output <span class="op">=</span> widgets.Output()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>messages <span class="op">=</span> []</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_chatbot(system_prompt, initial_message):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> messages </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> [ {<span class="st">'role'</span>:<span class="st">'system'</span>, <span class="st">'content'</span>: system_prompt} ]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    conversation_output.clear_output()</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    messages.append({<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: initial_message})</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    text_input <span class="op">=</span> widgets.Text(</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        placeholder<span class="op">=</span><span class="st">'Type your message here...'</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        layout<span class="op">=</span>widgets.Layout(width<span class="op">=</span><span class="st">'50%'</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    submit_button <span class="op">=</span> widgets.Button(description<span class="op">=</span><span class="st">"Send"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    input_box <span class="op">=</span> widgets.HBox([text_input, submit_button])</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    display(conversation_output, input_box)</span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> on_submit_click(b):</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        message <span class="op">=</span> text_input.value</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        text_input.value <span class="op">=</span> <span class="st">''</span>  <span class="co"># Clear the input field</span></span>
 <span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> conversation_output:</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            display(Markdown(<span class="ss">f"**User**: </span><span class="sc">{</span>message<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">'role'</span>: <span class="st">'user'</span>, <span class="st">'content'</span>: message})</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            response <span class="op">=</span> get_completion_messages(messages)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>            display(Markdown(<span class="ss">f"**AI**: </span><span class="sc">{</span>response<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            messages.append({<span class="st">'role'</span>: <span class="st">'assistant'</span>, <span class="st">'content'</span>: response})</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    submit_button.on_click(on_submit_click)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display initial AI message</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> conversation_output:</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        display(Markdown(<span class="ss">f"**AI**: </span><span class="sc">{</span>initial_message<span class="sc">}</span><span class="ss">"</span>))</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrap_text(text, max_width<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co">    Wraps the text to the specified max_width, preserving line breaks and formatting.</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> text.lstrip()</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    lines <span class="op">=</span> text.splitlines()  <span class="co"># Split the text into lines</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    wrapped_lines <span class="op">=</span> []</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> line <span class="kw">in</span> lines:</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> line.strip():  <span class="co"># Skip empty lines</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>            wrapped_line <span class="op">=</span> textwrap.fill(line, max_width, initial_indent<span class="op">=</span><span class="st">''</span>, subsequent_indent<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.extend(wrapped_line.splitlines())  <span class="co"># Preserve line breaks</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>            wrapped_lines.append(<span class="st">''</span>)  <span class="co"># Keep empty lines</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(wrapped_lines)</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages():</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> message <span class="kw">in</span> messages:</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>        role <span class="op">=</span> message[<span class="st">'role'</span>]</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>        content <span class="op">=</span> message[<span class="st">'content'</span>]</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> role <span class="op">==</span> <span class="st">'system'</span>:</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"System:"</span>)</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">40</span>)</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(content)</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> role <span class="op">==</span> <span class="st">'user'</span>:</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"User: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(wrap_text(content))</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> role <span class="op">==</span> <span class="st">'assistant'</span>:</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"Assistant: "</span>, end<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(wrap_text(content))</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>()  <span class="co"># Add an extra newline for spacing</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_prompt_and_response(prompt, response):</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Prompt: "</span>)</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(wrap_text(prompt))</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">""</span>)</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Response: "</span>)</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(response)</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_messages_and_response(messages, response):</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>    prompt <span class="op">=</span> ChatPromptTemplate(messages<span class="op">=</span>messages)</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    print_prompt_and_response(prompt.<span class="bu">format</span>(), response)</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion(prompt, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> llm.invoke(prompt, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_completion_messages(messages, temperature<span class="op">=</span><span class="fl">0.0</span>):</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>    response<span class="op">=</span>llm.invoke(messages, temperature<span class="op">=</span>temperature)</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>    wrapped_response <span class="op">=</span> wrap_text(response.content)</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wrapped_response</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -403,10 +459,10 @@ Step 4:#### The Floral Print Sundress is available in sizes XS-XL, which
 typically does not include specific pre-teen or junior sizes.
 
 Response to user:#### Thank you for your inquiry! The Floral Print Sundress is
-available in sizes XS-XL, but it does not specifically come in pre-teen or
-junior sizes. If your daughter is quite tall, you might want to consider sizing
-up to ensure a comfortable fit. If you have any other questions or need further
-assistance, feel free to ask!
+available in sizes XS-XL, but it does not specifically offer sizes for pre-teens
+or juniors. If your daughter is quite tall, you might consider checking the size
+chart to see if the larger sizes would work for her. If you have any other
+questions or need further assistance, feel free to ask!
 
 
 Query:
@@ -414,11 +470,11 @@ I really like the look of the Distressed Boyfriend Jeans, but I'm worried they
 might be too loose and baggy. Do they run small or true to size?
 
 -----Without CoT Response:-----
-Hi there! I'm glad to hear you're interested in the Distressed Boyfriend Jeans!
-They are designed with a relaxed fit, which means they do have a looser and more
-casual style. Most customers find that they run true to size, but if you prefer
-a more fitted look, you might consider sizing down. If you have any other
-questions or need help with sizing, feel free to ask! Happy shopping! 😊
+Hi there! The Distressed Boyfriend Jeans from DenimCo are designed with a
+relaxed fit, which means they do have a bit of extra room for comfort. Most
+customers find that they run true to size, so you should be safe sticking with
+your usual size. If you prefer a more fitted look, you might consider sizing
+down. Happy shopping! If you have any more questions, feel free to ask!
 
 -----CoT Response:--------
 Step 1:#### The user is asking a question about a specific product, which is the
@@ -449,11 +505,10 @@ medium. Since it's cropped, should I size up to a large?
 
 -----Without CoT Response:-----
 Hi there! I'm glad to hear you love the Striped Off-Shoulder Top! Since it's
-cropped and you're usually between a small and medium, sizing up to a large
-could give you a bit more room and comfort. However, if you prefer a more fitted
-look, you might want to stick with the medium. It really depends on your
-personal style! If you have any other questions or need help with anything else,
-feel free to ask! 😊
+cropped and you're usually between a small and medium, it might be a good idea
+to size up to a large for a more comfortable fit. This way, you'll have a little
+extra room while still enjoying that stylish look. If you have any other
+questions or need help with anything else, feel free to ask! 😊
 
 -----CoT Response:--------
 Step 1:#### The user is asking a question about a specific product, the Striped
@@ -464,16 +519,16 @@ Step 2:#### The Striped Off-Shoulder Top is in the list of available products.
 Step 3:#### The user is assuming that they should size up to a large because the
 top is cropped and they are usually between a small and medium.
 
-Step 4:#### The Striped Off-Shoulder Top comes in sizes XS-XL, and since the
-user is usually between a small and medium, it may not be necessary to size up
-to a large. The cropped design may fit well in a medium, depending on their
-preference for fit.
+Step 4:#### The Striped Off-Shoulder Top is available in sizes XS-XL, but there
+is no specific information indicating that it runs small or that customers
+should size up. The decision to size up may depend on personal preference for
+fit, especially with cropped styles.
 
 Response to user:#### Thank you for your interest in the Striped Off-Shoulder
-Top! Since you're usually between a small and medium, you might find that a
-medium fits well, especially since it’s designed to be cropped. However, if you
-prefer a looser fit, sizing up to a large could work too. It really depends on
-your personal style! If you have any more questions, feel free to ask!
+Top! Since you're usually between a small and medium, it really depends on how
+you prefer your tops to fit. If you like a looser fit, sizing up to a large
+could be a good option, but keep in mind that it is available in sizes XS-XL. If
+you have any other questions or need further assistance, feel free to ask!
 
 
 Query:
@@ -485,9 +540,9 @@ them?
 Hello! The Faux Leather Moto Jacket is a stylish choice for a gift! Generally,
 this jacket runs true to size, but it’s always a good idea to check the size
 range, which is XS-XL. As for stretch, the material is polyurethane, which
-doesn’t have much stretch, so it’s best to stick to the size that matches the
-recipient's measurements. If you have any more questions or need help with
-anything else, feel free to ask! Happy shopping!
+doesn’t have much stretch, so it’s best to stick to the size that corresponds to
+the recipient's measurements. If you have any more questions or need help with
+anything else, feel free to ask!
 
 -----CoT Response:--------
 Step 1:#### The user is asking a question about a specific product, the Faux
@@ -503,11 +558,12 @@ available in sizes XS-XL, but there is no specific information provided about
 whether it runs big or small. Additionally, the material is polyurethane, which
 typically does not have much stretch.
 
-Response to user:#### Thank you for your interest in the Faux Leather Moto
+Response to user:#### Thank you for your inquiry about the Faux Leather Moto
 Jacket! Unfortunately, we don't have specific information on whether the jacket
-runs big or small. However, it is available in sizes XS-XL. As for stretch, the
-jacket is made from polyurethane, which generally does not offer much stretch.
-If you have any other questions or need further assistance, feel free to ask!
+runs big or small. However, it is available in sizes XS-XL. The material is
+polyurethane, which usually doesn't offer much stretch. I recommend checking the
+size chart or considering the size you typically wear for jackets. If you have
+any other questions, feel free to ask!
 
 
 Query:
@@ -516,12 +572,11 @@ the Embroidered Canvas Sneakers, but he usually wears a men's size 11.5. Do
 these come in half sizes or just whole sizes?
 
 -----Without CoT Response:-----
-Hi there! It's great to hear that your son is into sneakers! The Embroidered
-Canvas Sneakers come in whole sizes only, ranging from size 6 to 11.
-Unfortunately, they don't offer half sizes. If he typically wears a men's size
-11.5, he might find the size 11 to be a snug fit, or the size 12 a bit roomy. If
-you have any other questions or need help finding something else, feel free to
-ask!
+Hi there! The Embroidered Canvas Sneakers come in whole sizes only, ranging from
+size 6 to 11. Unfortunately, they don't offer half sizes. If your son typically
+wears a men's size 11.5, he might want to try a size 11 for a snug fit or a size
+12 for a bit more room. Let me know if you have any other questions or need help
+with anything else!
 
 -----CoT Response:--------
 Step 1:#### The user is asking about a specific product, the Embroidered Canvas
@@ -534,14 +589,14 @@ Step 3:#### The user is assuming that the sneakers come in half sizes, as they
 mention their son usually wears a men's size 11.5.
 
 Step 4:#### Based on the product information, the Embroidered Canvas Sneakers
-are available in whole sizes only (6-11), and do not come in half sizes.
+are available in whole sizes only (6-11).
 
 Response to user:#### Thank you for your interest in the Embroidered Canvas
-Sneakers! I wanted to let you know that these sneakers are available in whole
-sizes only, ranging from size 6 to size 11. Unfortunately, they do not come in
-half sizes. If your son typically wears a size 11.5, he may need to try a size
-11 or 12, depending on his preference for fit. If you have any other questions
-or need further assistance, feel free to ask!
+Sneakers! However, I want to let you know that these sneakers are only available
+in whole sizes (6-11) and do not come in half sizes. If your son typically wears
+a size 11.5, you might want to consider sizing up to a size 12 for a comfortable
+fit. If you have any other questions or need further assistance, feel free to
+ask!
 
 
 Query:
@@ -551,9 +606,9 @@ dresses?
 -----Without CoT Response:-----
 Thank you for your inquiry! Currently, the Floral Print Sundress is available in
 sizes XS to XL, but we don't have plus size options for this particular dress.
-However, we do have a variety of other dresses that may fit your needs. If
+However, we do have a variety of other dresses that may suit your needs. If
 you're looking for something specific, feel free to let me know, and I'll be
-happy to help you find the perfect dress!
+happy to help you find the perfect fit!
 
 -----CoT Response:--------
 Step 1:#### The user is asking about a specific product, the Floral Print
@@ -564,24 +619,24 @@ Step 2:#### The Floral Print Sundress is in the list of available products.
 Step 3:#### The user is assuming that there are plus size options available for
 the Floral Print Sundress.
 
-Step 4:#### Based on the product information, the Floral Print Sundress is
-available in sizes XS-XL, which does not include plus sizes.
+Step 4:#### The Floral Print Sundress has a size range of XS-XL, which does not
+include plus sizes.
 
 Response to user:#### Thank you for your inquiry! Unfortunately, the Floral
-Print Sundress is only available in sizes XS-XL and does not include plus size
-options. If you're looking for other styles or sizes, feel free to ask, and I'll
-be happy to help you find something that suits your needs!
+Print Sundress is available only in sizes XS to XL, and we do not currently
+carry plus size options for this dress. If you're looking for other styles or
+sizes, feel free to ask, and I'll be happy to help!
 
 
 Query:
 What is the return policy on shoes like the Embroidered Canvas Sneakers?
 
 -----Without CoT Response:-----
-Hello! Thank you for your inquiry about the return policy for shoes like the
-Embroidered Canvas Sneakers. Generally, our return policy allows you to return
-unworn and unused items within 30 days of purchase for a full refund. Just make
-sure to keep the original packaging and tags intact. If you have any more
-questions or need assistance with your order, feel free to ask! Happy shopping!
+Hello! Thank you for your inquiry about our return policy. For shoes like the
+Embroidered Canvas Sneakers, we typically allow returns within 30 days of
+purchase, provided they are in their original condition and packaging. If you
+have any more questions or need assistance with a return, feel free to ask!
+Happy shopping!
 
 -----CoT Response:--------
 Step 1:#### The user is asking a question about a specific product, the
@@ -591,9 +646,9 @@ Step 2:#### The Embroidered Canvas Sneakers (Product ID: FW005) is in the list
 of available products.
 
 Step 3:#### The user is assuming that the return policy applies specifically to
-shoes, like the Embroidered Canvas Sneakers.
+shoes, in this case, the Embroidered Canvas Sneakers.
 
-Step 4:#### The assumption about the return policy applying to shoes is
+Step 4:#### The assumption about the return policy being applicable to shoes is
 generally true, as most retailers have a return policy for footwear. However,
 specific details about the return policy are not provided in the product
 information.
@@ -610,10 +665,12 @@ Sundress be appropriate or too casual?
 
 -----Without CoT Response:-----
 The Floral Print Sundress would be a lovely choice for a summer wedding! Its
-beautiful floral design and tiered skirt give it a charming and elegant vibe,
-perfect for such a special occasion. Plus, the adjustable straps and ruffled hem
-add a touch of femininity. I think you'll look fantastic in it! If you have any
-other questions or need help with sizing, feel free to ask!
+beautiful floral design and lightweight rayon material make it perfect for warm
+weather, and the adjustable straps and tiered skirt add a touch of elegance.
+While it is a casual dress, it can definitely be dressed up with the right
+accessories. Pair it with some stylish heels and a nice clutch, and you'll be
+all set for the occasion! If you have any other questions or need help with
+accessories, feel free to ask!
 
 -----CoT Response:--------
 Step 1:#### The user is asking about a specific product, the Floral Print
@@ -627,13 +684,14 @@ casual for a summer wedding.
 Step 4:#### Based on the product information, the Floral Print Sundress is
 described as "a beautiful floral sundress perfect for spring and summer," which
 suggests it is suitable for warm weather events. However, whether it is
-appropriate for a wedding can depend on the specific dress code of the event.
+appropriate for a wedding depends on the specific dress code of the event.
 
 Response to user:#### The Floral Print Sundress is a lovely choice for a summer
-wedding! It is designed to be stylish and is perfect for warm weather. However,
-the appropriateness can depend on the wedding's dress code. If the wedding is
-more formal, you might want to consider accessorizing it to elevate the look.
-Enjoy the wedding!
+wedding! It's designed to be stylish and perfect for warm weather. However, the
+appropriateness can depend on the wedding's dress code. If it's a casual or
+semi-formal event, this sundress should work beautifully. If you're unsure, you
+might want to check with the couple or the invitation for any specific
+guidelines. Enjoy the wedding!
 
 
 Query:
@@ -645,8 +703,8 @@ Thank you for your question! The Distressed Boyfriend Jeans are made from
 cotton, which is a natural fiber. While cotton can be grown sustainably, it
 often depends on the farming practices used. Unfortunately, we don't have
 specific information about the sourcing of the cotton used in these jeans. If
-you're looking for more environmentally friendly options, feel free to ask, and
-I can help you find products that prioritize sustainability!
+you're looking for more environmentally friendly options, feel free to ask about
+other products, and I'll be happy to help!
 
 -----CoT Response:--------
 Step 1:#### The user is asking a question about a specific product, which is the
@@ -659,13 +717,13 @@ Step 3:#### The user is assuming that the materials used for the Distressed
 Boyfriend Jeans are environmentally friendly or sustainable.
 
 Step 4:#### Based on the product information, the Distressed Boyfriend Jeans are
-made of cotton. While cotton can be grown sustainably, the product description
-does not specify whether the cotton used is organic or sourced sustainably.
+made from cotton, but there is no indication that the cotton is sourced
+sustainably or that the jeans are made with environmentally friendly practices.
 
 Response to user:#### Thank you for your question! The Distressed Boyfriend
-Jeans are made of cotton, but the product description does not specify if the
-cotton is sourced sustainably or if the materials are environmentally friendly.
-If you have any more questions or need further assistance, feel free to ask!
+Jeans are made from cotton, but we don't have specific information regarding
+whether the materials are environmentally friendly or sustainable. If you have
+any other questions or need further assistance, feel free to ask!
 
 
 Query:
@@ -673,19 +731,18 @@ My daughter wants a new backpack for school. Do you have any backpacks or bags
 in that department?
 
 -----Without CoT Response:-----
-Hello! While we don't have any backpacks specifically, we do have a lovely bag
-that might be perfect for your daughter. It's the **Tassel Crossbody Bag** from
-BoHo Chic. It features a trendy design with a tassel accent and an adjustable
-strap, making it both stylish and functional. Plus, it has an interior zip
-pocket for keeping her essentials organized. It’s priced at $29.99. Would you
-like to know more about it?
+Hello! While we don't have any backpacks specifically, we do have a lovely
+Tassel Crossbody Bag that could be a great option for your daughter. It's
+stylish and functional, featuring an adjustable strap and a cute tassel accent.
+Plus, it has an interior zip pocket for keeping her essentials organized. It’s
+priced at $29.99. Would you like to know more about it?
 
 -----CoT Response:--------
 Step 1:#### The user is asking about a specific product, which is a backpack for
 school.
 
-Step 2:#### The user is inquiring about bags, and there is a product in the list
-that fits this category: the Tassel Crossbody Bag (Product ID: AC006).
+Step 2:#### The user is inquiring about bags, and there is one product in the
+list that fits this category: the Tassel Crossbody Bag (Product ID: AC006).
 
 Step 3:#### The user assumes that there are backpacks available for school, but
 they specifically mention "bags" which could include other types of bags.
@@ -696,8 +753,8 @@ backpack.
 
 Response to user:#### Thank you for your inquiry! While we don't have any
 backpacks available, we do have a lovely Tassel Crossbody Bag that might be a
-great option for school. It's trendy and functional, perfect for carrying
-essentials. If you're interested, I can provide more details!
+great option for school. It features an adjustable strap and a trendy boho
+style. If you're interested, I can provide more details!
 
 
 Query:
@@ -709,12 +766,12 @@ Hello! Thank you for your inquiry about our tops and blouses. We typically
 receive new inventory for our clothing items, including tops like the Striped
 Off-Shoulder Top, on a regular basis. While the exact frequency can vary, we
 strive to refresh our selection every few weeks to keep things exciting and
-trendy. If you're looking for something specific, feel free to let us know, and
-we can help you find the perfect piece! Happy shopping!
+trendy. If you're looking for something specific, feel free to check back often
+or sign up for our newsletter to stay updated on new arrivals! Happy shopping! 🌼
 
 -----CoT Response:--------
-Step 1:#### The user is asking a question about a specific product, the Striped
-Off-Shoulder Top.
+Step 1:#### The user is asking a question about a specific product, which is the
+Striped Off-Shoulder Top.
 
 Step 2:#### The Striped Off-Shoulder Top is in the list of available products.
 
@@ -742,28 +799,27 @@ mention a lining for colder weather in its features. However, it is designed
 with a modern moto style that can be layered over other clothing for added
 warmth. If you're looking for something specifically lined for colder
 temperatures, I recommend checking out other outerwear options that may have
-that feature. If you have any other questions or need further assistance, feel
-free to ask!
+insulation or lining. If you have any other questions or need further
+assistance, feel free to ask!
 
 -----CoT Response:--------
 Step 1:#### The user is asking a question about a specific product, the Faux
 Leather Moto Jacket.
 
-Step 2:#### The product in question, the Faux Leather Moto Jacket, is in the
-list of available products.
+Step 2:#### The Faux Leather Moto Jacket is in the list of available products.
 
 Step 3:#### The user is assuming that the Faux Leather Moto Jacket may have a
 lining suitable for colder weather.
 
-Step 4:#### Based on the product information provided, there is no mention of a
-lining for the Faux Leather Moto Jacket, which suggests that it may not be
-specifically designed for colder weather.
+Step 4:#### Based on the product information, there is no mention of a lining
+for the Faux Leather Moto Jacket, so it does not appear to be designed
+specifically for colder weather.
 
 Response to user:#### Thank you for your inquiry! The Faux Leather Moto Jacket
-does not have a lining mentioned in its description, so it may not be ideal for
-very cold weather. However, it does have a stylish design that can be layered
-over other clothing for added warmth. If you have any more questions or need
-further assistance, feel free to ask!
+does not have a lining mentioned in its description, so it may not be the best
+option for colder weather. However, it does have a stylish design that can be
+layered over other clothing for added warmth. If you have any other questions or
+need further assistance, feel free to ask!
 
 
 Query:
@@ -792,7 +848,7 @@ Step 4:#### There are no assumptions to evaluate since no specific products were
 mentioned.
 
 Response to user:#### While I can't point to a specific product, I can recommend
-the Tassel Crossbody Bag from our accessories collection. It's trendy and has a
+the Tassel Crossbody Bag from our accessories department. It's trendy and has a
 boho style that many teenage girls love. It features an adjustable strap and a
 tassel accent, making it a stylish gift option. If you have any other questions
 or need more suggestions, feel free to ask!
@@ -804,8 +860,8 @@ Sneakers breathable?
 
 -----Without CoT Response:-----
 Hello! The Embroidered Canvas Sneakers are made from canvas material, which is
-generally breathable and allows for good air circulation. This can help keep
-your feet cooler and more comfortable, even if they tend to sweat. Plus, the fun
+generally breathable and allows for good airflow. This can help keep your feet
+cooler and more comfortable, even if they tend to sweat. Plus, the fun
 embroidered design adds a stylish touch! If you have any more questions or need
 further assistance, feel free to ask!
 
@@ -813,22 +869,21 @@ further assistance, feel free to ask!
 Step 1:#### The user is asking a question about a specific product, which is the
 Embroidered Canvas Sneakers.
 
-Step 2:#### The product in question, the Embroidered Canvas Sneakers, is
-included in the list of available products.
+Step 2:#### The product in question, the Embroidered Canvas Sneakers, is indeed
+in the list of available products.
 
-Step 3:#### The user is assuming that the material of the sneakers may affect
-their breathability, specifically in relation to foot sweat.
+Step 3:#### The user is assuming that the material used for the sneakers is
+breathable, likely due to their concern about foot sweat.
 
-Step 4:#### The Embroidered Canvas Sneakers are made of canvas material, which
-is generally considered breathable. However, the product description does not
-explicitly state that they are designed for high breathability.
+Step 4:#### The sneakers are made of canvas, which is generally considered a
+breathable material. However, the product description does not explicitly state
+that they are designed specifically for breathability.
 
 Response to user:#### Thank you for your question! The Embroidered Canvas
 Sneakers are made from canvas, which is typically a breathable material. While
-they should provide some ventilation, individual experiences may vary,
-especially if you tend to sweat a lot. If breathability is a major concern for
-you, it might be worth considering other options or styles that are specifically
-designed for enhanced airflow. Let me know if you have any other questions!
+they should help with airflow, please keep in mind that individual experiences
+may vary. If you have any more questions or need further assistance, feel free
+to ask!
 
 
 Query:
@@ -836,12 +891,12 @@ I'm looking for a new purse, but not one that's too big or bulky. What crossbody
 or smaller bag options do you have?
 
 -----Without CoT Response:-----
-Hi there! If you're looking for a stylish and compact purse, I recommend the
-**Tassel Crossbody Bag** from BoHo Chic. It's made of faux leather and features
-an adjustable strap, a trendy tassel accent, and an interior zip pocket for your
-essentials. Plus, it has a great rating of 4.6! It's perfect for a boho style
-without being too big or bulky. And it's priced at just $29.99. Let me know if
-you need any more information!
+Hi there! It sounds like you're in the market for a stylish and convenient bag.
+I recommend the **Tassel Crossbody Bag** from BoHo Chic. It's a trendy option
+made from faux leather, featuring an adjustable strap and a cute tassel accent.
+Plus, it has an interior zip pocket for your essentials, making it both
+fashionable and functional. Best of all, it's priced at just $29.99! Let me know
+if you’d like more information or if there's anything else I can help you with!
 
 -----CoT Response:--------
 Step 1:#### The user is asking about a specific product, which is a purse or
@@ -851,18 +906,17 @@ Step 2:#### The user is inquiring about smaller bag options, specifically
 crossbody bags. The product "Tassel Crossbody Bag" (Product ID: AC006) is
 available in the list.
 
-Step 3:#### The user assumes that they are looking for a crossbody or smaller
-bag option, which is valid since they are specifically asking for that type of
-bag.
+Step 3:#### The user assumes they are looking for a crossbody or smaller bag
+that is not too big or bulky.
 
-Step 4:#### The assumption is true; the "Tassel Crossbody Bag" is indeed a
-smaller bag option that fits the user's request.
+Step 4:#### The assumption is true, as the "Tassel Crossbody Bag" is designed to
+be a trendy crossbody bag, which typically means it is smaller and not bulky.
 
 Response to user:#### Hi there! I have a great option for you. We have the
-"Tassel Crossbody Bag" available, which is a trendy crossbody bag with a boho
-style. It's not too big or bulky, making it perfect for your needs. It features
-an adjustable strap and a tassel accent, and it's priced at $29.99. Let me know
-if you’d like more information or if you have any other questions!
+"Tassel Crossbody Bag," which is a trendy bag made from faux leather. It
+features an adjustable strap and a tassel accent, making it stylish and
+functional without being too big or bulky. It’s priced at $29.99. Let me know if
+you’d like more information or if you have any other questions!
 
 </code></pre>
 </div>
