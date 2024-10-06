@@ -235,52 +235,87 @@ Provider: OpenRouter AI</code></pre>
 </details>
 </div>
 </section>
-<section id="here-we-are-building-a-simple-bot-to-take-pizza-orders" class="level3">
-<h3 class="anchored" data-anchor-id="here-we-are-building-a-simple-bot-to-take-pizza-orders">Here we are building a simple bot to take pizza orders:</h3>
-<p>Create an order bot, which is an automated service to collect orders for a pizza restaurant</p>
-<p>The bot should</p>
-<ul>
-<li>Greet the customer and collect the order</li>
-<li>Make sure to ask if it’s for pickup or delivery</li>
-<li>Once the entire order is collected, summarize it and check for a final time if the customer wants to add anything else</li>
-<li>If its a delivery order, ask for an address</li>
-<li>Collect the payment</li>
-<li>Clarify all options, extras and sizes to uniquely identify the item from the menu</li>
-<li>Respond in a short, very conversational style</li>
-</ul>
+<section id="here-we-are-building-a-simple-bot-to-take-pizza-orders" class="level2">
+<h2 class="anchored" data-anchor-id="here-we-are-building-a-simple-bot-to-take-pizza-orders">Here we are building a simple bot to take pizza orders:</h2>
+<p>Create an order bot, which is an automated service to collect orders for a pizza restaurant. Come up with a set of intructions for the <code>system_prompt</code> below.</p>
 <p>The following is the menu:</p>
 <p>Pizzas</p>
 <ul>
-<li>pepperoni pizza 12.95, 10.00, 7.00</li>
-<li>cheese pizza 10.95, 9.25, 6.50</li>
-<li>eggplant pizza 11.95, 9.75, 6.75</li>
+<li>pepperoni pizza $12.95, $10.00, $7.00</li>
+<li>cheese pizza $10.95, $9.25, $6.50</li>
+<li>eggplant pizza $11.95, $9.75, $6.75</li>
 </ul>
 <p>Sides</p>
 <ul>
-<li>fries 4.50, 3.50</li>
-<li>greek salad 7.25</li>
+<li>fries $4.50, $3.50</li>
+<li>greek salad $7.25</li>
 </ul>
 <p>Toppings</p>
 <ul>
-<li>extra cheese 2.00,</li>
-<li>mushrooms 1.50</li>
-<li>sausage 3.00</li>
-<li>canadian bacon 3.50</li>
-<li>peppers 1.00</li>
+<li>extra cheese $2.00,</li>
+<li>mushrooms $1.50</li>
+<li>sausage $3.00</li>
+<li>canadian bacon $3.50</li>
+<li>peppers $1.00</li>
 </ul>
 <p>Drinks</p>
 <ul>
-<li>coke 3.00, 2.00, 1.00</li>
-<li>sprite 3.00, 2.00, 1.00</li>
-<li>bottled water 5.00</li>
+<li>coke $3.00, $2.00, $1.00</li>
+<li>sprite $3.00, $2.00, $1.00</li>
+<li>bottled water $5.00</li>
 </ul>
+<p>Here are some things to implement. Try to implement and test each of these.</p>
+</section>
+<section id="requirements-for-the-orderbot" class="level2">
+<h2 class="anchored" data-anchor-id="requirements-for-the-orderbot">Requirements for the OrderBot</h2>
+<ol type="1">
+<li>Greet the customer and introduce yourself as “Maggies Restaurant Order Assistant”</li>
+<li>Be able to display the entire menu or just a category depending on the users requests</li>
+<li>If the customer orders a item, ask them what size they want.</li>
+<li>Confirm each item with the name of the item, the size and the price</li>
+<li>Summarize the Order and give the prices and the total of all items. Ask the customer if the order is correct.</li>
+<li>Once the user is ready ask the user for their name and their phone number.</li>
+<li>Ask them if they will pickup or want delivery. If they want delivery get an address.</li>
+</ol>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>system_prompt <span class="op">=</span> <span class="st">""" You are a helpful assistant.</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;&lt;&lt; REPLACE WITH YOUR OWN DETAILS&gt;&gt;&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;&lt;&lt; REPLACE WITH YOUR OWN DETAILS BUT LEAVE MENU BELOW&gt;&gt;&gt;</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>initial_message <span class="op">=</span> <span class="st">"Welcome to our pizza restaurant. Can I take your order?"</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>run_chatbot(system_prompt, initial_message)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="st">Below is the menu between the &lt;menu&gt; &lt;/menu&gt; tags. It is in markdown. Please</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st">preserve the backslashes in front of the dollar signs when showing money</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">amounts.</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;menu&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">Pizzas  </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">- pepperoni pizza  \$12.95, \$10.00, \$7.00</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">- cheese pizza   \$10.95, \$9.25, \$6.50</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">- eggplant pizza   \$11.95, \$9.75, \$6.75</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">Sides</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="st">- fries \$4.50, \$3.50</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="st">- greek salad \$7.25</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="st">Toppings</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="st">- extra cheese \$2.00,</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="st">- mushrooms \$1.50</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="st">- sausage \$3.00</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="st">- canadian bacon \$3.50</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="st">- peppers \$1.00</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="st">Drinks</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="st">- coke \$3.00, \$2.00, \$1.00</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="st">- sprite \$3.00, \$2.00, \$1.00</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="st">- bottled water \$5.00</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/menu&gt;</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>initial_message <span class="op">=</span> <span class="st">"Welcome ..."</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>run_chatbot(system_prompt, initial_message)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>print_messages()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

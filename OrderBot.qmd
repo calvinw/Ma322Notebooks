@@ -9,58 +9,94 @@ model_name="openai/gpt-4o-mini"
 
 {{< include _llm_openrouter.qmd >}}
 
-### Here we are building a simple bot to take pizza orders:
+## Here we are building a simple bot to take pizza orders:
 
 Create an order bot, which is an automated service to collect orders for a
-pizza restaurant
-
-The bot should
-
-- Greet the customer and collect the order
-- Make sure to ask if it's for pickup or delivery
-- Once the entire order is collected, summarize it and check for a final time
-  if the customer wants to add anything else 
-- If its a delivery order, ask for an address
-- Collect the payment
-- Clarify all options, extras and sizes to uniquely identify the item from the
-  menu
-- Respond in a short, very conversational style 
+pizza restaurant. Come up with a set of intructions for the `system_prompt`
+below.
 
 The following is the menu:
 
 Pizzas  
 
-- pepperoni pizza  12.95, 10.00, 7.00
-- cheese pizza   10.95, 9.25, 6.50
-- eggplant pizza   11.95, 9.75, 6.75
+- pepperoni pizza  \$12.95, \$10.00, \$7.00
+- cheese pizza   \$10.95, \$9.25, \$6.50
+- eggplant pizza   \$11.95, \$9.75, \$6.75
 
 Sides
 
-- fries 4.50, 3.50
-- greek salad 7.25
+- fries \$4.50, \$3.50
+- greek salad \$7.25
 
 Toppings
 
-- extra cheese 2.00,
-- mushrooms 1.50
-- sausage 3.00
-- canadian bacon 3.50
-- peppers 1.00
+- extra cheese \$2.00,
+- mushrooms \$1.50
+- sausage \$3.00
+- canadian bacon \$3.50
+- peppers \$1.00
 
 Drinks
 
-- coke 3.00, 2.00, 1.00
-- sprite 3.00, 2.00, 1.00
-- bottled water 5.00
+- coke \$3.00, \$2.00, \$1.00
+- sprite \$3.00, \$2.00, \$1.00
+- bottled water \$5.00
 
+Here are some things to implement. Try to implement and test each of these.
+
+## Requirements for the OrderBot
+
+1. Greet the customer and introduce yourself as "Maggies Restaurant Order
+   Assistant"
+2. Be able to display the entire menu or just a category depending on the users
+   requests 
+3. If the customer orders a item, ask them what size they want.
+4. Confirm each item with the name of the item, the size and the price
+5. Summarize the Order and give the prices and the total of all items. Ask the
+   customer if the order is correct.
+6. Once the user is ready ask the user for their name and their phone number.
+7. Ask them if they will pickup or want delivery. If they want delivery get an
+   address.
 
 ```{python}
 #| eval: false
 system_prompt = """ You are a helpful assistant.
-<<< REPLACE WITH YOUR OWN DETAILS>>>
+
+<<< REPLACE WITH YOUR OWN DETAILS BUT LEAVE MENU BELOW>>>
+
+Below is the menu between the <menu> </menu> tags. It is in markdown. Please
+preserve the backslashes in front of the dollar signs when showing money
+amounts.
+
+<menu>
+Pizzas  
+
+- pepperoni pizza  \$12.95, \$10.00, \$7.00
+- cheese pizza   \$10.95, \$9.25, \$6.50
+- eggplant pizza   \$11.95, \$9.75, \$6.75
+
+Sides
+
+- fries \$4.50, \$3.50
+- greek salad \$7.25
+
+Toppings
+
+- extra cheese \$2.00,
+- mushrooms \$1.50
+- sausage \$3.00
+- canadian bacon \$3.50
+- peppers \$1.00
+
+Drinks
+
+- coke \$3.00, \$2.00, \$1.00
+- sprite \$3.00, \$2.00, \$1.00
+- bottled water \$5.00
+</menu>
 """
 
-initial_message = "Welcome to our pizza restaurant. Can I take your order?"
+initial_message = "Welcome ..."
 run_chatbot(system_prompt, initial_message)
 ```
 
