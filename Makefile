@@ -6,6 +6,7 @@ BarbieSystemPrompt.qmd \
 SpeakLikeAPirate.qmd
 
 SOURCES:= \
+AccuracyInClass.qmd \
 Calculator.qmd \
 Strings.qmd \
 Functions.qmd \

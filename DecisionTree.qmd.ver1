@@ -1,0 +1,130 @@
+---
+title: "Decision Trees"
+format:
+  html:
+    code-fold: false
+jupyter: python3
+---
+
+```{python}
+#| echo: true
+#| results: 'hide'
+#| message: false
+#| warning: false
+
+import pandas as pd
+import numpy as np
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score
+
+# Set display options
+pd.set_option('display.precision', 4)
+np.set_printoptions(precision=4, suppress=True)
+```
+
+## Building a Decision Tree
+
+```{python}
+url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFmRX4RW3PitgcJya0X2sRbSiD0J2t0oYewyhkkyWwR9i8NIaHiuQKrBtLlrwG9fzn4MvNOM92olnK/pub?gid=0&single=true&output=csv"
+df = pd.read_csv(url)
+```
+
+Let's see the info on this dataframe
+
+```{python}
+print(df.info())
+```
+
+Here is the original data
+
+```{python}
+print(df)
+```
+
+Let's sort it by gender:
+
+```{python}
+print(df.sort_values('gender'))
+```
+
+So if we split on gender here is what we would get:
+
+```{python}
+#| fig-width: 10
+#| fig-height: 6
+
+X = pd.get_dummies(df['gender'], drop_first=True)
+y = df['product']
+
+clf = DecisionTreeClassifier(max_depth=1, random_state=42)
+clf.fit(X, y)
+
+plt.figure(figsize=(10, 6))
+plot_tree(clf, feature_names=X.columns, class_names=clf.classes_, 
+          filled=True, rounded=True, impurity=False)
+plt.title("Decision Tree based on Gender")
+plt.show()
+
+print(f"Accuracy: {accuracy_score(y, clf.predict(X)):.2f}")
+```
+
+The tree above makes 1 mistake out of 7.
+
+Let's sort it by age:
+
+```{python}
+print(df.sort_values('age'))
+```
+
+```{python}
+#| fig-width: 10
+#| fig-height: 6
+
+# Encode 'age' column
+X = pd.get_dummies(df['age'], drop_first=True)
+y = df['product']
+
+clf = DecisionTreeClassifier(max_depth=1, random_state=42)
+clf.fit(X, y)
+
+plt.figure(figsize=(10, 6))
+plot_tree(clf, feature_names=X.columns, class_names=clf.classes_, 
+          filled=True, rounded=True, impurity=False)
+plt.title("Decision Tree based on Age")
+plt.show()
+
+print(f"Accuracy: {accuracy_score(y, clf.predict(X)):.2f}")
+```
+
+The tree above makes 2 mistakes out of 7.
+
+```{python}
+#| fig-width: 10
+#| fig-height: 6
+
+X = pd.get_dummies(df[['age', 'gender']], drop_first=True)
+y = df['product']
+
+clf = DecisionTreeClassifier(max_depth=3, random_state=42)
+clf.fit(X, y)
+
+plt.figure(figsize=(10, 6))
+plot_tree(clf, feature_names=X.columns, class_names=clf.classes_, 
+          filled=True, rounded=True, impurity=False)
+plt.title("Decision Tree based on Age and Gender")
+plt.show()
+
+print(f"Accuracy: {accuracy_score(y, clf.predict(X)):.2f}")
+```
+
+```{python}
+#| eval: false
+
+# Assuming you have a test dataset called testdf
+# pred = clf.predict(pd.get_dummies(testdf[['age', 'gender']], drop_first=True))
+# print(pred)
+```
+```
+
+</rewritten_file>

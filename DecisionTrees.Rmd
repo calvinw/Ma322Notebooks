@@ -1,0 +1,84 @@
+---
+title: "Decision Trees"
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+---
+
+```{r echo=T, results='hide', message=F, warning=F}
+options("scipen"=100, "digits"=4)
+
+if(!require("rpart")) install.packages("rpart")
+if(!require("rpart.plot")) install.packages("rpart.plot")
+if(!require("Metrics")) install.packages("Metrics")
+
+library("knitr")
+library("rpart")
+library("rpart.plot")
+library("Metrics")
+```
+
+## Building a Decision Tree
+
+
+```{r}
+url<-"https://docs.google.com/spreadsheets/d/e/2PACX-1vTFmRX4RW3PitgcJya0X2sRbSiD0J2t0oYewyhkkyWwR9i8NIaHiuQKrBtLlrwG9fzn4MvNOM92olnK/pub?gid=0&single=true&output=csv"
+df<-read.csv(url)
+```
+
+Lets see the info on this dataframe
+
+```{r}
+str(df)
+```
+
+Here is the original data
+
+```{r}
+print(df)
+```
+
+Lets sort it by gender:
+
+```{r}
+print(df[order(df$gender),])
+```
+
+So if we split on gender here is what we would get:
+
+```{r}
+control <- rpart.control(minsplit=1, maxdepth=1)
+model <- rpart(product~gender, data=df, method="class", control = control)
+rpart.plot(model, type=4, extra = 1, digits=-2)
+```
+
+The tree above makes 1 mistake out of 7.
+
+Lets sort it by age:
+
+```{r}
+print(df[order(df$age),])
+```
+
+```{r}
+control <- rpart.control(minsplit=1,maxdepth=1,cp=-1)
+model <- rpart(product~age, data=df, method="class", control = control)
+rpart.plot(model, type=4, extra = 1, digits=-2)
+```
+
+The tree above makes 2 mistake out of 7.
+
+```{r}
+control <- rpart.control(minsplit=1, maxdepth=3,cp=-1)
+model <- rpart(product~age+gender, data=df, method="class", control=control)
+rpart.plot(model, type=4, extra = 1, digits=-2)
+```
+
+```{r, eval=F}
+pred <- predict(model, newdata = testdf, type = 'class')
+str(pred)
+```
+
+

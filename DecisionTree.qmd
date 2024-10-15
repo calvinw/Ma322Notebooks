@@ -1,22 +1,72 @@
 ---
 title: "Decision Trees"
+format:
+  html:
+    code-fold: false
 jupyter: python3
 ---
 
 ```{python}
-import pandas as pd
-from sklearn import tree
-import matplotlib.pyplot as plt
+#| echo: true
+#| results: 'hide'
+#| message: false
+#| warning: false
 
-# Read data from URL
-url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFmRX4RW3PitgcJya0X2sRbSiD0J2t0oYewyhkkyWwR9i8NIaHiuQKrBtLlrwG9fzn4MvNOM92olnK/pub?gid=0&single=true&output=csv"
-df = pd.read_csv(url)
+import pandas as pd
+import numpy as np
+from sklearn.tree import DecisionTreeClassifier, plot_tree, export_text
+import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score
+
+# Set display options
+pd.set_option('display.precision', 4)
+np.set_printoptions(precision=4, suppress=True)
+
+def print_tree_results(X, y, feature_name, classifier):
+    print(f"\nDecision Tree based on {feature_name}:")
+    
+    # Get the text representation of the tree
+    tree_text = export_text(classifier, feature_names=list(X.columns))
+    
+    # Replace default labels with more readable ones
+    # Replace default labels with more readable ones
+    replacements = {
+        'gender_M <= 0.50': 'gender=F',
+        'gender_M >  0.50': 'gender=M',
+        'age_Young <= 0.50': 'age=Adult',
+        'age_Young >  0.50': 'age=Young',
+        'M <= 0.50': 'gender=F',
+        'M >  0.50': 'gender=M',
+        'Young <= 0.50': 'age=Adult',
+        'Young >  0.50': 'age=Young'
+    }
+    
+    for old, new in replacements.items():
+        tree_text = tree_text.replace(old, new)
+    
+    print(tree_text)
+
+    # Create a DataFrame with actual and predicted values
+    results = pd.DataFrame({
+        'Actual': y,
+        'Predicted': classifier.predict(X)
+    })
+    print("Actual vs Predicted:")
+    print(results)
+
+    print(f"Accuracy: {accuracy_score(y, classifier.predict(X)):.2f}")
 ```
 
 ## Building a Decision Tree
 
 ```{python}
-# Print the data
+url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTFmRX4RW3PitgcJya0X2sRbSiD0J2t0oYewyhkkyWwR9i8NIaHiuQKrBtLlrwG9fzn4MvNOM92olnK/pub?gid=0&single=true&output=csv"
+df = pd.read_csv(url)
+```
+
+Here is the original data
+
+```{python}
 print(df)
 ```
 
@@ -26,54 +76,51 @@ Let's sort it by gender:
 print(df.sort_values('gender'))
 ```
 
-So, if we split on gender, here's what we would get:
+So if we split on gender here is what we would get:
 
 ```{python}
-#| eval: false
-# Create a decision tree classifier and fit it to the data
-clf = tree.DecisionTreeClassifier(max_depth=1)
-clf = clf.fit(df[['gender']], df['product'])
 
-# Visualize the decision tree
-tree.plot_tree(clf, feature_names=['gender'], class_names=['product'], filled=True)
-plt.show()
+X = pd.get_dummies(df['gender'], drop_first=True)
+y = df['product']
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X, y)
+
+print_tree_results(X, y, "Gender", classifier)
 ```
+The tree above makes 1 mistake out of 7.
 
 Let's sort it by age:
 
 ```{python}
-#| eval: false
 print(df.sort_values('age'))
 ```
 
 ```{python}
-#| eval: false
-# Create a decision tree classifier and fit it to the data
-clf = tree.DecisionTreeClassifier(max_depth=1)
-clf = clf.fit(df[['age']], df['product'])
 
-# Visualize the decision tree
-tree.plot_tree(clf, feature_names=['age'], class_names=['product'], filled=True)
-plt.show()
+# Encode 'age' column
+X = pd.get_dummies(df['age'], drop_first=True)
+y = df['product']
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X, y)
+
+print_tree_results(X, y, "Age", classifier)
 ```
+
+The tree above makes 2 mistakes out of 7.
 
 ```{python}
-#| eval: false
-# Create a decision tree classifier and fit it to the data
-clf = tree.DecisionTreeClassifier(max_depth=3)
-clf = clf.fit(df[['age', 'gender']], df['product'])
 
-# Visualize the decision tree
-tree.plot_tree(clf, feature_names=['age', 'gender'], class_names=['product'], filled=True)
-plt.show()
+# Encode both 'age' and 'gender' columns
+X = pd.get_dummies(df[['age', 'gender']], drop_first=True)
+y = df['product']
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X, y)
+
+print_tree_results(X, y, "Age and Gender", classifier)
 ```
 
-```{python}
-#| eval: false
-pred = clf.predict(testdf)
-print(pred)
-```
 
-Note that in this Python version, I've used the scikit-learn library for building and visualizing the decision trees. The `tree.DecisionTreeClassifier` class is used to create the decision tree classifier, and the `tree.plot_tree` function is used to visualize the decision tree.
 
-Also, note that the last code block for making predictions on a test dataset is commented out, as we don't have a `testdf` defined in this example.

@@ -268,15 +268,26 @@ Provider: OpenRouter AI</code></pre>
 </section>
 <section id="requirements-for-the-orderbot" class="level2">
 <h2 class="anchored" data-anchor-id="requirements-for-the-orderbot">Requirements for the OrderBot</h2>
-<ol type="1">
-<li>Greet the customer and introduce yourself as “Maggies Restaurant Order Assistant”</li>
+<ul>
+<li>Greet the customer and introduce yourself as “The Order Technician”</li>
 <li>Be able to display the entire menu or just a category depending on the users requests</li>
 <li>If the customer orders a item, ask them what size they want.</li>
 <li>Confirm each item with the name of the item, the size and the price</li>
-<li>Summarize the Order and give the prices and the total of all items. Ask the customer if the order is correct.</li>
+<li>Once you have any items on the customer’s order, show the current order and total at the bottom of each response from you. Give the order details in a table</li>
 <li>Once the user is ready ask the user for their name and their phone number.</li>
 <li>Ask them if they will pickup or want delivery. If they want delivery get an address.</li>
-</ol>
+</ul>
+<p>Apply the following multi-tiered discount system based on the order total, customer type, and day of the week:</p>
+<ul>
+<li>If order total &lt; $20, no discount</li>
+<li>Else if order total &lt; $50, 5% discount</li>
+<li>Else if order total &lt; $100, 10% discount</li>
+<li>Else 15% discount</li>
+<li>If the customer is a senior citizen, add an additional 5% discount</li>
+<li>If it’s Tuesday, add an extra 2% “Taco Tuesday” discount</li>
+</ul>
+<p>Make sure to add all the discounts before discounting. For example if the order is 23.95, then there is a 5% discount. If it is “Taco Tuesday” add another 2% to the discount so that is becomes a 7% discount.</p>
+<p>Be sure to tell your chatbot to double check the arithmetic when it does it.</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>system_prompt <span class="op">=</span> <span class="st">""" You are a helpful assistant.</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
