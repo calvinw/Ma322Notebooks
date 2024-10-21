@@ -46,6 +46,7 @@ ASSIGNMENT_SOURCES:= \
 ClassifyCustomerQueries.qmd \
 MoreCalculator.qmd \
 MoreDataFrames.qmd \
+EvenMoreDataFrames.qmd \
 MorePrompts.qmd \
 MoreStrings.qmd \
 MoreFunctions.qmd \

@@ -1,0 +1,112 @@
+---
+title: "Exploring Library Books with DataFrames"
+execute:
+    eval: false
+---
+
+In this exercise, we will work with a data frame representing books in a library. The data frame has the following columns: `title`, `author`, `year`, `pages`, and `genre`.
+
+| title | author | year | pages | genre |
+|-------|--------|------|-------|-------|
+| To Kill a Mockingbird | Harper Lee | 1960 | 281 | Fiction |
+| 1984 | George Orwell | 1949 | 328 | Science Fiction |
+| Pride and Prejudice | Jane Austen | 1813 | 432 | Romance |
+| The Great Gatsby | F. Scott Fitzgerald | 1925 | 180 | Fiction |
+| The Hobbit | J.R.R. Tolkien | 1937 | 310 | Fantasy |
+| Brave New World | Aldous Huxley | 1932 | 311 | Science Fiction |
+| Jane Eyre | Charlotte Bronte | 1847 | 507 | Gothic Fiction |
+| The Catcher in the Rye | J.D. Salinger | 1951 | 234 | Fiction |
+
+Here's how we create the data frame in Python using the pandas library:
+
+```{python}
+# __REGULAR_BLOCK__
+import pandas as pd
+
+title = ['To Kill a Mockingbird', '1984', 'Pride and Prejudice', 'The Great Gatsby', 'The Hobbit', 'Brave New World', 'Jane Eyre', 'The Catcher in the Rye']
+author = ['Harper Lee', 'George Orwell', 'Jane Austen', 'F. Scott Fitzgerald', 'J.R.R. Tolkien', 'Aldous Huxley', 'Charlotte Bronte', 'J.D. Salinger']
+year = [1960, 1949, 1813, 1925, 1937, 1932, 1847, 1951]
+pages = [281, 328, 432, 180, 310, 311, 507, 234]
+genre = ['Fiction', 'Science Fiction', 'Romance', 'Fiction', 'Fantasy', 'Science Fiction', 'Gothic Fiction', 'Fiction']
+
+bookDict = {
+  'title': title,
+  'author': author,
+  'year': year,
+  'pages': pages,
+  'genre': genre
+}
+
+books = pd.DataFrame(bookDict)
+```
+
+Let's explore the data frame:
+
+__Problem__: Print the first few rows of the data frame using the `head` method on the `books` dataframe:
+```{python}
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(books.head())
+```
+
+__Problem__: Check the data types of the columns using the `dtypes` attribute of the `books` dataframe
+```{python}
+#| eval: false
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(books.dtypes)
+```
+
+__Problem__: Select the 'author' column and print it out
+```{python}
+#| eval: false
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(books['author'])
+```
+
+__Problem__: Add a new column 'is_long' with True/False values based on whether the book has more than 300 pages:
+```{python}
+CODE
+print(books)
+```
+```{python}
+# __SOLUTION__
+books['is_long'] = books['pages'] > 300
+print(books)
+```
+
+__Problem__: Remove the 'genre' column:
+```{python}
+CODE
+print(books)
+```
+```{python}
+# __SOLUTION__
+books = books.drop('genre', axis=1)
+print(books)
+```
+
+__Problem__: Print out the element in the 3rd row and the 2nd column
+```{python}
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(books.iloc[2, 1])
+```
+
+__Problem__: Print out the element in the 1st row and the 3nd column
+```{python}
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(books.iloc[0, 2])
+```
