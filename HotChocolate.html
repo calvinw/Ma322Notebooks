@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>- Decision Trees</title>
+<title>Hot Chocolate - Decision Trees</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">- Decision Trees</h1>
+<h1 class="title">Hot Chocolate - Decision Trees</h1>
 </div>
 
 
@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'humid'</span>: [<span class="st">'high'</span>, <span class="st">'high'</span>, <span class="st">'high'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'high'</span>, <span class="st">'high'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'high'</span>],</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'windy'</span>: [<span class="st">'windy'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'calm'</span>],</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'buys'</span>: [<span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'buys'</span>: [<span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>]</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Data - What we'll use to teach our decision tree:"</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -164,7 +164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 8   normal  windy  yes
 9   normal  windy  yes
 10  normal  windy  yes
-11    high   calm   no</code></pre>
+11    high   calm  yes</code></pre>
 </div>
 </div>
 </section>
@@ -197,79 +197,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="model-1-humidity-only-tree" class="level2">
 <h2 class="anchored" data-anchor-id="model-1-humidity-only-tree">Model 1: Humidity Only Tree</h2>
 <p>Let’s first try to predict buying behavior using only humidity:</p>
+<p>First we sort the tree based on humidity:</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'humid'</span>]])</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we fit the data (create our model) using the actuals </span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'buys'</span>])</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'humid'</span>]])</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions based only on humidity:"</span>)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>print_clean_tree(classifier, X_train.columns)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Here's the same tree in its technical format:"</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>print_tree(classifier, X_train.columns)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'buys'</span>], predictions)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>cm_df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    cm,</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: no'</span>, <span class="st">'Actual: yes'</span>],</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: no'</span>, <span class="st">'Predicted: yes'</span>]</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix (Shows how well our predictions matched reality):"</span>)</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm_df)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>correct<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>total<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">0</span>,<span class="dv">1</span>]</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> correct<span class="op">/</span>total</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show training data sorted by humid </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Data Sorted by Humid:"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train.sort_values(<span class="st">'humid'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Here's how our tree makes decisions based only on humidity:
-
-Decision Tree:
-|--- Normal Humidity?
-|   |---  yes
-|--- High Humidity?
-|   |---  no
-
-
-Here's the same tree in its technical format:
-
-Decision Tree:
-|--- humid_high &lt;= 0.50
-|   |--- class: yes
-|--- humid_high &gt;  0.50
-|   |--- class: no
-
-
-Confusion Matrix (Shows how well our predictions matched reality):
-             Predicted: no  Predicted: yes
-Actual: no               2               2
-Actual: yes              1               4
-
-Accuracy: 
-0.6666666666666666</code></pre>
+<pre><code>Training Data Sorted by Humid:
+     humid  windy buys
+0     high  windy   no
+1     high   calm   no
+2     high   calm  yes
+6     high  windy   no
+7     high  windy   no
+11    high   calm  yes
+3   normal   calm  yes
+4   normal   calm  yes
+5   normal   calm   no
+8   normal  windy  yes
+9   normal  windy  yes
+10  normal  windy  yes</code></pre>
 </div>
 </div>
-</section>
-<section id="model-2-wind-only-tree" class="level2">
-<h2 class="anchored" data-anchor-id="model-2-wind-only-tree">Model 2: Wind Only Tree</h2>
-<p>Now let’s try predicting based only on wind conditions:</p>
+<p>Next we see how the <code>DecisionTreeClassifier</code> works:</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'windy'</span>]])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'humid'</span>]])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
@@ -278,16 +231,16 @@ Accuracy:
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'buys'</span>])</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'windy'</span>]])</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'humid'</span>]])</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions based only on wind:"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions based only on humidity:"</span>)</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>print_clean_tree(classifier, X_train.columns)</span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Here's the same tree in its technical format:"</span>)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>print_tree(classifier, X_train.columns)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#print("\nHere's the same tree in its technical format:")</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#print_tree(classifier, X_train.columns)</span></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'buys'</span>], predictions)</span>
@@ -306,75 +259,150 @@ Accuracy:
 <span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
 <span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
+<pre><code>Here's how our tree makes decisions based only on humidity:
+
+Decision Tree:
+|--- High Humidity?
+|   |---  no
+|--- Normal Humidity?
+|   |---  yes
+
+
+Confusion Matrix (Shows how well our predictions matched reality):
+             Predicted: no  Predicted: yes
+Actual: no               2               2
+Actual: yes              1               4
+
+Accuracy: 
+0.6666666666666666</code></pre>
+</div>
+</div>
+</section>
+<section id="model-2-wind-only-tree" class="level2">
+<h2 class="anchored" data-anchor-id="model-2-wind-only-tree">Model 2: Wind Only Tree</h2>
+<p>Now let’s try predicting based only on wind conditions:</p>
+<p>First we sort the tree based on windy:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show training data sorted by windy </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Data Sorted by Windy:"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train.sort_values(<span class="st">'windy'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training Data Sorted by Windy:
+     humid  windy buys
+1     high   calm   no
+2     high   calm  yes
+3   normal   calm  yes
+4   normal   calm  yes
+5   normal   calm   no
+11    high   calm  yes
+0     high  windy   no
+6     high  windy   no
+7     high  windy   no
+8   normal  windy  yes
+9   normal  windy  yes
+10  normal  windy  yes</code></pre>
+</div>
+</div>
+<p>Next we see how the <code>DecisionTreeClassifier</code> works:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'windy'</span>]])</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we fit the data (create our model) using the actuals </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'buys'</span>])</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'windy'</span>]])</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions based only on wind:"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>print_clean_tree(classifier, X_train.columns)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#print("\nHere's the same tree in its technical format:")</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#print_tree(classifier, X_train.columns)</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'buys'</span>], predictions)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>cm_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    cm,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: no'</span>, <span class="st">'Actual: yes'</span>],</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: no'</span>, <span class="st">'Predicted: yes'</span>]</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix (Shows how well our predictions matched reality):"</span>)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm_df)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>correct<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>total<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> correct<span class="op">/</span>total</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
 <pre><code>Here's how our tree makes decisions based only on wind:
 
 Decision Tree:
 |--- Windy?
 |   |---  no
 |--- Calm?
-|   |---  no
-
-
-Here's the same tree in its technical format:
-
-Decision Tree:
-|--- windy_calm &lt;= 0.50
-|   |--- class: no
-|--- windy_calm &gt;  0.50
-|   |--- class: no
+|   |---  yes
 
 
 Confusion Matrix (Shows how well our predictions matched reality):
              Predicted: no  Predicted: yes
-Actual: no               4               0
-Actual: yes              5               0
+Actual: no               0               4
+Actual: yes              2               3
 
 Accuracy: 
-0.4444444444444444</code></pre>
+0.3333333333333333</code></pre>
 </div>
 </div>
 </section>
 <section id="model-3-full-tree-using-both-humidity-and-wind" class="level2">
 <h2 class="anchored" data-anchor-id="model-3-full-tree-using-both-humidity-and-wind">Model 3: Full Tree Using Both Humidity and Wind</h2>
 <p>Finally, let’s use both humidity and wind conditions to make our predictions:</p>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'humid'</span>, <span class="st">'windy'</span>]])</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we fit the data (create our model) using the actuals </span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'buys'</span>])</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'humid'</span>, <span class="st">'windy'</span>]])</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions using both humidity and wind:"</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>print_clean_tree(classifier, X_train.columns)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Here's the same tree in its technical format:"</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>print_tree(classifier, X_train.columns)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'buys'</span>], predictions)</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>cm_df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    cm,</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: no'</span>, <span class="st">'Actual: yes'</span>],</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: no'</span>, <span class="st">'Predicted: yes'</span>]</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix (Shows how well our predictions matched reality):"</span>)</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm_df)</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>correct<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>total<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">0</span>,<span class="dv">1</span>]</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> correct<span class="op">/</span>total</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'humid'</span>, <span class="st">'windy'</span>]])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we fit the data (create our model) using the actuals </span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'buys'</span>])</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'humid'</span>, <span class="st">'windy'</span>]])</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions using both humidity and wind:"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>print_clean_tree(classifier, X_train.columns)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#print("\nHere's the same tree in its technical format:")</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#print_tree(classifier, X_train.columns)</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'buys'</span>], predictions)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>cm_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    cm,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: no'</span>, <span class="st">'Actual: yes'</span>],</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: no'</span>, <span class="st">'Predicted: yes'</span>]</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix (Shows how well our predictions matched reality):"</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm_df)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>correct<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>total<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> correct<span class="op">/</span>total</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Here's how our tree makes decisions using both humidity and wind:
 
@@ -385,34 +413,19 @@ Decision Tree:
 |   |--- Windy?
 |   |   |---  yes
 |--- High Humidity?
-|   |--- Calm?
-|   |   |---  no
 |   |--- Windy?
 |   |   |---  no
-
-
-Here's the same tree in its technical format:
-
-Decision Tree:
-|--- humid_high &lt;= 0.50
-|   |--- windy_windy &lt;= 0.50
-|   |   |--- class: yes
-|   |--- windy_windy &gt;  0.50
-|   |   |--- class: yes
-|--- humid_high &gt;  0.50
-|   |--- windy_windy &lt;= 0.50
-|   |   |--- class: no
-|   |--- windy_windy &gt;  0.50
-|   |   |--- class: no
+|   |--- Calm?
+|   |   |---  yes
 
 
 Confusion Matrix (Shows how well our predictions matched reality):
              Predicted: no  Predicted: yes
-Actual: no               2               2
-Actual: yes              1               4
+Actual: no               0               4
+Actual: yes              0               5
 
 Accuracy: 
-0.6666666666666666</code></pre>
+0.5555555555555556</code></pre>
 </div>
 </div>
 </section>

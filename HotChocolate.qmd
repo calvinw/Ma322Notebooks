@@ -1,5 +1,5 @@
 ---
-title: " - Decision Trees"
+title: " Hot Chocolate - Decision Trees"
 ---
 
 ## Introduction
@@ -53,7 +53,7 @@ from sklearn.metrics import confusion_matrix
 train = pd.DataFrame({
     'humid': ['high', 'high', 'high', 'normal', 'normal', 'normal', 'high', 'high', 'normal', 'normal', 'normal', 'high'],
     'windy': ['windy', 'calm', 'calm', 'calm', 'calm', 'calm', 'windy', 'windy', 'windy', 'windy', 'windy', 'calm'],
-    'buys': ['no', 'no', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'no']
+    'buys': ['no', 'no', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'yes']
 })
 print("Training Data - What we'll use to teach our decision tree:")
 print(train)
@@ -75,6 +75,16 @@ print(test)
 ## Model 1: Humidity Only Tree
 Let's first try to predict buying behavior using only humidity:
 
+First we sort the tree based on humidity:
+
+```{python}
+# Show training data sorted by humid 
+print("Training Data Sorted by Humid:")
+print(train.sort_values('humid'))
+```
+
+Next we see how the `DecisionTreeClassifier` works:
+
 ```{python}
 # First we get the training data X-variables (predicters)
 X_train = pd.get_dummies(train[['humid']])
@@ -94,8 +104,8 @@ predictions = classifier.predict(X_test)
 print("Here's how our tree makes decisions based only on humidity:")
 print_clean_tree(classifier, X_train.columns)
 
-print("\nHere's the same tree in its technical format:")
-print_tree(classifier, X_train.columns)
+#print("\nHere's the same tree in its technical format:")
+#print_tree(classifier, X_train.columns)
 
 # Print confusion matrix
 cm = confusion_matrix(test['buys'], predictions)
@@ -118,6 +128,16 @@ print(accuracy)
 ## Model 2: Wind Only Tree
 Now let's try predicting based only on wind conditions:
 
+First we sort the tree based on windy:
+
+```{python}
+# Show training data sorted by windy 
+print("Training Data Sorted by Windy:")
+print(train.sort_values('windy'))
+```
+
+Next we see how the `DecisionTreeClassifier` works:
+
 ```{python}
 # First we get the training data X-variables (predicters)
 X_train = pd.get_dummies(train[['windy']])
@@ -137,8 +157,8 @@ predictions = classifier.predict(X_test)
 print("Here's how our tree makes decisions based only on wind:")
 print_clean_tree(classifier, X_train.columns)
 
-print("\nHere's the same tree in its technical format:")
-print_tree(classifier, X_train.columns)
+#print("\nHere's the same tree in its technical format:")
+#print_tree(classifier, X_train.columns)
 
 # Print confusion matrix
 cm = confusion_matrix(test['buys'], predictions)
@@ -180,8 +200,8 @@ predictions = classifier.predict(X_test)
 print("Here's how our tree makes decisions using both humidity and wind:")
 print_clean_tree(classifier, X_train.columns)
 
-print("\nHere's the same tree in its technical format:")
-print_tree(classifier, X_train.columns)
+#print("\nHere's the same tree in its technical format:")
+#print_tree(classifier, X_train.columns)
 
 # Print confusion matrix
 cm = confusion_matrix(test['buys'], predictions)

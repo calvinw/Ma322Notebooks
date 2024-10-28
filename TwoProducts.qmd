@@ -73,7 +73,16 @@ print(test)
 ```
 
 ## Model 1: Age Only Tree
-Let's first try to predict game preference using only age. The code below 
+Let's first try to predict game preference using only age. The code below sorts the data on age so we can see how the age only tree might be built.
+
+```{python}
+# Show training data sorted by age
+print("Training Data Sorted by Age:")
+print(train.sort_values('age'))
+```
+
+Next up we can see how the `DecisionTreeClassifier` works in python.
+This is the code that builds a decision tree in python
 
 ```{python}
 # This part trains the model on the training data
@@ -96,11 +105,8 @@ predictions = classifier.predict(X_test)
 #print("Age Only Tree Predictions:")
 #print(predictions)
 
-#print("Here's how our tree makes decisions based only on age:")
-#print_clean_tree(classifier, X_train.columns)
-
-print("\nHere's the same tree in its technical format:")
-print_tree(classifier, X_train.columns)
+print("Here's how our tree makes decisions based only on age:")
+print_clean_tree(classifier, X_train.columns)
 
 # Print confusion matrix
 cm = confusion_matrix(test['product'], predictions)
@@ -123,6 +129,17 @@ print(accuracy)
 ## Model 2: Gender Only Tree
 Now let's try predicting based only on gender:
 
+First we sort the tree based on age to understand the gender only tree.
+
+```{python}
+# Show training data sorted by gender 
+print("Training Data Sorted by Gender:")
+print(train.sort_values('gender'))
+```
+
+Next up we can see how the `DecisionTreeClassifier` works in python.
+This is the code that builds a decision tree in python
+
 ```{python}
 # First we get the training data X-variables (predicters)
 X_train = pd.get_dummies(train[['gender']])
@@ -141,9 +158,6 @@ predictions = classifier.predict(X_test)
 
 print("Here's how our tree makes decisions based only on gender:")
 print_clean_tree(classifier, X_train.columns)
-
-#print("\nHere's the same tree in its technical format:")
-#print_tree(classifier, X_train.columns)
 
 # Print confusion matrix
 cm = confusion_matrix(test['product'], predictions)
@@ -166,6 +180,8 @@ print(accuracy)
 ## Model 3: Full Tree Using Both Age and Gender
 Finally, let's use both age and gender to make our predictions:
 
+For this one we have the DecisionTreeClassifier make our model.
+
 ```{python}
 # First we get the training data X-variables (predicters)
 X_train = pd.get_dummies(train[['age', 'gender']])
@@ -184,9 +200,6 @@ predictions = classifier.predict(X_test)
 
 print("Here's how our tree makes decisions using both age and gender:")
 print_clean_tree(classifier, X_train.columns)
-
-#print("\nHere's the same tree in its technical format:")
-#print_tree(classifier, X_train.columns)
 
 # Print confusion matrix
 cm = confusion_matrix(test['product'], predictions)
