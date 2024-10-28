@@ -17,6 +17,7 @@ DecisionTree.qmd \
 Dicts.qmd \
 ForLoops.qmd \
 FStrings.qmd \
+HotChocolate.qmd \
 Lists.qmd \
 PromptsLLMByHand.qmd \
 Prompts.qmd \

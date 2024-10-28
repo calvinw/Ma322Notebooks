@@ -1,9 +1,9 @@
 ---
-title: "Two Products - Decision Trees"
+title: " - Decision Trees"
 ---
 
 ## Introduction
-We'll explore decision trees using a simple example: predicting which video game a person might prefer (MindCraft or AlienBetweenUs) based on their age and gender. This is a basic example to help understand how decision trees work.
+We'll explore decision trees using a simple example: predicting whether a person will make a purchase based on weather conditions (humidity and wind). This example will help understand how decision trees work.
 
 ## Setting Up Our Helper Functions
 First, we'll create some helper functions to make our trees easier to read and understand:
@@ -12,14 +12,14 @@ First, we'll create some helper functions to make our trees easier to read and u
 def clean_tree_text(tree_text):
     # Dictionary of all replacements
     replacements = {
-        "gender_F <= 0.50": "Male?",
-        "gender_F >  0.50": "Female?",
-        "gender_M <= 0.50": "Female?",
-        "gender_M >  0.50": "Male?",
-        "age_Adult <= 0.50": "Young?",
-        "age_Adult >  0.50": "Adult?",
-        "age_Young <= 0.50": "Adult?",
-        "age_Young >  0.50": "Young?",
+        "humid_high <= 0.50": "Normal Humidity?",
+        "humid_high >  0.50": "High Humidity?",
+        "humid_normal <= 0.50": "High Humidity?",
+        "humid_normal >  0.50": "Normal Humidity?",
+        "windy_windy <= 0.50": "Calm?",
+        "windy_windy >  0.50": "Windy?",
+        "windy_calm <= 0.50": "Windy?",
+        "windy_calm >  0.50": "Calm?",
         "class:": ""
     }
     
@@ -51,9 +51,9 @@ from sklearn.metrics import confusion_matrix
 
 # Data
 train = pd.DataFrame({
-    'gender': ['F', 'M', 'F', 'F', 'M', 'M', 'F'],
-    'age': ['Adult', 'Adult', 'Adult', 'Young', 'Young', 'Young', 'Young'],
-    'product': ['MindCraft', 'MindCraft', 'MindCraft', 'MindCraft', 'AlienBetweenUs', 'AlienBetweenUs', 'MindCraft']
+    'humid': ['high', 'high', 'high', 'normal', 'normal', 'normal', 'high', 'high', 'normal', 'normal', 'normal', 'high'],
+    'windy': ['windy', 'calm', 'calm', 'calm', 'calm', 'calm', 'windy', 'windy', 'windy', 'windy', 'windy', 'calm'],
+    'buys': ['no', 'no', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'no']
 })
 print("Training Data - What we'll use to teach our decision tree:")
 print(train)
@@ -64,50 +64,45 @@ This is our testing data - we'll use this to see how well our tree makes predict
 
 ```{python}
 test = pd.DataFrame({
-    'gender': ['F', 'F', 'F', 'F', 'M', 'M', 'F', 'F', 'M'],
-    'age': ['Adult', 'Young', 'Adult', 'Young', 'Young', 'Young', 'Adult', 'Young', 'Adult'],
-    'product': ['MindCraft', 'AlienBetweenUs', 'MindCraft', 'MindCraft', 'AlienBetweenUs', 'AlienBetweenUs', 'AlienBetweenUs', 'MindCraft', 'MindCraft']
+    'humid': ['high', 'normal', 'high', 'normal', 'normal', 'normal', 'high', 'normal', 'normal'],
+    'windy': ['calm', 'calm', 'calm', 'windy', 'windy', 'calm', 'calm', 'calm', 'calm'],
+    'buys': ['no', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'yes', 'no']
 })
 print("Testing Data - We'll use this to test our tree's predictions:")
 print(test)
 ```
 
-## Model 1: Age Only Tree
-Let's first try to predict game preference using only age. The code below 
+## Model 1: Humidity Only Tree
+Let's first try to predict buying behavior using only humidity:
 
 ```{python}
-# This part trains the model on the training data
-
 # First we get the training data X-variables (predicters)
-X_train = pd.get_dummies(train[['age']])
+X_train = pd.get_dummies(train[['humid']])
 
 # Next we create a Decision Tree Classifier 
 classifier = DecisionTreeClassifier()
 
 # Next we fit the data (create our model) using the actuals 
-classifier.fit(X_train, train['product'])
+classifier.fit(X_train, train['buys'])
 
 # This part gets the testing data X-varables 
-X_test = pd.get_dummies(test[['age']])
+X_test = pd.get_dummies(test[['humid']])
 
 # Now we use the classifer to predict on the testing data
 predictions = classifier.predict(X_test)
 
-#print("Age Only Tree Predictions:")
-#print(predictions)
-
-#print("Here's how our tree makes decisions based only on age:")
-#print_clean_tree(classifier, X_train.columns)
+print("Here's how our tree makes decisions based only on humidity:")
+print_clean_tree(classifier, X_train.columns)
 
 print("\nHere's the same tree in its technical format:")
 print_tree(classifier, X_train.columns)
 
 # Print confusion matrix
-cm = confusion_matrix(test['product'], predictions)
+cm = confusion_matrix(test['buys'], predictions)
 cm_df = pd.DataFrame(
     cm,
-    index=['Actual: AlienBetweenUs', 'Actual: MindCraft'],
-    columns=['Predicted: AlienBetweenUs', 'Predicted: MindCraft']
+    index=['Actual: no', 'Actual: yes'],
+    columns=['Predicted: no', 'Predicted: yes']
 )
 print("\nConfusion Matrix (Shows how well our predictions matched reality):")
 print(cm_df)
@@ -120,37 +115,37 @@ print("\nAccuracy: ")
 print(accuracy)
 ```
 
-## Model 2: Gender Only Tree
-Now let's try predicting based only on gender:
+## Model 2: Wind Only Tree
+Now let's try predicting based only on wind conditions:
 
 ```{python}
 # First we get the training data X-variables (predicters)
-X_train = pd.get_dummies(train[['gender']])
+X_train = pd.get_dummies(train[['windy']])
 
 # Next we create a Decision Tree Classifier 
 classifier = DecisionTreeClassifier()
 
 # Next we fit the data (create our model) using the actuals 
-classifier.fit(X_train, train['product'])
+classifier.fit(X_train, train['buys'])
 
 # This part gets the testing data X-varables 
-X_test = pd.get_dummies(test[['gender']])
+X_test = pd.get_dummies(test[['windy']])
 
 # Now we use the classifer to predict on the testing data
 predictions = classifier.predict(X_test)
 
-print("Here's how our tree makes decisions based only on gender:")
+print("Here's how our tree makes decisions based only on wind:")
 print_clean_tree(classifier, X_train.columns)
 
-#print("\nHere's the same tree in its technical format:")
-#print_tree(classifier, X_train.columns)
+print("\nHere's the same tree in its technical format:")
+print_tree(classifier, X_train.columns)
 
 # Print confusion matrix
-cm = confusion_matrix(test['product'], predictions)
+cm = confusion_matrix(test['buys'], predictions)
 cm_df = pd.DataFrame(
     cm,
-    index=['Actual: AlienBetweenUs', 'Actual: MindCraft'],
-    columns=['Predicted: AlienBetweenUs', 'Predicted: MindCraft']
+    index=['Actual: no', 'Actual: yes'],
+    columns=['Predicted: no', 'Predicted: yes']
 )
 print("\nConfusion Matrix (Shows how well our predictions matched reality):")
 print(cm_df)
@@ -163,37 +158,37 @@ print("\nAccuracy: ")
 print(accuracy)
 ```
 
-## Model 3: Full Tree Using Both Age and Gender
-Finally, let's use both age and gender to make our predictions:
+## Model 3: Full Tree Using Both Humidity and Wind
+Finally, let's use both humidity and wind conditions to make our predictions:
 
 ```{python}
 # First we get the training data X-variables (predicters)
-X_train = pd.get_dummies(train[['age', 'gender']])
+X_train = pd.get_dummies(train[['humid', 'windy']])
 
 # Next we create a Decision Tree Classifier 
 classifier = DecisionTreeClassifier()
 
 # Next we fit the data (create our model) using the actuals 
-classifier.fit(X_train, train['product'])
+classifier.fit(X_train, train['buys'])
 
 # This part gets the testing data X-varables 
-X_test = pd.get_dummies(test[['age', 'gender']])
+X_test = pd.get_dummies(test[['humid', 'windy']])
 
 # Now we use the classifer to predict on the testing data
 predictions = classifier.predict(X_test)
 
-print("Here's how our tree makes decisions using both age and gender:")
+print("Here's how our tree makes decisions using both humidity and wind:")
 print_clean_tree(classifier, X_train.columns)
 
-#print("\nHere's the same tree in its technical format:")
-#print_tree(classifier, X_train.columns)
+print("\nHere's the same tree in its technical format:")
+print_tree(classifier, X_train.columns)
 
 # Print confusion matrix
-cm = confusion_matrix(test['product'], predictions)
+cm = confusion_matrix(test['buys'], predictions)
 cm_df = pd.DataFrame(
     cm,
-    index=['Actual: AlienBetweenUs', 'Actual: MindCraft'],
-    columns=['Predicted: AlienBetweenUs', 'Predicted: MindCraft']
+    index=['Actual: no', 'Actual: yes'],
+    columns=['Predicted: no', 'Predicted: yes']
 )
 print("\nConfusion Matrix (Shows how well our predictions matched reality):")
 print(cm_df)
@@ -212,19 +207,17 @@ For each model, we show:
 1. The decision tree's rules in plain English
 2. The technical version of the tree (for reference)
 3. A confusion matrix showing:
-- How many times we correctly predicted AlienBetweenUs
-- How many times we correctly predicted MindCraft
-- How many times we made mistakes
+   - How many times we correctly predicted "no purchase"
+   - How many times we correctly predicted "yes purchase"
+   - How many times we made mistakes
 4. The accuracy (percentage of correct predictions)
 
 The confusion matrix is read like this:
-
 - Each row shows what actually happened
 - Each column shows what we predicted
 - The numbers show how many times each combination occurred
 
 By comparing the three models, we can see:
-
-1. How well age alone predicts game preference
-2. How well gender alone predicts game preference
-3. Whether using both features together improves our predictions
+1. How well humidity alone predicts buying behavior
+2. How well wind conditions alone predict buying behavior
+3. Whether using both weather features together improves our predictions

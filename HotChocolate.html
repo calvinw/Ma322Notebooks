@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Two Products - Decision Trees</title>
+<title>- Decision Trees</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="TwoProducts_files/libs/clipboard/clipboard.min.js"></script>
-<script src="TwoProducts_files/libs/quarto-html/quarto.js"></script>
-<script src="TwoProducts_files/libs/quarto-html/popper.min.js"></script>
-<script src="TwoProducts_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="TwoProducts_files/libs/quarto-html/anchor.min.js"></script>
-<link href="TwoProducts_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="TwoProducts_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="TwoProducts_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="TwoProducts_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="TwoProducts_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="HotChocolate_files/libs/clipboard/clipboard.min.js"></script>
+<script src="HotChocolate_files/libs/quarto-html/quarto.js"></script>
+<script src="HotChocolate_files/libs/quarto-html/popper.min.js"></script>
+<script src="HotChocolate_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="HotChocolate_files/libs/quarto-html/anchor.min.js"></script>
+<link href="HotChocolate_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="HotChocolate_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="HotChocolate_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="HotChocolate_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="HotChocolate_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -79,7 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Two Products - Decision Trees</h1>
+<h1 class="title">- Decision Trees</h1>
 </div>
 
 
@@ -96,7 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>We’ll explore decision trees using a simple example: predicting which video game a person might prefer (MindCraft or AlienBetweenUs) based on their age and gender. This is a basic example to help understand how decision trees work.</p>
+<p>We’ll explore decision trees using a simple example: predicting whether a person will make a purchase based on weather conditions (humidity and wind). This example will help understand how decision trees work.</p>
 </section>
 <section id="setting-up-our-helper-functions" class="level2">
 <h2 class="anchored" data-anchor-id="setting-up-our-helper-functions">Setting Up Our Helper Functions</h2>
@@ -105,14 +105,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_tree_text(tree_text):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Dictionary of all replacements</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    replacements <span class="op">=</span> {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"gender_F &lt;= 0.50"</span>: <span class="st">"Male?"</span>,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"gender_F &gt;  0.50"</span>: <span class="st">"Female?"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"gender_M &lt;= 0.50"</span>: <span class="st">"Female?"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"gender_M &gt;  0.50"</span>: <span class="st">"Male?"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"age_Adult &lt;= 0.50"</span>: <span class="st">"Young?"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"age_Adult &gt;  0.50"</span>: <span class="st">"Adult?"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"age_Young &lt;= 0.50"</span>: <span class="st">"Adult?"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"age_Young &gt;  0.50"</span>: <span class="st">"Young?"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"humid_high &lt;= 0.50"</span>: <span class="st">"Normal Humidity?"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"humid_high &gt;  0.50"</span>: <span class="st">"High Humidity?"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"humid_normal &lt;= 0.50"</span>: <span class="st">"High Humidity?"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"humid_normal &gt;  0.50"</span>: <span class="st">"Normal Humidity?"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"windy_windy &lt;= 0.50"</span>: <span class="st">"Calm?"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"windy_windy &gt;  0.50"</span>: <span class="st">"Windy?"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"windy_calm &lt;= 0.50"</span>: <span class="st">"Windy?"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"windy_calm &gt;  0.50"</span>: <span class="st">"Calm?"</span>,</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"class:"</span>: <span class="st">""</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -144,22 +144,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Data</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>train <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'gender'</span>: [<span class="st">'F'</span>, <span class="st">'M'</span>, <span class="st">'F'</span>, <span class="st">'F'</span>, <span class="st">'M'</span>, <span class="st">'M'</span>, <span class="st">'F'</span>],</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'age'</span>: [<span class="st">'Adult'</span>, <span class="st">'Adult'</span>, <span class="st">'Adult'</span>, <span class="st">'Young'</span>, <span class="st">'Young'</span>, <span class="st">'Young'</span>, <span class="st">'Young'</span>],</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'product'</span>: [<span class="st">'MindCraft'</span>, <span class="st">'MindCraft'</span>, <span class="st">'MindCraft'</span>, <span class="st">'MindCraft'</span>, <span class="st">'AlienBetweenUs'</span>, <span class="st">'AlienBetweenUs'</span>, <span class="st">'MindCraft'</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'humid'</span>: [<span class="st">'high'</span>, <span class="st">'high'</span>, <span class="st">'high'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'high'</span>, <span class="st">'high'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'high'</span>],</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'windy'</span>: [<span class="st">'windy'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'calm'</span>],</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'buys'</span>: [<span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>]</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Data - What we'll use to teach our decision tree:"</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Training Data - What we'll use to teach our decision tree:
-  gender    age         product
-0      F  Adult       MindCraft
-1      M  Adult       MindCraft
-2      F  Adult       MindCraft
-3      F  Young       MindCraft
-4      M  Young  AlienBetweenUs
-5      M  Young  AlienBetweenUs
-6      F  Young       MindCraft</code></pre>
+     humid  windy buys
+0     high  windy   no
+1     high   calm   no
+2     high   calm  yes
+3   normal   calm  yes
+4   normal   calm  yes
+5   normal   calm   no
+6     high  windy   no
+7     high  windy   no
+8   normal  windy  yes
+9   normal  windy  yes
+10  normal  windy  yes
+11    high   calm   no</code></pre>
 </div>
 </div>
 </section>
@@ -168,125 +173,128 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This is our testing data - we’ll use this to see how well our tree makes predictions on new data it hasn’t seen before:</p>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'gender'</span>: [<span class="st">'F'</span>, <span class="st">'F'</span>, <span class="st">'F'</span>, <span class="st">'F'</span>, <span class="st">'M'</span>, <span class="st">'M'</span>, <span class="st">'F'</span>, <span class="st">'F'</span>, <span class="st">'M'</span>],</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'age'</span>: [<span class="st">'Adult'</span>, <span class="st">'Young'</span>, <span class="st">'Adult'</span>, <span class="st">'Young'</span>, <span class="st">'Young'</span>, <span class="st">'Young'</span>, <span class="st">'Adult'</span>, <span class="st">'Young'</span>, <span class="st">'Adult'</span>],</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'product'</span>: [<span class="st">'MindCraft'</span>, <span class="st">'AlienBetweenUs'</span>, <span class="st">'MindCraft'</span>, <span class="st">'MindCraft'</span>, <span class="st">'AlienBetweenUs'</span>, <span class="st">'AlienBetweenUs'</span>, <span class="st">'AlienBetweenUs'</span>, <span class="st">'MindCraft'</span>, <span class="st">'MindCraft'</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'humid'</span>: [<span class="st">'high'</span>, <span class="st">'normal'</span>, <span class="st">'high'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>, <span class="st">'high'</span>, <span class="st">'normal'</span>, <span class="st">'normal'</span>],</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'windy'</span>: [<span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'windy'</span>, <span class="st">'windy'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>, <span class="st">'calm'</span>],</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'buys'</span>: [<span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>]</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Testing Data - We'll use this to test our tree's predictions:"</span>)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Testing Data - We'll use this to test our tree's predictions:
-  gender    age         product
-0      F  Adult       MindCraft
-1      F  Young  AlienBetweenUs
-2      F  Adult       MindCraft
-3      F  Young       MindCraft
-4      M  Young  AlienBetweenUs
-5      M  Young  AlienBetweenUs
-6      F  Adult  AlienBetweenUs
-7      F  Young       MindCraft
-8      M  Adult       MindCraft</code></pre>
+    humid  windy buys
+0    high   calm   no
+1  normal   calm  yes
+2    high   calm  yes
+3  normal  windy  yes
+4  normal  windy  yes
+5  normal   calm   no
+6    high   calm   no
+7  normal   calm  yes
+8  normal   calm   no</code></pre>
 </div>
 </div>
 </section>
-<section id="model-1-age-only-tree" class="level2">
-<h2 class="anchored" data-anchor-id="model-1-age-only-tree">Model 1: Age Only Tree</h2>
-<p>Let’s first try to predict game preference using only age. The code below</p>
+<section id="model-1-humidity-only-tree" class="level2">
+<h2 class="anchored" data-anchor-id="model-1-humidity-only-tree">Model 1: Humidity Only Tree</h2>
+<p>Let’s first try to predict buying behavior using only humidity:</p>
 <div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This part trains the model on the training data</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'age'</span>]])</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we fit the data (create our model) using the actuals </span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'product'</span>])</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'age'</span>]])</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#print("Age Only Tree Predictions:")</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#print(predictions)</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#print("Here's how our tree makes decisions based only on age:")</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#print_clean_tree(classifier, X_train.columns)</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Here's the same tree in its technical format:"</span>)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>print_tree(classifier, X_train.columns)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'product'</span>], predictions)</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>cm_df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    cm,</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: AlienBetweenUs'</span>, <span class="st">'Actual: MindCraft'</span>],</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: AlienBetweenUs'</span>, <span class="st">'Predicted: MindCraft'</span>]</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix (Shows how well our predictions matched reality):"</span>)</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm_df)</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>correct<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]</span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>total<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">0</span>,<span class="dv">1</span>]</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> correct<span class="op">/</span>total</span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'humid'</span>]])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we fit the data (create our model) using the actuals </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'buys'</span>])</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'humid'</span>]])</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions based only on humidity:"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>print_clean_tree(classifier, X_train.columns)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Here's the same tree in its technical format:"</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>print_tree(classifier, X_train.columns)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'buys'</span>], predictions)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>cm_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    cm,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: no'</span>, <span class="st">'Actual: yes'</span>],</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: no'</span>, <span class="st">'Predicted: yes'</span>]</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix (Shows how well our predictions matched reality):"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm_df)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Print accuracy</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>correct<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>total<span class="op">=</span>cm[<span class="dv">0</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">1</span>]<span class="op">+</span>cm[<span class="dv">1</span>,<span class="dv">0</span>]<span class="op">+</span>cm[<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> correct<span class="op">/</span>total</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
+<pre><code>Here's how our tree makes decisions based only on humidity:
+
+Decision Tree:
+|--- Normal Humidity?
+|   |---  yes
+|--- High Humidity?
+|   |---  no
+
+
 Here's the same tree in its technical format:
 
 Decision Tree:
-|--- age_Adult &lt;= 0.50
-|   |--- class: AlienBetweenUs
-|--- age_Adult &gt;  0.50
-|   |--- class: MindCraft
+|--- humid_high &lt;= 0.50
+|   |--- class: yes
+|--- humid_high &gt;  0.50
+|   |--- class: no
 
 
 Confusion Matrix (Shows how well our predictions matched reality):
-                        Predicted: AlienBetweenUs  Predicted: MindCraft
-Actual: AlienBetweenUs                          3                     1
-Actual: MindCraft                               2                     3
+             Predicted: no  Predicted: yes
+Actual: no               2               2
+Actual: yes              1               4
 
 Accuracy: 
 0.6666666666666666</code></pre>
 </div>
 </div>
 </section>
-<section id="model-2-gender-only-tree" class="level2">
-<h2 class="anchored" data-anchor-id="model-2-gender-only-tree">Model 2: Gender Only Tree</h2>
-<p>Now let’s try predicting based only on gender:</p>
+<section id="model-2-wind-only-tree" class="level2">
+<h2 class="anchored" data-anchor-id="model-2-wind-only-tree">Model 2: Wind Only Tree</h2>
+<p>Now let’s try predicting based only on wind conditions:</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'gender'</span>]])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'windy'</span>]])</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we fit the data (create our model) using the actuals </span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'product'</span>])</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'buys'</span>])</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'gender'</span>]])</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'windy'</span>]])</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions based only on gender:"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions based only on wind:"</span>)</span>
 <span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>print_clean_tree(classifier, X_train.columns)</span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#print("\nHere's the same tree in its technical format:")</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#print_tree(classifier, X_train.columns)</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Here's the same tree in its technical format:"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>print_tree(classifier, X_train.columns)</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'product'</span>], predictions)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'buys'</span>], predictions)</span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>cm_df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    cm,</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: AlienBetweenUs'</span>, <span class="st">'Actual: MindCraft'</span>],</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: AlienBetweenUs'</span>, <span class="st">'Predicted: MindCraft'</span>]</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: no'</span>, <span class="st">'Actual: yes'</span>],</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: no'</span>, <span class="st">'Predicted: yes'</span>]</span>
 <span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix (Shows how well our predictions matched reality):"</span>)</span>
 <span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm_df)</span>
@@ -298,56 +306,65 @@ Accuracy:
 <span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
 <span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Here's how our tree makes decisions based only on gender:
+<pre><code>Here's how our tree makes decisions based only on wind:
 
 Decision Tree:
-|--- Male?
-|   |---  AlienBetweenUs
-|--- Female?
-|   |---  MindCraft
+|--- Windy?
+|   |---  no
+|--- Calm?
+|   |---  no
+
+
+Here's the same tree in its technical format:
+
+Decision Tree:
+|--- windy_calm &lt;= 0.50
+|   |--- class: no
+|--- windy_calm &gt;  0.50
+|   |--- class: no
 
 
 Confusion Matrix (Shows how well our predictions matched reality):
-                        Predicted: AlienBetweenUs  Predicted: MindCraft
-Actual: AlienBetweenUs                          2                     2
-Actual: MindCraft                               1                     4
+             Predicted: no  Predicted: yes
+Actual: no               4               0
+Actual: yes              5               0
 
 Accuracy: 
-0.6666666666666666</code></pre>
+0.4444444444444444</code></pre>
 </div>
 </div>
 </section>
-<section id="model-3-full-tree-using-both-age-and-gender" class="level2">
-<h2 class="anchored" data-anchor-id="model-3-full-tree-using-both-age-and-gender">Model 3: Full Tree Using Both Age and Gender</h2>
-<p>Finally, let’s use both age and gender to make our predictions:</p>
+<section id="model-3-full-tree-using-both-humidity-and-wind" class="level2">
+<h2 class="anchored" data-anchor-id="model-3-full-tree-using-both-humidity-and-wind">Model 3: Full Tree Using Both Humidity and Wind</h2>
+<p>Finally, let’s use both humidity and wind conditions to make our predictions:</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we get the training data X-variables (predicters)</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'age'</span>, <span class="st">'gender'</span>]])</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> pd.get_dummies(train[[<span class="st">'humid'</span>, <span class="st">'windy'</span>]])</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we create a Decision Tree Classifier </span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>classifier <span class="op">=</span> DecisionTreeClassifier()</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Next we fit the data (create our model) using the actuals </span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'product'</span>])</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>classifier.fit(X_train, train[<span class="st">'buys'</span>])</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># This part gets the testing data X-varables </span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'age'</span>, <span class="st">'gender'</span>]])</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> pd.get_dummies(test[[<span class="st">'humid'</span>, <span class="st">'windy'</span>]])</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we use the classifer to predict on the testing data</span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> classifier.predict(X_test)</span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions using both age and gender:"</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Here's how our tree makes decisions using both humidity and wind:"</span>)</span>
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>print_clean_tree(classifier, X_train.columns)</span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#print("\nHere's the same tree in its technical format:")</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#print_tree(classifier, X_train.columns)</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Here's the same tree in its technical format:"</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>print_tree(classifier, X_train.columns)</span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Print confusion matrix</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'product'</span>], predictions)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(test[<span class="st">'buys'</span>], predictions)</span>
 <span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>cm_df <span class="op">=</span> pd.DataFrame(</span>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    cm,</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: AlienBetweenUs'</span>, <span class="st">'Actual: MindCraft'</span>],</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: AlienBetweenUs'</span>, <span class="st">'Predicted: MindCraft'</span>]</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'Actual: no'</span>, <span class="st">'Actual: yes'</span>],</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Predicted: no'</span>, <span class="st">'Predicted: yes'</span>]</span>
 <span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix (Shows how well our predictions matched reality):"</span>)</span>
 <span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cm_df)</span>
@@ -359,25 +376,43 @@ Accuracy:
 <span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Accuracy: "</span>)</span>
 <span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Here's how our tree makes decisions using both age and gender:
+<pre><code>Here's how our tree makes decisions using both humidity and wind:
 
 Decision Tree:
-|--- Female?
-|   |---  MindCraft
-|--- Male?
-|   |--- Adult?
-|   |   |---  MindCraft
-|   |--- Young?
-|   |   |---  AlienBetweenUs
+|--- Normal Humidity?
+|   |--- Calm?
+|   |   |---  yes
+|   |--- Windy?
+|   |   |---  yes
+|--- High Humidity?
+|   |--- Calm?
+|   |   |---  no
+|   |--- Windy?
+|   |   |---  no
+
+
+Here's the same tree in its technical format:
+
+Decision Tree:
+|--- humid_high &lt;= 0.50
+|   |--- windy_windy &lt;= 0.50
+|   |   |--- class: yes
+|   |--- windy_windy &gt;  0.50
+|   |   |--- class: yes
+|--- humid_high &gt;  0.50
+|   |--- windy_windy &lt;= 0.50
+|   |   |--- class: no
+|   |--- windy_windy &gt;  0.50
+|   |   |--- class: no
 
 
 Confusion Matrix (Shows how well our predictions matched reality):
-                        Predicted: AlienBetweenUs  Predicted: MindCraft
-Actual: AlienBetweenUs                          2                     2
-Actual: MindCraft                               0                     5
+             Predicted: no  Predicted: yes
+Actual: no               2               2
+Actual: yes              1               4
 
 Accuracy: 
-0.7777777777777778</code></pre>
+0.6666666666666666</code></pre>
 </div>
 </div>
 </section>
@@ -387,28 +422,16 @@ Accuracy:
 <ol type="1">
 <li>The decision tree’s rules in plain English</li>
 <li>The technical version of the tree (for reference)</li>
-<li>A confusion matrix showing:</li>
-</ol>
+<li>A confusion matrix showing:
 <ul>
-<li>How many times we correctly predicted AlienBetweenUs</li>
-<li>How many times we correctly predicted MindCraft</li>
+<li>How many times we correctly predicted “no purchase”</li>
+<li>How many times we correctly predicted “yes purchase”</li>
 <li>How many times we made mistakes</li>
-</ul>
-<ol start="4" type="1">
+</ul></li>
 <li>The accuracy (percentage of correct predictions)</li>
 </ol>
-<p>The confusion matrix is read like this:</p>
-<ul>
-<li>Each row shows what actually happened</li>
-<li>Each column shows what we predicted</li>
-<li>The numbers show how many times each combination occurred</li>
-</ul>
-<p>By comparing the three models, we can see:</p>
-<ol type="1">
-<li>How well age alone predicts game preference</li>
-<li>How well gender alone predicts game preference</li>
-<li>Whether using both features together improves our predictions</li>
-</ol>
+<p>The confusion matrix is read like this: - Each row shows what actually happened - Each column shows what we predicted - The numbers show how many times each combination occurred</p>
+<p>By comparing the three models, we can see: 1. How well humidity alone predicts buying behavior 2. How well wind conditions alone predict buying behavior 3. Whether using both weather features together improves our predictions</p>
 </section>
 
 </main>
