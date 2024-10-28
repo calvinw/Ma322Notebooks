@@ -1,0 +1,155 @@
+---
+title: "Restaurant"
+---
+
+```{python}
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.metrics import confusion_matrix
+
+# Training Data
+train = pd.DataFrame({
+    'Alternate': ['Yes', 'Yes', 'No', 'Yes', 'Yes', 'No', 'No', 'No', 'No', 'Yes', 'No', 'Yes'],
+    'Bar': ['No', 'No', 'Yes', 'No', 'No', 'Yes', 'Yes', 'No', 'Yes', 'Yes', 'No', 'Yes'],
+    'FriSat': ['No', 'No', 'No', 'Yes', 'Yes', 'No', 'No', 'No', 'Yes', 'Yes', 'No', 'Yes'],
+    'Hungry': ['Yes', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', 'Yes'],
+    'Patrons': ['Some', 'Full', 'Some', 'Full', 'Full', 'Some', 'None', 'Some', 'Full', 'Full', 'None', 'Full'],
+    'Price': ['Expensive', 'Cheap', 'Cheap', 'Cheap', 'Expensive', 'Moderate', 'Cheap', 'Moderate', 'Cheap', 'Expensive', 'Cheap', 'Cheap'],
+    'Raining': ['No', 'No', 'No', 'No', 'No', 'Yes', 'Yes', 'Yes', 'Yes', 'No', 'No', 'No'],
+    'Reservation': ['Yes', 'No', 'No', 'No', 'Yes', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', 'No'],
+    'Type': ['French', 'Thai', 'Burger', 'Thai', 'French', 'Italian', 'Burger', 'Thai', 'Burger', 'Italian', 'Thai', 'Burger'],
+    'WaitEstimate': ['0-10', '30-60', '0-10', '10-30', '>60', '0-10', '0-10', '0-10', '>60', '10-30', '0-10', '30-60'],
+    'WillWait': ['Yes', 'No', 'Yes', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', 'No', 'No', 'Yes']
+})
+
+# Testing Data (I'll use a smaller subset for simplicity)
+test = pd.DataFrame({
+    'Alternate': ['Yes', 'Yes', 'No', 'No'],
+    'Bar': ['No', 'Yes', 'Yes', 'No'],
+    'FriSat': ['Yes', 'Yes', 'No', 'No'],
+    'Hungry': ['No', 'Yes', 'No', 'Yes'],
+    'Patrons': ['Full', 'Full', 'None', 'Some'],
+    'Price': ['Expensive', 'Cheap', 'Cheap', 'Moderate'],
+    'Raining': ['No', 'No', 'Yes', 'Yes'],
+    'Reservation': ['Yes', 'No', 'No', 'Yes'],
+    'Type': ['French', 'Burger', 'Burger', 'Thai'],
+    'WaitEstimate': ['>60', '30-60', '0-10', '0-10'],
+    'WillWait': ['No', 'Yes', 'No', 'Yes']
+})
+
+def clean_tree_text(tree_text):
+    """Make the tree text more readable"""
+    replacements = {
+        "Price_ <= 0.50": "Price Cheap/Moderate?",
+        "Price_ >  0.50": "Price Expensive?",
+        "Patrons_ <= 0.50": "Few Patrons?",
+        "Patrons_ >  0.50": "Many Patrons?",
+        "class:": "Predict:"
+    }
+    clean_text = tree_text
+    for old, new in replacements.items():
+        clean_text = clean_text.replace(old, new)
+    return clean_text
+
+print("MODEL 1 - PREDICT FROM PRICE")
+print("--------------------------")
+# Create dummy variables for Price
+X_train = pd.get_dummies(train[['Price']])
+X_test = pd.get_dummies(test[['Price']])
+
+# Train model
+dt = DecisionTreeClassifier(max_depth=1)
+dt.fit(X_train, train['WillWait'])
+
+# Print tree
+tree_text = export_text(dt, feature_names=list(X_train.columns))
+print("\nDecision Tree:")
+print(clean_tree_text(tree_text))
+
+# Make predictions
+predictions = dt.predict(X_test)
+
+# Print confusion matrix
+cm = confusion_matrix(test['WillWait'], predictions)
+cm_df = pd.DataFrame(
+    cm,
+    index=['Actually No', 'Actually Yes'],
+    columns=['Predicted No', 'Predicted Yes']
+)
+print("\nConfusion Matrix:")
+print(cm_df)
+
+# Calculate accuracy from confusion matrix
+correct = cm[0,0] + cm[1,1]  # sum of diagonal
+total = cm.sum()             # sum of all values
+accuracy = (correct/total) * 100
+print(f"\nAccuracy: {accuracy:.1f}%")
+
+print("\nMODEL 2 - PREDICT FROM PATRONS")
+print("-----------------------------")
+# Create dummy variables for Patrons
+X_train = pd.get_dummies(train[['Patrons']])
+X_test = pd.get_dummies(test[['Patrons']])
+
+# Train model
+dt = DecisionTreeClassifier(max_depth=1)
+dt.fit(X_train, train['WillWait'])
+
+# Print tree
+tree_text = export_text(dt, feature_names=list(X_train.columns))
+print("\nDecision Tree:")
+print(clean_tree_text(tree_text))
+
+# Make predictions
+predictions = dt.predict(X_test)
+
+# Print confusion matrix
+cm = confusion_matrix(test['WillWait'], predictions)
+cm_df = pd.DataFrame(
+    cm,
+    index=['Actually No', 'Actually Yes'],
+    columns=['Predicted No', 'Predicted Yes']
+)
+print("\nConfusion Matrix:")
+print(cm_df)
+
+# Calculate accuracy from confusion matrix
+correct = cm[0,0] + cm[1,1]
+total = cm.sum()
+accuracy = (correct/total) * 100
+print(f"\nAccuracy: {accuracy:.1f}%")
+
+print("\nMODEL 3 - PREDICT FROM ALL VARIABLES")
+print("----------------------------------")
+# Create dummy variables for all predictors
+X_train = pd.get_dummies(train.drop('WillWait', axis=1))
+X_test = pd.get_dummies(test.drop('WillWait', axis=1))
+
+# Train model
+dt = DecisionTreeClassifier()
+dt.fit(X_train, train['WillWait'])
+
+# Print tree
+tree_text = export_text(dt, feature_names=list(X_train.columns))
+print("\nDecision Tree:")
+print(clean_tree_text(tree_text))
+
+# Make predictions
+predictions = dt.predict(X_test)
+
+# Print confusion matrix
+cm = confusion_matrix(test['WillWait'], predictions)
+cm_df = pd.DataFrame(
+    cm,
+    index=['Actually No', 'Actually Yes'],
+    columns=['Predicted No', 'Predicted Yes']
+)
+print("\nConfusion Matrix:")
+print(cm_df)
+
+# Calculate accuracy from confusion matrix
+correct = cm[0,0] + cm[1,1]
+total = cm.sum()
+accuracy = (correct/total) * 100
+print(f"\nAccuracy: {accuracy:.1f}%")
+```
