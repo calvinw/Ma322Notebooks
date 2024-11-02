@@ -2,6 +2,8 @@
 title: "Athletic Sneakers - Decision Trees"
 ---
 
+# ANSWER THE QUESTIONS AT THE END OF THE NOTEBOOK FOR THIS ASSIGNMENT
+
 ## Introduction
 We'll explore decision trees using a real-world example: predicting whether someone will buy athletic sneakers based on their age group and whether they purchase athletic wear. This example will help understand how multiple features can work together to create better predictions than single features alone.
 
@@ -158,26 +160,15 @@ print_clean_tree(classifier, X_train.columns)
 print_accuracy_metrics(predictions, test['buys'])
 ```
 
-## Understanding the Results
+# Answer the following questions for this assignment 
 
-In this example, we see how different features work together to predict customer behavior. Let's look at what each model tells us:
+1) What is unusual about the decision trees built from just use `age` or `athletic` alone. So each of those small decision trees has the same aspect about it that is odd. What are the predictions made by those models?
 
-This example shows why we often need multiple features to make good predictions. The patterns here mirror real-world retail scenarios:
-- Your best customers are teens who already buy athletic wear
-- Other segments buy much less frequently
-- You need both pieces of information to identify your target market
+2) How many incorrect predictions on the Testing data does the model built using `age` and `athletic` make? If a prediction of Purchase by the model is taken to be a Postive, then what was the incorrect prediction, a False Postive or a False Negative? 
 
-The confusion matrix for each model shows:
-- How many times we correctly predicted purchases
-- How many times we correctly predicted non-purchases
-- How many times we made mistakes in each direction
+3) What is the accuracy of the model using both `age` and `athletic`?
 
-By comparing the three models, we can see:
-1. Why age alone isn't enough to predict purchases
-2. Why athletic wear purchase history alone isn't enough
-3. How combining both features creates much better predictions
+4) Why did the two trees single predictor trees based on `age` and `athletic` alone have exactly the same confusion matrix?
 
-This kind of analysis can help stores:
-- Target marketing to the right customer segments
-- Stock inventory appropriately
-- Plan promotions effectively
+5) What can you say about the the type of customers with regards to buying this product. How would you describe the group with the highest demand for this product?
+

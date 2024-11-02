@@ -94,6 +94,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="answer-the-questions-at-the-end-of-the-notebook-for-this-assignment" class="level1">
+<h1>ANSWER THE QUESTIONS AT THE END OF THE NOTEBOOK FOR THIS ASSIGNMENT</h1>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>We’ll explore decision trees using a real-world example: predicting whether someone will buy athletic sneakers based on their age group and whether they purchase athletic wear. This example will help understand how multiple features can work together to create better predictions than single features alone.</p>
@@ -276,9 +278,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Here's how our tree makes decisions based only on age:
 
 Decision Tree:
-|--- Teen?
-|   |---  no
 |--- Adult?
+|   |---  no
+|--- Teen?
 |   |---  no
 
 
@@ -337,9 +339,9 @@ Accuracy: 66.67%</code></pre>
 Here's how our tree makes decisions based only on athletic wear purchases:
 
 Decision Tree:
-|--- Doesn't buy athletic?
-|   |---  no
 |--- Buys athletic?
+|   |---  no
+|--- Doesn't buy athletic?
 |   |---  no
 
 
@@ -370,14 +372,14 @@ Accuracy: 66.67%</code></pre>
 <pre><code>Here's how our tree makes decisions using both age and athletic wear purchases:
 
 Decision Tree:
+|--- Doesn't buy athletic?
+|   |--- Adult?
+|   |   |---  no
+|   |--- Teen?
+|   |   |---  no
 |--- Buys athletic?
 |   |--- Teen?
 |   |   |---  yes
-|   |--- Adult?
-|   |   |---  no
-|--- Doesn't buy athletic?
-|   |--- Teen?
-|   |   |---  no
 |   |--- Adult?
 |   |   |---  no
 
@@ -391,13 +393,16 @@ Accuracy: 91.67%</code></pre>
 </div>
 </div>
 </section>
-<section id="understanding-the-results" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-the-results">Understanding the Results</h2>
-<p>In this example, we see how different features work together to predict customer behavior. Let’s look at what each model tells us:</p>
-<p>This example shows why we often need multiple features to make good predictions. The patterns here mirror real-world retail scenarios: - Your best customers are teens who already buy athletic wear - Other segments buy much less frequently - You need both pieces of information to identify your target market</p>
-<p>The confusion matrix for each model shows: - How many times we correctly predicted purchases - How many times we correctly predicted non-purchases - How many times we made mistakes in each direction</p>
-<p>By comparing the three models, we can see: 1. Why age alone isn’t enough to predict purchases 2. Why athletic wear purchase history alone isn’t enough 3. How combining both features creates much better predictions</p>
-<p>This kind of analysis can help stores: - Target marketing to the right customer segments - Stock inventory appropriately - Plan promotions effectively</p>
+</section>
+<section id="answer-the-following-questions-for-this-assignment" class="level1">
+<h1>Answer the following questions for this assignment</h1>
+<ol type="1">
+<li><p>What is unusual about the decision trees built from just use <code>age</code> or <code>athletic</code> alone. So each of those small decision trees has the same aspect about it that is odd. What are the predictions made by those models?</p></li>
+<li><p>How many incorrect predictions on the Testing data does the model built using <code>age</code> and <code>athletic</code> make? If a prediction of Purchase by the model is taken to be a Postive, then what was the incorrect prediction, a False Postive or a False Negative?</p></li>
+<li><p>What is the accuracy of the model using both <code>age</code> and <code>athletic</code>?</p></li>
+<li><p>Why did the two trees single predictor trees based on <code>age</code> and <code>athletic</code> alone have exactly the same confusion matrix?</p></li>
+<li><p>What can you say about the the type of customers with regards to buying this product. How would you describe the group with the highest demand for this product?</p></li>
+</ol>
 </section>
 
 </main>
