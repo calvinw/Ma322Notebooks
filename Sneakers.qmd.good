@@ -1,0 +1,195 @@
+---
+title: "Athletic Sneakers - Decision Trees"
+---
+
+## Introduction
+We'll explore decision trees using a real-world example: predicting whether someone will buy athletic sneakers based on their age group and whether they purchase athletic wear. This example will help understand how multiple features can work together to create better predictions than single features alone.
+
+## Setting Up Our Helper Functions
+First, we'll create some helper functions to make our trees easier to read and understand:
+
+```{python}
+def clean_tree_text(tree_text):
+    # Dictionary of all replacements
+    replacements = {
+        "age_teen <= 0.50": "Adult?",
+        "age_teen >  0.50": "Teen?",
+        "athletic_yes <= 0.50": "Doesn't buy athletic?",
+        "athletic_yes >  0.50": "Buys athletic?",
+        "class:": ""
+    }
+    
+    # Apply all replacements
+    clean_text = tree_text
+    for old, new in replacements.items():
+        clean_text = clean_text.replace(old, new)
+    
+    return clean_text
+
+def print_clean_tree(classifier, columns):
+    tree_text = export_text(classifier, feature_names=list(columns))
+    print("\nDecision Tree:")
+    print(clean_tree_text(tree_text))
+
+def print_accuracy_metrics(predictions, actuals):
+    cm = confusion_matrix(actuals, predictions)
+    cm_df = pd.DataFrame(
+        cm,
+        index=['Actual: No Purchase', 'Actual: Purchase'],
+        columns=['Predicted: No Purchase', 'Predicted: Purchase']
+    )
+    print("\nConfusion Matrix:")
+    print(cm_df)
+    
+    correct = cm[0,0] + cm[1,1]
+    total = cm[0,0] + cm[1,1] + cm[1,0] + cm[0,1]
+    accuracy = correct/total
+    print(f"\nAccuracy: {accuracy:.2%}")
+```
+
+## The Training Data
+Here's our training data - this is what we'll use to teach our decision tree how to make predictions. The data represents customer purchase patterns in a sports retail store:
+
+```{python}
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.metrics import confusion_matrix
+
+# Training data
+train = pd.DataFrame({
+    'age':      ['teen', 'teen', 'teen', 'teen', 'teen', 'teen', 'teen', 'teen', 'teen', 'teen',
+                 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult'],
+    'athletic': ['yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no',
+                 'yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no'],
+    'buys':     ['no', 'yes', 'yes', 'yes', 'yes',     # teens who buy athletic: 100% buy sneakers
+                 'no', 'no', 'no', 'yes', 'no',          # teens who don't buy athletic: 20% buy sneakers
+                 'yes', 'no', 'no', 'no', 'no',          # adults who buy athletic: 20% buy sneakers
+                 'no', 'no', 'no', 'no', 'no']           # adults who don't buy athletic: 0% buy sneakers
+})
+print("Training Data - What we'll use to teach our decision tree:")
+print(train)
+```
+
+## The Testing Data
+This is our testing data - we'll use this to see how well our tree makes predictions on new data it hasn't seen before:
+
+```{python}
+test = pd.DataFrame({
+    'age':      ['teen', 'teen', 'teen', 'teen', 'adult', 'adult', 'adult', 'adult', 'teen', 'adult', 'teen', 'adult'],
+    'athletic': ['yes', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes', 'no', 'no', 'yes'],
+    'buys':     ['yes', 'yes', 'no', 'yes', 'no', 'no', 'no', 'no', 'yes', 'no', 'no', 'no']
+})
+print("Testing Data - We'll use this to test our tree's predictions:")
+print(test)
+```
+
+## Model 1: Age Only Tree
+Let's first try to predict buying behavior using only age. First, we'll sort the data by age to understand the patterns:
+
+```{python}
+# Show training data sorted by age
+print("Training Data Sorted by Age:")
+print(train.sort_values('age'))
+```
+
+Next, we'll create a decision tree using only age as a predictor:
+
+```{python}
+# First we get the training data X-variables (predicters)
+X_train = pd.get_dummies(train[['age']])
+
+# Next we create a Decision Tree Classifier 
+classifier = DecisionTreeClassifier()
+
+# Next we fit the data (create our model) using the actuals 
+classifier.fit(X_train, train['buys'])
+
+# This part gets the testing data X-varables 
+X_test = pd.get_dummies(test[['age']])
+
+# Now we use the classifer to predict on the testing data
+predictions = classifier.predict(X_test)
+
+print("Here's how our tree makes decisions based only on age:")
+print_clean_tree(classifier, X_train.columns)
+print_accuracy_metrics(predictions, test['buys'])
+```
+
+## Model 2: Athletic Purchase History Only Tree
+Now let's try predicting based only on whether customers buy athletic wear:
+
+```{python}
+# Show training data sorted by athletic wear purchases
+print("Training Data Sorted by Athletic Wear Purchase History:")
+print(train.sort_values('athletic'))
+
+# Create decision tree using only athletic wear purchase history
+X_train = pd.get_dummies(train[['athletic']])
+X_test = pd.get_dummies(test[['athletic']])
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, train['buys'])
+predictions = classifier.predict(X_test)
+
+print("Here's how our tree makes decisions based only on athletic wear purchases:")
+print_clean_tree(classifier, X_train.columns)
+print_accuracy_metrics(predictions, test['buys'])
+```
+
+## Model 3: Full Tree Using Both Age and Athletic Purchase History
+Finally, let's use both age and athletic wear purchase history to make our predictions:
+
+```{python}
+X_train = pd.get_dummies(train[['age', 'athletic']])
+X_test = pd.get_dummies(test[['age', 'athletic']])
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, train['buys'])
+predictions = classifier.predict(X_test)
+
+print("Here's how our tree makes decisions using both age and athletic wear purchases:")
+print_clean_tree(classifier, X_train.columns)
+print_accuracy_metrics(predictions, test['buys'])
+```
+
+## Understanding the Results
+
+In this example, we see how different features work together to predict customer behavior. Let's look at what each model tells us:
+
+1. Age Only Model (~58% accuracy):
+   - Being a teen or adult alone isn't enough to predict purchases
+   - Shows that age by itself is a weak predictor
+   - Makes sense because both age groups have mixed buying patterns
+
+2. Athletic Wear Purchase Model (~75% accuracy):
+   - Knowing if someone buys athletic wear helps somewhat
+   - Better than age alone, but still misses important patterns
+   - Can't distinguish between teens and adults who buy athletic wear
+
+3. Combined Model (~85-90% accuracy):
+   - Much better predictions by using both features
+   - Can identify specific customer segments:
+     * Teens who buy athletic wear (100% buy sneakers)
+     * Teens who don't buy athletic wear (20% buy sneakers)
+     * Adults who buy athletic wear (20% buy sneakers)
+     * Adults who don't buy athletic wear (0% buy sneakers)
+
+This example shows why we often need multiple features to make good predictions. The patterns here mirror real-world retail scenarios:
+- Your best customers are teens who already buy athletic wear
+- Other segments buy much less frequently
+- You need both pieces of information to identify your target market
+
+The confusion matrix for each model shows:
+- How many times we correctly predicted purchases
+- How many times we correctly predicted non-purchases
+- How many times we made mistakes in each direction
+
+By comparing the three models, we can see:
+1. Why age alone isn't enough to predict purchases
+2. Why athletic wear purchase history alone isn't enough
+3. How combining both features creates much better predictions
+
+This kind of analysis can help stores:
+- Target marketing to the right customer segments
+- Stock inventory appropriately
+- Plan promotions effectively

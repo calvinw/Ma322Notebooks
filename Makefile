@@ -36,8 +36,10 @@ ProductInquiries.qmd \
 ProductInquiries.short.qmd \
 ProductSpec.qmd \
 ReviewChainAssign.qmd \
+Restaurant.qmd \
 Roles.qmd \
 SegmentingCustomers.qmd \
+Sneakers.qmd \
 SimpleCompletion.qmd \
 SimpleLLMChain.qmd \
 Simple.qmd \

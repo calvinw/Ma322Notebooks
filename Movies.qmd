@@ -1,0 +1,100 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.metrics import confusion_matrix
+
+def clean_tree_text(tree_text):
+    # Dictionary of all replacements
+    replacements = {
+        "age_teen <= 0.50": "Adult?",
+        "age_teen >  0.50": "Teen?",
+        "action_yes <= 0.50": "Dislikes Action?",
+        "action_yes >  0.50": "Likes Action?",
+        "class:": ""
+    }
+    
+    # Apply all replacements
+    clean_text = tree_text
+    for old, new in replacements.items():
+        clean_text = clean_text.replace(old, new)
+    
+    return clean_text
+
+def print_clean_tree(classifier, columns):
+    tree_text = export_text(classifier, feature_names=list(columns))
+    print("\nDecision Tree:")
+    print(clean_tree_text(tree_text))
+
+def print_accuracy_metrics(predictions, actuals):
+    cm = confusion_matrix(actuals, predictions)
+    cm_df = pd.DataFrame(
+        cm,
+        index=['Actual: Dislike', 'Actual: Like'],
+        columns=['Predicted: Dislike', 'Predicted: Like']
+    )
+    print("\nConfusion Matrix:")
+    print(cm_df)
+    
+    correct = cm[0,0] + cm[1,1]
+    total = cm[0,0] + cm[1,1] + cm[1,0] + cm[0,1]
+    accuracy = correct/total
+    print(f"\nAccuracy: {accuracy:.2%}")
+
+# Training data with complex interaction patterns
+train = pd.DataFrame({
+    'age':    ['teen', 'teen', 'teen', 'teen', 'teen', 'teen', 'teen', 'teen', 'teen', 'teen',
+               'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult'],
+    'action': ['yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no',
+               'yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no'],
+    'enjoys': ['like', 'like', 'like', 'like', 'like',      # teens love action movies (100%)
+               'dislike', 'dislike', 'like', 'like', 'like', # teens mostly like non-action (60%)
+               'dislike', 'dislike', 'like', 'like', 'like', # adults mostly like action (60%)
+               'dislike', 'dislike', 'dislike', 'dislike', 'dislike']  # adults hate non-action (0%)
+})
+
+# Test data following same patterns
+test = pd.DataFrame({
+    'age':    ['teen', 'teen', 'teen', 'teen', 'adult', 'adult', 'adult', 'adult', 'teen', 'adult', 'teen', 'adult'],
+    'action': ['yes', 'yes', 'no', 'no', 'yes', 'yes', 'no', 'no', 'yes', 'no', 'no', 'yes'],
+    'enjoys': ['like', 'like', 'like', 'like', 'like', 'dislike', 'dislike', 'dislike', 'like', 'dislike', 'like', 'like']
+})
+
+print("Training Data:")
+print(train)
+print("\nTesting Data:")
+print(test)
+
+# Model 1: Age Only
+print("\n=== Model 1: Age Only ===")
+X_train = pd.get_dummies(train[['age']])
+X_test = pd.get_dummies(test[['age']])
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, train['enjoys'])
+predictions = classifier.predict(X_test)
+
+print_clean_tree(classifier, X_train.columns)
+print_accuracy_metrics(predictions, test['enjoys'])
+
+# Model 2: Action Only
+print("\n=== Model 2: Action Preference Only ===")
+X_train = pd.get_dummies(train[['action']])
+X_test = pd.get_dummies(test[['action']])
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, train['enjoys'])
+predictions = classifier.predict(X_test)
+
+print_clean_tree(classifier, X_train.columns)
+print_accuracy_metrics(predictions, test['enjoys'])
+
+# Model 3: Both Features
+print("\n=== Model 3: Both Age and Action Preference ===")
+X_train = pd.get_dummies(train[['age', 'action']])
+X_test = pd.get_dummies(test[['age', 'action']])
+
+classifier = DecisionTreeClassifier()
+classifier.fit(X_train, train['enjoys'])
+predictions = classifier.predict(X_test)
+
+print_clean_tree(classifier, X_train.columns)
+print_accuracy_metrics(predictions, test['enjoys'])
