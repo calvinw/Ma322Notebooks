@@ -118,7 +118,8 @@ from sklearn.tree import DecisionTreeClassifier, export_text
 from sklearn.metrics import confusion_matrix
 
 # Training data goes here
-train = pd.read_csv('sustainable_athletic_train.csv')
+url = 'https://calvinw.github.io/Ma322Notebooks/sustainable_athletic_train.csv'
+train = pd.read_csv(url)
 
 print("Training Data Summary:")
 print(f"Number of records: {len(train)}")
@@ -140,7 +141,8 @@ print(train['gender'].value_counts(normalize=True))
 
 ```{python}
 # Testing data goes here
-test = pd.read_csv('sustainable_athletic_test.csv')
+url = 'https://calvinw.github.io/Ma322Notebooks/sustainable_athletic_test.csv'
+test = pd.read_csv(url)
 
 print("Testing Data Summary:")
 print(f"Number of records: {len(test)}")
