@@ -15,6 +15,7 @@ DataTypes.qmd \
 DataFrames.qmd \
 DecisionTree.qmd \
 Dicts.qmd \
+Ecofriendly.qmd \
 ForLoops.qmd \
 FStrings.qmd \
 HotChocolate.qmd \

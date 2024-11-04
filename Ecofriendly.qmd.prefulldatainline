@@ -1,0 +1,256 @@
+---
+title: "Eco-Friendly Athletic Wear - Decision Trees"
+---
+
+## Introduction
+We'll explore decision trees using real customer data from an eco-friendly athletic wear collection. This analysis will help understand which customer segments are most likely to purchase sustainable athletic wear products priced 30-40% higher than standard lines.
+
+## Scenario: EcoAthletic Online Shopping Analysis
+In October 2023, a major athletic wear retailer analyzed customer behavior for their 
+new sustainable athletic wear collection. This premium line features workout gear 
+made from recycled materials and eco-friendly production methods, priced 30-40% 
+higher than their standard lines.
+
+### Data Collection Method:
+- Tracked logged-in users who viewed sustainable collection items for >2 minutes
+- Collected through website analytics and customer account data
+- Data includes both desktop and mobile browsers
+- Time period: October 1-31, 2023
+- Total unique viewers: ~3000, Analysis sample: 400
+
+### Target Variable: 
+- Whether a viewer made any sustainable collection purchase within 7 days of browsing
+
+### Customer Data Available:
+- Gender: Male/Female (from account info)
+- Age Group: Young (18-35) / Adult (36+)
+- Marital Status: Married/Not Married
+- Has Children: Yes/No (derived from previous purchase history)
+
+### Data Split:
+- Training Data: 280 viewers from first 3 weeks
+- Testing Data: 120 viewers from final week
+
+```{python}
+def clean_tree_text(tree_text):
+    # Dictionary of all replacements
+    replacements = {
+        "gender_F <= 0.50": "Male?",
+        "gender_F >  0.50": "Female?",
+        "gender_M <= 0.50": "Female?",
+        "gender_M >  0.50": "Male?",
+        "has_kids_No <= 0.50": "Has Kids?",
+        "has_kids_No >  0.50": "No Kids?",
+        "has_kids_Yes <= 0.50": "No Kids?",
+        "has_kids_Yes >  0.50": "Has Kids?",
+        "age_Young <= 0.50": "Adult?",
+        "age_Young >  0.50": "Young?",
+        "age_Adult <= 0.50": "Young?",
+        "age_Adult >  0.50": "Adult?",
+        "married_Yes <= 0.50": "Not Married?",
+        "married_Yes >  0.50": "Married?",
+        "class:": ""
+    }
+    
+    # Apply all replacements
+    clean_text = tree_text
+    for old, new in replacements.items():
+        clean_text = clean_text.replace(old, new)
+    
+    return clean_text
+
+def print_clean_tree(classifier, columns):
+    tree_text = export_text(classifier, feature_names=list(columns))
+    print("\nDecision Tree:")
+    print(clean_tree_text(tree_text))
+
+def print_tree(classifier, columns):
+    tree_text = export_text(classifier, feature_names=list(columns))
+    print("\nDecision Tree:")
+    print(tree_text)
+```
+
+## The Training Data
+Our training dataset includes extensive customer data from our eco-friendly athletic wear collection:
+
+```{python}
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.metrics import confusion_matrix
+
+# Training data - full 200+ records
+train = pd.read_csv('sustainable_athletic_train.csv')
+print("Training Data Summary:")
+print(f"Number of records: {len(train)}")
+print("\nSample of training data (first 10 records):")
+print(train.head(10))
+
+# Print some basic statistics
+print("\nPurchase Rate in Training Data:")
+print(f"Purchase Rate: {(train['purchased'] == 'Yes').mean():.1%}")
+print("\nDemographic Breakdowns:")
+print("\nBy Age:")
+print(train['age'].value_counts(normalize=True))
+print("\nBy Gender:")
+print(train['gender'].value_counts(normalize=True))
+```
+
+## The Testing Data
+Our testing dataset, collected separately to validate our model:
+
+```{python}
+# Testing data - full 100+ records
+test = pd.read_csv('sustainable_athletic_test.csv')
+print("Testing Data Summary:")
+print(f"Number of records: {len(test)}")
+print("\nSample of testing data (first 10 records):")
+print(test.head(10))
+
+# Print some basic statistics
+print("\nPurchase Rate in Testing Data:")
+print(f"Purchase Rate: {(test['purchased'] == 'Yes').mean():.1%}")
+print("\nDemographic Breakdowns:")
+print("\nBy Age:")
+print(test['age'].value_counts(normalize=True))
+print("\nBy Gender:")
+print(test['gender'].value_counts(normalize=True))
+```
+
+## Building the Decision Tree Model
+
+```{python}
+# Build the model using all predictors
+X_train = pd.get_dummies(train[['age', 'gender', 'married', 'has_kids']])
+classifier = DecisionTreeClassifier(max_depth=3)
+classifier.fit(X_train, train['purchased'])
+
+# Make predictions
+X_test = pd.get_dummies(test[['age', 'gender', 'married', 'has_kids']])
+predictions = classifier.predict(X_test)
+
+# Print the decision tree
+print("\nDecision Tree for Sustainable Athletic Wear Purchase Prediction:")
+print_clean_tree(classifier, X_train.columns)
+
+
+
+# Print confusion matrix
+cm = confusion_matrix(test['purchased'], predictions)
+cm_df = pd.DataFrame(
+    cm,
+    index=['Actual: No Purchase', 'Actual: Purchased'],
+    columns=['Predicted: No Purchase', 'Predicted: Purchased']
+)
+print("\nConfusion Matrix (Testing Results):")
+print(cm_df)
+
+# Calculate and print accuracy
+correct = cm[0,0] + cm[1,1]
+total = cm[0,0] + cm[1,1] + cm[1,0] + cm[0,1]
+accuracy = correct/total
+print(f"\nModel Accuracy: {accuracy:.2%}")
+
+# Print feature importances
+importances = pd.DataFrame({
+    'feature': X_train.columns,
+    'importance': classifier.feature_importances_
+})
+print("\nFeature Importances (Which customer characteristics matter most):")
+print(importances.sort_values('importance', ascending=False))
+
+# Additional analysis of predictions
+test['predicted'] = predictions
+print("\nPurchase Prediction Rates by Demographic:")
+print("\nBy Age:")
+print(pd.crosstab(test['age'], test['predicted'], normalize='index'))
+print("\nBy Gender:")
+print(pd.crosstab(test['gender'], test['predicted'], normalize='index'))
+```
+
+[Decision Tree Diagram](https://www.mermaidchart.com/raw/d148f5ac-3181-4740-ae5a-e6542cce3623?theme=light&version=v0.1&format=svg)
+
+## Analysis and Business Insights
+
+### Data Overview and Model Performance
+The model achieved an 80.83% accuracy rate on the testing data, demonstrating strong predictive power. The confusion matrix shows 97 correct predictions (78 true negatives and 19 true positives) versus only 23 errors (16 false positives and 7 false negatives). This suggests the model is particularly good at identifying non-purchasers while maintaining reasonable accuracy for identifying likely buyers.
+
+### Key Purchase Patterns
+
+1. **Family Status and Gender Interaction**
+   - Having no children is the dominant predictor (70.6% importance)
+   - Females without children are predicted to purchase regardless of age
+   - The decision tree shows this is the strongest and clearest pattern
+   - Males without children show mixed patterns, with only unmarried males likely to purchase
+
+2. **Purchase Probability by Segment**
+   - Females show much higher purchase rates (46.7%) compared to males (11.7%)
+   - The presence of children generally predicts non-purchase across most segments
+   - Unmarried males without children form a distinct positive segment
+   - Single parents (particularly adults) show some positive purchase patterns
+
+3. **Demographic Insights**
+   - Child-free status is more critical than age for purchase decisions
+   - Gender plays a key role but mainly in combination with family status
+   - Marital status has limited importance (combined ~5%) except in specific combinations
+   - Age, while showing high importance (18.8%), is not a primary decision factor for females without children
+
+### Marketing Implications
+
+1. **Primary Target Segment: Child-Free Females**
+   - Target females without children across all age ranges
+   - Create messaging that resonates with child-free lifestyle choices
+   - Develop inclusive campaigns that appeal to both young and mature child-free women
+   - Focus on sustainability and personal investment in quality
+
+2. **Secondary Segments**
+   - Unmarried males without children
+   - Single parents, particularly adults
+   - Focus marketing messages on lifestyle rather than age
+   - Develop specific content for each secondary segment
+
+3. **Marketing Strategy**
+   - Create content celebrating child-free lifestyle choices
+   - Develop influencer partnerships featuring diverse age representations
+   - Focus on sustainability and personal wellness messaging
+   - Avoid age-specific targeting for female segments
+
+### Business Recommendations
+
+1. **Product Development**
+   - Create versatile collections suitable for child-free women of all ages
+   - Develop specific lines for identified secondary segments
+   - Focus on premium quality and sustainability features
+   - Consider size-inclusive options to maximize target market
+
+2. **Pricing and Promotion**
+   - Maintain premium pricing for core child-free segments
+   - Develop targeted promotions for secondary segments
+   - Create loyalty programs emphasizing sustainability impact
+   - Consider bundle options for price-sensitive segments like single parents
+
+3. **Customer Experience**
+   - Develop personalized shopping experiences based on lifestyle rather than age
+   - Create community features for sustainability-conscious customers
+   - Implement segment-specific communications
+   - Focus on inclusive messaging across age ranges
+
+### Future Considerations
+
+1. **Market Expansion**
+   - Research barriers to purchase among customers with children
+   - Explore product modifications for family-oriented segments
+   - Consider development of more accessible price points for broader appeal
+   - Investigate opportunities in the single parent market
+
+2. **Research and Development**
+   - Study specific preferences of child-free females across age ranges
+   - Analyze price sensitivity variations among segments
+   - Research brand perception across different lifestyle groups
+   - Investigate product feature preferences by segment
+
+3. **Data Enhancement**
+   - Track long-term purchase patterns of core segments
+   - Gather lifestyle preference data beyond basic demographics
+   - Monitor cross-category sustainable purchasing
+   - Analyze customer lifetime value by segment
+

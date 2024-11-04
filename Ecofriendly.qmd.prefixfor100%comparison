@@ -1,0 +1,660 @@
+---
+title: "Eco-Friendly Athletic Wear - Decision Trees"
+---
+
+## Introduction
+We'll explore decision trees using real customer data from an eco-friendly athletic wear collection. This analysis will help understand which customer segments are most likely to purchase sustainable athletic wear products priced 30-40% higher than standard lines.
+
+## Scenario: EcoAthletic Online Shopping Analysis
+In October 2023, a major athletic wear retailer analyzed customer behavior for their 
+new sustainable athletic wear collection. This premium line features workout gear 
+made from recycled materials and eco-friendly production methods, priced 30-40% 
+higher than their standard lines.
+
+### Data Collection Method:
+- Tracked logged-in users who viewed sustainable collection items for >2 minutes
+- Collected through website analytics and customer account data
+- Data includes both desktop and mobile browsers
+- Time period: October 1-31, 2023
+- Total unique viewers: ~3000, Analysis sample: 400
+
+### Target Variable: 
+- Whether a viewer made any sustainable collection purchase within 7 days of browsing
+
+### Customer Data Available:
+- Gender: Male/Female (from account info)
+- Age Group: Young (18-35) / Adult (36+)
+- Marital Status: Married/Not Married
+- Has Children: Yes/No (derived from previous purchase history)
+
+### Data Split:
+- Training Data: 280 viewers from first 3 weeks
+- Testing Data: 120 viewers from final week
+
+```{python}
+def clean_tree_text(tree_text):
+    # Dictionary of all replacements
+    replacements = {
+        "gender_F <= 0.50": "Male?",
+        "gender_F >  0.50": "Female?",
+        "gender_M <= 0.50": "Female?",
+        "gender_M >  0.50": "Male?",
+        "has_kids_No <= 0.50": "Has Kids?",
+        "has_kids_No >  0.50": "No Kids?",
+        "has_kids_Yes <= 0.50": "No Kids?",
+        "has_kids_Yes >  0.50": "Has Kids?",
+        "age_Young <= 0.50": "Adult?",
+        "age_Young >  0.50": "Young?",
+        "age_Adult <= 0.50": "Young?",
+        "age_Adult >  0.50": "Adult?",
+        "married_Yes <= 0.50": "Not Married?",
+        "married_Yes >  0.50": "Married?",
+        "class:": ""
+    }
+    
+    # Apply all replacements
+    clean_text = tree_text
+    for old, new in replacements.items():
+        clean_text = clean_text.replace(old, new)
+    
+    return clean_text
+
+def print_clean_tree(classifier, columns):
+    tree_text = export_text(classifier, feature_names=list(columns))
+    print("\nDecision Tree:")
+    print(clean_tree_text(tree_text))
+
+def print_tree(classifier, columns):
+    tree_text = export_text(classifier, feature_names=list(columns))
+    print("\nDecision Tree:")
+    print(tree_text)
+```
+
+## The Training Data
+Our training dataset includes extensive customer data from our eco-friendly athletic wear collection:
+
+```{python}
+import pandas as pd
+import numpy as np
+from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.metrics import confusion_matrix
+
+# Create training data
+train_data = '''
+gender,age,married,has_kids,purchased
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+M,Young,No,Yes,No
+M,Adult,Yes,Yes,Yes
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+F,Young,No,No,Yes
+F,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+M,Young,Yes,No,No
+F,Young,No,No,Yes
+M,Young,No,No,No
+F,Young,No,No,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,No,Yes,Yes
+M,Adult,Yes,Yes,No
+F,Young,No,Yes,No
+F,Young,No,Yes,No
+F,Young,Yes,No,Yes
+M,Young,No,No,Yes
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+M,Young,Yes,No,No
+F,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+F,Adult,Yes,Yes,No
+F,Young,No,No,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+F,Young,Yes,No,No
+F,Adult,No,Yes,Yes
+F,Young,No,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+M,Young,Yes,Yes,No
+M,Adult,No,Yes,Yes
+F,Adult,Yes,Yes,No
+M,Young,No,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,No,No,Yes
+F,Young,No,No,Yes
+M,Young,Yes,Yes,No
+F,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+F,Young,No,No,No
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,No,Yes
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,Yes
+F,Young,No,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+F,Adult,Yes,No,Yes
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,No,No,No
+F,Young,Yes,No,No
+M,Young,Yes,No,No
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,Yes
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,Yes
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+F,Young,No,No,No
+F,Young,Yes,No,Yes
+F,Adult,Yes,No,Yes
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+M,Young,No,No,No
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+F,Young,Yes,No,Yes
+F,Young,Yes,Yes,No
+M,Young,Yes,No,No
+M,Young,No,Yes,No
+F,Adult,Yes,No,Yes
+M,Young,No,Yes,No
+F,Young,No,No,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+F,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+M,Young,No,Yes,No
+F,Young,No,No,Yes
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,No,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+M,Young,No,No,No
+F,Young,No,No,Yes
+M,Young,Yes,No,No
+F,Young,No,No,Yes
+F,Adult,No,Yes,Yes
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+F,Young,No,No,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,No,No,Yes
+M,Young,No,Yes,No
+M,Young,No,No,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,No,Yes,No
+F,Young,No,No,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,Yes
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+F,Young,No,No,Yes
+M,Young,No,No,Yes
+M,Young,Yes,No,Yes
+F,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+M,Young,No,No,No
+F,Young,No,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,No,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+F,Young,No,No,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+F,Young,Yes,No,No
+F,Adult,Yes,Yes,No
+M,Young,No,No,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,No,No,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,No,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+F,Young,Yes,No,No
+M,Young,Yes,Yes,No
+M,Young,Yes,No,Yes
+F,Adult,Yes,Yes,No
+F,Young,No,No,No
+M,Young,Yes,No,Yes
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+M,Young,No,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+M,Adult,Yes,Yes,No
+M,Young,No,No,No
+F,Young,No,No,Yes
+M,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+F,Young,No,No,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Young,No,No,Yes
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+F,Young,No,Yes,No
+F,Young,Yes,Yes,No
+F,Young,No,No,Yes
+F,Young,No,No,Yes
+M,Young,No,No,No
+F,Young,No,No,Yes
+F,Adult,Yes,Yes,No
+M,Adult,Yes,No,Yes
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+F,Young,No,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,No,No,No
+M,Adult,Yes,Yes,No
+M,Young,No,Yes,No
+F,Adult,No,Yes,Yes
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,No,Yes
+M,Young,No,No,Yes
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,No,No,Yes
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+'''
+
+# Create testing data
+test_data = '''
+gender,age,married,has_kids,purchased
+F,Young,Yes,No,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,No,Yes,Yes
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,Yes
+F,Adult,Yes,Yes,No
+M,Young,Yes,No,Yes
+F,Adult,Yes,No,Yes
+M,Adult,Yes,Yes,No
+M,Young,No,Yes,No
+F,Young,No,No,Yes
+M,Young,No,Yes,No
+M,Young,Yes,No,No
+M,Young,No,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,No,Yes,No
+F,Young,No,No,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+M,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,No,No,No
+F,Young,No,No,Yes
+M,Young,No,Yes,No
+F,Adult,No,Yes,Yes
+M,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Young,No,No,No
+M,Adult,Yes,Yes,No
+F,Young,No,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+M,Young,Yes,No,No
+F,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+M,Adult,Yes,Yes,No
+F,Young,No,No,No
+F,Young,No,No,Yes
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+M,Young,Yes,Yes,No
+M,Adult,No,Yes,Yes
+M,Young,No,Yes,No
+F,Young,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Young,No,No,Yes
+F,Young,Yes,No,No
+F,Young,No,No,No
+M,Adult,Yes,Yes,No
+M,Young,Yes,No,No
+M,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+F,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+F,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+F,Young,No,No,No
+F,Young,No,No,No
+F,Young,Yes,Yes,No
+F,Young,No,No,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,No
+F,Adult,No,No,Yes
+F,Adult,Yes,Yes,No
+F,Young,Yes,No,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Young,Yes,No,Yes
+F,Young,No,No,Yes
+M,Young,No,No,Yes
+M,Adult,Yes,Yes,Yes
+F,Young,Yes,Yes,No
+M,Young,Yes,Yes,No
+F,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,No
+F,Adult,No,No,Yes
+F,Young,No,Yes,No
+M,Young,No,No,No
+M,Young,No,No,Yes
+M,Young,Yes,No,Yes
+M,Adult,Yes,Yes,No
+F,Young,No,Yes,No
+F,Young,No,No,Yes
+F,Young,No,No,Yes
+F,Adult,Yes,Yes,No
+F,Young,Yes,Yes,No
+F,Young,No,Yes,No
+F,Young,Yes,Yes,No
+M,Adult,Yes,Yes,No
+M,Adult,Yes,Yes,Yes
+M,Young,No,Yes,No
+M,Young,No,Yes,No
+F,Young,No,Yes,No
+M,Young,Yes,No,No
+M,Young,No,Yes,No
+'''  
+
+# Convert string data to DataFrames
+from io import StringIO
+train = pd.read_csv(StringIO(train_data))
+test = pd.read_csv(StringIO(test_data))
+
+print("Training Data Summary:")
+print(f"Number of records: {len(train)}")
+print("\nSample of training data (first 10 records):")
+print(train.head(10))
+
+# Print some basic statistics
+print("\nPurchase Rate in Training Data:")
+print(f"Purchase Rate: {(train['purchased'] == 'Yes').mean():.1%}")
+print("\nDemographic Breakdowns:")
+print("\nBy Age:")
+print(train['age'].value_counts(normalize=True))
+print("\nBy Gender:")
+print(train['gender'].value_counts(normalize=True))
+```
+
+## The Testing Data
+Our testing dataset, collected separately to validate our model:
+
+```{python}
+print("Testing Data Summary:")
+print(f"Number of records: {len(test)}")
+print("\nSample of testing data (first 10 records):")
+print(test.head(10))
+
+# Print some basic statistics
+print("\nPurchase Rate in Testing Data:")
+print(f"Purchase Rate: {(test['purchased'] == 'Yes').mean():.1%}")
+print("\nDemographic Breakdowns:")
+print("\nBy Age:")
+print(test['age'].value_counts(normalize=True))
+print("\nBy Gender:")
+print(test['gender'].value_counts(normalize=True))
+```
+
+## Understanding the DecisionTreeClassifier
+
+The DecisionTreeClassifier in scikit-learn builds the tree using the following process:
+
+1. It uses the CART (Classification and Regression Trees) algorithm
+2. At each node, it:
+   - Evaluates all possible splits on all features
+   - Calculates the Gini impurity (or entropy) for each potential split
+   - Chooses the split that maximizes information gain
+3. Key parameters affecting our model:
+   - max_depth=3 (limits tree to 3 levels to prevent overfitting)
+   - Default parameters:
+     - criterion='gini' (uses Gini impurity)
+     - min_samples_split=2 (minimum samples needed to split a node)
+     - min_samples_leaf=1 (minimum samples required at a leaf node)
+
+```{python}
+# Build the model using all predictors
+X_train = pd.get_dummies(train[['age', 'gender', 'married', 'has_kids']])
+classifier = DecisionTreeClassifier(max_depth=3)
+classifier.fit(X_train, train['purchased'])
+
+# Make predictions
+X_test = pd.get_dummies(test[['age', 'gender', 'married', 'has_kids']])
+predictions = classifier.predict(X_test)
+
+# Print the decision tree
+print("\nDecision Tree for Sustainable Athletic Wear Purchase Prediction:")
+print_clean_tree(classifier, X_train.columns)
+
+# Print confusion matrix
+cm = confusion_matrix(test['purchased'], predictions)
+cm_df = pd.DataFrame(
+    cm,
+    index=['Actual: No Purchase', 'Actual: Purchased'],
+    columns=['Predicted: No Purchase', 'Predicted: Purchased']
+)
+print("\nConfusion Matrix (Testing Results):")
+print(cm_df)
+
+# Calculate and print accuracy
+correct = cm[0,0] + cm[1,1]
+total = cm[0,0] + cm[1,1] + cm[1,0] + cm[0,1]
+accuracy = correct/total
+print(f"\nModel Accuracy: {accuracy:.2%}")
+
+# Print feature importances
+importances = pd.DataFrame({
+    'feature': X_train.columns,
+    'importance': classifier.feature_importances_
+})
+print("\nFeature Importances (Which customer characteristics matter most):")
+print(importances.sort_values('importance', ascending=False))
+
+# After making predictions, add this comparison code:
+
+print("\nComparison of Actual vs Predicted Purchase Rates")
+print("\n1. By Age Group:")
+
+# Calculate actual purchase rates
+age_actual = pd.DataFrame({
+    'Age': test['age'],
+    'Purchased': (test['purchased'] == 'Yes').astype(int)
+}).groupby('Age')['Purchased'].mean() * 100
+
+# Calculate predicted purchase rates
+age_predicted = pd.DataFrame({
+    'Age': test['age'],
+    'Predicted': predictions
+}).groupby('Age')['Predicted'].mean() * 100
+
+age_comparison = pd.DataFrame({
+    'Actual_Purchase_Rate': age_actual,
+    'Predicted_Purchase_Rate': age_predicted
+}).round(1)
+
+print("\nPurchase Rates (%):")
+print(age_comparison)
+
+print("\n2. By Gender:")
+# Calculate actual purchase rates
+gender_actual = pd.DataFrame({
+    'Gender': test['gender'],
+    'Purchased': (test['purchased'] == 'Yes').astype(int)
+}).groupby('Gender')['Purchased'].mean() * 100
+
+# Calculate predicted purchase rates
+gender_predicted = pd.DataFrame({
+    'Gender': test['gender'],
+    'Predicted': predictions
+}).groupby('Gender')['Predicted'].mean() * 100
+
+gender_comparison = pd.DataFrame({
+    'Actual_Purchase_Rate': gender_actual,
+    'Predicted_Purchase_Rate': gender_predicted
+}).round(1)
+
+print("\nPurchase Rates (%):")
+print(gender_comparison)
+```
+
+
+[Decision Tree Diagram](https://www.mermaidchart.com/raw/d148f5ac-3181-4740-ae5a-e6542cce3623?theme=light&version=v0.1&format=svg)
+
+## Analysis and Business Insights
+
+### Model Performance and Prediction Analysis
+
+The decision tree model achieved an 80.83% accuracy rate, but shows some systematic biases in its predictions:
+
+1. Age Group Predictions:
+   - Young Customers:
+     - Actual Purchase Rate: 29.3%
+     - Predicted Purchase Rate: 31.0%
+     - Slight overestimation (+1.7%)
+   - Adult Customers:
+     - Actual Purchase Rate: 20.7%
+     - Predicted Purchase Rate: 25.9%
+     - Moderate overestimation (+5.2%)
+
+2. Gender Predictions:
+   - Female Customers:
+     - Actual Purchase Rate: 28.3%
+     - Predicted Purchase Rate: 46.7%
+     - Substantial overestimation (+18.4%)
+   - Male Customers:
+     - Actual Purchase Rate: 22.4%
+     - Predicted Purchase Rate: 11.7%
+     - Significant underestimation (-10.7%)
+

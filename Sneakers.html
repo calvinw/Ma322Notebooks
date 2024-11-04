@@ -160,10 +160,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'adult'</span>, <span class="st">'adult'</span>, <span class="st">'adult'</span>, <span class="st">'adult'</span>, <span class="st">'adult'</span>, <span class="st">'adult'</span>, <span class="st">'adult'</span>, <span class="st">'adult'</span>, <span class="st">'adult'</span>, <span class="st">'adult'</span>],</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'athletic'</span>: [<span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>,</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>],</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'buys'</span>:     [<span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>,     <span class="co"># teens who buy athletic: 100% buy sneakers</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>,          <span class="co"># teens who don't buy athletic: 20% buy sneakers</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'yes'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>,          <span class="co"># adults who buy athletic: 20% buy sneakers</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>]           <span class="co"># adults who don't buy athletic: 0% buy sneakers</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'buys'</span>:     [<span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>, <span class="st">'yes'</span>,     </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'yes'</span>, <span class="st">'no'</span>,      </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'yes'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>,     </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>, <span class="st">'no'</span>]   </span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Training Data - What we'll use to teach our decision tree:"</span>)</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -278,9 +278,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Here's how our tree makes decisions based only on age:
 
 Decision Tree:
-|--- Adult?
-|   |---  no
 |--- Teen?
+|   |---  no
+|--- Adult?
 |   |---  no
 
 
@@ -292,7 +292,6 @@ Actual: Purchase                          4                    0
 Accuracy: 66.67%</code></pre>
 </div>
 </div>
-<p>EV</p>
 </section>
 <section id="model-2-athletic-purchase-history-only-tree" class="level2">
 <h2 class="anchored" data-anchor-id="model-2-athletic-purchase-history-only-tree">Model 2: Athletic Purchase History Only Tree</h2>
@@ -339,9 +338,9 @@ Accuracy: 66.67%</code></pre>
 Here's how our tree makes decisions based only on athletic wear purchases:
 
 Decision Tree:
-|--- Buys athletic?
-|   |---  no
 |--- Doesn't buy athletic?
+|   |---  no
+|--- Buys athletic?
 |   |---  no
 
 
@@ -372,15 +371,15 @@ Accuracy: 66.67%</code></pre>
 <pre><code>Here's how our tree makes decisions using both age and athletic wear purchases:
 
 Decision Tree:
-|--- Doesn't buy athletic?
-|   |--- Adult?
-|   |   |---  no
-|   |--- Teen?
-|   |   |---  no
-|--- Buys athletic?
-|   |--- Teen?
+|--- Teen?
+|   |--- Buys athletic?
 |   |   |---  yes
-|   |--- Adult?
+|   |--- Doesn't buy athletic?
+|   |   |---  no
+|--- Adult?
+|   |--- Doesn't buy athletic?
+|   |   |---  no
+|   |--- Buys athletic?
 |   |   |---  no
 
 

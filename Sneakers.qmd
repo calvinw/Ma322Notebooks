@@ -67,10 +67,10 @@ train = pd.DataFrame({
                  'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult', 'adult'],
     'athletic': ['yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no',
                  'yes', 'yes', 'yes', 'yes', 'yes', 'no', 'no', 'no', 'no', 'no'],
-    'buys':     ['no', 'no', 'yes', 'yes', 'yes',     # teens who buy athletic: 100% buy sneakers
-                 'no', 'no', 'no', 'yes', 'no',          # teens who don't buy athletic: 20% buy sneakers
-                 'yes', 'no', 'no', 'no', 'no',          # adults who buy athletic: 20% buy sneakers
-                 'no', 'no', 'no', 'no', 'no']           # adults who don't buy athletic: 0% buy sneakers
+    'buys':     ['no', 'no', 'yes', 'yes', 'yes',     
+                 'no', 'no', 'no', 'yes', 'no',      
+                 'yes', 'no', 'no', 'no', 'no',     
+                 'no', 'no', 'no', 'no', 'no']   
 })
 print("Training Data - What we'll use to teach our decision tree:")
 print(train)
@@ -120,8 +120,6 @@ print("Here's how our tree makes decisions based only on age:")
 print_clean_tree(classifier, X_train.columns)
 print_accuracy_metrics(predictions, test['buys'])
 ```
-
-EV
 
 ## Model 2: Athletic Purchase History Only Tree
 Now let's try predicting based only on whether customers buy athletic wear:
