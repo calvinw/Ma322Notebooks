@@ -343,39 +343,33 @@ Decision Tree for Sustainable Athletic Wear Purchase Prediction:
 
 Decision Tree:
 |--- No Kids?
-|   |--- Female?
-|   |   |--- Young?
+|   |--- Male?
+|   |   |--- Not Married?
 |   |   |   |---  Yes
+|   |   |--- Married?
+|   |   |   |---  No
+|   |--- Female?
 |   |   |--- Adult?
 |   |   |   |---  Yes
-|   |--- Male?
-|   |   |--- married_No &lt;= 0.50
-|   |   |   |---  No
-|   |   |--- married_No &gt;  0.50
+|   |   |--- Young?
 |   |   |   |---  Yes
 |--- Has Kids?
-|   |--- married_No &lt;= 0.50
-|   |   |--- Male?
-|   |   |   |---  No
-|   |   |--- Female?
-|   |   |   |---  No
-|   |--- married_No &gt;  0.50
-|   |   |--- Young?
-|   |   |   |---  No
+|   |--- Not Married?
 |   |   |--- Adult?
 |   |   |   |---  Yes
+|   |   |--- Young?
+|   |   |   |---  No
+|   |--- Married?
+|   |   |--- Female?
+|   |   |   |---  No
+|   |   |--- Male?
+|   |   |   |---  No
 </code></pre>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://www.mermaidchart.com/raw/d148f5ac-3181-4740-ae5a-e6542cce3623?theme=light&amp;version=v0.1&amp;format=svg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Decision Tree Diagram</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="EcofriendlyTree.png" class="img-fluid figure-img"></p>
+<p><img src="https://calvinw.github.io/Ma322Notebooks/EcofriendlyTree.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">EcofriendlyTree PNG</figcaption>
 </figure>
 </div>
@@ -436,12 +430,12 @@ Model Accuracy: 80.83%</code></pre>
 Feature Importances (Which customer characteristics matter most):
         feature  importance
 7  has_kids_Yes    0.706382
-0     age_Adult    0.188223
-4    married_No    0.052946
-3      gender_M    0.052168
-2      gender_F    0.000281
-1     age_Young    0.000000
-5   married_Yes    0.000000
+1     age_Young    0.188223
+5   married_Yes    0.052946
+2      gender_F    0.052168
+3      gender_M    0.000281
+0     age_Adult    0.000000
+4    married_No    0.000000
 6   has_kids_No    0.000000</code></pre>
 </div>
 </div>
