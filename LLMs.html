@@ -248,23 +248,25 @@ Provider: OpenRouter AI</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible, giving
-the sky its characteristic color during the day.</code></pre>
+wavelengths, making the sky look blue to our eyes. This effect is more
+pronounced when the sun is high in the sky.</code></pre>
 </div>
 </div>
-<p>Sometimes its nice to print out the prompt and the response when we are working like this. We can use the function <code>print_prompt_and_response</code> and pass it the prompt and the response we got from the <code>get_completion</code> function.</p>
+<p>Sometimes its nice to print out the prompt and the response when we are working like this. We can use the <code>print</code> function for this:</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Why is the sky blue? In 50 words or less.
-
-Response: 
+Response:
 The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible, giving
-the sky its characteristic color during the day.</code></pre>
+wavelengths. This scattering causes the blue light to be more visible, making
+the sky look blue during the day.</code></pre>
 </div>
 </div>
 </section>
@@ -312,15 +314,15 @@ Earth's atmosphere, shorter blue wavelengths scatter more than longer red
 wavelengths. This scattering causes the blue light to be more visible, making
 the sky look blue during the day.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
-atmosphere, shorter blue wavelengths scatter more than longer red wavelengths.
-This scattering causes the blue light to be more visible, making the sky look
-blue during the day.
+The sky appears blue due to Rayleigh scattering. When sunlight enters the
+Earth's atmosphere, shorter blue wavelengths scatter more than longer red
+wavelengths. This scattering causes the blue light to be more visible, making
+the sky look blue during the day.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
-atmosphere, shorter blue wavelengths scatter more than longer red wavelengths.
-This scattering causes the blue light to be more visible, making the sky look
-blue during the day.
+The sky appears blue due to Rayleigh scattering. When sunlight enters the
+Earth's atmosphere, shorter blue wavelengths scatter more than longer red
+wavelengths. This scattering causes the blue light to be more visible, making
+the sky look blue during the day.
 ------</code></pre>
 </div>
 </div>
@@ -343,18 +345,18 @@ blue during the day.
 <div class="cell-output cell-output-stdout">
 <pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths, making the sky look blue to our eyes. This effect is more
-pronounced when the sun is higher in the sky.
+wavelengths, causing the sky to look blue to our eyes. This effect is more
+pronounced when the sun is high in the sky.
+------
+The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
+atmosphere, shorter blue wavelengths scatter more than longer red wavelengths.
+This scattering causes the blue light to spread across the sky, making it
+predominantly blue to our eyes during the day.
 ------
 The sky appears blue due to Rayleigh scattering. Sunlight, which contains all
-colors, scatters more blue light when it passes through the Earth's atmosphere.
-This scattering causes the blue wavelengths to spread across the sky, making it
-look blue to our eyes, especially when the sun is high.
-------
-The sky appears blue due to Rayleigh scattering. Sunlight, which contains
-multiple colors, scatters more in shorter wavelengths (blue) when it passes
-through the Earth's atmosphere. This scattering causes the blue light to be more
-prominent, making the sky look blue during the day.
+colors, scatters more in shorter wavelengths (blue) as it passes through the
+Earth's atmosphere. This scattering causes the blue light to be more visible,
+giving the sky its characteristic color during the day.
 ------</code></pre>
 </div>
 </div>
@@ -374,20 +376,21 @@ prominent, making the sky look blue during the day.
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The sky appears blue due to Rayleigh scattering, where shorter blue wavelengths
-of sunlight scatter more than other colors when they interact with atmospheric
-molecules. When sunlight passes through the atmosphere, blue light is scattered
-in all directions, making the sky look blue to our eyes.
+<pre><code>The sky appears blue due to Rayleigh scattering. Sunlight, composed of various
+colors, interacts with Earth's atmosphere. Shorter blue wavelengths scatter more
+than other colors, making the sky predominantly blue. During sunrise and sunset,
+longer wavelengths, like red and orange, become more prominent, creating vibrant
+colors.
 ------
-The sky appears blue due to Rayleigh scattering. Sunlight, which contains
-various colors, is scattered in all directions by molecules in the atmosphere.
-Blue light is scattered more than other colors because it travels in shorter,
-smaller waves, making the sky predominantly blue during the day.
+The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
+atmosphere, shorter blue wavelengths scatter more than longer red wavelengths,
+causing the sky to look blue during the day. The effect is more pronounced when
+the sun is low, resulting in reddish hues during sunrise and sunset.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters the
-Earth's atmosphere, shorter blue wavelengths scatter more than longer
-wavelengths. This scattering causes the direct sunlight to appear less blue,
-while the surrounding sky takes on a blue hue, especially when the sun is high.
+The sky appears blue due to Rayleigh scattering. Sunlight consists of various
+colors, and blue light has shorter wavelengths. When sunlight passes through
+Earth's atmosphere, blue wavelengths scatter more than other colors, making the
+sky look predominantly blue to our eyes, especially when the sun is high.
 ------</code></pre>
 </div>
 </div>
@@ -403,12 +406,14 @@ while the surrounding sky takes on a blue hue, especially when the sun is high.
 <div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(what<span class="op">=</span><span class="st">"cars"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Recommend a name for a company that makes cars
-
-Response: 
+Response:
 Here are some name suggestions for a car manufacturing company:
 
 1. **Velocity Motors**
@@ -433,19 +438,21 @@ for your company!</code></pre>
 <div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(what<span class="op">=</span><span class="st">"books"</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Recommend a name for a company that makes books
-
-Response: 
+Response:
 Here are some name ideas for a company that makes books:
 
-1. **PageTurner Press**
-2. **Boundless Books**
+1. **Boundless Books**
+2. **PageTurner Press**
 3. **Ink &amp; Imagination**
 4. **StoryCraft Publishing**
-5. **Literary Lane**
+5. **Literary Loom**
 6. **Quill &amp; Quire**
 7. **Narrative Nest**
 8. **Epic Editions**
@@ -466,12 +473,14 @@ for your company!</code></pre>
 <div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">3</span>, what<span class="op">=</span><span class="st">"cars"</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Recommend 3 names for a company that makes cars
-
-Response: 
+Response:
 Sure! Here are three name suggestions for a car manufacturing company:
 
 1. **Velocity Motors** - Emphasizes speed and innovation in automotive design.
@@ -494,13 +503,15 @@ Feel free to mix and match or modify these names to better suit your vision!</co
 <div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(num<span class="op">=</span><span class="dv">3</span>, what<span class="op">=</span><span class="st">"cars"</span>, <span class="bu">format</span><span class="op">=</span><span class="st">"A bulleted list using upper case"</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt, response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Recommend 3 names for a company that makes cars.
 Give your answer in A bulleted list using upper case
-
-Response: 
+Response:
 - VELOCITY MOTORS
 - INNOVATE AUTOMOTIVE
 - ELEVATE CARS</code></pre>

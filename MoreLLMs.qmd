@@ -34,7 +34,10 @@ print(response)
 ```{python}
 # __REGULAR_BLOCK__ 
 response = get_completion(prompt)
-print_prompt_and_response(prompt,response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 
 ## Calling an LLM with `temperature=0.0`
@@ -107,7 +110,7 @@ __Problem__:
 
 - Evaluate your template with `place="Texas"`
 - Call `get_completion` to get the response from the LLM
-- print the response using `print_prompt_and_response`
+- print the prompt and response using `print`
 
 ```{python}
 prompt=template.format(CODE)
@@ -115,8 +118,11 @@ prompt=template.format(CODE)
 # Call the LLM by passing the prompt to get_completion
 response=get_completion(CODE)
 
-# Print the response
-print_prompt_and_response(prompt,response)
+# Print the prompt and response
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 ```{python}
 # __SOLUTION__
@@ -125,8 +131,11 @@ prompt=template.format(place="Texas")
 # Call the LLM by passing the prompt to get_completion
 response=get_completion(prompt)
 
-# Print the response
-print_prompt_and_response(prompt,response)
+# Print the prompt and response
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 
 ## Adding a Variable Called `num`
@@ -173,14 +182,17 @@ response = get_completion(prompt)
 
 __Problem__:  
 
-- Use `print_prompt_and_response` to print out the prompt and completion.
+- Use `print` to print out the prompt and the response 
 
 ```{python}
 CODE
 ```
 ```{python}
 # __SOLUTION__
-print_prompt_and_response(prompt,response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 
 ## Ask To Format the Response
@@ -198,9 +210,12 @@ template = CODE
 # Evaluate the template using place="Texas" and num=3 and format="upper case"
 prompt=template.format(CODE)
 
-# Call get_completion and get the response, then print it.
+# Call get_completion and get the response, then print the prompt and response.
 response = get_completion(prompt)
-print_prompt_and_response(prompt,response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 ```{python}
 # __SOLUTION__
@@ -213,5 +228,8 @@ prompt=template.format(place="Texas", num=3, format="uppercase")
 
 # Call get_completion and get the response, then print it.
 response = get_completion(prompt)
-print_prompt_and_response(prompt,response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```

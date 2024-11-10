@@ -15,7 +15,7 @@ __Problem__:
 Define a string called `template` that asks for the capital of a place. Use the template variable `{place}`
 
 ```{python}
-CODE
+template=CODE
 ```
 ```{python}
 # __SOLUTION__

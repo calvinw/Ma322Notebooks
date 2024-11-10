@@ -26,12 +26,14 @@ print(response)
 ```
 
 Sometimes its nice to print out the prompt and the response when we are working
-like this. We can use the function `print_prompt_and_response` and pass it the
-prompt and the response we got from the `get_completion` function.
+like this. We can use the `print` function for this: 
 
 ```{python}
 response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 
 ## Calling an LLM with the `temperature`
@@ -127,7 +129,10 @@ Lets set that up and call it with `what="cars"`:
 ```{python}
 prompt=template.format(what="cars")
 response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 
 ## Change the template variable `{what}`
@@ -137,7 +142,10 @@ Let's call the LLM using `what="books"` as the template variable.
 ```{python}
 prompt=template.format(what="books")
 response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 
 ## Add A Template Variable `{num}`
@@ -151,7 +159,10 @@ Lets call it with `num=3` and `what="cars"`:
 ```{python}
 prompt=template.format(num=3, what="cars")
 response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```
 
 ### Add a Template Variable `{format}`
@@ -168,5 +179,8 @@ Call the LLM:
 ```{python}
 prompt=template.format(num=3, what="cars", format="A bulleted list using upper case")
 response = get_completion(prompt)
-print_prompt_and_response(prompt, response)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
 ```

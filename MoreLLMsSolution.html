@@ -254,9 +254,9 @@ Provider: OpenRouter AI</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She encourages creativity through diverse roles and careers,
-inspiring children to dream big. Barbie's evolving image reflects societal
-changes, promoting inclusivity and self-expression. Nostalgia also plays a role,
-as many adults cherish memories of playing with Barbie dolls.</code></pre>
+inspiring children to dream big. Barbie's evolution reflects societal changes,
+promoting inclusivity and self-expression. Nostalgia also plays a role, as many
+adults cherish memories of playing with Barbie dolls.</code></pre>
 </div>
 </div>
 <ul>
@@ -264,17 +264,19 @@ as many adults cherish memories of playing with Barbie dolls.</code></pre>
 </ul>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Why do people like Barbie? 50 words please
-
-Response: 
+Response:
 People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She encourages creativity through diverse roles and careers,
-inspiring children to dream big. Barbie's evolving image reflects societal
-changes, promoting inclusivity and self-expression. Nostalgia also plays a role,
-as many adults cherish memories of playing with Barbie dolls.</code></pre>
+inspiring children to dream big. Barbie's evolution reflects societal changes,
+promoting inclusivity and self-expression. Nostalgia also plays a role, as many
+adults cherish memories of playing with Barbie dolls.</code></pre>
 </div>
 </div>
 </section>
@@ -313,7 +315,7 @@ as many adults cherish memories of playing with Barbie dolls.
 People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She embodies diverse careers and lifestyles, inspiring creativity
 in children. Barbie's ability to evolve with societal changes, along with her
-strong brand presence, fosters nostalgia and connection for many, making her a
+strong brand presence, fosters nostalgia and connection for adults, making her a
 beloved figure across generations.
  
 People like Barbie for her iconic status, representing empowerment, fashion, and
@@ -345,25 +347,24 @@ as many adults cherish memories of playing with Barbie dolls.</code></pre>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>People like Barbie for various reasons, including nostalgia, empowerment, and
-creativity. The iconic doll represents diverse careers and body types, inspiring
-imagination and self-expression. Barbie's ability to adapt over decades,
-reflecting societal changes, resonates with fans. Additionally, her cultural
-impact and collaborations keep her relevant and beloved across generations.
+<pre><code>People like Barbie for her versatility, representing various careers, cultures,
+and lifestyles, which inspires creativity and imagination. She promotes
+empowerment, encouraging children to envision limitless possibilities. Nostalgia
+also plays a role, as many recall fond memories of playing with Barbie.
+Additionally, her evolving image reflects societal changes, appealing to diverse
+audiences.
  
-People enjoy Barbie for her versatility and empowerment, as she represents
-various careers and lifestyles, inspiring creativity in play. The brand’s
-nostalgic appeal attracts adults, while its modern, inclusive designs resonate
-with children. Barbie fosters imagination, encourages self-expression, and
-promotes positive messages about diversity and ambition, making her a beloved
-icon.
+People like Barbie for her versatility and cultural significance. She represents
+empowerment, encouraging imagination and creativity in children. The diverse
+range of dolls promotes inclusivity and self-expression. Nostalgia plays a role
+for adults, while Barbie's fashion and lifestyle appeal resonate across
+generations, making her an enduring icon in popular culture.
  
-People like Barbie for her embodiment of imagination and empowerment. She
-encourages creativity through diverse roles and professions, inspiring children
-to dream big. Barbie's evolving representation promotes inclusivity and self-
-expression, allowing individuals to see themselves in her. Nostalgia, fashion,
-and cultural relevance also contribute to her enduring popularity across
-generations.</code></pre>
+People like Barbie for her iconic status, representing empowerment, fashion, and
+imagination. She embodies diverse roles and professions, inspiring creativity
+and self-expression. Barbie's ability to adapt over decades resonates with
+various generations, making her a timeless figure in popular culture. Her appeal
+lies in the combination of nostalgia and modernity.</code></pre>
 </div>
 </div>
 </section>
@@ -384,7 +385,7 @@ generations.</code></pre>
 <ul>
 <li>Evaluate your template with <code>place="Texas"</code></li>
 <li>Call <code>get_completion</code> to get the response from the LLM</li>
-<li>print the response using <code>print_prompt_and_response</code></li>
+<li>print the prompt and response using <code>print</code></li>
 </ul>
 <div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
@@ -392,8 +393,11 @@ generations.</code></pre>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the LLM by passing the prompt to get_completion</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(CODE)</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the response</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the prompt and response</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
@@ -402,13 +406,15 @@ generations.</code></pre>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the LLM by passing the prompt to get_completion</span></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the response</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the prompt and response</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Can you tell me the capital of Texas?
-
-Response: 
+Response:
 The capital of Texas is Austin.</code></pre>
 </div>
 </div>
@@ -451,33 +457,35 @@ The capital of Texas is Austin.</code></pre>
 </div>
 <p><strong>Problem</strong>:</p>
 <ul>
-<li>Use <code>print_prompt_and_response</code> to print out the prompt and completion.</li>
+<li>Use <code>print</code> to print out the prompt and the response</li>
 </ul>
 <div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>CODE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Can you tell me the capital of Texas and give me 3 simple
 facts about it?
-
-Response: 
+Response:
 The capital of Texas is Austin. Here are three simple facts about it:
 
-1. **Music Scene**: Austin is known as the "Live Music Capital of the World" due
-to its vibrant music scene and numerous live music venues, including the famous
-South by Southwest (SXSW) festival.
+1. **Music Capital**: Austin is known as the "Live Music Capital of the World"
+due to its vibrant music scene and numerous live music venues, including the
+famous South by Southwest (SXSW) festival.
 
-2. **University of Texas**: The city is home to the University of Texas at
-Austin, one of the largest and most prestigious universities in the United
-States, which contributes significantly to the city's culture and economy.
+2. **University City**: It is home to the University of Texas at Austin, one of
+the largest and most prestigious universities in the United States, which
+contributes to the city's youthful and dynamic atmosphere.
 
-3. **Green Spaces**: Austin boasts many parks and outdoor spaces, including
-Zilker Park and Lady Bird Lake, making it a great place for outdoor activities
-like hiking, biking, and kayaking.</code></pre>
+3. **Green Spaces**: Austin is known for its beautiful parks and outdoor spaces,
+including Zilker Park and Lady Bird Lake, which offer opportunities for hiking,
+biking, and water activities.</code></pre>
 </div>
 </div>
 </section>
@@ -495,9 +503,12 @@ like hiking, biking, and kayaking.</code></pre>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Evaluate the template using place="Texas" and num=3 and format="upper case"</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>prompt<span class="op">=</span>template.<span class="bu">format</span>(CODE)</span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print the prompt and response.</span></span>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Solution:</span></span>
@@ -510,21 +521,22 @@ like hiking, biking, and kayaking.</code></pre>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Call get_completion and get the response, then print it.</span></span>
 <span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>print_prompt_and_response(prompt,response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Prompt: 
+<pre><code>Prompt:
 Can you tell me the capital of Texas and give me 3 simple
 facts about it?. Format the facts using uppercase
-
-Response: 
+Response:
 The capital of Texas is Austin. Here are three simple facts about it:
 
-1. AUSTIN IS KNOWN AS THE "LIVE MUSIC CAPITAL OF THE WORLD" DUE TO ITS VIBRANT
-MUSIC SCENE.
+1. AUSTIN IS KNOWN AS THE "LIVE MUSIC CAPITAL OF THE WORLD."
 2. AUSTIN IS HOME TO THE UNIVERSITY OF TEXAS, ONE OF THE LARGEST UNIVERSITIES IN
-THE UNITED STATES.
-3. AUSTIN HOSTS THE ANNUAL SOUTH BY SOUTHWEST (SXSW) FESTIVAL, WHICH CELEBRATES
-FILM, MUSIC, AND INTERACTIVE MEDIA.</code></pre>
+THE U.S.
+3. AUSTIN HAS A THRIVING TECH INDUSTRY AND IS OFTEN REFERRED TO AS "SILICON
+HILLS."</code></pre>
 </div>
 </div>
 </section>
