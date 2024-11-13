@@ -13,54 +13,66 @@ First, let's read in the data using pandas:
 ```{python}
 import pandas as pd
 
+# Set display options to show full text in columns
+pd.set_option('display.max_colwidth', None)  # Show full text in columns
+pd.set_option('display.max_rows', None)      # Show all rows
+pd.set_option('display.width', None)         # Don't wrap wide displays
+
 dresses = pd.read_csv('https://calvinw.github.io/Ma322Notebooks/hm-dresses-100.csv')
 ```
 
-Let's explore the data frame:
+Let's explore the data frame. Run the cells below to get a look at some aspects of the data
 
-## Print first few rows to get an overview
+### Print first few rows to get an overview
 
 ```{python}
 print(dresses.head())
 ```
 
-## Check what columns are available and their data types
+### Check what columns are available and their data types
 ```{python}
 print(dresses.dtypes)
 ```
 
-## Look at detailed descriptions for first 3 dresses
+### Look at detailed descriptions for first 3 dresses
 ```{python}
 print(dresses['detail_desc'].head(3))
 ```
 
+### Print out all the detailed descriptions 
 ```{python}
-# See what departments sell dresses
+print(dresses['detail_desc'])
+```
+
+### See what departments sell dresses
+```{python}
 print(dresses['department_name'].unique())
 ```
 
+### Check how many different color groups exist
 ```{python}
-# Check how many different color groups exist
 print(dresses['colour_group_name'].unique())
 ```
 
+### Look at all colors available for the Alcazar strap dress
 ```{python}
-# Look at all colors available for the Alcazar strap dress
 alcazar_dresses = dresses[dresses['prod_name'] == 'Alcazar strap dress']
 print(alcazar_dresses['colour_group_name'])
 ```
 
+### Find dresses that are dark blue
 ```{python}
-# Find dresses that are dark blue
 dark_blue = dresses[(dresses['perceived_colour_value_name'] == 'Dark') & 
                     (dresses['colour_group_name'] == 'Blue')]
 print(dark_blue[['prod_name', 'colour_group_name', 'perceived_colour_value_name']])
 ```
 
+### Look at different patterns/textures available
 ```{python}
-# Look at different patterns/textures available
 print(dresses['graphical_appearance_name'].unique())
 ```
+
+Now try to answer this questions.
 
 __Questions for Analysis__:
 

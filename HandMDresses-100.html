@@ -102,12 +102,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dresses <span class="op">=</span> pd.read_csv(<span class="st">'https://calvinw.github.io/Ma322Notebooks/hm-dresses-100.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set display options to show full text in columns</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_colwidth'</span>, <span class="va">None</span>)  <span class="co"># Show full text in columns</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="va">None</span>)      <span class="co"># Show all rows</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.width'</span>, <span class="va">None</span>)         <span class="co"># Don't wrap wide displays</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>dresses <span class="op">=</span> pd.read_csv(<span class="st">'https://calvinw.github.io/Ma322Notebooks/hm-dresses-100.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s explore the data frame:</p>
-</section>
-<section id="print-first-few-rows-to-get-an-overview" class="level2">
-<h2 class="anchored" data-anchor-id="print-first-few-rows-to-get-an-overview">Print first few rows to get an overview</h2>
+<p>Let’s explore the data frame. Run the cells below to get a look at some aspects of the data</p>
+<section id="print-first-few-rows-to-get-an-overview" class="level3">
+<h3 class="anchored" data-anchor-id="print-first-few-rows-to-get-an-overview">Print first few rows to get an overview</h3>
 <div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -146,19 +150,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 3         51          Divided Basics             1002        Jersey Basic   
 4         51          Divided Basics             1002        Jersey Basic   
 
-                                         detail_desc  
-0  Short, fine-knit dress with a hood, waterfall ...  
-1  Short-sleeved dress in slub jersey with an ela...  
-2  Long, sleeveless dress in jersey with narrow s...  
-3  Long, sleeveless dress in jersey with narrow s...  
-4  Long, sleeveless dress in jersey with narrow s...  
+                                                                                                   detail_desc  
+0                            Short, fine-knit dress with a hood, waterfall neckline and long sleeves. Unlined.  
+1                               Short-sleeved dress in slub jersey with an elasticated waist and side pockets.  
+2  Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.  
+3  Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.  
+4  Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.  
 
 [5 rows x 25 columns]</code></pre>
 </div>
 </div>
 </section>
-<section id="check-what-columns-are-available-and-their-data-types" class="level2">
-<h2 class="anchored" data-anchor-id="check-what-columns-are-available-and-their-data-types">Check what columns are available and their data types</h2>
+<section id="check-what-columns-are-available-and-their-data-types" class="level3">
+<h3 class="anchored" data-anchor-id="check-what-columns-are-available-and-their-data-types">Check what columns are available and their data types</h3>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -191,20 +195,131 @@ dtype: object</code></pre>
 </div>
 </div>
 </section>
-<section id="look-at-detailed-descriptions-for-first-3-dresses" class="level2">
-<h2 class="anchored" data-anchor-id="look-at-detailed-descriptions-for-first-3-dresses">Look at detailed descriptions for first 3 dresses</h2>
+<section id="look-at-detailed-descriptions-for-first-3-dresses" class="level3">
+<h3 class="anchored" data-anchor-id="look-at-detailed-descriptions-for-first-3-dresses">Look at detailed descriptions for first 3 dresses</h3>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses[<span class="st">'detail_desc'</span>].head(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0    Short, fine-knit dress with a hood, waterfall ...
-1    Short-sleeved dress in slub jersey with an ela...
-2    Long, sleeveless dress in jersey with narrow s...
+<pre><code>0                              Short, fine-knit dress with a hood, waterfall neckline and long sleeves. Unlined.
+1                                 Short-sleeved dress in slub jersey with an elasticated waist and side pockets.
+2    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
 Name: detail_desc, dtype: object</code></pre>
 </div>
 </div>
+</section>
+<section id="print-out-all-the-detailed-descriptions" class="level3">
+<h3 class="anchored" data-anchor-id="print-out-all-the-detailed-descriptions">Print out all the detailed descriptions</h3>
 <div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See what departments sell dresses</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses[<span class="st">'department_name'</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses[<span class="st">'detail_desc'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0                                                                                                                                                                              Short, fine-knit dress with a hood, waterfall neckline and long sleeves. Unlined.
+1                                                                                                                                                                                 Short-sleeved dress in slub jersey with an elasticated waist and side pockets.
+2                                                                                                                                                    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+3                                                                                                                                                    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+4                                                                                                                                                    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+5                                                                                                                                                    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+6                                                                                                                                                    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+7                                                                                                                                                    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+8                                                                                                                                                    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+9                                                                                                                                                    Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+10                                                                                                                                                   Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+11                                                                                                                                                   Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+12                                                                                                                                                   Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+13                                                                                                                                                   Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+14                                                                                                                                                   Long, sleeveless dress in jersey with narrow shoulder straps and an elasticated seam at the waist. Unlined.
+15                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+16                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+17                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+18                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+19                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+20                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+21                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+22                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+23                                                                                                                       Strapless maxi dress in jersey with an elasticated seam at the waist and slits in the sides. Integral top with elastication at the top.
+24                                                                                                                                                                                                            Short-sleeved dress in soft organic cotton jersey.
+25                                                                                                                                                                                                            Short-sleeved dress in soft organic cotton jersey.
+26                                                                                                                                                                                                            Short-sleeved dress in soft organic cotton jersey.
+27                                                                                                                                                                                                            Short-sleeved dress in soft organic cotton jersey.
+28                                                                                                                                                                                                            Short-sleeved dress in soft organic cotton jersey.
+29                                                                                                                                                                                                            Short-sleeved dress in soft organic cotton jersey.
+30                                                                                                                                                                                                            Short-sleeved dress in soft organic cotton jersey.
+31                                                                                                                                                                                                                    Fitted, sleeveless dress in ribbed jersey.
+32                                                                                                                                                                                                                    Fitted, sleeveless dress in ribbed jersey.
+33                                                                                                                                                                                                                    Fitted, sleeveless dress in ribbed jersey.
+34                                                                                                                                                                                                                    Fitted, sleeveless dress in ribbed jersey.
+35                                                                                                                                                                                                                    Fitted, sleeveless dress in ribbed jersey.
+36                                                                                                                                                                                                                    Fitted, sleeveless dress in ribbed jersey.
+37                                                                                                                                                                                                  Long-sleeved dress in soft, patterned organic cotton jersey.
+38                                                                                                                                                                                                  Long-sleeved dress in soft, patterned organic cotton jersey.
+39                                                                                                                                                                                                  Long-sleeved dress in soft, patterned organic cotton jersey.
+40                                                                                                                                                                                                  Long-sleeved dress in soft, patterned organic cotton jersey.
+41                                                                                                                                                                                                  Long-sleeved dress in soft, patterned organic cotton jersey.
+42                                                                                                                                                                                                  Long-sleeved dress in soft, patterned organic cotton jersey.
+43                                                                                                                                                                                                  Long-sleeved dress in soft, patterned organic cotton jersey.
+44                                                                                                                                                                     Strapless jersey dress with an elasticated waist. Inner top with elastication at the top.
+45                                                                                                                                                                     Strapless jersey dress with an elasticated waist. Inner top with elastication at the top.
+46                                                                                                                                                                     Strapless jersey dress with an elasticated waist. Inner top with elastication at the top.
+47                                                                                            Long, straight-cut shirt in soft Tencel™ lyocell denim with a collar and buttons down the front. Chest pockets with a pleat, and long sleeves with buttoned cuffs.
+48                                                                                            Long, straight-cut shirt in soft Tencel™ lyocell denim with a collar and buttons down the front. Chest pockets with a pleat, and long sleeves with buttoned cuffs.
+49                                                                                            Long, straight-cut shirt in soft Tencel™ lyocell denim with a collar and buttons down the front. Chest pockets with a pleat, and long sleeves with buttoned cuffs.
+50                                                                                            Long, straight-cut shirt in soft Tencel™ lyocell denim with a collar and buttons down the front. Chest pockets with a pleat, and long sleeves with buttoned cuffs.
+51                                                                                            Long, straight-cut shirt in soft Tencel™ lyocell denim with a collar and buttons down the front. Chest pockets with a pleat, and long sleeves with buttoned cuffs.
+52                                                                                            Long, straight-cut shirt in soft Tencel™ lyocell denim with a collar and buttons down the front. Chest pockets with a pleat, and long sleeves with buttoned cuffs.
+53                                                                                                                                                               Dress in soft cotton jersey with 3/4-length sleeves, a seam at the waist and bell-shaped skirt.
+54                                                                                                                                                               Dress in soft cotton jersey with 3/4-length sleeves, a seam at the waist and bell-shaped skirt.
+55                                                                                                                                                                    Short jersey dress with narrow shoulder straps, a seam at the waist and bell-shaped skirt.
+56                                                                                                                                                                    Short jersey dress with narrow shoulder straps, a seam at the waist and bell-shaped skirt.
+57                                                                                                                                                                    Short jersey dress with narrow shoulder straps, a seam at the waist and bell-shaped skirt.
+58                                                                                                                                                                    Short jersey dress with narrow shoulder straps, a seam at the waist and bell-shaped skirt.
+59                                                                                                                                    Sleeveless jersey jumpsuit with a deep neckline at the back, elasticated seam at the waist, side pockets and tapered legs.
+60                                                                                                                                    Sleeveless jersey jumpsuit with a deep neckline at the back, elasticated seam at the waist, side pockets and tapered legs.
+61                                                                                                                                    Sleeveless jersey jumpsuit with a deep neckline at the back, elasticated seam at the waist, side pockets and tapered legs.
+62                                                                  Short, gently fitted dress in a patterned weave with a small stand-up collar, covered buttons at the back, long sleeves with a flounce at the cuffs and a flounce at the hem. Jersey lining.
+63                                                                  Short, gently fitted dress in a patterned weave with a small stand-up collar, covered buttons at the back, long sleeves with a flounce at the cuffs and a flounce at the hem. Jersey lining.
+64                                                                                                                                                                                                                    Short, sleeveless, fitted dress in jersey.
+65                                                                                                                                                                                                                    Short, sleeveless, fitted dress in jersey.
+66                                                                                                                                                                                                                    Short, sleeveless, fitted dress in jersey.
+67                                                                            Sleeveless, knee-length dress in pleated jersey with a V-neck and crossover, decorative straps at the back. Narrow elasticated seam at the waist and gently flared skirt. Unlined.
+68                                                                            Sleeveless, knee-length dress in pleated jersey with a V-neck and crossover, decorative straps at the back. Narrow elasticated seam at the waist and gently flared skirt. Unlined.
+69                                                                                                                              Short T-shirt dress in soft jersey with short cap sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+70                                                                                                                              Short T-shirt dress in soft jersey with short cap sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+71                                                                                                                              Short T-shirt dress in soft jersey with short cap sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+72                                                                                                                              Short T-shirt dress in soft jersey with short cap sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+73                                                                                                                              Short T-shirt dress in soft jersey with short cap sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+74                                                                                                                              Short T-shirt dress in soft jersey with short cap sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+75                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+76                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+77                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+78                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+79                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+80                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+81                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+82                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+83                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+84                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+85                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+86                                                                                                                 Short dress in a washed viscose weave with a round neck, short sleeves with sewn-in turn-ups, and a rounded hem. Slightly longer at the back.
+87                                                                                        Strapless dress in a crinkled, patterned weave with elastication and a flounce at the top, an elasticated waist and a flounce at the hem. Longer at the back. Unlined.
+88    Playsuit in woven fabric with decorative lace trims, a wrapover front with a concealed press-stud, narrow adjustable shoulder straps that cross at the back and an elasticated waist. Smocking at the back, side pockets and short legs. Lined at the top.
+89    Playsuit in woven fabric with decorative lace trims, a wrapover front with a concealed press-stud, narrow adjustable shoulder straps that cross at the back and an elasticated waist. Smocking at the back, side pockets and short legs. Lined at the top.
+90                                                                                                                      Off-the-shoulder playsuit in an airy, patterned weave with a flounce at the top, an elasticated seam at the waist and short legs. Lined.
+91                                                               Short dress in a crêpe weave with a collar and cuffs in lace. The dress has pleats at the top, a concealed zip at the back, long sleeves, a seam at the waist and gently flared skirt. Unlined.
+92                                                                                                                              Short dress in ribbed jersey with an opening with a covered button at the back of the neck, 3/4-length sleeves and flared skirt.
+93                                                                                                                              Short dress in ribbed jersey with an opening with a covered button at the back of the neck, 3/4-length sleeves and flared skirt.
+94                                               Short dress in viscose crêpe with lace insets. The dress has an opening with a button at the back of the neck, long sleeves and yoke in mesh, a concealed zip in the side and gentle flare to the hem. Unlined.
+95                                                                             Sleeveless dress in a crêpe weave with decorative gathers at the top. Elasticated seam under the bust and an opening with a hook-and-eye fastener at the back of the neck. Lined.
+96                                                                             Sleeveless dress in a crêpe weave with decorative gathers at the top. Elasticated seam under the bust and an opening with a hook-and-eye fastener at the back of the neck. Lined.
+97                                                                                                                                                                             Short, fitted dress in ribbed viscose jersey with a turtle neck and long sleeves.
+98                                                                                                                                                                             Short, fitted dress in ribbed viscose jersey with a turtle neck and long sleeves.
+99                                                                                                                                                                             Short, fitted dress in ribbed viscose jersey with a turtle neck and long sleeves.
+Name: detail_desc, dtype: object</code></pre>
+</div>
+</div>
+</section>
+<section id="see-what-departments-sell-dresses" class="level3">
+<h3 class="anchored" data-anchor-id="see-what-departments-sell-dresses">See what departments sell dresses</h3>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses[<span class="st">'department_name'</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['Tops Knitwear DS' 'Jersey Basic' 'Basic 1' 'Baby basics'
  'Denim Other Garments' 'Everyday Waredrobe Denim'
@@ -212,9 +327,11 @@ Name: detail_desc, dtype: object</code></pre>
  'Dresses DS' 'Jersey Fancy DS' 'Woven Tops']</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check how many different color groups exist</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses[<span class="st">'colour_group_name'</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="check-how-many-different-color-groups-exist" class="level3">
+<h3 class="anchored" data-anchor-id="check-how-many-different-color-groups-exist">Check how many different color groups exist</h3>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses[<span class="st">'colour_group_name'</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['Dark Grey' 'White' 'Black' 'Dark Green' 'Dark Pink' 'Red'
  'Greenish Khaki' 'Dark Red' 'Orange' 'Grey' 'Dark Blue' 'Light Beige'
@@ -222,10 +339,12 @@ Name: detail_desc, dtype: object</code></pre>
  'Other' 'Green' 'Light Yellow' 'Pink' 'Beige' 'Light Blue']</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at all colors available for the Alcazar strap dress</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>alcazar_dresses <span class="op">=</span> dresses[dresses[<span class="st">'prod_name'</span>] <span class="op">==</span> <span class="st">'Alcazar strap dress'</span>]</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alcazar_dresses[<span class="st">'colour_group_name'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="look-at-all-colors-available-for-the-alcazar-strap-dress" class="level3">
+<h3 class="anchored" data-anchor-id="look-at-all-colors-available-for-the-alcazar-strap-dress">Look at all colors available for the Alcazar strap dress</h3>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>alcazar_dresses <span class="op">=</span> dresses[dresses[<span class="st">'prod_name'</span>] <span class="op">==</span> <span class="st">'Alcazar strap dress'</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alcazar_dresses[<span class="st">'colour_group_name'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2              Black
 3         Dark Green
@@ -243,25 +362,30 @@ Name: detail_desc, dtype: object</code></pre>
 Name: colour_group_name, dtype: object</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find dresses that are dark blue</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dark_blue <span class="op">=</span> dresses[(dresses[<span class="st">'perceived_colour_value_name'</span>] <span class="op">==</span> <span class="st">'Dark'</span>) <span class="op">&amp;</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                    (dresses[<span class="st">'colour_group_name'</span>] <span class="op">==</span> <span class="st">'Blue'</span>)]</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dark_blue[[<span class="st">'prod_name'</span>, <span class="st">'colour_group_name'</span>, <span class="st">'perceived_colour_value_name'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="find-dresses-that-are-dark-blue" class="level3">
+<h3 class="anchored" data-anchor-id="find-dresses-that-are-dark-blue">Find dresses that are dark blue</h3>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dark_blue <span class="op">=</span> dresses[(dresses[<span class="st">'perceived_colour_value_name'</span>] <span class="op">==</span> <span class="st">'Dark'</span>) <span class="op">&amp;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                    (dresses[<span class="st">'colour_group_name'</span>] <span class="op">==</span> <span class="st">'Blue'</span>)]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dark_blue[[<span class="st">'prod_name'</span>, <span class="st">'colour_group_name'</span>, <span class="st">'perceived_colour_value_name'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Empty DataFrame
 Columns: [prod_name, colour_group_name, perceived_colour_value_name]
 Index: []</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at different patterns/textures available</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses[<span class="st">'graphical_appearance_name'</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="look-at-different-patternstextures-available" class="level3">
+<h3 class="anchored" data-anchor-id="look-at-different-patternstextures-available">Look at different patterns/textures available</h3>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dresses[<span class="st">'graphical_appearance_name'</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>['Solid' 'Stripe' 'Melange' 'All over pattern' 'Denim' 'Treatment'
  'Front print']</code></pre>
 </div>
 </div>
+<p>Now try to answer this questions.</p>
 <p><strong>Questions for Analysis</strong>:</p>
 <ol type="1">
 <li><p>Looking at the ‘index_name’ and ‘department_name’ columns, what different market segments does H&amp;M categorize these dresses into? How do these segments appear to be organized?</p></li>
@@ -279,6 +403,7 @@ Index: []</code></pre>
 <li><p>Some dresses appear multiple times with different color options. Find an example of this in the data. What does this tell us about how H&amp;M manages their product variations?</p></li>
 </ol>
 <p>These questions will help you understand both the structure of the data and how H&amp;M organizes their product information. Think about why each piece of information might be important from both a business and technical perspective.</p>
+</section>
 </section>
 
 </main>
