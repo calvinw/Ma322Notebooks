@@ -1,0 +1,87 @@
+---
+title: "Exploring H&M Dresses with DataFrames"
+---
+
+In this exercise, we will work with a data frame containing information about dresses from H&M. The data comes from a dataset of 100 dresses with various attributes like product codes, names, colors, and descriptions.
+
+We will use this dataset later on to do semantic search, todays exercise is to try to examine the data to answer questions about what the fields mean in this dataset.
+
+First, let's read in the data using pandas:
+
+## Read the CSV file
+
+```{python}
+import pandas as pd
+
+dresses = pd.read_csv('https://calvinw.github.io/Ma322Notebooks/hm-dresses-100.csv')
+```
+
+Let's explore the data frame:
+
+## Print first few rows to get an overview
+
+```{python}
+print(dresses.head())
+```
+
+## Check what columns are available and their data types
+```{python}
+print(dresses.dtypes)
+```
+
+## Look at detailed descriptions for first 3 dresses
+```{python}
+print(dresses['detail_desc'].head(3))
+```
+
+```{python}
+# See what departments sell dresses
+print(dresses['department_name'].unique())
+```
+
+```{python}
+# Check how many different color groups exist
+print(dresses['colour_group_name'].unique())
+```
+
+```{python}
+# Look at all colors available for the Alcazar strap dress
+alcazar_dresses = dresses[dresses['prod_name'] == 'Alcazar strap dress']
+print(alcazar_dresses['colour_group_name'])
+```
+
+```{python}
+# Find dresses that are dark blue
+dark_blue = dresses[(dresses['perceived_colour_value_name'] == 'Dark') & 
+                    (dresses['colour_group_name'] == 'Blue')]
+print(dark_blue[['prod_name', 'colour_group_name', 'perceived_colour_value_name']])
+```
+
+```{python}
+# Look at different patterns/textures available
+print(dresses['graphical_appearance_name'].unique())
+```
+
+__Questions for Analysis__:
+
+1. Looking at the 'index_name' and 'department_name' columns, what different market segments does H&M categorize these dresses into? How do these segments appear to be organized?
+
+2. Based on the 'detail_desc' column, what are some common features that H&M frequently mentions in their dress descriptions? What kinds of details seem to be important to them?
+
+3. H&M has a complex color categorization system with multiple columns:
+   - colour_group_name
+   - perceived_colour_value_name
+   - perceived_colour_master_name
+   What seems to be the purpose of having these three different ways of describing colors? How do they differ from each other?
+
+4. Looking at the 'garment_group_name' and 'product_type_name' columns, how does H&M categorize their garments? What might be the business reason for having both of these classification systems?
+
+5. Examine the 'graphical_appearance_name' column. What are the main types of patterns or textures that H&M uses in their dresses? Why might this information be useful from a business perspective?
+
+6. The dataset includes both 'article_id' and 'product_code'. Compare these columns - how do they appear to be used? Why might a company need multiple identification systems for their products?
+
+7. Looking at the 'section_name' and 'section_no' columns, how does H&M organize their sections? How does this relate to the department and index organization?
+
+8. Some dresses appear multiple times with different color options. Find an example of this in the data. What does this tell us about how H&M manages their product variations?
+
+These questions will help you understand both the structure of the data and how H&M organizes their product information. Think about why each piece of information might be important from both a business and technical perspective.

@@ -18,6 +18,7 @@ Dicts.qmd \
 Ecofriendly.qmd \
 ForLoops.qmd \
 FStrings.qmd \
+HandMDresses-100.qmd \
 HotChocolate.qmd \
 Lists.qmd \
 PromptsLLMByHand.qmd \
