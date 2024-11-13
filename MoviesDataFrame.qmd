@@ -1,0 +1,110 @@
+---
+title: "Working with Movie Data in DataFrames"
+execute:
+    eval: false
+---
+
+In this exercise, we will work with a data frame containing information about popular movies. The data frame has the following columns: `title`, `director`, `runtime`, `year`, and `rating`.
+
+| title | director | runtime | year | rating |
+|-------|----------|---------|------|--------|
+| The Lion King | Roger Allers | 88 | 1994 | 8.5 |
+| Frozen | Chris Buck | 102 | 2013 | 7.4 |
+| Toy Story | John Lasseter | 81 | 1995 | 8.3 |
+| Finding Nemo | Andrew Stanton | 100 | 2003 | 8.2 |
+| Shrek | Andrew Adamson | 90 | 2001 | 7.9 |
+| Moana | Ron Clements | 107 | 2016 | 7.6 |
+| Coco | Lee Unkrich | 105 | 2017 | 8.4 |
+| Zootopia | Byron Howard | 108 | 2016 | 8.0 |
+
+Here's how we create the data frame in Python using the pandas library:
+
+```{python}
+# __REGULAR_BLOCK__
+import pandas as pd
+
+title = ['The Lion King', 'Frozen', 'Toy Story', 'Finding Nemo', 'Shrek', 'Moana', 'Coco', 'Zootopia']
+director = ['Roger Allers', 'Chris Buck', 'John Lasseter', 'Andrew Stanton', 'Andrew Adamson', 'Ron Clements', 'Lee Unkrich', 'Byron Howard']
+runtime = [88, 102, 81, 100, 90, 107, 105, 108]
+year = [1994, 2013, 1995, 2003, 2001, 2016, 2017, 2016]
+rating = [8.5, 7.4, 8.3, 8.2, 7.9, 7.6, 8.4, 8.0]
+
+movieDict = {
+    'title': title,
+    'director': director,
+    'runtime': runtime,
+    'year': year,
+    'rating': rating
+}
+
+movies = pd.DataFrame(movieDict)
+```
+
+Let's explore the data frame:
+
+__Problem__: Print the first few rows of the data frame using the `head` method on the `movies` dataframe:
+```{python}
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(movies.head())
+```
+
+__Problem__: Check the data types of the columns using the `dtypes` attribute of the `movies` dataframe:
+```{python}
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(movies.dtypes)
+```
+
+__Problem__: Select the 'title' column and print it out:
+```{python}
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(movies['title'])
+```
+
+__Problem__: Add a new column 'animated_studio' with these values: ['Disney', 'Disney', 'Pixar', 'Pixar', 'DreamWorks', 'Disney', 'Pixar', 'Disney']:
+```{python}
+CODE
+print(movies)
+```
+```{python}
+# __SOLUTION__
+movies['animated_studio'] = ['Disney', 'Disney', 'Pixar', 'Pixar', 'DreamWorks', 'Disney', 'Pixar', 'Disney']
+print(movies)
+```
+
+__Problem__: Remove the 'director' column:
+```{python}
+CODE
+print(movies)
+```
+```{python}
+# __SOLUTION__
+movies = movies.drop('director', axis=1)
+print(movies)
+```
+
+__Problem__: Print out the element in the 4th row and the 2nd column:
+```{python}
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(movies.iloc[3, 1])
+```
+
+__Problem__: Print out the element in the 1st row and the 4th column:
+```{python}
+print(CODE)
+```
+```{python}
+# __SOLUTION__
+print(movies.iloc[0, 3])
+```

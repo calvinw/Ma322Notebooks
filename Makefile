@@ -51,6 +51,7 @@ ClassifyCustomerQueries.qmd \
 MoreCalculator.qmd \
 MoreDataFrames.qmd \
 EvenMoreDataFrames.qmd \
+MoviesDataFrame.qmd \
 MorePrompts.qmd \
 MoreStrings.qmd \
 MoreFunctions.qmd \
