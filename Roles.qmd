@@ -2,6 +2,14 @@
 title: "Roles"
 ---
 
+For this notebook we use a model which is slightly older to show it these ideas
+work. The current models from openai do better, but this older model
+illustrates the ideas better.
+
+```{python}
+model_name="openai/gpt-3.5-turbo"
+```
+
 {{< include _llm_openrouter.qmd >}}
 
 Many times it helps to give the LLM a role or a persona. That helps set the
