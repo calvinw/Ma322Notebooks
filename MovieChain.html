@@ -299,9 +299,53 @@ Provider: OpenRouter AI</code></pre>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(plot<span class="op">=</span>movie_plot)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>genre_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(genre_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Print out the prompt and the response</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(genre_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Action, Adventure, Science Fiction, Drama</code></pre>
+<pre><code>Prompt:
+
+Based on the following movie plot summary, identify the primary genre(s) for
+the film. The plot is enclosed in &lt;plot&gt; &lt;/plot&gt; tags:
+
+&lt;plot&gt;
+
+In a post-apocalyptic world ravaged by a devastating cataclysm, a young woman
+named Tara sets out on a perilous journey to find a rumored sanctuary known as
+The Oasis – a legend that promises safety, resources, and a chance at
+rebuilding civilization.
+
+Tara's path is fraught with danger as she navigates the treacherous wastelands,
+where lawlessness and chaos reign supreme. Along the way, she encounters a
+ragtag group of survivors who have banded together for protection, forming an
+unlikely alliance born out of necessity.
+
+Despite initial mistrust and conflicting agendas, Tara and the survivors
+realize that their only hope of survival lies in cooperation. They must
+traverse a hostile landscape, facing off against ruthless marauders who will
+stop at nothing to claim what little resources remain, as well as mutated
+creatures twisted by the cataclysm's aftermath.
+
+As they uncover clues and follow a trail of breadcrumbs left by those who came
+before, the group is forced to confront not only the harsh realities of their
+new world but also their own inner demons and personal conflicts. They must
+make difficult choices that will test their morality, their loyalty, and their
+resolve, ultimately determining their fate and the fate of those who may follow
+in their footsteps.
+
+In this harrowing journey, the line between survival and sacrifice blurs, and
+the true cost of reaching The Oasis may be higher than any of them could have
+imagined.
+
+&lt;/plot&gt;
+
+Provide your answer in a comma-separated list:
+
+Response:
+Action, Adventure, Science Fiction, Drama</code></pre>
 </div>
 </div>
 </section>
@@ -320,9 +364,51 @@ Provider: OpenRouter AI</code></pre>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(plot<span class="op">=</span>movie_plot)</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>tagline_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tagline_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Print out the prompt and the response</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tagline_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>"Survival is just the beginning; in the wasteland, every choice could be your
+<pre><code>Prompt:
+
+Based on the following movie plot, generate a catchy tagline for the movie.
+The plot is enclosed in &lt;plot&gt; &lt;/plot&gt; tags:
+
+&lt;plot&gt;
+
+In a post-apocalyptic world ravaged by a devastating cataclysm, a young woman
+named Tara sets out on a perilous journey to find a rumored sanctuary known as
+The Oasis – a legend that promises safety, resources, and a chance at
+rebuilding civilization.
+
+Tara's path is fraught with danger as she navigates the treacherous wastelands,
+where lawlessness and chaos reign supreme. Along the way, she encounters a
+ragtag group of survivors who have banded together for protection, forming an
+unlikely alliance born out of necessity.
+
+Despite initial mistrust and conflicting agendas, Tara and the survivors
+realize that their only hope of survival lies in cooperation. They must
+traverse a hostile landscape, facing off against ruthless marauders who will
+stop at nothing to claim what little resources remain, as well as mutated
+creatures twisted by the cataclysm's aftermath.
+
+As they uncover clues and follow a trail of breadcrumbs left by those who came
+before, the group is forced to confront not only the harsh realities of their
+new world but also their own inner demons and personal conflicts. They must
+make difficult choices that will test their morality, their loyalty, and their
+resolve, ultimately determining their fate and the fate of those who may follow
+in their footsteps.
+
+In this harrowing journey, the line between survival and sacrifice blurs, and
+the true cost of reaching The Oasis may be higher than any of them could have
+imagined.
+
+&lt;/plot&gt;
+
+Response:
+"Survival is just the beginning; in the wasteland, every choice could be your
 last."</code></pre>
 </div>
 </div>
@@ -348,9 +434,57 @@ last."</code></pre>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>prompt <span class="op">=</span> template.<span class="bu">format</span>(plot<span class="op">=</span>movie_plot,</span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                         tagline<span class="op">=</span>tagline_response)</span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>title_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(title_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Print out the prompt and the response</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(title_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>**Title: "Oasis of Shadows"**</code></pre>
+<pre><code>Prompt:
+
+Based on the following movie plot summary and tagline generate a title for the
+movie. The plot is enclosed in &lt;plot&gt; &lt;/plot&gt; tags and the tagline is enclosed
+in &lt;tagline&gt; &lt;/tagline&gt; tags
+
+&lt;plot&gt;
+
+In a post-apocalyptic world ravaged by a devastating cataclysm, a young woman
+named Tara sets out on a perilous journey to find a rumored sanctuary known as
+The Oasis – a legend that promises safety, resources, and a chance at
+rebuilding civilization.
+
+Tara's path is fraught with danger as she navigates the treacherous wastelands,
+where lawlessness and chaos reign supreme. Along the way, she encounters a
+ragtag group of survivors who have banded together for protection, forming an
+unlikely alliance born out of necessity.
+
+Despite initial mistrust and conflicting agendas, Tara and the survivors
+realize that their only hope of survival lies in cooperation. They must
+traverse a hostile landscape, facing off against ruthless marauders who will
+stop at nothing to claim what little resources remain, as well as mutated
+creatures twisted by the cataclysm's aftermath.
+
+As they uncover clues and follow a trail of breadcrumbs left by those who came
+before, the group is forced to confront not only the harsh realities of their
+new world but also their own inner demons and personal conflicts. They must
+make difficult choices that will test their morality, their loyalty, and their
+resolve, ultimately determining their fate and the fate of those who may follow
+in their footsteps.
+
+In this harrowing journey, the line between survival and sacrifice blurs, and
+the true cost of reaching The Oasis may be higher than any of them could have
+imagined.
+
+&lt;/plot&gt;
+
+&lt;tagline&gt;
+"Survival is just the beginning; in the wasteland, every choice could be your
+last."
+&lt;/tagline&gt;
+
+Response:
+**Title: "Oasis of Shadows"**</code></pre>
 </div>
 </div>
 </section>
@@ -386,12 +520,69 @@ last."</code></pre>
 <span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>                        genres<span class="op">=</span>genre_response,</span>
 <span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                        title<span class="op">=</span>title_response)</span>
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>synopsis_response <span class="op">=</span> get_completion(prompt)</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(synopsis_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co">#Print out the prompt and the response</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Prompt:"</span>)</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(prompt)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Response:"</span>)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(synopsis_response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>In a post-apocalyptic wasteland, Tara embarks on a treacherous quest to find The
+<pre><code>Prompt:
+
+Based on the following movie plot, tagline, title, and genres, generate a short
+synopsis for the movie of 50 words or less. The plot is contained in &lt;plot&gt;
+tags, the tagline is contained in &lt;tagline&gt; tags, the genres are contained
+&lt;genres&gt; tags, the title is contained in &lt;title&gt; tags. 
+
+&lt;plot&gt;
+
+In a post-apocalyptic world ravaged by a devastating cataclysm, a young woman
+named Tara sets out on a perilous journey to find a rumored sanctuary known as
+The Oasis – a legend that promises safety, resources, and a chance at
+rebuilding civilization.
+
+Tara's path is fraught with danger as she navigates the treacherous wastelands,
+where lawlessness and chaos reign supreme. Along the way, she encounters a
+ragtag group of survivors who have banded together for protection, forming an
+unlikely alliance born out of necessity.
+
+Despite initial mistrust and conflicting agendas, Tara and the survivors
+realize that their only hope of survival lies in cooperation. They must
+traverse a hostile landscape, facing off against ruthless marauders who will
+stop at nothing to claim what little resources remain, as well as mutated
+creatures twisted by the cataclysm's aftermath.
+
+As they uncover clues and follow a trail of breadcrumbs left by those who came
+before, the group is forced to confront not only the harsh realities of their
+new world but also their own inner demons and personal conflicts. They must
+make difficult choices that will test their morality, their loyalty, and their
+resolve, ultimately determining their fate and the fate of those who may follow
+in their footsteps.
+
+In this harrowing journey, the line between survival and sacrifice blurs, and
+the true cost of reaching The Oasis may be higher than any of them could have
+imagined.
+
+&lt;/plot&gt;
+
+&lt;genres&gt; 
+Action, Adventure, Science Fiction, Drama
+&lt;/genres&gt; 
+
+&lt;tagline&gt;
+"Survival is just the beginning; in the wasteland, every choice could be your
+last."
+&lt;/tagline&gt;
+
+&lt;title&gt;
+**Title: "Oasis of Shadows"**
+&lt;/title&gt;
+
+Response:
+In a post-apocalyptic wasteland, Tara embarks on a treacherous quest to find The
 Oasis, a rumored sanctuary. Joined by a diverse group of survivors, they
 confront ruthless marauders and mutated creatures, testing their morality and
-loyalty. In this harsh reality, survival demands sacrifices that could change
+resolve. In this harsh reality, survival demands sacrifices that could change
 everything.</code></pre>
 </div>
 </div>
@@ -468,7 +659,7 @@ last."
 In a post-apocalyptic wasteland, Tara embarks on a treacherous quest to find The
 Oasis, a rumored sanctuary. Joined by a diverse group of survivors, they
 confront ruthless marauders and mutated creatures, testing their morality and
-loyalty. In this harsh reality, survival demands sacrifices that could change
+resolve. In this harsh reality, survival demands sacrifices that could change
 everything.
 </code></pre>
 </div>

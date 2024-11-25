@@ -81,6 +81,11 @@ Provide your answer in a comma-separated list:
 
 prompt = template.format(plot=movie_plot)
 genre_response = get_completion(prompt)
+
+#Print out the prompt and the response
+print("Prompt:")
+print(prompt)
+print("Response:")
 print(genre_response)
 ```
 
@@ -100,6 +105,11 @@ The plot is enclosed in <plot> </plot> tags:
 
 prompt = template.format(plot=movie_plot)
 tagline_response = get_completion(prompt)
+
+#Print out the prompt and the response
+print("Prompt:")
+print(prompt)
+print("Response:")
 print(tagline_response)
 ```
 
@@ -125,6 +135,11 @@ in <tagline> </tagline> tags
 prompt = template.format(plot=movie_plot,
                          tagline=tagline_response)
 title_response = get_completion(prompt)
+
+#Print out the prompt and the response
+print("Prompt:")
+print(prompt)
+print("Response:")
 print(title_response)
 ```
 
@@ -162,6 +177,11 @@ prompt = template.format(plot=movie_plot,
                         genres=genre_response,
                         title=title_response)
 synopsis_response = get_completion(prompt)
+
+#Print out the prompt and the response
+print("Prompt:")
+print(prompt)
+print("Response:")
 print(synopsis_response)
 ```
 
