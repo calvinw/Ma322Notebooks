@@ -109,7 +109,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install <span class="op">--</span>upgrade openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="5">
@@ -265,8 +266,8 @@ Why is the sky blue? In 50 words or less.
 Response:
 The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible, making
-the sky look blue during the day.</code></pre>
+wavelengths. This scattering causes the blue light to be more visible, giving
+the sky its characteristic color during the day.</code></pre>
 </div>
 </div>
 </section>
@@ -309,10 +310,10 @@ the sky look blue during the day.</code></pre>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
-Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths. This scattering causes the blue light to be more visible, making
-the sky look blue during the day.
+<pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
+atmosphere, shorter blue wavelengths scatter more than longer red wavelengths.
+This scattering causes the blue light to be more visible, making the sky look
+blue during the day.
 ------
 The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
@@ -345,18 +346,18 @@ the sky look blue during the day.
 <div class="cell-output cell-output-stdout">
 <pre><code>The sky appears blue due to Rayleigh scattering. When sunlight enters the
 Earth's atmosphere, shorter blue wavelengths scatter more than longer red
-wavelengths, causing the sky to look blue to our eyes. This effect is more
-pronounced when the sun is high in the sky.
+wavelengths. This scattering causes the blue light to be more visible, giving
+the sky its characteristic color during the day.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
-atmosphere, shorter blue wavelengths scatter more than longer red wavelengths.
-This scattering causes the blue light to spread across the sky, making it
-predominantly blue to our eyes during the day.
+The sky appears blue due to Rayleigh scattering. When sunlight enters the
+Earth's atmosphere, shorter blue wavelengths scatter more than longer red
+wavelengths. This scattering causes the blue light to be more visible, giving
+the sky its characteristic color during the day.
 ------
 The sky appears blue due to Rayleigh scattering. Sunlight, which contains all
-colors, scatters more in shorter wavelengths (blue) as it passes through the
-Earth's atmosphere. This scattering causes the blue light to be more visible,
-giving the sky its characteristic color during the day.
+colors, scatters off air molecules. Blue light scatters more than other colors
+because it travels in shorter, smaller waves. Thus, when we look up, we see a
+predominance of blue light scattered in all directions.
 ------</code></pre>
 </div>
 </div>
@@ -376,21 +377,20 @@ giving the sky its characteristic color during the day.
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"------"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The sky appears blue due to Rayleigh scattering. Sunlight, composed of various
-colors, interacts with Earth's atmosphere. Shorter blue wavelengths scatter more
-than other colors, making the sky predominantly blue. During sunrise and sunset,
-longer wavelengths, like red and orange, become more prominent, creating vibrant
-colors.
+<pre><code>The sky appears blue due to Rayleigh scattering. Sunlight, which contains many
+colors, scatters off air molecules. Blue light is scattered more than other
+colors because it travels in shorter, smaller waves. Thus, we see a blue sky
+during daytime when the sun is overhead.
 ------
-The sky appears blue due to Rayleigh scattering. When sunlight enters Earth's
-atmosphere, shorter blue wavelengths scatter more than longer red wavelengths,
-causing the sky to look blue during the day. The effect is more pronounced when
-the sun is low, resulting in reddish hues during sunrise and sunset.
+The sky appears blue due to Rayleigh scattering. Shorter blue wavelengths of
+sunlight scatter more than other colors when they pass through Earth's
+atmosphere, making the sky predominantly blue during the day. This scattering is
+more pronounced when the sun is higher in the sky.
 ------
-The sky appears blue due to Rayleigh scattering. Sunlight consists of various
-colors, and blue light has shorter wavelengths. When sunlight passes through
-Earth's atmosphere, blue wavelengths scatter more than other colors, making the
-sky look predominantly blue to our eyes, especially when the sun is high.
+The sky appears blue due to Rayleigh scattering. When sunlight enters the
+Earth’s atmosphere, shorter blue wavelengths are scattered in all directions
+more than other colors. This scattering causes the sky to look predominantly
+blue during the day, especially when the sun is high.
 ------</code></pre>
 </div>
 </div>
@@ -414,18 +414,18 @@ sky look predominantly blue to our eyes, especially when the sun is high.
 <pre><code>Prompt:
 Recommend a name for a company that makes cars
 Response:
-Here are some name suggestions for a car manufacturing company:
+Sure! Here are some name suggestions for a car manufacturing company:
 
 1. **Velocity Motors**
 2. **Apex Automotive**
-3. **NexGen Vehicles**
-4. **EcoDrive Innovations**
+3. **Nexus Drive**
+4. **Eclipse Vehicles**
 5. **Pinnacle Motors**
 6. **Fusion AutoWorks**
-7. **RevTech Automotive**
-8. **Stellar Cars**
-9. **Quantum Drive**
-10. **Vanguard Vehicles**
+7. **RevTech Cars**
+8. **Summit Automotive**
+9. **Ignite Motors**
+10. **Zenith Car Co.**
 
 Feel free to mix and match or modify these suggestions to find the perfect fit
 for your company!</code></pre>
@@ -449,15 +449,15 @@ Response:
 Here are some name ideas for a company that makes books:
 
 1. **Boundless Books**
-2. **PageTurner Press**
-3. **Ink &amp; Imagination**
+2. **Ink &amp; Imagination**
+3. **PageTurner Press**
 4. **StoryCraft Publishing**
 5. **Literary Loom**
 6. **Quill &amp; Quire**
 7. **Narrative Nest**
 8. **Epic Editions**
 9. **Book Haven**
-10. **Tome Treasures**
+10. **Tome &amp; Tale**
 
 Feel free to mix and match or modify these suggestions to find the perfect fit
 for your company!</code></pre>
@@ -483,13 +483,17 @@ Recommend 3 names for a company that makes cars
 Response:
 Sure! Here are three name suggestions for a car manufacturing company:
 
-1. **Velocity Motors** - Emphasizes speed and innovation in automotive design.
-2. **EcoDrive Automotive** - Highlights a focus on sustainability and eco-
-friendly vehicles.
-3. **Apex Automotive** - Suggests a commitment to high performance and top-tier
-engineering.
+1. **Velocity Motors** - Emphasizing speed and innovation, this name conveys a
+sense of dynamic performance.
 
-Feel free to mix and match or modify these names to better suit your vision!</code></pre>
+2. **EcoDrive Automotive** - Highlighting a commitment to sustainability, this
+name suggests a focus on environmentally friendly vehicles.
+
+3. **Apex Automotive** - Suggesting peak performance and quality, this name
+conveys a sense of excellence in engineering and design.
+
+Feel free to mix and match or modify these suggestions to better fit your
+vision!</code></pre>
 </div>
 </div>
 <section id="add-a-template-variable-format" class="level3">

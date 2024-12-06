@@ -17,6 +17,7 @@ os.environ["OPENROUTER_API_KEY"] = "paste_your_api_key_here"
 #| eval: false
 #| code-fold: true
 !pip3 install langchain langchain_openai
+!pip3 install --upgrade openai
 ```
 
 ```{python}

@@ -111,7 +111,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install <span class="op">--</span>upgrade openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="5">
@@ -263,14 +264,13 @@ Provider: OpenRouter AI</code></pre>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Alright, fellow physicists, let's delve into the fascinating concept of black
-holes. A black hole is a region in spacetime where gravity is so strong that
-nothing, not even light, can escape its grasp. This occurs when a massive star
-collapses under its own gravity, creating a singularity with infinite density
-and curvature. The event horizon marks the point of no return, beyond which
-nothing can escape. Black holes exhibit unique properties such as time dilation
-and gravitational lensing, making them a key area of study in theoretical
-physics. Their existence challenges our understanding of the universe and the
-laws of physics.</code></pre>
+holes. A black hole is a region in space where the gravitational pull is so
+strong that nothing, not even light, can escape its grasp. This occurs when a
+massive star collapses under its own gravity, creating a singularity with
+infinite density and zero volume at its center. The event horizon marks the
+point of no return, beyond which nothing can escape. Black holes can vary in
+size, with supermassive black holes found at the centers of galaxies and stellar
+black holes formed from the remnants of massive stars.</code></pre>
 </div>
 </div>
 <p>Now like a school teacher talking to some sixth grade students</p>
@@ -367,29 +367,25 @@ fascinating and mysterious phenomena in our universe.</code></pre>
 <pre><code>To calculate the number of key strokes needed to type the numbers from 1 to 500,
 we need to consider the following:
 
-1. Count the number of key strokes needed to type each number individually.
-2. Consider the number of digits in each number and the additional key strokes
-needed for spaces or commas.
+1. Count the number of key strokes needed to type each digit from 1 to 9. Each
+digit requires one key stroke.
 
-Let's break it down:
+2. Count the number of key strokes needed to type the numbers from 10 to 99.
+Each number in this range has two digits, so each number requires two key
+strokes.
 
-- Numbers 1 to 9: Each number requires 1 key stroke.
-- Numbers 10 to 99: Each number requires 2 key strokes (1 for the tens digit and
-1 for the ones digit).
-- Numbers 100 to 500: Each number requires 3 key strokes (1 for the hundreds
-digit, 1 for the tens digit, and 1 for the ones digit).
+3. Count the number of key strokes needed to type the numbers from 100 to 500.
+Each number in this range has three digits, so each number requires three key
+strokes.
 
 Now, let's calculate the total number of key strokes needed:
 
-- Numbers 1 to 9: 9 numbers * 1 key stroke = 9 key strokes
-- Numbers 10 to 99: 90 numbers * 2 key strokes = 180 key strokes
-- Numbers 100 to 500: 400 numbers * 3 key strokes = 1200 key strokes
+- For numbers 1 to 9: 9 key strokes
+- For numbers 10 to 99: 90 numbers * 2 key strokes = 180 key strokes
+- For numbers 100 to 500: 401 numbers * 3 key strokes = 1203 key strokes
 
-Adding all the key strokes together:
-
-9 key strokes + 180 key strokes + 1200 key strokes = 1389 key strokes
-
-Therefore, it would take 1389 key strokes to type the numbers from 1 to 500.</code></pre>
+Therefore, the total number of key strokes needed to type the numbers from 1 to
+500 is 9 + 180 + 1203 = 1392 key strokes.</code></pre>
 </div>
 </div>
 <p>For this last one you might try various wordings, the LLM we are using currently seems to respond slightly differently depending on how you word things.</p>
