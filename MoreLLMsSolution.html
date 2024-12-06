@@ -106,7 +106,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install <span class="op">--</span>upgrade openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="4">
@@ -254,9 +255,9 @@ Provider: OpenRouter AI</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She encourages creativity through diverse roles and careers,
-inspiring children to dream big. Barbie's evolution reflects societal changes,
-promoting inclusivity and self-expression. Nostalgia also plays a role, as many
-adults cherish memories of playing with Barbie dolls.</code></pre>
+inspiring children to dream big. Barbie's evolving image reflects societal
+changes, promoting inclusivity and self-expression. Nostalgia also plays a role,
+as many adults cherish memories of playing with Barbie dolls.</code></pre>
 </div>
 </div>
 <ul>
@@ -308,21 +309,21 @@ adults cherish memories of playing with Barbie dolls.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She encourages creativity through diverse roles and careers,
-inspiring children to dream big. Barbie's evolving image reflects societal
-changes, promoting inclusivity and self-expression. Nostalgia also plays a role,
-as many adults cherish memories of playing with Barbie dolls.
- 
-People like Barbie for her iconic status, representing empowerment, fashion, and
-imagination. She embodies diverse careers and lifestyles, inspiring creativity
-in children. Barbie's ability to evolve with societal changes, along with her
-strong brand presence, fosters nostalgia and connection for adults, making her a
-beloved figure across generations.
+inspiring children to dream big. Barbie's evolution reflects societal changes,
+promoting inclusivity and self-expression. Nostalgia also plays a role, as many
+adults cherish memories of playing with Barbie dolls.
  
 People like Barbie for her iconic status, representing empowerment, fashion, and
 imagination. She encourages creativity through diverse roles and careers,
 inspiring children to dream big. Barbie's evolving image reflects societal
 changes, promoting inclusivity and self-expression. Nostalgia also plays a role,
-as many adults cherish memories of playing with Barbie dolls.</code></pre>
+as many adults cherish memories of playing with Barbie dolls.
+ 
+People like Barbie for her iconic status, representing empowerment, fashion, and
+imagination. She encourages creativity through diverse roles and careers,
+inspiring children to dream big. Barbie's evolution reflects societal changes,
+promoting inclusivity and self-expression. Nostalgia also plays a role, as many
+adults cherish memories of playing with Barbie dolls.</code></pre>
 </div>
 </div>
 <p><strong>Problem</strong>:</p>
@@ -347,24 +348,23 @@ as many adults cherish memories of playing with Barbie dolls.</code></pre>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> get_completion(prompt, temperature <span class="op">=</span> <span class="fl">0.7</span>)</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>People like Barbie for her versatility, representing various careers, cultures,
-and lifestyles, which inspires creativity and imagination. She promotes
-empowerment, encouraging children to envision limitless possibilities. Nostalgia
-also plays a role, as many recall fond memories of playing with Barbie.
-Additionally, her evolving image reflects societal changes, appealing to diverse
-audiences.
+<pre><code>People like Barbie for her iconic status, representing empowerment, creativity,
+and diversity. She inspires imagination through endless play scenarios,
+encourages self-expression, and has evolved to reflect modern values. Barbie's
+appeal also lies in nostalgia, connecting generations of fans who appreciate her
+role in fashion, culture, and childhood memories.
  
-People like Barbie for her versatility and cultural significance. She represents
-empowerment, encouraging imagination and creativity in children. The diverse
-range of dolls promotes inclusivity and self-expression. Nostalgia plays a role
-for adults, while Barbie's fashion and lifestyle appeal resonate across
-generations, making her an enduring icon in popular culture.
+People like Barbie for her embodiment of creativity, empowerment, and nostalgia.
+She represents diverse career paths and encourages imaginative play. Barbie’s
+evolving image reflects societal changes, promoting inclusivity and self-
+expression. Many enjoy collecting her dolls, appreciating the artistry and
+craftsmanship, while others cherish the memories associated with childhood play.
  
-People like Barbie for her iconic status, representing empowerment, fashion, and
-imagination. She embodies diverse roles and professions, inspiring creativity
-and self-expression. Barbie's ability to adapt over decades resonates with
-various generations, making her a timeless figure in popular culture. Her appeal
-lies in the combination of nostalgia and modernity.</code></pre>
+People like Barbie for her versatility, representing various careers, styles,
+and cultures, which inspires creativity and imagination. She symbolizes
+empowerment and self-expression, allowing children and adults alike to explore
+diverse possibilities. Nostalgia also plays a role, as many remember Barbie
+fondly from their childhood, creating lasting connections to the brand.</code></pre>
 </div>
 </div>
 </section>
@@ -475,17 +475,17 @@ facts about it?
 Response:
 The capital of Texas is Austin. Here are three simple facts about it:
 
-1. **Music Capital**: Austin is known as the "Live Music Capital of the World"
-due to its vibrant music scene and numerous live music venues, including the
-famous South by Southwest (SXSW) festival.
+1. **Music Scene**: Austin is known as the "Live Music Capital of the World" due
+to its vibrant music scene and numerous live music venues, including the famous
+South by Southwest (SXSW) festival.
 
-2. **University City**: It is home to the University of Texas at Austin, one of
-the largest and most prestigious universities in the United States, which
-contributes to the city's youthful and dynamic atmosphere.
+2. **University of Texas**: The city is home to the University of Texas at
+Austin, one of the largest and most prestigious universities in the United
+States, which contributes significantly to the city's culture and economy.
 
-3. **Green Spaces**: Austin is known for its beautiful parks and outdoor spaces,
-including Zilker Park and Lady Bird Lake, which offer opportunities for hiking,
-biking, and water activities.</code></pre>
+3. **Green Spaces**: Austin boasts many parks and outdoor spaces, including
+Zilker Park and Lady Bird Lake, making it a great place for outdoor activities
+like hiking, biking, and kayaking.</code></pre>
 </div>
 </div>
 </section>
@@ -532,11 +532,12 @@ facts about it?. Format the facts using uppercase
 Response:
 The capital of Texas is Austin. Here are three simple facts about it:
 
-1. AUSTIN IS KNOWN AS THE "LIVE MUSIC CAPITAL OF THE WORLD."
+1. AUSTIN IS KNOWN AS THE "LIVE MUSIC CAPITAL OF THE WORLD" DUE TO ITS VIBRANT
+MUSIC SCENE.
 2. AUSTIN IS HOME TO THE UNIVERSITY OF TEXAS, ONE OF THE LARGEST UNIVERSITIES IN
-THE U.S.
-3. AUSTIN HAS A THRIVING TECH INDUSTRY AND IS OFTEN REFERRED TO AS "SILICON
-HILLS."</code></pre>
+THE UNITED STATES.
+3. AUSTIN HOSTS THE ANNUAL SOUTH BY SOUTHWEST (SXSW) FESTIVAL, WHICH CELEBRATES
+FILM, MUSIC, AND INTERACTIVE MEDIA.</code></pre>
 </div>
 </div>
 </section>

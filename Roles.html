@@ -110,7 +110,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install langchain langchain_openai</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install <span class="op">--</span>upgrade openai</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-execution_count="5">
@@ -253,9 +254,9 @@ Provider: OpenRouter AI</code></pre>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Squeak! I think skateboards are pretty cool, but they can be a little scary for
-a tiny mouse like me. I prefer to stick to scurrying around on the ground
-instead of riding on a skateboard.</code></pre>
+<pre><code>Squeak! I think skateboards are pretty cool to watch humans ride on. They go
+really fast and make lots of interesting sounds. But I prefer scurrying around
+on the ground and finding tasty crumbs to nibble on.</code></pre>
 </div>
 </div>
 </section>
@@ -321,10 +322,10 @@ Therefore, a married person (Jack) is looking at an unmarried person (Anne).</co
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>response<span class="op">=</span>get_completion(prompt)</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Yes, a married person is looking at an unmarried person in this scenario. Since
-Jack is married and looking at Anne, who may or may not be married, and George
-is unmarried, we can conclude that a married person (Jack) is looking at an
-unmarried person (George).</code></pre>
+<pre><code>Yes, a married person is looking at an unmarried person. Since Jack is married
+and looking at Anne, who may or may not be married, and George is unmarried, we
+can conclude that a married person (Jack) is looking at an unmarried person
+(George).</code></pre>
 </div>
 </div>
 <p>This time the LLM does much better and you see it doing better thinking step-by-step.</p>
@@ -374,7 +375,7 @@ unmarried person (George).</code></pre>
 
 Therefore, the correct solution to the equation 2x - 3 = 9 is x = 6.
 
-The solution provided in the question, x = 3, is incorrect. The correct solution
+The solution provided in the question, x = 3, is incorrect. The correct answer
 is x = 6.</code></pre>
 </div>
 </div>
