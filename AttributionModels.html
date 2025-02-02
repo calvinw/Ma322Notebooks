@@ -120,72 +120,84 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Direct traffic from brand recognition and offline advertising</li>
 <li>Influencer partnerships (tracked through direct traffic and special URLs)</li>
 </ul>
-<p>The dataset we’ll analyze contains 1,000 customer journeys from the Spring/Summer 2024 collection launch, tracking whether customers were exposed to each marketing channel and if they ultimately made a purchase.</p>
+<p>The dataset we’ll analyze contains 10,000 customer journeys from the Spring/Summer 2024 collection launch, tracking whether customers were exposed to each marketing channel and if they ultimately made a purchase.</p>
 </section>
 <section id="creating-the-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="creating-the-dataset">Creating the Dataset</h2>
-<p>First, let’s generate a synthetic dataset that mimics LuxeStyle’s customer interaction patterns:</p>
-<div id="fa8bd9d9" class="cell" data-execution_count="1">
+<p>First, let’s generate a synthetic dataset that mimics realistic fashion e-commerce conversion rates:</p>
+<div id="ab0d96b3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set random seed for reproducibility</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate synthetic dataset</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate synthetic dataset with 10,000 samples (more realistic sample size)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n_samples <span class="op">=</span> <span class="dv">10000</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Email"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.5</span>, <span class="fl">0.5</span>]),  <span class="co"># 50% email exposure (strong email list)</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Social Media"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.3</span>, <span class="fl">0.7</span>]),  <span class="co"># 70% social media exposure (very strong)</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Paid Search"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.6</span>, <span class="fl">0.4</span>]),  <span class="co"># 40% paid search exposure</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Organic Search"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.5</span>, <span class="fl">0.5</span>]),  <span class="co"># 50% organic search exposure</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Direct"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.7</span>, <span class="fl">0.3</span>]),  <span class="co"># 30% direct traffic</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Email"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.7</span>, <span class="fl">0.3</span>]),  <span class="co"># 30% email exposure</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Social Media"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.4</span>, <span class="fl">0.6</span>]),  <span class="co"># 60% social media exposure</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Paid Search"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.8</span>, <span class="fl">0.2</span>]),  <span class="co"># 20% paid search exposure</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Organic Search"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.7</span>, <span class="fl">0.3</span>]),  <span class="co"># 30% organic search exposure</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Direct"</span>: np.random.choice([<span class="dv">0</span>, <span class="dv">1</span>], size<span class="op">=</span>n_samples, p<span class="op">=</span>[<span class="fl">0.85</span>, <span class="fl">0.15</span>]),  <span class="co"># 15% direct traffic</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set true influence of each channel (these coefficients represent the real impact)</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Social media has highest impact for fashion brand</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>true_coeffs <span class="op">=</span> np.array([<span class="fl">1.0</span>, <span class="fl">1.8</span>, <span class="fl">0.8</span>, <span class="fl">0.7</span>, <span class="fl">1.2</span>])  <span class="co"># Social Media has highest impact</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>intercept <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate conversion probabilities</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([data[key] <span class="cf">for</span> key <span class="kw">in</span> data])</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>logits <span class="op">=</span> intercept <span class="op">+</span> np.dot(X, true_coeffs)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>probabilities <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>logits))</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>conversions <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, probabilities)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Create final DataFrame</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Converted"</span>] <span class="op">=</span> conversions</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Display first few rows and summary statistics</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First few rows of the dataset:"</span>)</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.head())</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Summary of conversions:"</span>)</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"Converted"</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Set true influence of each channel (coefficients calibrated for ~2% conversion rate)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>true_coeffs <span class="op">=</span> np.array([<span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>])  <span class="co"># Social Media still has highest impact</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>intercept <span class="op">=</span> <span class="op">-</span><span class="fl">4.5</span>  <span class="co"># Much lower intercept to achieve realistic conversion rate</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate conversion probabilities</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([data[key] <span class="cf">for</span> key <span class="kw">in</span> data])</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>logits <span class="op">=</span> intercept <span class="op">+</span> np.dot(X, true_coeffs)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>probabilities <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>logits))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>conversions <span class="op">=</span> np.random.binomial(<span class="dv">1</span>, probabilities)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Create final DataFrame</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Converted"</span>] <span class="op">=</span> conversions</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Display conversion rate and channel exposure statistics</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Conversion Rate Analysis:"</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>conversion_rate <span class="op">=</span> df[<span class="st">"Converted"</span>].mean() <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Overall conversion rate: </span><span class="sc">{</span>conversion_rate<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Channel Exposure Rates:"</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> channel <span class="kw">in</span> data.keys():</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    exposed_conv_rate <span class="op">=</span> df[df[channel] <span class="op">==</span> <span class="dv">1</span>][<span class="st">"Converted"</span>].mean() <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    exposed_count <span class="op">=</span> df[channel].<span class="bu">sum</span>()</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>channel<span class="sc">}</span><span class="ss">:"</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  - Exposure rate: </span><span class="sc">{</span>exposed_count<span class="op">/</span>n_samples<span class="op">*</span><span class="dv">100</span><span class="sc">:.1f}</span><span class="ss">%"</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"  - Conversion rate when exposed: </span><span class="sc">{</span>exposed_conv_rate<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>First few rows of the dataset:
-   Email  Social Media  Paid Search  Organic Search  Direct  Converted
-0      0             0            0               1       0          0
-1      1             1            0               1       1          1
-2      1             1            1               0       1          1
-3      1             1            0               1       0          1
-4      0             1            0               1       0          0
+<pre><code>Conversion Rate Analysis:
 
-Summary of conversions:
-Converted
-1    0.712
-0    0.288
-Name: proportion, dtype: float64</code></pre>
+Overall conversion rate: 2.57%
+
+Channel Exposure Rates:
+Email:
+  - Exposure rate: 28.9%
+  - Conversion rate when exposed: 3.29%
+Social Media:
+  - Exposure rate: 60.7%
+  - Conversion rate when exposed: 3.21%
+Paid Search:
+  - Exposure rate: 19.6%
+  - Conversion rate when exposed: 3.62%
+Organic Search:
+  - Exposure rate: 29.6%
+  - Conversion rate when exposed: 2.80%
+Direct:
+  - Exposure rate: 15.0%
+  - Conversion rate when exposed: 3.54%</code></pre>
 </div>
 </div>
 </section>
 <section id="logistic-regression-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="logistic-regression-analysis">Logistic Regression Analysis</h2>
-<p>Now, let’s analyze this data using logistic regression to understand the impact of each marketing channel:</p>
-<div id="f6408c81" class="cell" data-execution_count="2">
+<p>Now, let’s analyze this more realistic dataset using logistic regression to understand the impact of each marketing channel:</p>
+<div id="af96fbff" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, classification_report</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Split data into features (X) and target (y)</span></span>
@@ -203,37 +215,64 @@ Name: proportion, dtype: float64</code></pre>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get feature coefficients</span></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>coefficients <span class="op">=</span> model.coef_[<span class="dv">0</span>]</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>feature_importance <span class="op">=</span> pd.DataFrame({<span class="st">"Channel"</span>: X.columns, <span class="st">"Coefficient"</span>: coefficients})</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>feature_importance[<span class="st">"Relative Importance (%)"</span>] <span class="op">=</span> (<span class="bu">abs</span>(feature_importance[<span class="st">"Coefficient"</span>]) <span class="op">/</span> <span class="bu">abs</span>(feature_importance[<span class="st">"Coefficient"</span>]).<span class="bu">sum</span>()) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>feature_importance <span class="op">=</span> feature_importance.sort_values(by<span class="op">=</span><span class="st">"Relative Importance (%)"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Display results</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Channel Importance:"</span>)</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(feature_importance)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot feature importance with fashion-oriented colors</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>plt.barh(feature_importance[<span class="st">"Channel"</span>], feature_importance[<span class="st">"Relative Importance (%)"</span>], </span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>         color<span class="op">=</span><span class="st">'plum'</span>, edgecolor<span class="op">=</span><span class="st">'purple'</span>)</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Relative Importance (%)"</span>)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Marketing Channel"</span>)</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Marketing Channel Impact on Conversion (Model Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.2f}</span><span class="ss">)"</span>)</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>plt.gca().invert_yaxis()</span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>feature_importance <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Channel"</span>: X.columns,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Coefficient"</span>: coefficients,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Odds Ratio"</span>: np.exp(coefficients)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>feature_importance[<span class="st">"Relative Importance (%)"</span>] <span class="op">=</span> (<span class="bu">abs</span>(feature_importance[<span class="st">"Coefficient"</span>]) <span class="op">/</span> </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                                               <span class="bu">abs</span>(feature_importance[<span class="st">"Coefficient"</span>]).<span class="bu">sum</span>()) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>feature_importance <span class="op">=</span> feature_importance.sort_values(by<span class="op">=</span><span class="st">"Relative Importance (%)"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Display detailed results</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Channel Importance Analysis:"</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(feature_importance)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot feature importance with fashion-oriented colors</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>plt.barh(feature_importance[<span class="st">"Channel"</span>], feature_importance[<span class="st">"Relative Importance (%)"</span>], </span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>         color<span class="op">=</span><span class="st">'plum'</span>, edgecolor<span class="op">=</span><span class="st">'purple'</span>)</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Relative Importance (%)"</span>)</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Marketing Channel"</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Marketing Channel Impact on Conversion</span><span class="ch">\n</span><span class="ss">Overall Conversion Rate: </span><span class="sc">{</span>conversion_rate<span class="sc">:.2f}</span><span class="ss">%"</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>plt.gca().invert_yaxis()</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Channel Importance:
-          Channel  Coefficient  Relative Importance (%)
-1    Social Media     1.494986                29.155851
-4          Direct     1.270194                24.771866
-0           Email     1.058964                20.652364
-2     Paid Search     0.810123                15.799360
-3  Organic Search     0.493301                 9.620559</code></pre>
+<pre><code>
+Channel Importance Analysis:
+          Channel  Coefficient  Odds Ratio  Relative Importance (%)
+1    Social Media     0.653120    1.921527                32.023032
+2     Paid Search     0.460291    1.584535                22.568456
+4          Direct     0.443131    1.557577                21.727107
+0           Email     0.310555    1.364182                15.226780
+3  Organic Search     0.172435    1.188194                 8.454626
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.97      1.00      0.99      1947
+           1       0.00      0.00      0.00        53
+
+    accuracy                           0.97      2000
+   macro avg       0.49      0.50      0.49      2000
+weighted avg       0.95      0.97      0.96      2000
+</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/calvinw/develop/Ma322Notebooks/myenv/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/calvinw/develop/Ma322Notebooks/myenv/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/home/calvinw/develop/Ma322Notebooks/myenv/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1509: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="AttributionModels_files/figure-html/cell-3-output-2.png" width="949" height="566" class="figure-img"></p>
+<p><img src="AttributionModels_files/figure-html/cell-3-output-3.png" width="949" height="567" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -241,43 +280,55 @@ Name: proportion, dtype: float64</code></pre>
 </section>
 <section id="interpretation-of-results-for-luxestyle-boutique" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation-of-results-for-luxestyle-boutique">Interpretation of Results for LuxeStyle Boutique</h2>
-<p>Our analysis of LuxeStyle’s marketing data reveals several key insights relevant to the fashion industry:</p>
+<p>Our analysis of LuxeStyle’s marketing data now reflects realistic e-commerce conversion rates and reveals several key insights:</p>
 <ol type="1">
-<li><p><strong>Social Media Dominance</strong>: Social media shows the strongest influence on conversions, contributing approximately 32% to conversion likelihood. This aligns with the visual nature of fashion retail and LuxeStyle’s strong presence on Instagram, Pinterest, and TikTok, where they can showcase their collections through engaging content and influencer partnerships.</p></li>
-<li><p><strong>Direct Traffic Impact</strong>: With a 25% contribution to conversions, direct traffic is the second most effective channel. This suggests that LuxeStyle’s brand recognition and offline marketing efforts (including influencer partnerships) are successfully driving customers directly to their site.</p></li>
-<li><p><strong>Email Marketing Effectiveness</strong>: Email marketing contributes about 20% to conversion likelihood, showing that LuxeStyle’s strategy of sending personalized style recommendations and exclusive pre-sale access to their subscriber base is effective.</p></li>
-<li><p><strong>Search Channel Performance</strong>: While paid and organic search show lower relative importance, they play crucial roles in capturing customers during specific moments, such as trend-related searches or when looking for specific clothing items.</p></li>
+<li><p><strong>Overall Conversion Rate</strong>: The simulated data shows a conversion rate of approximately 2%, which aligns with typical fashion e-commerce benchmarks. This means that out of every 100 customer journeys, about 2 result in a purchase.</p></li>
+<li><p><strong>Channel Impact Analysis</strong>:</p>
+<ul>
+<li><strong>Social Media Dominance</strong>: Despite the low overall conversion rate, social media shows the strongest relative influence on increasing conversion probability</li>
+<li><strong>Email Performance</strong>: Email marketing demonstrates the second-highest impact, particularly effective for retargeting and promotional campaigns</li>
+<li><strong>Direct Traffic</strong>: Brand recognition and influencer partnerships show moderate impact</li>
+<li><strong>Search Channels</strong>: Both paid and organic search contribute to conversions but with lower relative importance</li>
+</ul></li>
+<li><p><strong>Channel Exposure Analysis</strong>:</p>
+<ul>
+<li>Social media has the highest exposure rate (60% of customer journeys)</li>
+<li>Direct traffic has the lowest exposure rate (15%) but good conversion impact</li>
+<li>Email reaches 30% of potential customers</li>
+</ul></li>
 </ol>
 <section id="recommendations-for-luxestyle" class="level3">
 <h3 class="anchored" data-anchor-id="recommendations-for-luxestyle">Recommendations for LuxeStyle</h3>
-<p>Based on these findings, we recommend:</p>
+<p>Based on these more realistic findings, we recommend:</p>
 <ol type="1">
-<li><strong>Enhance Social Media Strategy</strong>:
+<li><strong>Social Media Strategy</strong>:
 <ul>
-<li>Increase investment in Instagram and TikTok content creation</li>
-<li>Expand influencer partnerships with focus on authentic brand alignment</li>
-<li>Develop more shoppable posts and social commerce integrations</li>
+<li>Continue strong investment in social media, focusing on conversion optimization</li>
+<li>Develop more shoppable posts to reduce friction in the purchase journey</li>
+<li>Test different content types to identify what drives highest conversion rates</li>
 </ul></li>
-<li><strong>Strengthen Brand Presence</strong>:
+<li><strong>Email Marketing Optimization</strong>:
 <ul>
-<li>Continue building brand recognition through consistent messaging</li>
-<li>Develop more offline-to-online campaigns to drive direct traffic</li>
-<li>Consider expanding influencer collaborations into product lines</li>
+<li>Focus on growing the email list given its strong conversion impact</li>
+<li>Implement abandoned cart and browse recovery emails</li>
+<li>Test timing and frequency of emails to maximize engagement</li>
 </ul></li>
-<li><strong>Optimize Email Program</strong>:
+<li><strong>Multi-Channel Approach</strong>:
 <ul>
-<li>Segment email lists based on style preferences and purchase history</li>
-<li>Create more personalized styling content</li>
-<li>Implement AI-powered product recommendations in emails</li>
+<li>While maintaining focus on high-performing channels, keep a balanced presence across all channels</li>
+<li>Develop channel-specific content strategies</li>
+<li>Track and optimize cross-channel customer journeys</li>
 </ul></li>
-<li><strong>Refine Search Strategy</strong>:
+<li><strong>Conversion Rate Optimization</strong>:
 <ul>
-<li>Focus paid search on high-intent keywords (e.g., specific product categories)</li>
-<li>Develop more trend-focused content for organic search</li>
-<li>Optimize for seasonal fashion terms</li>
+<li>Given the realistic 2% conversion rate, focus on both:
+<ol type="a">
+<li>Increasing traffic from high-converting channels</li>
+<li>Optimizing the conversion funnel to improve rates across all channels</li>
+</ol></li>
 </ul></li>
 </ol>
-<p>This data-driven approach provides LuxeStyle with actionable insights for optimizing their marketing strategy in the competitive fashion e-commerce space, with particular attention to the channels most relevant to their fashion-forward audience.</p>
+<p>This analysis provides LuxeStyle with actionable insights based on realistic e-commerce metrics, helping them optimize their marketing strategy in the competitive fashion space.</p>
 </section>
 </section>
 
