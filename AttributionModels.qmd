@@ -32,6 +32,152 @@ LuxeStyle's marketing mix includes:
 - Direct traffic from brand recognition and offline advertising
 - Influencer partnerships (tracked through direct traffic and special URLs)
 
+## How Is This Data Collected?
+
+Before diving into our analysis, it's important to understand how fashion e-commerce companies actually collect this channel exposure data. In our simulation, we'll generate 1s and 0s to represent channel exposure, but in reality, this data comes from multiple tracking systems and tools.
+
+### Channel Tracking Methods
+
+1. **Email Tracking**
+   - Records whether a customer was "exposed" (1) through:
+     * Email opens (tracked via pixel tracking)
+     * Link clicks (tracked via UTM parameters)
+     * Conversion from email-specific promo codes
+   - A "0" indicates no email interaction was recorded
+   - Tools used: Klaviyo, Mailchimp, Bronto
+   - Challenges: 
+     * Apple's Mail Privacy Protection affecting open rates
+     * Multiple email addresses for same customer
+
+2. **Social Media Tracking**
+   - Records a "1" when customer:
+     * Clicks through from Instagram/Facebook/TikTok posts
+     * Uses social-specific promo codes
+     * Interacts with shopping tags
+   - Tools used: 
+     * Facebook Pixel
+     * Platform-specific analytics
+     * UTM parameters in posts
+   - Challenges:
+     * Cross-platform customer journeys
+     * Attribution windows varying by platform
+
+3. **Paid Search Tracking**
+   - Records a "1" for:
+     * Clicks on Google/Bing ads
+     * Interactions with shopping ads
+   - Tools used:
+     * Google Ads tracking
+     * Microsoft Advertising
+     * AdWords conversion tracking
+   - Challenges:
+     * Keyword attribution
+     * Cross-device tracking
+
+4. **Organic Search Tracking**
+   - Records a "1" when:
+     * Customer arrives via non-paid search results
+     * Interacts with Google Shopping free listings
+   - Tools used:
+     * Google Analytics source/medium tracking
+     * Google Search Console
+   - Challenges:
+     * "Not provided" keywords
+     * Distinguishing from direct traffic
+
+5. **Direct Traffic Tracking**
+   - Records a "1" for:
+     * Direct URL entry
+     * Bookmark usage
+     * Some app launches
+   - Often includes:
+     * Influencer campaign traffic
+     * Dark social (e.g., messaging apps)
+   - Challenges:
+     * Attribution accuracy
+     * Separating true direct from other sources
+
+### Data Integration Challenges
+
+Fashion retailers typically face several challenges when collecting this data:
+
+1. **Technical Limitations**
+   - Cookie blocking and ITP (Intelligent Tracking Prevention)
+   - Mobile app vs. web tracking differences
+   - Cross-device customer journeys
+
+2. **Privacy Regulations**
+   - GDPR compliance in Europe
+   - CCPA compliance in California
+   - Cookie consent requirements
+
+3. **Data Quality Issues**
+   - Multiple customer identifiers
+   - Duplicate tracking
+   - Missing data points
+
+### Typical Technology Stack
+
+Most fashion e-commerce companies use a combination of tools to collect and analyze this data:
+
+1. **Analytics Platforms**
+   - Google Analytics 4 (primary analytics)
+   - Adobe Analytics (enterprise level)
+   - Mixpanel (for specific user journeys)
+
+2. **Customer Data Platforms (CDP)**
+   - Segment
+   - mParticle
+   - Tealium
+
+3. **E-commerce Platforms**
+   - Shopify Plus
+   - Magento
+   - BigCommerce
+
+4. **Marketing Tools**
+   - Email marketing platforms
+   - Social media management tools
+   - Ad platforms
+
+### Data Collection Example
+
+Here's how a typical customer journey might be tracked:
+
+```{python}
+# Example customer journey data structure
+customer_journey = {
+    'customer_id': '12345',
+    'touchpoints': [
+        {
+            'channel': 'Instagram',
+            'timestamp': '2024-02-01 10:30:00',
+            'type': 'post_click',
+            'utm_source': 'instagram',
+            'utm_medium': 'social',
+            'utm_campaign': 'spring_collection'
+        },
+        {
+            'channel': 'Email',
+            'timestamp': '2024-02-02 14:20:00',
+            'type': 'email_open',
+            'campaign_id': 'new_arrival_alert'
+        },
+        {
+            'channel': 'Direct',
+            'timestamp': '2024-02-02 14:25:00',
+            'type': 'website_visit'
+        }
+    ],
+    'conversion': {
+        'occurred': True,
+        'timestamp': '2024-02-02 14:40:00',
+        'value': 150.00,
+        'products': ['dress_123', 'accessory_456']
+    }
+}
+```
+
 The dataset we'll analyze contains 10,000 customer journeys from the Spring/Summer 2024 collection launch, tracking whether customers were exposed to each marketing channel and if they ultimately made a purchase.
 
 ## Creating the Dataset
