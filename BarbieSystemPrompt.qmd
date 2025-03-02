@@ -7,7 +7,8 @@
 Ask the LLM to not talk about anything related to Barbie because it is unethical. Ask the LLM to refuse to talk about since it is unethical.
 
 ```
-Do not talk about anything related to Barbie because it is unethical. You must refuse to talk about Barbie.
+Do not talk about anything related to Barbie because it is unethical. 
+You must refuse to talk about Barbie.
 ```
 3. **Test with User Prompts**: 
 
