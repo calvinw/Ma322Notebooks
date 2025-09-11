@@ -4,7 +4,8 @@ execute:
     eval: false
 ---
 
-__Problem__: 
+__Problem__:    
+
 - Store the number 8 in a variable called `x`
 - Print out `x`
 - Execute the code block
@@ -16,10 +17,11 @@ CODE
 
 The output of the above should be `8`
 
-__Problem__: 
-- Now assign `y` to be `5*x+3`
-- Print out `y`
-- Execute the code block
+__Problem__:    
+
+- Now assign `y` to be `5*x+3`   
+- Print out `y`  
+- Execute the code block  
 
 ```{python}
 CODE
@@ -27,7 +29,8 @@ CODE
 
 The output of the above should be `43`
 
-__Problem__: 
+__Problem__:    
+
 - Find the square root of 119025 using the function `sqrt`
 - Execute the code block
 
@@ -38,7 +41,8 @@ CODE
 The output of the above should be `345`
 
 
-__Problem__: 
+__Problem__:    
+
 - Use the function `ceiling` to round up the value `1.3`
 - Execute the code block
 
@@ -48,7 +52,8 @@ CODE
 
 The output of the above should be `2`
 
-__Problem__: 
+__Problem__:    
+
 - Use the function `floor` to round down the value `3.8`
 - Execute the code block
 
@@ -58,7 +63,8 @@ CODE
 
 The output of the above should be `3`
 
-__Problem__: 
+__Problem__:    
+
 - Store a new number 10 in the variable called `x`.
 - Print out `x`
 - Execute the code block
@@ -69,7 +75,8 @@ CODE
 
 The output of the above should be `10`
 
-__Problem__: 
+__Problem__:    
+
 - Assign the variable `myVal` to be `x+y`
 - Print out `myVal`
 - Execute the code block
@@ -80,7 +87,8 @@ CODE
 
 The output of the above should be `53`
 
-__Problem__: 
+__Problem__:    
+
 - Enter and the expression `14/2-1+3`
 - Execute the code block, it outputs  `9`
 - Put in parentheses so that it outputs `17` instead
@@ -89,7 +97,8 @@ __Problem__:
 14/2-1+3
 ```
 
-__Problem__: 
+__Problem__:    
+
 - Enter and the expression `8*3+9-9`
 - Execute the code block, it outputs  `24`
 - Put in parentheses so that it outputs `87` instead
@@ -98,7 +107,8 @@ __Problem__:
 8*3+9-9
 ```
 
-__Problem__: 
+__Problem__:    
+
 - Enter and the expression `10-9*24/8*6`
 - Execute the code block, it outputs  `-152`
 - Put in parentheses so that it outputs `18` instead
@@ -107,7 +117,8 @@ __Problem__:
 10-9*24/8*6
 ```
 
-__Problem__: 
+__Problem__:    
+
 - Assume you have this code `5(3)`
 - Execute the code block, it outputs  an error
 - Fix the code so that it outputs 15
@@ -116,7 +127,8 @@ __Problem__:
 5(3)
 ```
 
-__Problem__: 
+__Problem__:    
+
 - Assign a variable `z=7`
 - Try to print out this expression: `2z`
 - Execute the code, it outputs  an error
