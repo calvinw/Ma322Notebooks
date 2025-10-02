@@ -1,0 +1,235 @@
+---
+title: "More More LLMS"
+execute:
+    eval: false
+---
+
+{{< include _llm_openrouter.qmd >}}
+
+## Calling an LLM
+
+__Problem__:
+
+- Choose a question and set up a prompt to send the question to the LLM. Any
+question you like.
+
+```{python}
+prompt = CODE
+```
+```{python}
+# __SOLUTION__
+prompt = "What makes a good movie? 50 words please"
+```
+
+- Run the cell below to print out your response
+
+```{python}
+# __REGULAR_BLOCK__
+response = get_completion(prompt)
+print(response)
+```
+
+- Run the cell below to print out your prompt and your response together
+
+```{python}
+# __REGULAR_BLOCK__
+response = get_completion(prompt)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
+```
+
+## Calling an LLM with `temperature=0.0`
+
+Call the LLM 3 times with your question above, using temperature 0.0 for these.
+
+__Problem__:
+
+- Using the same prompt as above call `get_completion` three times with `temperature=0`
+- Each time print out the response you get
+
+```{python}
+CODE
+```
+```{python}
+# __SOLUTION__
+response = get_completion(prompt, temperature = 0.0)
+print(response)
+
+print(" ")
+
+response = get_completion(prompt, temperature = 0.0)
+print(response)
+
+print(" ")
+
+response = get_completion(prompt, temperature = 0.0)
+print(response)
+```
+
+__Problem__:
+
+- Exactly the same as above but use `temperature=0.8` instead
+
+```{python}
+CODE
+```
+```{python}
+# __SOLUTION__
+response = get_completion(prompt, temperature = 0.8)
+print(response)
+
+print(" ")
+
+response = get_completion(prompt, temperature = 0.8)
+print(response)
+
+print(" ")
+
+response = get_completion(prompt, temperature = 0.8)
+print(response)
+```
+
+## Template For Asking For a Famous Person
+
+__Problem__:
+
+- Create a template string with using a template variable `{field}` for asking the LLM
+  to give you a famous person from `{field}`.
+
+```{python}
+template = CODE
+```
+```{python}
+# __SOLUTION__
+template = "Can you tell me a famous person in {field}?"
+```
+
+__Problem__:
+
+- Evaluate your template with `field="music"`
+- Call `get_completion` to get the response from the LLM
+- print the prompt and response using `print`
+
+```{python}
+prompt=template.format(CODE)
+
+# Call the LLM by passing the prompt to get_completion
+response=get_completion(CODE)
+
+# Print the prompt and response
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
+```
+```{python}
+# __SOLUTION__
+prompt=template.format(field="music")
+
+# Call the LLM by passing the prompt to get_completion
+response=get_completion(prompt)
+
+# Print the prompt and response
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
+```
+
+## Adding a Variable Called `num`
+
+__Problem__:
+
+- Add another template variable called `{num}` to the template and ask the LLM
+  to provide you with `num` interesting facts about the famous person from
+  `{field}`.
+
+```{python}
+template = CODE
+```
+```{python}
+# __SOLUTION__
+template = """Can you tell me a famous person in {field} and give me {num}
+interesting facts about them?"""
+```
+
+__Problem__:
+
+- Evaluate your template with `field="music"` and `num=4` and save it in the
+  `prompt` variable
+
+```{python}
+prompt=template.format(CODE)
+```
+```{python}
+# __SOLUTION__
+prompt=template.format(field="music", num=4)
+```
+
+__Problem__:
+
+- Now call `get_completion` with the prompt and get the response. Store it in the `response` variable
+
+```{python}
+response = get_completion(CODE)
+```
+```{python}
+# __SOLUTION__
+response = get_completion(prompt)
+```
+
+__Problem__:
+
+- Use `print` to print out the prompt and the response
+
+```{python}
+CODE
+```
+```{python}
+# __SOLUTION__
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
+```
+
+## Ask To Format the Response
+
+__Problem__:
+
+- Add a template variable called `format` so you can pass in the desired format
+  for the facts that are given.
+- Call your template with "music" and 4 facts and "a numbered list" for the format
+
+```{python}
+# Define template here
+template = CODE
+
+# Evaluate the template using field="music" and num=4 and format="a numbered list"
+prompt=template.format(CODE)
+
+# Call get_completion and get the response, then print the prompt and response.
+response = get_completion(prompt)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
+```
+```{python}
+# __SOLUTION__
+# Define template here
+template ="""Can you tell me a famous person in {field} and give me {num}
+interesting facts about them? Format the facts using {format}"""
+
+# Evaluate the template for "music" and 4 facts and "a numbered list"
+prompt=template.format(field="music", num=4, format="a numbered list")
+
+# Call get_completion and get the response, then print it.
+response = get_completion(prompt)
+print("Prompt:")
+print(prompt)
+print("Response:")
+print(response)
+```

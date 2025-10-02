@@ -62,6 +62,7 @@ ReviewChain.qmd \
 VariablesHW.qmd \
 MoreDataTypes.qmd \
 MoreLLMs.qmd \
+MoreMoreLLMs.qmd \
 MoreReviews.qmd \
 MoreRoles.qmd \
 MoreSimpleLLMChain.qmd
