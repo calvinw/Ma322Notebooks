@@ -1,0 +1,129 @@
+# Assignment: Luxe Boutique Shopping Assistant
+
+## Overview
+You will create a conversational AI system prompt for **Luxe Assistant**, an automated shopping bot for Luxe Boutique, a curated fashion accessories and jewelry store. Your goal is to write clear, comprehensive instructions that enable the bot to handle customer orders from greeting to final checkout.
+
+[Chat Editor](https://fb7fvurzmhhlmqoutvez5x.streamlit.app/)
+
+Place your prompt that instructs the LLM how to by the Assistant into the System Prompt area, and test it with some user queries. 
+
+Make sure you save your chats (by copying and pasting the whole page)
+
+Here are the details.
+
+## The Product Catalog
+
+### Designer Handbags
+- Milan Tote: \$495.00 (Large), \$395.00 (Medium), \$295.00 (Small)
+- Paris Crossbody: \$385.00 (Leather), \$285.00 (Vegan Leather)
+- Monaco Clutch: \$225.00 (Satin), \$195.00 (Velvet)
+
+### Statement Jewelry
+- Gold Layered Necklace: \$189.00
+- Diamond Stud Earrings: \$425.00
+- Rose Gold Bracelet Set: \$165.00
+- Pearl Drop Earrings: \$145.00
+
+### Scarves & Wraps
+- Silk Scarf Collection: \$95.00 (Large), \$75.00 (Medium)
+- Cashmere Wrap: \$185.00
+- Printed Bandana: \$45.00
+
+### Sunglasses
+- Vintage Cat-Eye: \$215.00
+- Modern Aviators: \$185.00
+- Oversized Glam: \$195.00
+
+### Small Accessories
+- Leather Card Holder: \$65.00
+- Designer Belt: \$125.00
+- Hair Accessories Set: \$48.00
+- Phone Chain Strap: \$38.00
+
+### Wallets
+- Continental Wallet: \$175.00 (Leather), \$145.00 (Vegan Leather)
+- Card Case: \$85.00
+
+---
+
+## Required Functionality
+
+Your system prompt must enable the bot to:
+
+### 1. Customer Engagement
+- Greet customers warmly and introduce itself as "Luxe Assistant"
+- Display the full catalog OR specific categories based on customer requests
+- Maintain a sophisticated, friendly, and fashion-forward tone throughout the conversation
+
+### 2. Order Management
+- When a customer orders an item with multiple options (sizes, materials), ask which variant they prefer
+- Confirm each item added with: product name, variant selected, and price
+- Once ANY items are in the cart, display the current order as a formatted table at the bottom of every response
+- Show a running subtotal with each update
+
+### 3. Customer Information Collection
+When the customer is ready to checkout, collect:
+- Full name
+- Email address
+- Phone number
+- Shipping preference: standard shipping (\$9.99), express shipping (\$24.99), or local pickup (free)
+- If shipping is selected: collect complete delivery address
+
+### 4. Discount & Promotion Logic
+Implement the following promotional system:
+
+**Buy 2 Get 1 Free on Small Accessories:**
+- When a customer buys 2 or more small accessory items, the cheapest one is free
+- If they buy 3 small accessories, only 1 is free (not 2)
+- If they buy 4 small accessories, they get 2 free (one for every pair)
+
+**VIP Member Discount:**
+- If customer identifies as a VIP member: 15% off entire order
+- Apply this discount to the subtotal AFTER the Buy 2 Get 1 Free promotion
+
+**Discount Application Order:**
+1. Apply "Buy 2 Get 1 Free" promotion first (reduces the subtotal)
+2. Apply VIP member discount (percentage off the new subtotal)
+3. Calculate and add shipping fee
+
+### 5. Checkout Summary
+Display a clear final summary showing:
+- Itemized list of products ordered
+- Subtotal before discounts
+- Each discount applied (with description and amount saved)
+- Shipping fee (if applicable)
+- **Final total**
+- Verify all arithmetic is correct
+
+### 6. Edge Cases & Validation
+Your prompt should handle:
+- Correctly calculating free items when customers buy 3, 4, 5+ small accessories
+- Clear communication about how much the customer is saving
+- Ensuring discounts are applied in the correct order
+
+---
+
+## What to Save 
+
+1. **System Prompt Document**
+   - Submit your complete system prompt as a text file or document
+   - Your prompt should be clear enough that anyone could implement it
+
+2. **Test Conversation Log**
+   - Provide a sample conversation that demonstrates your bot working correctly
+   - Your test should include:
+     - Ordering at least 3 different items (including small accessories)
+     - Triggering at least one discount
+     - Complete checkout process with customer information
+   
+---
+
+## Suggestions 
+
+- Start simple: Get the basic ordering flow working before adding discount logic
+- Test incrementally: Add one feature at a time and test it thoroughly
+- Be explicit: Don't assume the AI knows what you mean—spell out every rule clearly
+- Consider edge cases: What if someone orders 5 small accessories? How many free items do they get?
+- Show your math: Have the bot explain discount calculations so customers understand their savings
+- Think about tone: Fashion retail has a specific voice—elegant yet approachable
+

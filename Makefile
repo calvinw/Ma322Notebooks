@@ -3,6 +3,7 @@ SHELL:=/bin/bash
 PAGES= \
 SystemPrompting.qmd \
 BarbieSystemPrompt.qmd \
+LuxeBoutiqueShoppingAssistant.qmd \
 SpeakLikeAPirate.qmd
 
 SOURCES:= \
