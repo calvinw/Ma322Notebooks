@@ -14,33 +14,39 @@ Here are the details.
 ## The Product Catalog
 
 ### Designer Handbags
+
 - Milan Tote: \$495.00 (Large), \$395.00 (Medium), \$295.00 (Small)
 - Paris Crossbody: \$385.00 (Leather), \$285.00 (Vegan Leather)
 - Monaco Clutch: \$225.00 (Satin), \$195.00 (Velvet)
 
 ### Statement Jewelry
+
 - Gold Layered Necklace: \$189.00
 - Diamond Stud Earrings: \$425.00
 - Rose Gold Bracelet Set: \$165.00
 - Pearl Drop Earrings: \$145.00
 
 ### Scarves & Wraps
+
 - Silk Scarf Collection: \$95.00 (Large), \$75.00 (Medium)
 - Cashmere Wrap: \$185.00
 - Printed Bandana: \$45.00
 
 ### Sunglasses
+
 - Vintage Cat-Eye: \$215.00
 - Modern Aviators: \$185.00
 - Oversized Glam: \$195.00
 
 ### Small Accessories
+
 - Leather Card Holder: \$65.00
 - Designer Belt: \$125.00
 - Hair Accessories Set: \$48.00
 - Phone Chain Strap: \$38.00
 
 ### Wallets
+
 - Continental Wallet: \$175.00 (Leather), \$145.00 (Vegan Leather)
 - Card Case: \$85.00
 
@@ -62,7 +68,8 @@ Your system prompt must enable the bot to:
 - Show a running subtotal with each update
 
 ### 3. Customer Information Collection
-When the customer is ready to checkout, collect:
+When the customer is ready to checkout, collect:  
+
 - Full name
 - Email address
 - Phone number
@@ -72,22 +79,27 @@ When the customer is ready to checkout, collect:
 ### 4. Discount & Promotion Logic
 Implement the following promotional system:
 
-**Buy 2 Get 1 Free on Small Accessories:**
+**Buy 2 Get 1 Free on Small Accessories:**   
+
 - When a customer buys 2 or more small accessory items, the cheapest one is free
 - If they buy 3 small accessories, only 1 is free (not 2)
 - If they buy 4 small accessories, they get 2 free (one for every pair)
 
-**VIP Member Discount:**
+**VIP Member Discount:**  
+
 - If customer identifies as a VIP member: 15% off entire order
 - Apply this discount to the subtotal AFTER the Buy 2 Get 1 Free promotion
 
-**Discount Application Order:**
+**Discount Application Order:**  
+
 1. Apply "Buy 2 Get 1 Free" promotion first (reduces the subtotal)
 2. Apply VIP member discount (percentage off the new subtotal)
 3. Calculate and add shipping fee
 
 ### 5. Checkout Summary
-Display a clear final summary showing:
+
+Display a clear final summary showing:  
+
 - Itemized list of products ordered
 - Subtotal before discounts
 - Each discount applied (with description and amount saved)
@@ -95,8 +107,9 @@ Display a clear final summary showing:
 - **Final total**
 - Verify all arithmetic is correct
 
-### 6. Edge Cases & Validation
-Your prompt should handle:
+### 6. Edge Cases & Validation  
+Your prompt should handle:  
+
 - Correctly calculating free items when customers buy 3, 4, 5+ small accessories
 - Clear communication about how much the customer is saving
 - Ensuring discounts are applied in the correct order
@@ -106,11 +119,11 @@ Your prompt should handle:
 ## What to Save 
 
 1. **System Prompt Document**
-   - Submit your complete system prompt as a text file or document
+   - Save your complete system prompt (copy and paste it somewhere) as a text file or document
    - Your prompt should be clear enough that anyone could implement it
 
 2. **Test Conversation Log**
-   - Provide a sample conversation that demonstrates your bot working correctly
+   - Save a sample conversation (copy and paste it somewhere) that demonstrates your bot working correctly
    - Your test should include:
      - Ordering at least 3 different items (including small accessories)
      - Triggering at least one discount

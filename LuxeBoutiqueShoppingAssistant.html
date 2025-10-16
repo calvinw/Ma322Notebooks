@@ -131,22 +131,56 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="customer-information-collection" class="level3">
 <h3 class="anchored" data-anchor-id="customer-information-collection">3. Customer Information Collection</h3>
-<p>When the customer is ready to checkout, collect: - Full name - Email address - Phone number - Shipping preference: standard shipping ($9.99), express shipping ($24.99), or local pickup (free) - If shipping is selected: collect complete delivery address</p>
+<p>When the customer is ready to checkout, collect:</p>
+<ul>
+<li>Full name</li>
+<li>Email address</li>
+<li>Phone number</li>
+<li>Shipping preference: standard shipping ($9.99), express shipping ($24.99), or local pickup (free)</li>
+<li>If shipping is selected: collect complete delivery address</li>
+</ul>
 </section>
 <section id="discount-promotion-logic" class="level3">
 <h3 class="anchored" data-anchor-id="discount-promotion-logic">4. Discount &amp; Promotion Logic</h3>
 <p>Implement the following promotional system:</p>
-<p><strong>Buy 2 Get 1 Free on Small Accessories:</strong> - When a customer buys 2 or more small accessory items, the cheapest one is free - If they buy 3 small accessories, only 1 is free (not 2) - If they buy 4 small accessories, they get 2 free (one for every pair)</p>
-<p><strong>VIP Member Discount:</strong> - If customer identifies as a VIP member: 15% off entire order - Apply this discount to the subtotal AFTER the Buy 2 Get 1 Free promotion</p>
-<p><strong>Discount Application Order:</strong> 1. Apply “Buy 2 Get 1 Free” promotion first (reduces the subtotal) 2. Apply VIP member discount (percentage off the new subtotal) 3. Calculate and add shipping fee</p>
+<p><strong>Buy 2 Get 1 Free on Small Accessories:</strong></p>
+<ul>
+<li>When a customer buys 2 or more small accessory items, the cheapest one is free</li>
+<li>If they buy 3 small accessories, only 1 is free (not 2)</li>
+<li>If they buy 4 small accessories, they get 2 free (one for every pair)</li>
+</ul>
+<p><strong>VIP Member Discount:</strong></p>
+<ul>
+<li>If customer identifies as a VIP member: 15% off entire order</li>
+<li>Apply this discount to the subtotal AFTER the Buy 2 Get 1 Free promotion</li>
+</ul>
+<p><strong>Discount Application Order:</strong></p>
+<ol type="1">
+<li>Apply “Buy 2 Get 1 Free” promotion first (reduces the subtotal)</li>
+<li>Apply VIP member discount (percentage off the new subtotal)</li>
+<li>Calculate and add shipping fee</li>
+</ol>
 </section>
 <section id="checkout-summary" class="level3">
 <h3 class="anchored" data-anchor-id="checkout-summary">5. Checkout Summary</h3>
-<p>Display a clear final summary showing: - Itemized list of products ordered - Subtotal before discounts - Each discount applied (with description and amount saved) - Shipping fee (if applicable) - <strong>Final total</strong> - Verify all arithmetic is correct</p>
+<p>Display a clear final summary showing:</p>
+<ul>
+<li>Itemized list of products ordered</li>
+<li>Subtotal before discounts</li>
+<li>Each discount applied (with description and amount saved)</li>
+<li>Shipping fee (if applicable)</li>
+<li><strong>Final total</strong></li>
+<li>Verify all arithmetic is correct</li>
+</ul>
 </section>
 <section id="edge-cases-validation" class="level3">
 <h3 class="anchored" data-anchor-id="edge-cases-validation">6. Edge Cases &amp; Validation</h3>
-<p>Your prompt should handle: - Correctly calculating free items when customers buy 3, 4, 5+ small accessories - Clear communication about how much the customer is saving - Ensuring discounts are applied in the correct order</p>
+<p>Your prompt should handle:</p>
+<ul>
+<li>Correctly calculating free items when customers buy 3, 4, 5+ small accessories</li>
+<li>Clear communication about how much the customer is saving</li>
+<li>Ensuring discounts are applied in the correct order</li>
+</ul>
 <hr>
 </section>
 </section>
@@ -155,12 +189,12 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li><strong>System Prompt Document</strong>
 <ul>
-<li>Submit your complete system prompt as a text file or document</li>
+<li>Save your complete system prompt (copy and paste it somewhere) as a text file or document</li>
 <li>Your prompt should be clear enough that anyone could implement it</li>
 </ul></li>
 <li><strong>Test Conversation Log</strong>
 <ul>
-<li>Provide a sample conversation that demonstrates your bot working correctly</li>
+<li>Save a sample conversation (copy and paste it somewhere) that demonstrates your bot working correctly</li>
 <li>Your test should include:
 <ul>
 <li>Ordering at least 3 different items (including small accessories)</li>
